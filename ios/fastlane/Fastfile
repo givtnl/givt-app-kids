@@ -18,7 +18,7 @@ default_platform(:ios)
 platform :ios do
   git_url = "git@github.com:givtnl/givt.apps.codesigning.git"
   lane :certificates do
-    match(type: "appstore", app_identifier: "net.givtapp.kids", git_url: git_url, override_keystore: true)
+    match(type: "appstore", app_identifier: "net.givtapp.kids", git_url: git_url, force: true)
   end
 
   desc "Push a new build to Testflight"
