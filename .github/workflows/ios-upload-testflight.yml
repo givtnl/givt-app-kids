@@ -15,7 +15,7 @@ jobs:
       - name: 'Upload app to TestFlight'
         uses: apple-actions/upload-testflight-build@v1
         with: 
-          app-path: "https://github.com/givtnl/Ggivt-app-kids/releases/tag/$env:latest_tag" 
+          app-path: "https://github.com/givtnl/givt-app-kids/releases/tag/$env:latest_tag" 
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORECONNECT_PRIVATE_KEY }}
