@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:givt_app_kids/screens/wallet_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -9,37 +11,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      title: 'Givt App Kids',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Givt App Kids"),
-      ),
-      body: Center(
-        child: Text(
-          "Hello Kids!",
-          style: Theme.of(context).textTheme.headline2,
+        title: 'Givt App Kids',
+        theme: ThemeData(
+          primaryColor: Color.fromARGB(255, 62, 73, 112),
         ),
-      ),
-    );
+        initialRoute: WalletScreen.routeName,
+        routes: {
+          WalletScreen.routeName: (_) => WalletScreen(),
+        });
   }
 }
