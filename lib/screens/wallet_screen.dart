@@ -17,6 +17,9 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey(); 
+
   String _userName = "James";
   int _userAge = 10;
   double _walletAmmount = 20.0;
@@ -29,19 +32,19 @@ class _WalletScreenState extends State<WalletScreen> {
 
   Future<void> _readPreferences() async {
     var prefs = await StreamingSharedPreferences.instance;
-    var name = prefs.getString(SettingsDrawer.nameKey, defaultValue: "");
+    var name = prefs.getString(SettingsDrawer.nameKey, defaultValue: "James");
     name.listen((newName) {
       setState(() {
         _userName = newName;
       });
     });
-    var age = prefs.getInt(SettingsDrawer.ageKey, defaultValue: 0);
+    var age = prefs.getInt(SettingsDrawer.ageKey, defaultValue: 11);
     age.listen((newAge) {
       setState(() {
         _userAge = newAge;
       });
     });
-    var wallet = prefs.getDouble(SettingsDrawer.walletKey, defaultValue: 0.0);
+    var wallet = prefs.getDouble(SettingsDrawer.walletKey, defaultValue: 20.0);
     wallet.listen((newWalletAmmount) {
       setState(() {
         _walletAmmount = newWalletAmmount;
@@ -52,6 +55,7 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       drawer: SettingsDrawer(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,10 +76,13 @@ class _WalletScreenState extends State<WalletScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Icon(
-                      Icons.account_circle_outlined,
-                      size: 70,
-                      color: Theme.of(context).primaryColor,
+                    child: GestureDetector(
+                      onLongPress: () => _scaffoldKey.currentState!.openDrawer(),
+                      child: Icon(
+                        Icons.account_circle_outlined,
+                        size: 70,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                   ),
                   Expanded(
