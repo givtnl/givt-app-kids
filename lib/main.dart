@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
+import 'package:givt_app_kids/screens/wallet_screen.dart';
+import 'package:givt_app_kids/providers/goals_provider.dart';
+import 'package:givt_app_kids/screens/goals_list_screen.dart';
+import 'package:givt_app_kids/screens/goal_details_screen.dart';
+import 'package:givt_app_kids/screens/choose_amount_screen.dart';
+import 'package:givt_app_kids/screens/success_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -9,36 +18,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Givt App Kids',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Givt App Kids"),
-      ),
-      body: Center(
-        child: Text(
-          "Hello Kids!",
-          style: Theme.of(context).textTheme.headline2,
+    return ChangeNotifierProvider(
+      create: (_) => GoalsProvider(),
+      child: MaterialApp(
+        title: 'Givt Kids',
+        theme: ThemeData(
+          primaryColor: Color.fromARGB(255, 62, 73, 112),
         ),
+        initialRoute: WalletScreen.routeName,
+        routes: {
+          WalletScreen.routeName: (_) => WalletScreen(),
+          GoalsListScreen.routeName: (_) => GoalsListScreen(),
+          GoalDetailsScreen.routeName: (_) => GoalDetailsScreen(),
+          ChooseAmountScreen.routeName: (_) => ChooseAmountScreen(),
+          SuccessScreen.routeName: (_) => SuccessScreen(),
+        },
       ),
     );
   }
