@@ -17,12 +17,15 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+  static const String nameDefault = "James";
+  static const int ageDefault = 11;
+  static const double walletAmountDefault = 20.0;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey(); 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  String _userName = "James";
-  int _userAge = 10;
-  double _walletAmmount = 20.0;
+  String _userName = nameDefault;
+  int _userAge = ageDefault;
+  double _walletAmmount = walletAmountDefault;
 
   @override
   void initState() {
@@ -30,8 +33,23 @@ class _WalletScreenState extends State<WalletScreen> {
     _readPreferences();
   }
 
+  Future<void> _checkDefaultValues(StreamingSharedPreferences prefs) async {
+   var keys = prefs.getKeys().getValue();
+    if (!keys.contains(SettingsDrawer.nameKey)) {
+      await prefs.setString(SettingsDrawer.nameKey, nameDefault);
+    }
+    if (!keys.contains(SettingsDrawer.ageKey)) {
+      await prefs.setInt(SettingsDrawer.ageKey, ageDefault);
+    }
+    if (!keys.contains(SettingsDrawer.walletKey)) {
+      await prefs.setDouble(SettingsDrawer.walletKey, walletAmountDefault);
+    }
+  }
+
   Future<void> _readPreferences() async {
     var prefs = await StreamingSharedPreferences.instance;
+    await _checkDefaultValues(prefs);
+
     var name = prefs.getString(SettingsDrawer.nameKey, defaultValue: "James");
     name.listen((newName) {
       setState(() {
@@ -77,7 +95,8 @@ class _WalletScreenState extends State<WalletScreen> {
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onLongPress: () => _scaffoldKey.currentState!.openDrawer(),
+                      onLongPress: () =>
+                          _scaffoldKey.currentState!.openDrawer(),
                       child: Icon(
                         Icons.account_circle_outlined,
                         size: 70,
