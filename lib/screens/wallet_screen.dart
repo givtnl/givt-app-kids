@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
+import 'package:givt_app_kids/screens/goals_list_screen.dart';
 
 class WalletScreen extends StatefulWidget {
   static const String routeName = "/wallet";
@@ -16,10 +17,9 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
-
   String _userName = "James";
   int _userAge = 10;
-  final double walletAmmount = 20.0;
+  double _walletAmmount = 20.0;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _WalletScreenState extends State<WalletScreen> {
     _readPreferences();
   }
 
-  void _readPreferences() async {
+  Future<void> _readPreferences() async {
     var prefs = await StreamingSharedPreferences.instance;
     var name = prefs.getString(SettingsDrawer.nameKey, defaultValue: "");
     name.listen((newName) {
@@ -41,6 +41,12 @@ class _WalletScreenState extends State<WalletScreen> {
         _userAge = newAge;
       });
     });
+    var wallet = prefs.getDouble(SettingsDrawer.walletKey, defaultValue: 0.0);
+    wallet.listen((newWalletAmmount) {
+      setState(() {
+        _walletAmmount = newWalletAmmount;
+      });
+    });
   }
 
   @override
@@ -52,7 +58,7 @@ class _WalletScreenState extends State<WalletScreen> {
         children: [
           Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 40),
+            padding: EdgeInsets.only(top: 50, bottom: 40),
             decoration: BoxDecoration(
               color: Colors.grey,
               borderRadius: BorderRadius.vertical(
@@ -61,24 +67,41 @@ class _WalletScreenState extends State<WalletScreen> {
                 ),
               ),
             ),
-            child: Column(
-              children: [
-                Text(
-                  _userName,
-                  style: TextStyle(
-                    fontSize: 27,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Icon(
+                      Icons.account_circle_outlined,
+                      size: 70,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                ),
-                Text(
-                  "$_userAge y.o.",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Theme.of(context).primaryColor,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          _userName,
+                          style: TextStyle(
+                            fontSize: 27,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        Text(
+                          "$_userAge y.o.",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  Spacer(),
+                ],
+              ),
             ),
           ),
           Column(
@@ -107,23 +130,28 @@ class _WalletScreenState extends State<WalletScreen> {
                         fontSize: 35,
                       ),
                     ),
-                    TextSpan(text: "$walletAmmount"),
+                    TextSpan(text: "$_walletAmmount"),
                   ],
                 ),
               ),
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: EdgeInsets.only(bottom: 15),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: _walletAmmount > 0
+                  ? () {
+                      Navigator.of(context)
+                          .pushNamed(GoalsListScreen.routeName);
+                    }
+                  : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                  "I WANT TO DONATE",
+                  "I WANT TO GIVE",
                   style: TextStyle(
                     fontSize: 35,
                     color: Colors.white,
