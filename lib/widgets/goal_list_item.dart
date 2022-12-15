@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 
 import 'package:givt_app_kids/models/goal.dart';
 import 'package:givt_app_kids/screens/goal_details_screen.dart';
-import 'package:givt_app_kids/screens/choose_amount_screen.dart';
+import 'package:givt_app_kids/helpers/flows.dart';
+import 'package:givt_app_kids/screens/goals_list_screen.dart';
 
 class GoalListItem extends StatelessWidget {
-  const GoalListItem({Key? key, required this.goal}) : super(key: key);
+  const GoalListItem({
+    Key? key,
+    required this.goal,
+    required this.currentFlow,
+  }) : super(key: key);
 
   final Goal goal;
+  final Flows currentFlow;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +55,10 @@ class GoalListItem extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        var route =
+                            currentFlow.routes[GoalsListScreen.routeName];
                         Navigator.of(context).pushNamed(
-                          ChooseAmountScreen.routeName,
+                          route!,
                           arguments: goal,
                         );
                       },

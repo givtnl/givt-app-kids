@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/helpers/flows.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
@@ -20,6 +21,7 @@ class _WalletScreenState extends State<WalletScreen> {
   static const String nameDefault = "James";
   static const int ageDefault = 11;
   static const double walletAmountDefault = 20.0;
+  static const int selectedFlowDefault = 0;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -34,7 +36,7 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   Future<void> _checkDefaultValues(StreamingSharedPreferences prefs) async {
-   var keys = prefs.getKeys().getValue();
+    var keys = prefs.getKeys().getValue();
     if (!keys.contains(SettingsDrawer.nameKey)) {
       await prefs.setString(SettingsDrawer.nameKey, nameDefault);
     }
@@ -43,6 +45,9 @@ class _WalletScreenState extends State<WalletScreen> {
     }
     if (!keys.contains(SettingsDrawer.walletKey)) {
       await prefs.setDouble(SettingsDrawer.walletKey, walletAmountDefault);
+    }
+    if (!keys.contains(SettingsDrawer.flowKey)) {
+      await prefs.setInt(SettingsDrawer.flowKey, selectedFlowDefault);
     }
   }
 
@@ -72,122 +77,124 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: SettingsDrawer(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(top: 50, bottom: 40),
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(
-                  15,
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldKey,
+        drawer: SettingsDrawer(),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(top: 50, bottom: 40),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor.withAlpha(38), //15%
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(
+                    15,
+                  ),
                 ),
               ),
-            ),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onLongPress: () =>
-                          _scaffoldKey.currentState!.openDrawer(),
-                      child: Icon(
-                        Icons.account_circle_outlined,
-                        size: 70,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          _userName,
-                          style: TextStyle(
-                            fontSize: 27,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        Text(
-                          "$_userAge y.o.",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Spacer(),
-                ],
-              ),
-            ),
-          ),
-          Column(
-            children: [
-              Text(
-                "In my wallet",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    fontSize: 55,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextSpan(
-                      text: "\$",
-                      style: TextStyle(
-                        fontSize: 35,
+                    Expanded(
+                      child: GestureDetector(
+                        onLongPress: () =>
+                            _scaffoldKey.currentState!.openDrawer(),
+                        child: Icon(
+                          Icons.account_circle_outlined,
+                          size: 70,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
-                    TextSpan(text: "$_walletAmmount"),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            _userName,
+                            style: TextStyle(
+                              fontSize: 27,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          Text(
+                            "$_userAge y.o.",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
                   ],
                 ),
               ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 15),
-            child: ElevatedButton(
-              onPressed: _walletAmmount > 0
-                  ? () {
-                      Navigator.of(context)
-                          .pushNamed(GoalsListScreen.routeName);
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  "I WANT TO GIVE",
+            ),
+            Column(
+              children: [
+                Text(
+                  "In my wallet",
                   style: TextStyle(
-                    fontSize: 35,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 55,
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "\$",
+                        style: TextStyle(
+                          fontSize: 35,
+                        ),
+                      ),
+                      TextSpan(text: "$_walletAmmount"),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 30),
+              child: ElevatedButton(
+                onPressed: _walletAmmount > 0
+                    ? () {
+                        Navigator.of(context)
+                            .pushNamed(GoalsListScreen.routeName);
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    "I WANT TO GIVE",
+                    style: TextStyle(
+                      fontSize: 35,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
