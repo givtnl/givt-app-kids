@@ -7,21 +7,18 @@ import 'package:givt_app_kids/widgets/settings_drawer.dart';
 import 'package:givt_app_kids/models/goal.dart';
 import 'package:givt_app_kids/screens/success_screen.dart';
 
-class ChooseAmountScreen extends StatefulWidget {
-  static const String routeName = "/choose-ammount";
+class ChooseAmountScreenV2 extends StatefulWidget {
+  static const String routeName = "/choose-ammount-v2";
 
-  const ChooseAmountScreen({Key? key}) : super(key: key);
+  const ChooseAmountScreenV2({Key? key}) : super(key: key);
 
   @override
-  _ChooseAmountScreenState createState() => _ChooseAmountScreenState();
+  _ChooseAmountScreenV2State createState() => _ChooseAmountScreenV2State();
 }
 
-class _ChooseAmountScreenState extends State<ChooseAmountScreen> {
-  final List<double> _amountOptions = [2, 5, 7];
-
-  int _currentAmmountIndex = -1;
-
+class _ChooseAmountScreenV2State extends State<ChooseAmountScreenV2> {
   double _walletAmmount = 20;
+  double _selectedAmount = 0;
 
   late final StreamingSharedPreferences _prefs;
 
@@ -76,9 +73,55 @@ class _ChooseAmountScreenState extends State<ChooseAmountScreen> {
                   SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _createPickOptions(),
+                  Text(
+                    "\$${_selectedAmount.round()}",
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            children: [
+                              Text(
+                                "\$0",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              Spacer(),
+                              Text(
+                                "\$${_walletAmmount.round()}",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Slider(
+                          value: _selectedAmount,
+                          min: 0,
+                          max: _walletAmmount,
+                          activeColor: Theme.of(context).primaryColor,
+                          inactiveColor: Theme.of(context).primaryColor.withAlpha(38), //15%
+                          divisions: _walletAmmount.round(),
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedAmount = value;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -87,11 +130,10 @@ class _ChooseAmountScreenState extends State<ChooseAmountScreen> {
               alignment: Alignment.center,
               padding: EdgeInsets.only(bottom: 30),
               child: ElevatedButton(
-                onPressed: _currentAmmountIndex == -1
+                onPressed: _selectedAmount == 0
                     ? null
                     : () {
-                        var newAmount = _walletAmmount -
-                            _amountOptions[_currentAmmountIndex];
+                        var newAmount = _walletAmmount - _selectedAmount;
                         if (newAmount < 0) {
                           newAmount = 0;
                         }
@@ -122,67 +164,5 @@ class _ChooseAmountScreenState extends State<ChooseAmountScreen> {
         ),
       ),
     );
-  }
-
-  List<Widget> _createPickOptions() {
-    const double pickItemSize = 65;
-
-    List<Widget> result = [];
-
-    for (var i = 0; i < _amountOptions.length; i++) {
-      double currentOptionAmmount;
-
-      bool noMoreMoney = false;
-      if (_walletAmmount <= _amountOptions[i]) {
-        currentOptionAmmount = _walletAmmount;
-        noMoreMoney = true;
-      } else {
-        currentOptionAmmount = _amountOptions[i];
-      }
-
-      result.add(
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              if (_currentAmmountIndex == i) {
-                _currentAmmountIndex = -1;
-              } else {
-                _currentAmmountIndex = i;
-              }
-            });
-          },
-          child: Container(
-            margin: EdgeInsets.all(5),
-            alignment: Alignment.center,
-            width: pickItemSize,
-            height: pickItemSize,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Theme.of(context).primaryColor,
-              ),
-              borderRadius: BorderRadius.circular(10),
-              color: i == _currentAmmountIndex
-                  ? Theme.of(context).primaryColor
-                  : Colors.white,
-            ),
-            child: Text(
-              "\$$currentOptionAmmount",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: i == _currentAmmountIndex
-                    ? Colors.white
-                    : Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-        ),
-      );
-      if (noMoreMoney) {
-        break;
-      }
-    }
-
-    return result;
   }
 }

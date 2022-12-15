@@ -4,20 +4,18 @@ import 'package:flutter/material.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
+import 'package:givt_app_kids/helpers/flows.dart';
+
 class SettingsDrawer extends StatefulWidget {
   static const String nameKey = "nameKey";
   static const String ageKey = "ageKey";
   static const String walletKey = "walletKey";
+  static const String flowKey = "flowKey";
 
   const SettingsDrawer({Key? key}) : super(key: key);
 
   @override
   State<SettingsDrawer> createState() => _SettingsDrawerState();
-}
-
-enum Flows {
-  firstFlow,
-  altFlow,
 }
 
 class _SettingsDrawerState extends State<SettingsDrawer> {
@@ -30,8 +28,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   String _userName = "James";
   int _userAge = 10;
   double _walletAmmount = 20.0;
-
-  Flows _selectedFlow = Flows.firstFlow;
+  Flows _selectedFlow = Flows.flow_1;
 
   @override
   void initState() {
@@ -45,11 +42,14 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     var age = _prefs.getInt(SettingsDrawer.ageKey, defaultValue: 0);
     var walletAmmount =
         _prefs.getDouble(SettingsDrawer.walletKey, defaultValue: 0.0);
+    var selectedFlow = _prefs.getInt(SettingsDrawer.flowKey, defaultValue: 0);
+
     setState(() {
       _userName = name.getValue();
       _nameTextController.text = _userName;
       _userAge = age.getValue();
       _walletAmmount = walletAmmount.getValue();
+      _selectedFlow = Flows.values[selectedFlow.getValue()];
     });
   }
 
@@ -71,6 +71,18 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     _prefs.setDouble(SettingsDrawer.walletKey, newAmmount);
     setState(() {
       _walletAmmount = newAmmount;
+    });
+  }
+
+  void _setSelectedFlow(Flows flow) {
+    _prefs.setInt(SettingsDrawer.flowKey, flow.index);
+    if (_selectedFlow != flow) {
+      Navigator.of(context).popUntil(
+        ModalRoute.withName("/wallet"),
+      );
+    }
+    setState(() {
+      _selectedFlow = flow;
     });
   }
 
@@ -219,29 +231,25 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                         ),
                       ),
                       ListTile(
-                        title: const Text("Firts Flow"),
+                        title: Text(Flows.flow_1.name),
                         leading: Radio<Flows>(
-                          value: Flows.firstFlow,
+                          value: Flows.flow_1,
                           groupValue: _selectedFlow,
                           onChanged: (Flows? value) {
-                            setState(() {
-                              _selectedFlow = value ?? _selectedFlow;
-                            });
+                            _setSelectedFlow(value ?? _selectedFlow);
                           },
                         ),
                       ),
-                      // ListTile(
-                      //   title: const Text("Alt Flow"),
-                      //   leading: Radio<Flows>(
-                      //     value: Flows.altFlow,
-                      //     groupValue: _selectedFlow,
-                      //     onChanged: (Flows? value) {
-                      //       setState(() {
-                      //         _selectedFlow = value ?? _selectedFlow;
-                      //       });
-                      //     },
-                      //   ),
-                      // ),
+                      ListTile(
+                        title: Text(Flows.flow_2.name),
+                        leading: Radio<Flows>(
+                          value: Flows.flow_2,
+                          groupValue: _selectedFlow,
+                          onChanged: (Flows? value) {
+                            _setSelectedFlow(value ?? _selectedFlow);
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
