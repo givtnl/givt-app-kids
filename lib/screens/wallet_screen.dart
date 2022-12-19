@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:givt_app_kids/helpers/flows.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
@@ -103,9 +104,10 @@ class _WalletScreenState extends State<WalletScreen> {
                       child: GestureDetector(
                         onLongPress: () =>
                             _scaffoldKey.currentState!.openDrawer(),
-                        child: Icon(
-                          Icons.account_circle_outlined,
-                          size: 70,
+                        child: SvgPicture.asset(
+                          "assets/images/avatar.svg",
+                          width: 70,
+                          height: 70,
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
@@ -162,7 +164,9 @@ class _WalletScreenState extends State<WalletScreen> {
                           fontSize: 35,
                         ),
                       ),
-                      TextSpan(text: "$_walletAmmount"),
+                      TextSpan(
+                        text: _walletAmmount.toStringAsFixed(2),
+                      ),
                     ],
                   ),
                 ),

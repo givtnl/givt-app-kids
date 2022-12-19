@@ -22,20 +22,18 @@ class SuccessScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 150,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 60),
-                child: Icon(
-                  Icons.cloud_done_rounded,
-                  size: 60,
-                  color: Colors.white, // Theme.of(context).primaryColor,
+              Spacer(),
+              Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: Image(
+                  width: 100,
+                  image: AssetImage(
+                    "assets/images/givy_celebrates.png",
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 50,
-              ),
+              SizedBox(height: 30,),
               Padding(
                 padding: EdgeInsets.only(
                   left: 50,
@@ -64,14 +62,13 @@ class SuccessScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 50,
-              ),
+              Spacer(),
+
               Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: 15,
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                padding: EdgeInsets.only(right: 10, top: 15, bottom: 15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Color.fromARGB(255, 217, 217, 217),
@@ -79,11 +76,9 @@ class SuccessScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Image(
+                      image: AssetImage("assets/images/superman.png"),
                       width: 70,
                       height: 70,
-                      image: AssetImage(
-                        "assets/images/superman.png",
-                      ),
                     ),
                     SizedBox(
                       width: 10,
@@ -118,9 +113,6 @@ class SuccessScreen extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              // SizedBox(
-              //   height: 30,
-              // ),
               Center(
                 child: Container(
                   padding: EdgeInsets.only(bottom: 25),

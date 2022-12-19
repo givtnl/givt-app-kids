@@ -60,7 +60,7 @@ class FriendsDonatedList extends StatelessWidget {
             fontSize: 16,
             
             fontWeight: FontWeight.bold,
-            color: Colors.white,// Colors.black,
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ],

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:givt_app_kids/models/goal.dart';
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
@@ -70,18 +71,17 @@ class _GoalDetailsScreenState extends State<GoalDetailsScreen> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 26,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold,
-                              color: Colors
-                                  .white, // Theme.of(context).primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
-                        Icon(
-                          goal.icon,
-                          size: 65,
-                          color:
-                              Colors.white, // Theme.of(context).primaryColor,
+                        SvgPicture.asset(
+                          goal.iconAsset,
+                          width: 65,
+                          height: 65,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ],
                     ),
@@ -106,7 +106,7 @@ class _GoalDetailsScreenState extends State<GoalDetailsScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 30),
+              padding: EdgeInsets.only(bottom: 20),
               child: ElevatedButton(
                 onPressed: () {
                   var route = _currentFlow.routes[GoalDetailsScreen.routeName];

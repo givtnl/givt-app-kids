@@ -51,7 +51,8 @@ class _ChooseAmountScreenState extends State<ChooseAmountScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+              padding:
+                  EdgeInsets.only(left: 30, right: 30, top: 50, bottom: 10),
               child: Text(
                 goal.name,
                 style: TextStyle(
@@ -59,6 +60,32 @@ class _ChooseAmountScreenState extends State<ChooseAmountScreen> {
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).primaryColor,
                 ),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "In my wallet",
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    "\$${_walletAmmount.toStringAsFixed(2)}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 29,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -166,7 +193,7 @@ class _ChooseAmountScreenState extends State<ChooseAmountScreen> {
                   : Colors.white,
             ),
             child: Text(
-              "\$$currentOptionAmmount",
+              "\$${currentOptionAmmount.toStringAsFixed(0)}",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
