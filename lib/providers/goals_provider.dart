@@ -12,8 +12,8 @@ class GoalsProvider with ChangeNotifier {
       who: "Animals like dogs, cats and rabbits without a home.",
       how: "We will build another dog kennel to house 10 more dogs.",
       friendsNum: 3,
-      icon: Icons.pets,
-      bgAsset: "assets/images/shelter.jpeg",
+      iconAsset: "assets/images/dog.svg",
+      bgAsset: "assets/images/shelter.jpg",
     ),
     Goal(
       name: "Operation Christmas Child",
@@ -23,8 +23,8 @@ class GoalsProvider with ChangeNotifier {
       who: "Kids in need all around the world.",
       how: "Make gift-filled shoeboxes. Each box packed full of toys, school supplies, and personal care items.",
       friendsNum: 4,
-      icon: Icons.emoji_people,
-      bgAsset: "assets/images/xmas.jpeg",
+      iconAsset: "assets/images/child.svg",
+      bgAsset: "assets/images/xmas.jpg",
     ),
   ];
 

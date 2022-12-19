@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class Goal {
   final String name;
@@ -7,7 +6,7 @@ class Goal {
   final String who;
   final String how;
   final int friendsNum;
-  final IconData icon;
+  final String iconAsset;
   final String bgAsset;
 
   Goal({
@@ -17,7 +16,7 @@ class Goal {
     required this.who,
     required this.how,
     required this.friendsNum,
-    required this.icon,
+    required this.iconAsset,
     required this.bgAsset,
   });
 }

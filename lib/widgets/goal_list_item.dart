@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_svg/svg.dart';
+
 import 'package:givt_app_kids/models/goal.dart';
 import 'package:givt_app_kids/screens/goal_details_screen.dart';
 import 'package:givt_app_kids/helpers/flows.dart';
@@ -55,10 +57,14 @@ class GoalListItem extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        var route =
-                            currentFlow.routes[GoalsListScreen.routeName];
+                        // var route =
+                        //     currentFlow.routes[GoalsListScreen.routeName];
+                        // Navigator.of(context).pushNamed(
+                        //   route!,
+                        //   arguments: goal,
+                        // );
                         Navigator.of(context).pushNamed(
-                          route!,
+                          GoalDetailsScreen.routeName,
                           arguments: goal,
                         );
                       },
@@ -80,10 +86,15 @@ class GoalListItem extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(
-                    goal.icon,
-                    size: 50,
-                    color: Theme.of(context).primaryColor,
+                  SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: SvgPicture.asset(
+                      goal.iconAsset,
+                      fit: BoxFit.contain,
+                      width: 50,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                   SizedBox(
                     width: 10,

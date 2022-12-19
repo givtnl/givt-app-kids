@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:givt_app_kids/helpers/flows.dart';
 
@@ -30,6 +31,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   double _walletAmmount = 20.0;
   Flows _selectedFlow = Flows.flow_1;
 
+  String _appVersion = "None";
+  
+
   @override
   void initState() {
     super.initState();
@@ -44,12 +48,15 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
         _prefs.getDouble(SettingsDrawer.walletKey, defaultValue: 0.0);
     var selectedFlow = _prefs.getInt(SettingsDrawer.flowKey, defaultValue: 0);
 
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
     setState(() {
       _userName = name.getValue();
       _nameTextController.text = _userName;
       _userAge = age.getValue();
       _walletAmmount = walletAmmount.getValue();
       _selectedFlow = Flows.values[selectedFlow.getValue()];
+      _appVersion = packageInfo.version;
     });
   }
 
@@ -88,6 +95,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Drawer(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -98,7 +107,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               width: double.infinity,
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                "Settings",
+                "Settings v$_appVersion",
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
