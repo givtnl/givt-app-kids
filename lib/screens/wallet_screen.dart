@@ -189,7 +189,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   child: Text(
                     "I WANT TO GIVE",
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 33,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),

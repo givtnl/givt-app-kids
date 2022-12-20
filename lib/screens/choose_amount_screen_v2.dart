@@ -152,7 +152,7 @@ class _ChooseAmountScreenV2State extends State<ChooseAmountScreenV2> {
                   child: Text(
                     "GIVE NOW",
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 33,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),

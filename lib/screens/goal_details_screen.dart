@@ -106,7 +106,10 @@ class _GoalDetailsScreenState extends State<GoalDetailsScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.only(
+                bottom: 20,
+                top: 5,
+              ),
               child: ElevatedButton(
                 onPressed: () {
                   var route = _currentFlow.routes[GoalDetailsScreen.routeName];
@@ -123,7 +126,7 @@ class _GoalDetailsScreenState extends State<GoalDetailsScreen> {
                   child: Text(
                     "GIVE TO THIS GOAL",
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 33,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),

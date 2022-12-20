@@ -32,7 +32,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   Flows _selectedFlow = Flows.flow_1;
 
   String _appVersion = "None";
-  
 
   @override
   void initState() {
@@ -95,176 +94,176 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Drawer(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                "Settings v$_appVersion",
-                style: Theme.of(context).textTheme.headline5,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "Settings v$_appVersion",
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ),
-            ),
-            Divider(
-              color: Theme.of(context).primaryColor,
-              height: 2,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                color: Colors.grey[200],
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Text(
-                          "Account",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+              Divider(
+                color: Theme.of(context).primaryColor,
+                height: 2,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Card(
+                  color: Colors.grey[200],
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "Account",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      TextField(
-                        controller: _nameTextController,
-                        decoration: InputDecoration(hintText: "Name"),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 22),
-                        onChanged: (value) {
-                          _setName(value);
-                        },
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              if (_userAge > 0) {
-                                _setAge(_userAge - 1);
-                              }
-                            },
-                            icon: Icon(Icons.remove_circle_outline),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              "$_userAge y.o.",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                        TextField(
+                          controller: _nameTextController,
+                          decoration: InputDecoration(hintText: "Name"),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 22),
+                          onChanged: (value) {
+                            _setName(value);
+                          },
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                if (_userAge > 0) {
+                                  _setAge(_userAge - 1);
+                                }
+                              },
+                              icon: Icon(Icons.remove_circle_outline),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Text(
+                                "$_userAge y.o.",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              _setAge(_userAge + 1);
-                            },
-                            icon: Icon(Icons.add_circle_outline_outlined),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              if (_walletAmmount - _changeWalletAmmountStep >=
-                                  0) {
+                            IconButton(
+                              onPressed: () {
+                                _setAge(_userAge + 1);
+                              },
+                              icon: Icon(Icons.add_circle_outline_outlined),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                if (_walletAmmount - _changeWalletAmmountStep >=
+                                    0) {
+                                  _setWalletAmmount(_walletAmmount -
+                                      _changeWalletAmmountStep);
+                                }
+                              },
+                              icon: Icon(Icons.remove_circle_outline),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Text(
+                                "\$$_walletAmmount",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
                                 _setWalletAmmount(
-                                    _walletAmmount - _changeWalletAmmountStep);
-                              }
-                            },
-                            icon: Icon(Icons.remove_circle_outline),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              "\$$_walletAmmount",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+                                    _walletAmmount + _changeWalletAmmountStep);
+                              },
+                              icon: Icon(Icons.add_circle_outline_outlined),
                             ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Card(
+                  color: Colors.grey[200],
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "Flows",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          IconButton(
-                            onPressed: () {
-                              _setWalletAmmount(
-                                  _walletAmmount + _changeWalletAmmountStep);
+                        ),
+                        ListTile(
+                          title: Text(Flows.flow_1.name),
+                          leading: Radio<Flows>(
+                            value: Flows.flow_1,
+                            groupValue: _selectedFlow,
+                            onChanged: (Flows? value) {
+                              _setSelectedFlow(value ?? _selectedFlow);
                             },
-                            icon: Icon(Icons.add_circle_outline_outlined),
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        ListTile(
+                          title: Text(Flows.flow_2.name),
+                          leading: Radio<Flows>(
+                            value: Flows.flow_2,
+                            groupValue: _selectedFlow,
+                            onChanged: (Flows? value) {
+                              _setSelectedFlow(value ?? _selectedFlow);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                color: Colors.grey[200],
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Text(
-                          "Flows",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      ListTile(
-                        title: Text(Flows.flow_1.name),
-                        leading: Radio<Flows>(
-                          value: Flows.flow_1,
-                          groupValue: _selectedFlow,
-                          onChanged: (Flows? value) {
-                            _setSelectedFlow(value ?? _selectedFlow);
-                          },
-                        ),
-                      ),
-                      ListTile(
-                        title: Text(Flows.flow_2.name),
-                        leading: Radio<Flows>(
-                          value: Flows.flow_2,
-                          groupValue: _selectedFlow,
-                          onChanged: (Flows? value) {
-                            _setSelectedFlow(value ?? _selectedFlow);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
