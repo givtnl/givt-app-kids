@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
 import 'package:givt_app_kids/models/goal.dart';
+import 'package:givt_app_kids/screens/home_screen.dart';
 
 class SuccessScreen extends StatelessWidget {
   static const String routeName = "/success";
@@ -33,7 +34,9 @@ class SuccessScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               Padding(
                 padding: EdgeInsets.only(
                   left: 50,
@@ -63,7 +66,6 @@ class SuccessScreen extends StatelessWidget {
                 ),
               ),
               Spacer(),
-
               Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: 15,
@@ -119,8 +121,9 @@ class SuccessScreen extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       Navigator.of(context).popUntil(
-                        ModalRoute.withName("/wallet"),
+                        ModalRoute.withName("/"),
                       );
+                      Navigator.of(context).pushNamed(HomeScreen.routeName);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,

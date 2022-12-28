@@ -2,6 +2,7 @@ import 'package:givt_app_kids/screens/goals_list_screen.dart';
 import 'package:givt_app_kids/screens/goal_details_screen.dart';
 import 'package:givt_app_kids/screens/choose_amount_screen.dart';
 import 'package:givt_app_kids/screens/choose_amount_screen_v2.dart';
+import 'package:givt_app_kids/screens/choose_amount_screen_v3.dart';
 
 enum Flows {
   flow_1(
@@ -16,6 +17,12 @@ enum Flows {
     routes: {
       GoalsListScreen.routeName: ChooseAmountScreenV2.routeName,
       GoalDetailsScreen.routeName: ChooseAmountScreenV2.routeName,
+    },
+  ),
+  flow_3(
+    name: "Donation flow",
+    routes: {
+      GoalDetailsScreen.routeName: ChooseAmountScreenV3.routeName,
     },
   );
 

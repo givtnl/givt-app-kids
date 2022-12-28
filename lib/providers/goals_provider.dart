@@ -31,4 +31,19 @@ class GoalsProvider with ChangeNotifier {
   List<Goal> get goals {
     return [..._goals];
   }
+
+  Goal get qrCodeFlowGoal {
+    return Goal(
+      name: "Reconstruct Presbyterian Church Tulsa",
+      description: "We are going to reconstruct the Presbyterian Church Tulsa building.",
+      what:
+          "We reconstruct the Presbyterian Church Tulsa building.",
+      who: "We're building a great new place to celebrate together.",
+      how: "You donation will go towards reconstructing the church.",
+      friendsNum: 0,
+      iconAsset: "assets/images/church.svg",
+      bgAsset: "assets/images/reconstruction.jpg",
+    );
+
+  }
 }
