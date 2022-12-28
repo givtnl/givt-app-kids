@@ -68,24 +68,28 @@ class _GoalDetailsScreenState extends State<GoalDetailsScreen> {
                         Expanded(
                           child: Text(
                             goal.name,
-                            maxLines: 2,
+                            maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 28,
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
-                        SvgPicture.asset(
-                          goal.iconAsset,
-                          width: 65,
-                          height: 65,
-                          color: Theme.of(context).primaryColor,
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: SvgPicture.asset(
+                            goal.iconAsset,
+                            width: 60,
+                            height: 60,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                       ],
                     ),
-                    FriendsDonatedList(goal: goal),
+                    if(goal.friendsNum > 0) FriendsDonatedList(goal: goal),
                   ],
                 ),
               ),

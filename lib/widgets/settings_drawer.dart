@@ -6,12 +6,18 @@ import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:givt_app_kids/helpers/flows.dart';
+import 'package:givt_app_kids/screens/home_screen.dart';
 
 class SettingsDrawer extends StatefulWidget {
   static const String nameKey = "nameKey";
   static const String ageKey = "ageKey";
   static const String walletKey = "walletKey";
   static const String flowKey = "flowKey";
+
+  static const String nameDefault = "James";
+  static const int ageDefault = 11;
+  static const double walletAmountDefault = 20.0;
+  static const int selectedFlowDefault = 0;
 
   const SettingsDrawer({Key? key}) : super(key: key);
 
@@ -84,8 +90,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     _prefs.setInt(SettingsDrawer.flowKey, flow.index);
     if (_selectedFlow != flow) {
       Navigator.of(context).popUntil(
-        ModalRoute.withName("/wallet"),
+        ModalRoute.withName("/"),
       );
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
     }
     setState(() {
       _selectedFlow = flow;
@@ -251,6 +258,16 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                           title: Text(Flows.flow_2.name),
                           leading: Radio<Flows>(
                             value: Flows.flow_2,
+                            groupValue: _selectedFlow,
+                            onChanged: (Flows? value) {
+                              _setSelectedFlow(value ?? _selectedFlow);
+                            },
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(Flows.flow_3.name),
+                          leading: Radio<Flows>(
+                            value: Flows.flow_3,
                             groupValue: _selectedFlow,
                             onChanged: (Flows? value) {
                               _setSelectedFlow(value ?? _selectedFlow);

@@ -4,20 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
 import 'package:givt_app_kids/screens/goals_list_screen.dart';
+import 'package:givt_app_kids/screens/goal_details_screen.dart';
+import 'package:givt_app_kids/providers/goals_provider.dart';
+import 'package:givt_app_kids/models/goal.dart';
+import 'package:givt_app_kids/screens/qr_code_scan_screen.dart';
 
-class WalletScreen extends StatefulWidget {
-  static const String routeName = "/wallet";
+class WalletScreenV2 extends StatefulWidget {
+  static const String routeName = "/wallet-v2";
 
-  const WalletScreen({Key? key}) : super(key: key);
+  const WalletScreenV2({Key? key}) : super(key: key);
 
   @override
-  State<WalletScreen> createState() => _WalletScreenState();
+  State<WalletScreenV2> createState() => _WalletScreenV2State();
 }
 
-class _WalletScreenState extends State<WalletScreen> {
+class _WalletScreenV2State extends State<WalletScreenV2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   String _userName = SettingsDrawer.nameDefault;
@@ -165,18 +170,35 @@ class _WalletScreenState extends State<WalletScreen> {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 30),
-              child: ElevatedButton(
+              child: ElevatedButton.icon(
                 onPressed: _walletAmmount > 0
                     ? () {
-                        Navigator.of(context)
-                            .pushNamed(GoalsListScreen.routeName);
+                        // Navigator.of(context)
+                        //     .pushNamed(GoalsListScreen.routeName);
+                        // Navigator.of(context).pushNamed(
+                        //   GoalDetailsScreen.routeName,
+                        //   arguments:
+                        //       Provider.of<GoalsProvider>(context, listen: false)
+                        //           .qrCodeFlowGoal,
+                        // );
+                        Navigator.of(context).pushNamed(
+                          QrCodeScanScreen.routeName,
+                        );
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                icon: Icon(
+                  Icons.qr_code_2,
+                  size: 45,
+                ),
+                label: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    bottom: 10,
+                    left: 5,
+                  ),
                   child: Text(
                     "I WANT TO GIVE",
                     style: TextStyle(
