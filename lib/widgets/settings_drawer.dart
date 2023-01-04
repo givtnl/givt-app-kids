@@ -1,23 +1,24 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:intl/intl.dart';
 
-import 'package:givt_app_kids/helpers/flows.dart';
-import 'package:givt_app_kids/screens/home_screen.dart';
+import 'package:givt_app_kids/models/transaction.dart';
 
 class SettingsDrawer extends StatefulWidget {
   static const String nameKey = "nameKey";
   static const String ageKey = "ageKey";
   static const String walletKey = "walletKey";
-  static const String flowKey = "flowKey";
+  static const String transactionsKey = "transactionsKey";
 
   static const String nameDefault = "James";
   static const int ageDefault = 11;
   static const double walletAmountDefault = 20.0;
-  static const int selectedFlowDefault = 0;
 
   const SettingsDrawer({Key? key}) : super(key: key);
 
@@ -35,7 +36,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   String _userName = "James";
   int _userAge = 10;
   double _walletAmmount = 20.0;
-  Flows _selectedFlow = Flows.flow_1;
 
   String _appVersion = "None";
 
@@ -51,7 +51,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     var age = _prefs.getInt(SettingsDrawer.ageKey, defaultValue: 0);
     var walletAmmount =
         _prefs.getDouble(SettingsDrawer.walletKey, defaultValue: 0.0);
-    var selectedFlow = _prefs.getInt(SettingsDrawer.flowKey, defaultValue: 0);
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
@@ -60,7 +59,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
       _nameTextController.text = _userName;
       _userAge = age.getValue();
       _walletAmmount = walletAmmount.getValue();
-      _selectedFlow = Flows.values[selectedFlow.getValue()];
       _appVersion = packageInfo.version;
     });
   }
@@ -86,21 +84,14 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     });
   }
 
-  void _setSelectedFlow(Flows flow) {
-    _prefs.setInt(SettingsDrawer.flowKey, flow.index);
-    if (_selectedFlow != flow) {
-      Navigator.of(context).popUntil(
-        ModalRoute.withName("/"),
-      );
-      Navigator.of(context).pushNamed(HomeScreen.routeName);
-    }
-    setState(() {
-      _selectedFlow = flow;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    var transactionsListPref = _prefs.getStringList(
+      SettingsDrawer.transactionsKey,
+      defaultValue: [],
+    );
+    var transactionsList = transactionsListPref.getValue();
+
     return Drawer(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -237,48 +228,107 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                         SizedBox(
                           width: double.infinity,
                           child: Text(
-                            "Flows",
+                            "Transactions",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        ListTile(
-                          title: Text(Flows.flow_1.name),
-                          leading: Radio<Flows>(
-                            value: Flows.flow_1,
-                            groupValue: _selectedFlow,
-                            onChanged: (Flows? value) {
-                              _setSelectedFlow(value ?? _selectedFlow);
-                            },
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: transactionsList.isEmpty
+                                    ? null
+                                    : () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                  "Are you sure you want to clear all transactions from the device?"),
+                                              actions: [
+                                                TextButton(
+                                                  child: Text("OK"),
+                                                  onPressed: () {
+                                                    return Navigator.of(context)
+                                                        .pop(true);
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: Text("CANCEL"),
+                                                  onPressed: () {
+                                                    return Navigator.of(context)
+                                                        .pop(false);
+                                                  },
+                                                )
+                                              ],
+                                            );
+                                          },
+                                        ).then((value) async {
+                                          if (value) {
+                                            Navigator.of(context).pop();
+                                            await _prefs.setStringList(
+                                              SettingsDrawer.transactionsKey,
+                                              [],
+                                            );
+                                          }
+                                        });
+                                      },
+                                icon: Icon(Icons.delete),
+                                label: Text(
+                                  "Clear",
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        ListTile(
-                          title: Text(Flows.flow_2.name),
-                          leading: Radio<Flows>(
-                            value: Flows.flow_2,
-                            groupValue: _selectedFlow,
-                            onChanged: (Flows? value) {
-                              _setSelectedFlow(value ?? _selectedFlow);
-                            },
-                          ),
+                        Divider(
+                          height: 2,
+                          color: Theme.of(context).primaryColor,
                         ),
-                        ListTile(
-                          title: Text(Flows.flow_3.name),
-                          leading: Radio<Flows>(
-                            value: Flows.flow_3,
-                            groupValue: _selectedFlow,
-                            onChanged: (Flows? value) {
-                              _setSelectedFlow(value ?? _selectedFlow);
-                            },
+                        if (transactionsList.isEmpty)
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              "There is no trasactions. Please donate first.",
+                              style: TextStyle(fontSize: 20),
+                            ),
                           ),
-                        ),
+                        if (transactionsList.isNotEmpty)
+                          Column(
+                            children: transactionsList.map((item) {
+                              var transaction =
+                                  Transaction.fromJson(jsonDecode(item));
+                              var dateTime =
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      transaction.timestamp);
+                              var dateString = DateFormat("MMM dd hh:mm aaa")
+                                  .format(dateTime);
+
+                              return ListTile(
+                                title: Text(
+                                  dateString,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                trailing: Text(
+                                  "\$${transaction.amount}",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
                       ],
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
