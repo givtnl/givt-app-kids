@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/helpers/flows.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
-import 'package:givt_app_kids/screens/wallet_screen.dart';
-import 'package:givt_app_kids/screens/wallet_screen_v2.dart';
+import 'package:givt_app_kids/screens/wallet_screen_v3.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home";
@@ -17,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedFlowIndex = SettingsDrawer.selectedFlowDefault;
 
   Future<void> _checkDefaultValues(StreamingSharedPreferences prefs) async {
     var keys = prefs.getKeys().getValue();
@@ -31,32 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
       await prefs.setDouble(
           SettingsDrawer.walletKey, SettingsDrawer.walletAmountDefault);
     }
-    if (!keys.contains(SettingsDrawer.flowKey)) {
-      await prefs.setInt(
-          SettingsDrawer.flowKey, SettingsDrawer.selectedFlowDefault);
-    }
   }
 
   Future<String> _readPreferences() async {
     var prefs = await StreamingSharedPreferences.instance;
     await _checkDefaultValues(prefs);
-
-    var flowIndex = prefs.getInt(SettingsDrawer.flowKey,
-        defaultValue: SettingsDrawer.selectedFlowDefault);
-    int selectedFlowIndex = flowIndex.getValue();
-    Flows selectedFlow = Flows.values[selectedFlowIndex];
-
-    String nextRoute;
-    switch (selectedFlow) {
-      case Flows.flow_3:
-        nextRoute = WalletScreenV2.routeName;
-        break;
-      case Flows.flow_1:
-      case Flows.flow_2:
-      default:
-        nextRoute = WalletScreen.routeName;
-    }
-    return nextRoute;
+    return WalletScreenV3.routeName;
   }
 
   @override

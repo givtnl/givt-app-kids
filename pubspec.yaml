@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.7
+version: 1.0.8
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -41,6 +41,7 @@ dependencies:
   flutter_svg: ^1.1.6
   package_info_plus: ^3.0.2
   mobile_scanner: ^2.1.0
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
@@ -68,13 +69,19 @@ flutter:
   assets:
     - assets/images/xmas.jpg
     - assets/images/shelter.jpg
-    - assets/images/superman.png
+    - assets/images/givy_superman.png
     - assets/images/child.svg
     - assets/images/dog.svg
     - assets/images/avatar.svg
     - assets/images/givy_celebrates.png
     - assets/images/reconstruction.jpg
     - assets/images/church.svg
+    - assets/images/wallet.png
+    - assets/images/qr.png
+    - assets/images/qr_target.png
+    - assets/images/home.svg
+    - assets/images/givy_superman.svg
+    - assets/images/givy_celebrates.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -86,6 +93,13 @@ flutter:
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
+  fonts:
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Regular.ttf
+        - asset: assets/fonts/Raleway-Bold.ttf
+          weight: 700
+
   # example:
   # fonts:
   #   - family: Schyler

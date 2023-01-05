@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
@@ -104,7 +105,6 @@ class _ChooseAmountScreenV3State extends State<ChooseAmountScreenV3> {
                     height: 15,
                   ),
                   Column(
-//                    mainAxisAlignment: MainAxisAlignment.,
                     children: _createPickOptions(),
                   ),
                 ],
@@ -117,8 +117,8 @@ class _ChooseAmountScreenV3State extends State<ChooseAmountScreenV3> {
                 onPressed: _currentAmmountIndex == -1
                     ? null
                     : () {
-                        var newAmount = _walletAmmount -
-                            _amountOptions[_currentAmmountIndex];
+                        var giveAmount = _amountOptions[_currentAmmountIndex];
+                        var newAmount = _walletAmmount - giveAmount;
                         if (newAmount < 0) {
                           newAmount = 0;
                         }
@@ -201,7 +201,8 @@ class _ChooseAmountScreenV3State extends State<ChooseAmountScreenV3> {
               child: Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
                     child: Text(
                       "\$${currentOptionAmmount.toStringAsFixed(0)}",
                       style: TextStyle(

@@ -1,15 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/screens/choose_amount_screen_v3.dart';
 
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:givt_app_kids/models/goal.dart';
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
 import 'package:givt_app_kids/widgets/friends_donated_list.dart';
-import 'package:givt_app_kids/screens/choose_amount_screen.dart';
-import 'package:givt_app_kids/helpers/flows.dart';
 
 class GoalDetailsScreen extends StatefulWidget {
   static const String routeName = "/goal-details";
@@ -21,18 +19,10 @@ class GoalDetailsScreen extends StatefulWidget {
 }
 
 class _GoalDetailsScreenState extends State<GoalDetailsScreen> {
-  Flows _currentFlow = Flows.flow_1;
 
   @override
   void initState() {
     super.initState();
-    _readPreferences();
-  }
-
-  Future<void> _readPreferences() async {
-    var prefs = await StreamingSharedPreferences.instance;
-    var flow = prefs.getInt(SettingsDrawer.flowKey, defaultValue: 0);
-    _currentFlow = Flows.values[flow.getValue()];
   }
 
   @override
@@ -116,9 +106,8 @@ class _GoalDetailsScreenState extends State<GoalDetailsScreen> {
               ),
               child: ElevatedButton(
                 onPressed: () {
-                  var route = _currentFlow.routes[GoalDetailsScreen.routeName];
                   Navigator.of(context).pushNamed(
-                    route!,
+                    ChooseAmountScreenV3.routeName,
                     arguments: goal,
                   );
                 },

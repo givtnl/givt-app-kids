@@ -6,18 +6,14 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:givt_app_kids/models/goal.dart';
 import 'package:givt_app_kids/screens/goal_details_screen.dart';
-import 'package:givt_app_kids/helpers/flows.dart';
-import 'package:givt_app_kids/screens/goals_list_screen.dart';
 
 class GoalListItem extends StatelessWidget {
   const GoalListItem({
     Key? key,
     required this.goal,
-    required this.currentFlow,
   }) : super(key: key);
 
   final Goal goal;
-  final Flows currentFlow;
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +53,6 @@ class GoalListItem extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // var route =
-                        //     currentFlow.routes[GoalsListScreen.routeName];
-                        // Navigator.of(context).pushNamed(
-                        //   route!,
-                        //   arguments: goal,
-                        // );
                         Navigator.of(context).pushNamed(
                           GoalDetailsScreen.routeName,
                           arguments: goal,

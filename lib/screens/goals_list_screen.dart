@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/helpers/flows.dart';
 
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
@@ -18,21 +16,6 @@ class GoalsListScreen extends StatefulWidget {
 }
 
 class _GoalsListScreenState extends State<GoalsListScreen> {
-  Flows _currentFlow = Flows.flow_1;
-
-  @override
-  void initState() {
-    super.initState();
-    _readPreferences();
-  }
-
-  Future<void> _readPreferences() async {
-    var prefs = await StreamingSharedPreferences.instance;
-    var flow = prefs.getInt(SettingsDrawer.flowKey, defaultValue: 0);
-    setState(() {
-      _currentFlow = Flows.values[flow.getValue()];
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +46,6 @@ class _GoalsListScreenState extends State<GoalsListScreen> {
                   children: goals.map((goal) {
                     return GoalListItem(
                       goal: goal,
-                      currentFlow: _currentFlow,
                     );
                   }).toList(),
                 ),
