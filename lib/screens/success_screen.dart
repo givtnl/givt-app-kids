@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 
+import 'package:flutter_svg/svg.dart';
+
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
-import 'package:givt_app_kids/models/goal.dart';
+//import 'package:givt_app_kids/models/goal.dart';
 import 'package:givt_app_kids/screens/home_screen.dart';
 
 class SuccessScreen extends StatelessWidget {
@@ -12,28 +14,34 @@ class SuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final goal = ModalRoute.of(context)?.settings.arguments as Goal;
+//    final goal = ModalRoute.of(context)?.settings.arguments as Goal;
 
     return SafeArea(
       child: Scaffold(
         drawer: SettingsDrawer(),
         body: Container(
           width: double.infinity,
-          color: Theme.of(context).primaryColor,
+          color: Color(0xFF3E7AB5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Spacer(),
+              Spacer(flex: 2),
               Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                child: Image(
-                  width: 100,
-                  image: AssetImage(
-                    "assets/images/givy_celebrates.png",
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  child: 
+                  // SvgPicture.asset(
+                  //   "assets/images/givy_celebrates.svg",
+                  //   width: 120,
+                  // )
+                  Image(
+                    width: 160,
+                    fit: BoxFit.fitWidth,
+                    image: AssetImage(
+                      "assets/images/givy_celebrates.png",
+                    ),
                   ),
-                ),
-              ),
+                  ),
               SizedBox(
                 height: 30,
               ),
@@ -42,77 +50,88 @@ class SuccessScreen extends StatelessWidget {
                   left: 50,
                   right: 50,
                 ),
-                child: Text(
-                  "Thank you for your gift to",
-                  style: TextStyle(
-                    fontSize: 34,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 50,
-                  right: 50,
-                ),
-                child: Text(
-                  goal.name,
-                  style: TextStyle(
-                    fontSize: 34,
-                    color: Color.fromARGB(255, 244, 191, 99),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Spacer(),
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 15,
-                ),
-                padding: EdgeInsets.only(right: 10, top: 15, bottom: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color.fromARGB(255, 217, 217, 217),
-                ),
-                child: Row(
-                  children: [
-                    Image(
-                      image: AssetImage("assets/images/superman.png"),
-                      width: 70,
-                      height: 70,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 34,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Givy Tip",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                          Text(
-                            "Talk to your family why you chose this goal!",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ],
+                    children: [
+                      TextSpan(
+                        text: "Thank you for your gift to ",
                       ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                  ],
+                      TextSpan(
+                        text: "Presbyterian Church Tulsa",
+                        style: TextStyle(
+                          color: Color(0xFFE1C075),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+              ),
+              Spacer(flex: 2),
+              Stack(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: 40,
+                    ),
+                    padding: EdgeInsets.only(
+                        left: 20, right: 30, top: 15, bottom: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Color.fromARGB(190, 255, 255, 255),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Givy Tip",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xFF404A70),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 15),
+                              Text(
+                                "Tell your family why\nyou chose this amount!",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xFF404A70),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    right: -5,
+                    top: -15,
+                    child: 
+                    // SvgPicture.asset(
+                    //   "assets/images/givy_superman.svg",
+                    //   width: 120,
+                    //   height: 100,
+                    // ),
+                    Image(
+                      image: AssetImage("assets/images/givy_superman.png"),
+                      width: 120,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                ],
               ),
               Spacer(),
               Center(
@@ -127,18 +146,27 @@ class SuccessScreen extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
                     ),
-                    icon: Icon(
-                      Icons.house,
-                      color: Theme.of(context).primaryColor,
+                    icon: Padding(
+                      padding: EdgeInsets.only(left: 5),
+                      child: SvgPicture.asset(
+                        "assets/images/home.svg",
+                        width: 25,
+                        height: 25,
+                        color: Color(0xFF404A70),
+                      ),
                     ),
                     label: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                       child: Text(
                         "back to start",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Theme.of(context).primaryColor,
+                          color: Color(0xFF404A70),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

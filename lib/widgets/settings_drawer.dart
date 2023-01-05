@@ -39,6 +39,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
   String _appVersion = "None";
 
+  List<Transaction> _transactionList = [];
+
   @override
   void initState() {
     super.initState();
@@ -54,13 +56,32 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
+    var transactions = _readTransactions();
+
     setState(() {
       _userName = name.getValue();
       _nameTextController.text = _userName;
       _userAge = age.getValue();
       _walletAmmount = walletAmmount.getValue();
       _appVersion = packageInfo.version;
+      _transactionList = transactions;
     });
+  }
+
+  List<Transaction> _readTransactions() {
+    List<Transaction> list = [];
+    var transactionsListPref = _prefs.getStringList(
+      SettingsDrawer.transactionsKey,
+      defaultValue: [],
+    );
+    var transactions = transactionsListPref.getValue();
+    for (var item in transactions) {
+      var transaction = Transaction.fromJson(jsonDecode(item));
+      list.add(transaction);
+    }
+
+    list.sort();
+    return list;
   }
 
   void _setName(String newName) {
@@ -86,12 +107,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    var transactionsListPref = _prefs.getStringList(
-      SettingsDrawer.transactionsKey,
-      defaultValue: [],
-    );
-    var transactionsList = transactionsListPref.getValue();
-
     return Drawer(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -241,7 +256,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               ElevatedButton.icon(
-                                onPressed: transactionsList.isEmpty
+                                onPressed: _transactionList.isEmpty
                                     ? null
                                     : () {
                                         showDialog(
@@ -290,19 +305,17 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                           height: 2,
                           color: Theme.of(context).primaryColor,
                         ),
-                        if (transactionsList.isEmpty)
+                        if (_transactionList.isEmpty)
                           Padding(
                             padding: const EdgeInsets.all(15.0),
                             child: Text(
-                              "There is no trasactions. Please donate first.",
+                              "There are no trasactions. Please donate first.",
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
-                        if (transactionsList.isNotEmpty)
+                        if (_transactionList.isNotEmpty)
                           Column(
-                            children: transactionsList.map((item) {
-                              var transaction =
-                                  Transaction.fromJson(jsonDecode(item));
+                            children: _transactionList.map((transaction) {
                               var dateTime =
                                   DateTime.fromMillisecondsSinceEpoch(
                                       transaction.timestamp);

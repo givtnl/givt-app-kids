@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/models/transaction.dart';
 
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
@@ -107,7 +105,6 @@ class _ChooseAmountScreenV3State extends State<ChooseAmountScreenV3> {
                     height: 15,
                   ),
                   Column(
-//                    mainAxisAlignment: MainAxisAlignment.,
                     children: _createPickOptions(),
                   ),
                 ],
@@ -126,8 +123,6 @@ class _ChooseAmountScreenV3State extends State<ChooseAmountScreenV3> {
                           newAmount = 0;
                         }
                         _prefs.setDouble(SettingsDrawer.walletKey, newAmount);
-
-                        _saveNewTransaction(giveAmount);
 
                         Navigator.of(context).pushNamed(
                           SuccessScreen.routeName,
@@ -153,24 +148,6 @@ class _ChooseAmountScreenV3State extends State<ChooseAmountScreenV3> {
           ],
         ),
       ),
-    );
-  }
-
-  Future<bool> _saveNewTransaction(double amount) async {
-    var transaction = Transaction(
-      timestamp: DateTime.now().millisecondsSinceEpoch,
-      amount: amount,
-    );
-
-    var transactionsListPref = _prefs.getStringList(
-      SettingsDrawer.transactionsKey,
-      defaultValue: [],
-    );
-    var transactionsList = transactionsListPref.getValue();
-    transactionsList.add(jsonEncode(transaction.toJson()));
-    return await _prefs.setStringList(
-      SettingsDrawer.transactionsKey,
-      transactionsList,
     );
   }
 

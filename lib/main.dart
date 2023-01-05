@@ -13,6 +13,8 @@ import 'package:givt_app_kids/screens/choose_amount_screen_v2.dart';
 import 'package:givt_app_kids/screens/home_screen.dart';
 import 'package:givt_app_kids/screens/choose_amount_screen_v3.dart';
 import 'package:givt_app_kids/screens/qr_code_scan_screen.dart';
+import 'package:givt_app_kids/screens/wallet_screen_v3.dart';
+import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
         title: 'Givt Kids',
         theme: ThemeData(
           primaryColor: Color.fromARGB(255, 62, 73, 112),
+          fontFamily: "Raleway"
         ),
         initialRoute: HomeScreen.routeName,
         routes: {
@@ -42,6 +45,8 @@ class MyApp extends StatelessWidget {
           ChooseAmountScreenV3.routeName: (_) => ChooseAmountScreenV3(),
           HomeScreen.routeName: (_) => HomeScreen(),
           QrCodeScanScreen.routeName: (_) => QrCodeScanScreen(),
+          WalletScreenV3.routeName: (_) => WalletScreenV3(),
+          ChooseAmountScreenV4.routeName: (_) => ChooseAmountScreenV4(),
         },
       ),
     );

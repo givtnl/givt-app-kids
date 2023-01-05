@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
-import 'package:givt_app_kids/screens/wallet_screen_v2.dart';
+import 'package:givt_app_kids/screens/wallet_screen_v3.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home";
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<String> _readPreferences() async {
     var prefs = await StreamingSharedPreferences.instance;
     await _checkDefaultValues(prefs);
-    return WalletScreenV2.routeName;
+    return WalletScreenV3.routeName;
   }
 
   @override

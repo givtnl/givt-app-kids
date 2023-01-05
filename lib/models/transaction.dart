@@ -1,4 +1,4 @@
-class Transaction {
+class Transaction implements Comparable {
   final int timestamp;
   final double amount;
 
@@ -15,4 +15,10 @@ class Transaction {
         'timestamp': timestamp,
         'amount': amount,
       };
+
+  @override
+  int compareTo(other) {
+    if (timestamp == other.timestamp) return 0;
+    return timestamp > other.timestamp ? -1 : 1;
+  }
 }
