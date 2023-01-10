@@ -42,6 +42,7 @@ dependencies:
   package_info_plus: ^3.0.2
   mobile_scanner: ^2.1.0
   intl: ^0.18.0
+  lottie: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +83,7 @@ flutter:
     - assets/images/home.svg
     - assets/images/givy_superman.svg
     - assets/images/givy_celebrates.svg
+    - assets/lotties/confetti.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
