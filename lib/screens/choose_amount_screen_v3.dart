@@ -1,237 +1,223 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+// import 'package:provider/provider.dart';
 
-import 'package:givt_app_kids/widgets/settings_drawer.dart';
-import 'package:givt_app_kids/models/goal.dart';
-import 'package:givt_app_kids/screens/success_screen.dart';
+// import 'package:givt_app_kids/widgets/settings_drawer.dart';
+// import 'package:givt_app_kids/models/goal.dart';
+// import 'package:givt_app_kids/screens/success_screen.dart';
+// import 'package:givt_app_kids/providers/wallet_provider.dart';
 
-class ChooseAmountScreenV3 extends StatefulWidget {
-  static const String routeName = "/choose-ammount-v3";
+// class ChooseAmountScreenV3 extends StatefulWidget {
+//   static const String routeName = "/choose-ammount-v3";
 
-  const ChooseAmountScreenV3({Key? key}) : super(key: key);
+//   const ChooseAmountScreenV3({Key? key}) : super(key: key);
 
-  @override
-  State<ChooseAmountScreenV3> createState() => _ChooseAmountScreenV3State();
-}
+//   @override
+//   State<ChooseAmountScreenV3> createState() => _ChooseAmountScreenV3State();
+// }
 
-class _ChooseAmountScreenV3State extends State<ChooseAmountScreenV3> {
-  final List<double> _amountOptions = [2, 5, 7];
+// class _ChooseAmountScreenV3State extends State<ChooseAmountScreenV3> {
+//   final List<double> _amountOptions = [2, 5, 7];
 
-  int _currentAmmountIndex = -1;
+//   int _currentAmountIndex = -1;
 
-  double _walletAmmount = 20;
+//   @override
+//   Widget build(BuildContext context) {
+//     final goal = ModalRoute.of(context)?.settings.arguments as Goal;
 
-  late final StreamingSharedPreferences _prefs;
+//     var walletProvider = Provider.of<WalletProvider>(context);
 
-  @override
-  void initState() {
-    super.initState();
-    _readPreferences();
-  }
+//     return SafeArea(
+//       child: Scaffold(
+//         drawer: SettingsDrawer(),
+//         body: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Padding(
+//               padding:
+//                   EdgeInsets.only(left: 30, right: 30, top: 50, bottom: 10),
+//               child: Text(
+//                 goal.name,
+//                 style: TextStyle(
+//                   fontSize: 28,
+//                   fontWeight: FontWeight.bold,
+//                   color: Theme.of(context).primaryColor,
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               width: double.infinity,
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.center,
+//                 children: [
+//                   Text(
+//                     "In my wallet",
+//                     style: TextStyle(
+//                       fontSize: 22,
+//                       color: Theme.of(context).primaryColor,
+//                     ),
+//                   ),
+//                   SizedBox(
+//                     height: 5,
+//                   ),
+//                   Text(
+//                     "\$${walletProvider.totalAmount.toStringAsFixed(2)}",
+//                     style: TextStyle(
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 29,
+//                       color: Theme.of(context).primaryColor,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             Container(
+//               width: double.infinity,
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.center,
+//                 children: [
+//                   Text(
+//                     "Choose amount you want to give",
+//                     style: TextStyle(
+//                       fontSize: 22,
+//                       color: Theme.of(context).primaryColor,
+//                     ),
+//                   ),
+//                   SizedBox(
+//                     height: 15,
+//                   ),
+//                   Column(
+//                     children: _createPickOptions(walletProvider),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             Container(
+//               alignment: Alignment.center,
+//               padding: EdgeInsets.only(bottom: 30),
+//               child: ElevatedButton(
+//                 onPressed: _currentAmountIndex == -1
+//                     ? null
+//                     : () {
 
-  Future<void> _readPreferences() async {
-    _prefs = await StreamingSharedPreferences.instance;
-    var wallet = _prefs.getDouble(SettingsDrawer.walletKey, defaultValue: 0.0);
-    setState(() {
-      _walletAmmount = wallet.getValue();
-    });
-  }
+//                         var newAmount = walletProvider.totalAmount -
+//                             _amountOptions[_currentAmountIndex];
+//                         if (newAmount < 0) {
+//                           newAmount = 0;
+//                         }
+//                         walletProvider.setAmount(newAmount);
 
-  @override
-  Widget build(BuildContext context) {
-    final goal = ModalRoute.of(context)?.settings.arguments as Goal;
+//                         Navigator.of(context).pushNamed(
+//                           SuccessScreen.routeName,
+//                           arguments: goal,
+//                         );
+//                       },
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: Theme.of(context).primaryColor,
+//                 ),
+//                 child: Padding(
+//                   padding: EdgeInsets.symmetric(vertical: 10),
+//                   child: Text(
+//                     "GIVE NOW",
+//                     style: TextStyle(
+//                       fontSize: 33,
+//                       color: Colors.white,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
 
-    return SafeArea(
-      child: Scaffold(
-        drawer: SettingsDrawer(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding:
-                  EdgeInsets.only(left: 30, right: 30, top: 50, bottom: 10),
-              child: Text(
-                goal.name,
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "In my wallet",
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "\$${_walletAmmount.toStringAsFixed(2)}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 29,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Choose amount you want to give",
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Column(
-                    children: _createPickOptions(),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(bottom: 30),
-              child: ElevatedButton(
-                onPressed: _currentAmmountIndex == -1
-                    ? null
-                    : () {
-                        var giveAmount = _amountOptions[_currentAmmountIndex];
-                        var newAmount = _walletAmmount - giveAmount;
-                        if (newAmount < 0) {
-                          newAmount = 0;
-                        }
-                        _prefs.setDouble(SettingsDrawer.walletKey, newAmount);
+//   List<Widget> _createPickOptions(WalletProvider walletProvider) {
+//     List<String> pickOptionDesciptionList = [
+//       "Buys one pack of nails",
+//       "Buys a savings lamp",
+//       "Buys a hammer",
+//     ];
 
-                        Navigator.of(context).pushNamed(
-                          SuccessScreen.routeName,
-                          arguments: goal,
-                        );
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    "GIVE NOW",
-                    style: TextStyle(
-                      fontSize: 33,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+//     const double pickItemSize = 65;
 
-  List<Widget> _createPickOptions() {
-    List<String> pickOptionDesciptionList = [
-      "Buys one pack of nails",
-      "Buys a savings lamp",
-      "Buys a hammer",
-    ];
+//     List<Widget> result = [];
 
-    const double pickItemSize = 65;
+//     for (var i = 0; i < _amountOptions.length; i++) {
+//       double currentOptionAmmount;
 
-    List<Widget> result = [];
+//       bool noMoreMoney = false;
+//       if (walletProvider.totalAmount <= _amountOptions[i]) {
+//         currentOptionAmmount = walletProvider.totalAmount;
+//         noMoreMoney = true;
+//       } else {
+//         currentOptionAmmount = _amountOptions[i];
+//       }
 
-    for (var i = 0; i < _amountOptions.length; i++) {
-      double currentOptionAmmount;
+//       result.add(
+//         GestureDetector(
+//           onTap: () {
+//             setState(() {
+//               if (_currentAmountIndex == i) {
+//                 _currentAmountIndex = -1;
+//               } else {
+//                 _currentAmountIndex = i;
+//               }
+//             });
+//           },
+//           child: Container(
+//               margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+//               alignment: Alignment.center,
+//               width: double.infinity,
+//               height: pickItemSize,
+//               decoration: BoxDecoration(
+//                 border: Border.all(
+//                   color: Theme.of(context).primaryColor,
+//                 ),
+//                 borderRadius: BorderRadius.circular(10),
+//                 color: i == _currentAmountIndex
+//                     ? Theme.of(context).primaryColor
+//                     : Colors.white,
+//               ),
+//               child: Row(
+//                 children: [
+//                   Padding(
+//                     padding: const EdgeInsets.symmetric(
+//                         horizontal: 20, vertical: 10),
+//                     child: Text(
+//                       "\$${currentOptionAmmount.toStringAsFixed(0)}",
+//                       style: TextStyle(
+//                         fontSize: 24,
+//                         fontWeight: FontWeight.bold,
+//                         color: i == _currentAmountIndex
+//                             ? Colors.white
+//                             : Theme.of(context).primaryColor,
+//                       ),
+//                     ),
+//                   ),
+//                   Text(
+//                     pickOptionDesciptionList[i],
+//                     style: TextStyle(
+//                       fontSize: 24,
+//                       color: i == _currentAmountIndex
+//                           ? Colors.white
+//                           : Theme.of(context).primaryColor,
+//                     ),
+//                   ),
+//                 ],
+//               )),
+//         ),
+//       );
+//       if (noMoreMoney) {
+//         break;
+//       }
+//     }
 
-      bool noMoreMoney = false;
-      if (_walletAmmount <= _amountOptions[i]) {
-        currentOptionAmmount = _walletAmmount;
-        noMoreMoney = true;
-      } else {
-        currentOptionAmmount = _amountOptions[i];
-      }
-
-      result.add(
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              if (_currentAmmountIndex == i) {
-                _currentAmmountIndex = -1;
-              } else {
-                _currentAmmountIndex = i;
-              }
-            });
-          },
-          child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              alignment: Alignment.center,
-              width: double.infinity,
-              height: pickItemSize,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).primaryColor,
-                ),
-                borderRadius: BorderRadius.circular(10),
-                color: i == _currentAmmountIndex
-                    ? Theme.of(context).primaryColor
-                    : Colors.white,
-              ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: Text(
-                      "\$${currentOptionAmmount.toStringAsFixed(0)}",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: i == _currentAmmountIndex
-                            ? Colors.white
-                            : Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    pickOptionDesciptionList[i],
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: i == _currentAmmountIndex
-                          ? Colors.white
-                          : Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ],
-              )),
-        ),
-      );
-      if (noMoreMoney) {
-        break;
-      }
-    }
-
-    return result;
-  }
-}
+//     return result;
+//   }
+// }

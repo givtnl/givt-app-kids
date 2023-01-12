@@ -1,6 +1,7 @@
 class Transaction implements Comparable {
   final int timestamp;
   final double amount;
+  final String goalName = "Presbyterian Church Tulsa";
 
   Transaction({
     required this.timestamp,

@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
-
-import 'package:givt_app_kids/widgets/settings_drawer.dart';
-import 'package:givt_app_kids/screens/success_screen.dart';
 import 'package:givt_app_kids/models/transaction.dart';
+
+import 'package:provider/provider.dart';
+
+import 'package:givt_app_kids/screens/success_screen.dart';
+import 'package:givt_app_kids/screens/choose_amount_extended_screen.dart';
+import 'package:givt_app_kids/providers/wallet_provider.dart';
+import 'package:givt_app_kids/providers/account_provider.dart';
 
 class ChooseAmountScreenV4 extends StatefulWidget {
   static const String routeName = "/choose-ammount-v4";
@@ -21,57 +21,32 @@ class ChooseAmountScreenV4 extends StatefulWidget {
 class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
   final List<double> _amountOptions = [2, 5, 7];
 
-  int _currentAmmountIndex = -1;
+  final double addScrollThreshold = 500;
 
-  double _walletAmmount = 20;
-  String _userName = "";
-
-  late final StreamingSharedPreferences _prefs;
-
-  @override
-  void initState() {
-    super.initState();
-    _readPreferences();
-  }
-
-  Future<void> _readPreferences() async {
-    _prefs = await StreamingSharedPreferences.instance;
-    var wallet = _prefs.getDouble(SettingsDrawer.walletKey, defaultValue: 0.0);
-    var name = _prefs.getString(
-      SettingsDrawer.nameKey,
-      defaultValue: SettingsDrawer.nameDefault,
-    );
-
-    setState(() {
-      _walletAmmount = wallet.getValue();
-      _userName = name.getValue();
-    });
-  }
-
-  Future<bool> _saveNewTransaction(double amount) async {
-    var transaction = Transaction(
-      timestamp: DateTime.now().millisecondsSinceEpoch,
-      amount: amount,
-    );
-
-    var transactionsListPref = _prefs.getStringList(
-      SettingsDrawer.transactionsKey,
-      defaultValue: [],
-    );
-    var transactionsList = transactionsListPref.getValue();
-    transactionsList.add(jsonEncode(transaction.toJson()));
-    return await _prefs.setStringList(
-      SettingsDrawer.transactionsKey,
-      transactionsList,
-    );
-  }
+  int _currentAmountIndex = -1;
 
   @override
   Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFFF1EAE2),
-        body: Column(
+        body: Container(
+            child: mediaQuery.size.height < addScrollThreshold
+                ? SingleChildScrollView(
+                    child: _createMainLayout(context, true),
+                  )
+                : _createMainLayout(context, false)),
+      ),
+    );
+  }
+
+  Widget _createMainLayout(BuildContext context, bool addScroll) {
+    var walletProvider = Provider.of<WalletProvider>(context);
+
+    return Column(
+      children: [
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 25),
@@ -81,7 +56,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
                   margin: EdgeInsets.symmetric(vertical: 15),
                   decoration: BoxDecoration(
-                      color: const Color(0xFF3E7AB5),
+                      color: const Color(0xFF54A1EE),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                         bottomRight: Radius.circular(10),
@@ -93,7 +68,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                       Column(
                         children: [
                           Text(
-                            _userName,
+                            Provider.of<AccountProvider>(context).name,
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -114,7 +89,8 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: _walletAmmount.toStringAsFixed(2),
+                                  text: walletProvider.totalAmount
+                                      .toStringAsFixed(2),
                                 ),
                               ],
                             ),
@@ -144,87 +120,117 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF494C54),
+                  color: Color(0xFF3B3240),
                 ),
               ),
             ),
             Container(
               width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: _createPickOptions(),
-              ),
-            ),
-            Spacer(),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(bottom: 30),
-              child: ElevatedButton(
-                onPressed: _currentAmmountIndex == -1
-                    ? null
-                    : () {
-                        var giveAmount = _amountOptions[_currentAmmountIndex];
-                        var newAmount = _walletAmmount - giveAmount;
-                        if (newAmount < 0) {
-                          newAmount = 0;
-                        }
-                        _prefs.setDouble(SettingsDrawer.walletKey, newAmount);
-
-                        _saveNewTransaction(giveAmount);
-
-                        Navigator.of(context).pushNamed(
-                          SuccessScreen.routeName,
-                        );
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF3E7AB5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _createPickOptions(walletProvider),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 25),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(ChooseAmountExtendedScreen.routeName);
+                  },
                   child: Text(
-                    "Give to this goal",
+                    "enter a different amount",
                     style: TextStyle(
-                      fontSize: 26,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF3B3240),
+                      fontSize: 18,
+                      decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
-              ),
+              ]),
             ),
           ],
         ),
-      ),
+        if (!addScroll) Spacer(),
+        Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(
+            top: 30,
+            bottom: 30,
+            left: 50,
+            right: 50,
+          ),
+          child: ElevatedButton(
+            onPressed: _currentAmountIndex == -1
+                ? null
+                : () {
+                    var giveAmount = _amountOptions[_currentAmountIndex];
+                    if (giveAmount > walletProvider.totalAmount) {
+                      giveAmount = walletProvider.totalAmount;
+                    }
+                    var transaction = Transaction(
+                      timestamp: DateTime.now().millisecondsSinceEpoch,
+                      amount: giveAmount,
+                    );
+                    walletProvider.createTransaction(transaction);
+
+                    Navigator.of(context).pushNamed(
+                      SuccessScreen.routeName,
+                    );
+                  },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF54A1EE),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            child: Container(
+              width: double.infinity,
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+              child: Text(
+                "Give to this goal",
+                style: TextStyle(
+                  fontSize: 26,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  List<Widget> _createPickOptions() {
+  List<Widget> _createPickOptions(WalletProvider walletProvider) {
     const double pickItemSize = 65;
 
     List<Widget> result = [];
 
     for (var i = 0; i < _amountOptions.length; i++) {
-      double currentOptionAmmount;
+      double currentOptionAmount;
 
       bool noMoreMoney = false;
-      if (_walletAmmount <= _amountOptions[i]) {
-        currentOptionAmmount = _walletAmmount;
+      if (walletProvider.totalAmount <= _amountOptions[i]) {
+        currentOptionAmount = walletProvider.totalAmount;
         noMoreMoney = true;
       } else {
-        currentOptionAmmount = _amountOptions[i];
+        currentOptionAmount = _amountOptions[i];
+      }
+
+      String currentOptionAmountString = currentOptionAmount.toStringAsFixed(0);
+      if (noMoreMoney && currentOptionAmount.toString().split(".").length > 1) {
+        currentOptionAmountString = currentOptionAmount.toStringAsFixed(1);
       }
 
       result.add(
         GestureDetector(
           onTap: () {
             setState(() {
-              if (_currentAmmountIndex == i) {
-                _currentAmmountIndex = -1;
+              if (_currentAmountIndex == i) {
+                _currentAmountIndex = -1;
               } else {
-                _currentAmmountIndex = i;
+                _currentAmountIndex = i;
               }
             });
           },
@@ -235,18 +241,17 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
             height: pickItemSize,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: i == _currentAmmountIndex
-                  ? Color(0xFF3E7AB5)
-                  : Color(0xFFCEDDE2),
+              color: i == _currentAmountIndex
+                  ? Color(0xFF54A1EE)
+                  : Color(0xFFBFDBFC),
             ),
             child: Text(
-              "\$${currentOptionAmmount.toStringAsFixed(0)}",
+              "\$$currentOptionAmountString",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: i == _currentAmmountIndex
-                    ? Colors.white
-                    : Color(0xFF494C54),
+                color:
+                    i == _currentAmountIndex ? Colors.white : Color(0xFF3B3240),
               ),
             ),
           ),
