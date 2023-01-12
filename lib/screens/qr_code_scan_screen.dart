@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_declarations
 
 import 'package:flutter/material.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
+
+import 'package:givt_app_kids/widgets/qr_code_target.dart';
 
 class QrCodeScanScreen extends StatefulWidget {
   static const String routeName = "/qr-code-scan";
@@ -15,7 +17,8 @@ class QrCodeScanScreen extends StatefulWidget {
 }
 
 class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
-
+  bool _isQrCodeDetected = false;
+  
   // @override
   // void initState() {
   //   super.initState();
@@ -41,7 +44,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
           children: [
             Expanded(
               child: Container(
-                color: Color(0xFFF1EAE2),
+                color: Color(0xFFEEEDE4),
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -53,7 +56,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF3E7AB5),
+                    color: Color(0xFF3B3240),
                   ),
                 ),
               ),
@@ -69,23 +72,19 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
                       if (barcode.rawValue == null) {
                         print('Failed to scan Barcode');
                       } else {
-                        Navigator.of(context).pushNamed(
-                          ChooseAmountScreenV4.routeName,
-                        );
-                        final String code = barcode.rawValue!;
-                        print('Barcode found! $code');
+                        if (!_isQrCodeDetected) {
+                          _isQrCodeDetected = true;
+                          Navigator.of(context).pushNamed(
+                            ChooseAmountScreenV4.routeName,
+                          );
+                          final String code = barcode.rawValue!;
+                          print('Barcode found! $code');
+                        }
                       }
                     },
                   ),
                   Positioned.fill(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 60),
-                      child: Image(
-                        width: double.infinity,
-                        fit: BoxFit.fitWidth,
-                        image: AssetImage("assets/images/qr_target.png"),
-                      ),
-                    ),
+                    child: QrCodeTarget(),
                   ),
                 ],
               ),

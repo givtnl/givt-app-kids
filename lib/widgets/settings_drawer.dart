@@ -1,25 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:intl/intl.dart';
 
-import 'package:givt_app_kids/models/transaction.dart';
+import 'package:givt_app_kids/providers/wallet_provider.dart';
+import 'package:givt_app_kids/providers/account_provider.dart';
 
 class SettingsDrawer extends StatefulWidget {
-  static const String nameKey = "nameKey";
-  static const String ageKey = "ageKey";
-  static const String walletKey = "walletKey";
-  static const String transactionsKey = "transactionsKey";
-
-  static const String nameDefault = "James";
-  static const int ageDefault = 11;
-  static const double walletAmountDefault = 20.0;
-
   const SettingsDrawer({Key? key}) : super(key: key);
 
   @override
@@ -29,17 +19,9 @@ class SettingsDrawer extends StatefulWidget {
 class _SettingsDrawerState extends State<SettingsDrawer> {
   final TextEditingController _nameTextController = TextEditingController();
 
-  late final StreamingSharedPreferences _prefs;
-
   final double _changeWalletAmmountStep = 5;
 
-  String _userName = "James";
-  int _userAge = 10;
-  double _walletAmmount = 20.0;
-
   String _appVersion = "None";
-
-  List<Transaction> _transactionList = [];
 
   @override
   void initState() {
@@ -48,65 +30,19 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   }
 
   Future<void> _readPreferences() async {
-    _prefs = await StreamingSharedPreferences.instance;
-    var name = _prefs.getString(SettingsDrawer.nameKey, defaultValue: "");
-    var age = _prefs.getInt(SettingsDrawer.ageKey, defaultValue: 0);
-    var walletAmmount =
-        _prefs.getDouble(SettingsDrawer.walletKey, defaultValue: 0.0);
-
+    var userName = Provider.of<AccountProvider>(context, listen: false).name;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-    var transactions = _readTransactions();
-
     setState(() {
-      _userName = name.getValue();
-      _nameTextController.text = _userName;
-      _userAge = age.getValue();
-      _walletAmmount = walletAmmount.getValue();
+      _nameTextController.text = userName;
       _appVersion = packageInfo.version;
-      _transactionList = transactions;
-    });
-  }
-
-  List<Transaction> _readTransactions() {
-    List<Transaction> list = [];
-    var transactionsListPref = _prefs.getStringList(
-      SettingsDrawer.transactionsKey,
-      defaultValue: [],
-    );
-    var transactions = transactionsListPref.getValue();
-    for (var item in transactions) {
-      var transaction = Transaction.fromJson(jsonDecode(item));
-      list.add(transaction);
-    }
-
-    list.sort();
-    return list;
-  }
-
-  void _setName(String newName) {
-    _prefs.setString(SettingsDrawer.nameKey, newName);
-    setState(() {
-      _userName = newName;
-    });
-  }
-
-  void _setAge(int newAge) {
-    _prefs.setInt(SettingsDrawer.ageKey, newAge);
-    setState(() {
-      _userAge = newAge;
-    });
-  }
-
-  void _setWalletAmmount(double newAmmount) {
-    _prefs.setDouble(SettingsDrawer.walletKey, newAmmount);
-    setState(() {
-      _walletAmmount = newAmmount;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    var walletProvider = Provider.of<WalletProvider>(context);
+    var accountProvider = Provider.of<AccountProvider>(context);
+
     return Drawer(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -154,7 +90,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 22),
                           onChanged: (value) {
-                            _setName(value);
+                            accountProvider.setName(value);
                           },
                         ),
                         SizedBox(
@@ -166,8 +102,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                if (_userAge > 0) {
-                                  _setAge(_userAge - 1);
+                                if (accountProvider.age > 0) {
+                                  accountProvider
+                                      .setAge(accountProvider.age - 1);
                                 }
                               },
                               icon: Icon(Icons.remove_circle_outline),
@@ -175,7 +112,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             Padding(
                               padding: EdgeInsets.all(5),
                               child: Text(
-                                "$_userAge y.o.",
+                                "${accountProvider.age} y.o.",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -184,7 +121,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             ),
                             IconButton(
                               onPressed: () {
-                                _setAge(_userAge + 1);
+                                accountProvider.setAge(accountProvider.age + 1);
                               },
                               icon: Icon(Icons.add_circle_outline_outlined),
                             ),
@@ -198,19 +135,23 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             IconButton(
-                              onPressed: () {
-                                if (_walletAmmount - _changeWalletAmmountStep >=
-                                    0) {
-                                  _setWalletAmmount(_walletAmmount -
-                                      _changeWalletAmmountStep);
-                                }
-                              },
+                              onPressed: walletProvider.totalAmount >= 0
+                                  ? () {
+                                      var newAmount =
+                                          walletProvider.totalAmount -
+                                              _changeWalletAmmountStep;
+                                      if (newAmount < 0) {
+                                        newAmount = 0;
+                                      }
+                                      walletProvider.setAmount(newAmount);
+                                    }
+                                  : null,
                               icon: Icon(Icons.remove_circle_outline),
                             ),
                             Padding(
                               padding: EdgeInsets.all(5),
                               child: Text(
-                                "\$$_walletAmmount",
+                                "\$${walletProvider.totalAmount}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -219,8 +160,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             ),
                             IconButton(
                               onPressed: () {
-                                _setWalletAmmount(
-                                    _walletAmmount + _changeWalletAmmountStep);
+                                walletProvider.setAmount(
+                                    walletProvider.totalAmount +
+                                        _changeWalletAmmountStep);
                               },
                               icon: Icon(Icons.add_circle_outline_outlined),
                             ),
@@ -256,7 +198,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               ElevatedButton.icon(
-                                onPressed: _transactionList.isEmpty
+                                onPressed: walletProvider.transactions.isEmpty
                                     ? null
                                     : () {
                                         showDialog(
@@ -283,13 +225,10 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                               ],
                                             );
                                           },
-                                        ).then((value) async {
+                                        ).then((value) {
                                           if (value) {
+                                            walletProvider.clearTransactions();
                                             Navigator.of(context).pop();
-                                            await _prefs.setStringList(
-                                              SettingsDrawer.transactionsKey,
-                                              [],
-                                            );
                                           }
                                         });
                                       },
@@ -305,7 +244,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                           height: 2,
                           color: Theme.of(context).primaryColor,
                         ),
-                        if (_transactionList.isEmpty)
+                        if (walletProvider.transactions.isEmpty)
                           Padding(
                             padding: const EdgeInsets.all(15.0),
                             child: Text(
@@ -313,9 +252,10 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
-                        if (_transactionList.isNotEmpty)
+                        if (walletProvider.transactions.isNotEmpty)
                           Column(
-                            children: _transactionList.map((transaction) {
+                            children:
+                                walletProvider.transactions.map((transaction) {
                               var dateTime =
                                   DateTime.fromMillisecondsSinceEpoch(
                                       transaction.timestamp);

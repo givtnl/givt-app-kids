@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:givt_app_kids/screens/wallet_screen.dart';
-import 'package:givt_app_kids/screens/wallet_screen_v2.dart';
 import 'package:givt_app_kids/providers/goals_provider.dart';
-import 'package:givt_app_kids/screens/goals_list_screen.dart';
-import 'package:givt_app_kids/screens/goal_details_screen.dart';
-import 'package:givt_app_kids/screens/choose_amount_screen.dart';
 import 'package:givt_app_kids/screens/success_screen.dart';
-import 'package:givt_app_kids/screens/choose_amount_screen_v2.dart';
-import 'package:givt_app_kids/screens/home_screen.dart';
-import 'package:givt_app_kids/screens/choose_amount_screen_v3.dart';
 import 'package:givt_app_kids/screens/qr_code_scan_screen.dart';
 import 'package:givt_app_kids/screens/wallet_screen_v3.dart';
 import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
+import 'package:givt_app_kids/screens/choose_amount_extended_screen.dart';
+
+import 'package:givt_app_kids/providers/wallet_provider.dart';
+import 'package:givt_app_kids/providers/account_provider.dart';
+import 'package:givt_app_kids/screens/givy_tip_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,28 +22,41 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => GoalsProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => GoalsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => WalletProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AccountProvider(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Givt Kids',
         theme: ThemeData(
-          primaryColor: Color.fromARGB(255, 62, 73, 112),
-          fontFamily: "Raleway"
-        ),
-        initialRoute: HomeScreen.routeName,
+            primaryColor: Color.fromARGB(255, 62, 73, 112),
+            fontFamily: "Raleway"),
+        initialRoute: WalletScreenV3.routeName,
         routes: {
-          WalletScreen.routeName: (_) => WalletScreen(),
-          WalletScreenV2.routeName: (_) => WalletScreenV2(),
-          GoalsListScreen.routeName: (_) => GoalsListScreen(),
-          GoalDetailsScreen.routeName: (_) => GoalDetailsScreen(),
-          ChooseAmountScreen.routeName: (_) => ChooseAmountScreen(),
+          // WalletScreen.routeName: (_) => WalletScreen(),
+          // WalletScreenV2.routeName: (_) => WalletScreenV2(),
+          // GoalsListScreen.routeName: (_) => GoalsListScreen(),
+          // GoalDetailsScreen.routeName: (_) => GoalDetailsScreen(),
+          // ChooseAmountScreen.routeName: (_) => ChooseAmountScreen(),
           SuccessScreen.routeName: (_) => SuccessScreen(),
-          ChooseAmountScreenV2.routeName: (_) => ChooseAmountScreenV2(),
-          ChooseAmountScreenV3.routeName: (_) => ChooseAmountScreenV3(),
-          HomeScreen.routeName: (_) => HomeScreen(),
+          // ChooseAmountScreenV2.routeName: (_) => ChooseAmountScreenV2(),
+          // ChooseAmountScreenV3.routeName: (_) => ChooseAmountScreenV3(),
           QrCodeScanScreen.routeName: (_) => QrCodeScanScreen(),
           WalletScreenV3.routeName: (_) => WalletScreenV3(),
           ChooseAmountScreenV4.routeName: (_) => ChooseAmountScreenV4(),
+          ChooseAmountExtendedScreen.routeName: (_) =>
+              ChooseAmountExtendedScreen(),
+          GivyTipScreen.routeName: (_) =>
+              GivyTipScreen(),
+              
         },
       ),
     );

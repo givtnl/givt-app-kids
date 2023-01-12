@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.8
+version: 1.0.9
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -36,13 +36,13 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  streaming_shared_preferences: ^2.0.0
   provider: ^6.0.4
   flutter_svg: ^1.1.6
   package_info_plus: ^3.0.2
   mobile_scanner: ^2.1.0
   intl: ^0.18.0
   lottie: ^2.1.0
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:
@@ -79,10 +79,14 @@ flutter:
     - assets/images/church.svg
     - assets/images/wallet.png
     - assets/images/qr.png
-    - assets/images/qr_target.png
     - assets/images/home.svg
     - assets/images/givy_superman.svg
     - assets/images/givy_celebrates.svg
+    - assets/images/givy_tip.svg
+    - assets/images/target_left_top.svg
+    - assets/images/target_left_bottom.svg
+    - assets/images/target_right_top.svg
+    - assets/images/target_right_bottom.svg
     - assets/lotties/confetti.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
