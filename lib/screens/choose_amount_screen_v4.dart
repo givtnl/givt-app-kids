@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:givt_app_kids/models/transaction.dart';
 
 import 'package:provider/provider.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 import 'package:givt_app_kids/screens/success_screen.dart';
 import 'package:givt_app_kids/screens/choose_amount_extended_screen.dart';
@@ -24,6 +25,22 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
   final double addScrollThreshold = 500;
 
   int _currentAmountIndex = -1;
+
+  late final Mixpanel _mixpanel;
+
+  @override
+  void initState() {
+    super.initState();
+    _initMixpanel();
+  }
+
+  Future<void> _initMixpanel() async {
+    _mixpanel = await Mixpanel.init(
+      "0176910dde232f14cd8bd192371d1d5e",
+      trackAutomaticEvents: true,
+      optOutTrackingDefault: true,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +189,10 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                       amount: giveAmount,
                     );
                     walletProvider.createTransaction(transaction);
+
+                    _mixpanel.track('New Transaction');
+                    _mixpanel.flush();
+                    print("Mixpanel flushed");
 
                     Navigator.of(context).pushNamed(
                       SuccessScreen.routeName,
