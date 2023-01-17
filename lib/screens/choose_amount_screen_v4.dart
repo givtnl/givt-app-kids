@@ -37,7 +37,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
   Future<void> _initMixpanel() async {
     _mixpanel = await Mixpanel.init(
       "0176910dde232f14cd8bd192371d1d5e",
-      trackAutomaticEvents: true,
+//      trackAutomaticEvents: true,
       optOutTrackingDefault: true,
     );
   }
