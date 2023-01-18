@@ -13,12 +13,24 @@ import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/screens/givy_tip_screen.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'package:givt_app_kids/firebase_options.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +51,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primaryColor: Color.fromARGB(255, 62, 73, 112),
             fontFamily: "Raleway"),
+        navigatorObservers: <NavigatorObserver>[observer],
         initialRoute: WalletScreenV3.routeName,
         routes: {
           // WalletScreen.routeName: (_) => WalletScreen(),
@@ -54,9 +67,7 @@ class MyApp extends StatelessWidget {
           ChooseAmountScreenV4.routeName: (_) => ChooseAmountScreenV4(),
           ChooseAmountExtendedScreen.routeName: (_) =>
               ChooseAmountExtendedScreen(),
-          GivyTipScreen.routeName: (_) =>
-              GivyTipScreen(),
-              
+          GivyTipScreen.routeName: (_) => GivyTipScreen(),
         },
       ),
     );

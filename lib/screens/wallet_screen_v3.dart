@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
 import 'package:givt_app_kids/screens/qr_code_scan_screen.dart';
@@ -23,6 +24,12 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   final int recentTransactionsNumber = 3;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAnalytics.instance.setCurrentScreen(screenName: WalletScreenV3.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {

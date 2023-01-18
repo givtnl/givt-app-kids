@@ -3,15 +3,36 @@ import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 //import 'package:givt_app_kids/models/goal.dart';
 import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/screens/givy_tip_screen.dart';
 
-class SuccessScreen extends StatelessWidget {
+class SuccessScreen extends StatefulWidget {
   static const String routeName = "/success";
 
   const SuccessScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SuccessScreen> createState() => _SuccessScreenState();
+}
+
+class _SuccessScreenState extends State<SuccessScreen> {
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAnalytics.instance
+        .setCurrentScreen(screenName: SuccessScreen.routeName);
+    _logScreenView();
+  }
+
+  Future<void> _logScreenView() async {
+    await FirebaseAnalytics.instance.logScreenView(
+      screenName: SuccessScreen.routeName,
+      screenClass: "SuccessScreen",
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

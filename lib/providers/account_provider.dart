@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class AccountProvider with ChangeNotifier {
   static const String nameKey = "nameKey";
@@ -25,7 +26,16 @@ class AccountProvider with ChangeNotifier {
     var savedAge = prefs.getInt(ageKey);
     _age = savedAge ?? ageDefault;
 
+    await _setFbDefaultParameters();
+
     notifyListeners();
+  }
+
+  Future<void> _setFbDefaultParameters() async {
+    await FirebaseAnalytics.instance.setDefaultEventParameters({
+      'user_name': _name,
+      'user_age': _age,
+    });
   }
 
   String get name => _name;
@@ -35,6 +45,7 @@ class AccountProvider with ChangeNotifier {
     _name = newName;
     var prefs = await SharedPreferences.getInstance();
     await prefs.setString(nameKey, newName);
+    await _setFbDefaultParameters();
     notifyListeners();
   }
 
@@ -42,7 +53,7 @@ class AccountProvider with ChangeNotifier {
     _age = newAge;
     var prefs = await SharedPreferences.getInstance();
     await prefs.setInt(ageKey, newAge);
+    await _setFbDefaultParameters();
     notifyListeners();
   }
-
 }
