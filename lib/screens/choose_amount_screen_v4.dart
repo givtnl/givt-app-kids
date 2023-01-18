@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/models/transaction.dart';
 
 import 'package:provider/provider.dart';
-import 'package:mixpanel_flutter/mixpanel_flutter.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
+import 'package:givt_app_kids/models/transaction.dart';
 import 'package:givt_app_kids/screens/success_screen.dart';
 import 'package:givt_app_kids/screens/choose_amount_extended_screen.dart';
 import 'package:givt_app_kids/providers/wallet_provider.dart';
@@ -26,19 +26,28 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
 
   int _currentAmountIndex = -1;
 
-  late final Mixpanel _mixpanel;
-
   @override
   void initState() {
     super.initState();
-    _initMixpanel();
+    FirebaseAnalytics.instance
+        .setCurrentScreen(screenName: ChooseAmountScreenV4.routeName);
+
+    _logScreenView();
   }
 
-  Future<void> _initMixpanel() async {
-    _mixpanel = await Mixpanel.init(
-      "0176910dde232f14cd8bd192371d1d5e",
-//      trackAutomaticEvents: true,
-      optOutTrackingDefault: true,
+  Future<void> _logScreenView() async {
+    await FirebaseAnalytics.instance.logScreenView(
+      screenName: ChooseAmountScreenV4.routeName,
+      screenClass: "ChooseAmountScreenV4",
+    );
+  }
+
+  Future<void> _fbButtonPressedEvent(String buttonName) async {
+    await FirebaseAnalytics.instance.logEvent(
+      name: 'button_pressed',
+      parameters: {
+        'name': buttonName,
+      },
     );
   }
 
@@ -190,9 +199,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                     );
                     walletProvider.createTransaction(transaction);
 
-                    _mixpanel.track('New Transaction');
-                    _mixpanel.flush();
-                    print("Mixpanel flushed");
+                    _fbButtonPressedEvent("Give to this goal");
 
                     Navigator.of(context).pushNamed(
                       SuccessScreen.routeName,
@@ -252,6 +259,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                 _currentAmountIndex = -1;
               } else {
                 _currentAmountIndex = i;
+                _fbButtonPressedEvent(currentOptionAmountString);
               }
             });
           },

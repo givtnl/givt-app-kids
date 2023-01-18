@@ -3,13 +3,27 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:givt_app_kids/screens/wallet_screen_v3.dart';
 
-class GivyTipScreen extends StatelessWidget {
+class GivyTipScreen extends StatefulWidget {
   static const String routeName = "/givy-tip";
 
   const GivyTipScreen({Key? key}) : super(key: key);
+
+  @override
+  State<GivyTipScreen> createState() => _GivyTipScreenState();
+}
+
+class _GivyTipScreenState extends State<GivyTipScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAnalytics.instance
+        .setCurrentScreen(screenName: GivyTipScreen.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_declarations
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import "package:flutter/foundation.dart";
 
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
+import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
 import 'package:givt_app_kids/widgets/qr_code_target.dart';
 
 class QrCodeScanScreen extends StatefulWidget {
@@ -18,22 +21,26 @@ class QrCodeScanScreen extends StatefulWidget {
 
 class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
   bool _isQrCodeDetected = false;
-  
-  // @override
-  // void initState() {
-  //   super.initState();
 
-  //   //temporary code to test on iOS simulators
-  //   Future.delayed(
-  //     Duration(seconds: 3),
-  //   ).then(
-  //     (_) {
-  //       Navigator.of(context).pushNamed(
-  //         ChooseAmountScreenV4.routeName,
-  //       );
-  //     },
-  //   );
-  // }
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAnalytics.instance.setCurrentScreen(screenName: QrCodeScanScreen.routeName);
+
+    //temporary code to test on iOS simulators
+    if (kDebugMode && Platform.isIOS) {
+      Future.delayed(
+        Duration(seconds: 3),
+      ).then(
+        (_) {
+          Navigator.of(context).pushNamed(
+            ChooseAmountScreenV4.routeName,
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

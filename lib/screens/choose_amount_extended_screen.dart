@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:givt_app_kids/screens/success_screen.dart';
 import 'package:givt_app_kids/providers/wallet_provider.dart';
@@ -23,6 +24,21 @@ class _ChooseAmountExtendedScreenState
   double _chosenAmount = 0;
 
   final TextEditingController _textController = TextEditingController(text: "");
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAnalytics.instance
+        .setCurrentScreen(screenName: ChooseAmountExtendedScreen.routeName);
+    _logScreenView();
+  }
+
+  Future<void> _logScreenView() async {
+    await FirebaseAnalytics.instance.logScreenView(
+      screenName: ChooseAmountExtendedScreen.routeName,
+      screenClass: "ChooseAmountExtendedScreen",
+    );
+  }
 
   void _handleAmountChanged(String newValue) {
     var walletProvider = Provider.of<WalletProvider>(context, listen: false);
@@ -194,8 +210,9 @@ class _ChooseAmountExtendedScreenState
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color:
-                            _chosenAmount > 0 ? Color(0xFF54A1EE) : Color(0xFFC4C4C4),
+                        color: _chosenAmount > 0
+                            ? Color(0xFF54A1EE)
+                            : Color(0xFFC4C4C4),
                       ),
                       child: IconButton(
                         alignment: Alignment.center,
