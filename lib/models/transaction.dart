@@ -5,8 +5,8 @@ class Transaction implements Comparable {
 
   Transaction({
     required this.timestamp,
-    required this.amount,
-  });
+    required amount,
+  }) : amount = double.parse(amount.toStringAsFixed(2));
 
   Transaction.fromJson(Map<String, dynamic> json)
       : timestamp = json['timestamp'],

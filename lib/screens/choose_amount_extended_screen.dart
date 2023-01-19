@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
 import 'package:givt_app_kids/screens/success_screen.dart';
 import 'package:givt_app_kids/providers/wallet_provider.dart';
@@ -24,6 +25,12 @@ class _ChooseAmountExtendedScreenState
   double _chosenAmount = 0;
 
   final TextEditingController _textController = TextEditingController(text: "");
+  final CurrencyTextInputFormatter _currencyTextFormatter =
+      CurrencyTextInputFormatter(
+    decimalDigits: 2,
+    enableNegative: false,
+    symbol: "\$",
+  );
 
   @override
   void initState() {
@@ -34,12 +41,15 @@ class _ChooseAmountExtendedScreenState
   void _handleAmountChanged(String newValue) {
     var walletProvider = Provider.of<WalletProvider>(context, listen: false);
 
+    newValue = newValue.isNotEmpty ? newValue.substring(1) : "0";
     double? amount = double.tryParse(newValue);
+
     if (amount != null) {
       if (amount > walletProvider.totalAmount) {
         amount = walletProvider.totalAmount;
         setState(() {
-          _textController.text = amount.toString();
+          _textController.text =
+              _currencyTextFormatter.format(amount!.toStringAsFixed(2));
           _textController.selection =
               TextSelection.collapsed(offset: _textController.text.length);
         });
@@ -126,7 +136,7 @@ class _ChooseAmountExtendedScreenState
               Container(
                 alignment: Alignment.center,
                 padding:
-                    EdgeInsets.only(left: 50, right: 50, top: 50, bottom: 30),
+                    EdgeInsets.only(left: 50, right: 50, top: 25, bottom: 30),
                 child: Text(
                   "Presbyterian Church Tulsa",
                   style: TextStyle(
@@ -156,17 +166,17 @@ class _ChooseAmountExtendedScreenState
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 12, right: 5),
-                          child: Text(
-                            "\$",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF3B3240),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.only(bottom: 12, right: 5),
+                        //   child: Text(
+                        //     "\$",
+                        //     style: TextStyle(
+                        //       fontSize: 20,
+                        //       color: Color(0xFF3B3240),
+                        //       fontWeight: FontWeight.bold,
+                        //     ),
+                        //   ),
+                        // ),
                         Expanded(
                           child: TextField(
                             autofocus: true,
@@ -178,11 +188,11 @@ class _ChooseAmountExtendedScreenState
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "0",
+                              hintText: "\$0",
                             ),
                             maxLines: 1,
-                            keyboardType:
-                                TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [_currencyTextFormatter],
+                            keyboardType: TextInputType.number,
                             onChanged: (value) {
                               _handleAmountChanged(value);
                             },

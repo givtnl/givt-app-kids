@@ -151,7 +151,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             Padding(
                               padding: EdgeInsets.all(5),
                               child: Text(
-                                "\$${walletProvider.totalAmount}",
+                                "\$${walletProvider.totalAmount.toStringAsFixed(2)}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -268,7 +268,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 trailing: Text(
-                                  "\$${transaction.amount}",
+                                  "\$${transaction.amount.toStringAsFixed(2)}",
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,

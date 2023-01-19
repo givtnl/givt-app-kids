@@ -18,7 +18,7 @@ class AnalyticsHelper {
   static Future<void> setDefaultParameters({required String userName, required int userAge}) async {
     await FirebaseAnalytics.instance.setDefaultEventParameters({
       userNameKey: userName,
-      userAgeKey: userName,
+      userAgeKey: userAge,
     });
   }
 

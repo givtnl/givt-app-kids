@@ -67,7 +67,7 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
                   children: [
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(25),
+                      padding: EdgeInsets.only(top: 25, bottom: 25, right: 0),
                       margin: EdgeInsets.symmetric(vertical: 15),
                       decoration: BoxDecoration(
                         color: const Color(0xFF54A1EE),
@@ -79,8 +79,9 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
                       ),
                       child: Row(
                         children: [
-                          Spacer(),
+                          Spacer(flex: 4),
                           Expanded(
+                            flex: 5,
                             child: Column(
                               children: [
                                 Text(

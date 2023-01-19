@@ -50,7 +50,7 @@ class WalletProvider with ChangeNotifier {
 
   Future<void> setAmount(double amount) async {
     var prefs = await SharedPreferences.getInstance();
-    _totalAmount = amount;
+    _totalAmount = double.parse(amount.toStringAsFixed(2));
     await prefs.setDouble(totalAmountKey, _totalAmount);
     await AnalyticsHelper.logWalletAmountEvent(_totalAmount);
     notifyListeners();
