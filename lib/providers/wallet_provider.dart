@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:givt_app_kids/models/transaction.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class WalletProvider with ChangeNotifier {
   static const String totalAmountKey = "totalAmountKey";
@@ -48,29 +48,11 @@ class WalletProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _sendNewTransactionEvent(double amount) async {
-    await FirebaseAnalytics.instance.logEvent(
-      name: 'new_transaction',
-      parameters: {
-        'amount': amount,
-      },
-    );
-  }
-
-  Future<void> _sendNewWalletAmountEvent(double amount) async {
-    await FirebaseAnalytics.instance.logEvent(
-      name: 'wallet_amount',
-      parameters: {
-        'amount': amount,
-      },
-    );
-  }
-
   Future<void> setAmount(double amount) async {
     var prefs = await SharedPreferences.getInstance();
     _totalAmount = amount;
     await prefs.setDouble(totalAmountKey, _totalAmount);
-    await _sendNewWalletAmountEvent(_totalAmount);
+    await AnalyticsHelper.logWalletAmountEvent(_totalAmount);
     notifyListeners();
   }
 
@@ -80,7 +62,7 @@ class WalletProvider with ChangeNotifier {
 
     _saveTransactions(prefs);
 
-    await _sendNewTransactionEvent(transaction.amount);
+    await AnalyticsHelper.logNewTransactionEvent(transaction);
     await setAmount(_totalAmount - transaction.amount);
 
     notifyListeners();

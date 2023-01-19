@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import "package:flutter/foundation.dart";
 
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
 import 'package:givt_app_kids/widgets/qr_code_target.dart';
@@ -26,7 +26,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
   void initState() {
     super.initState();
 
-    FirebaseAnalytics.instance.setCurrentScreen(screenName: QrCodeScanScreen.routeName);
+    AnalyticsHelper.logScreenView(QrCodeScanScreen.routeName);
 
     //temporary code to test on iOS simulators
     if (kDebugMode && Platform.isIOS) {

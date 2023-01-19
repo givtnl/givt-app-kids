@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 //import 'package:givt_app_kids/models/goal.dart';
 import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/screens/givy_tip_screen.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class SuccessScreen extends StatefulWidget {
   static const String routeName = "/success";
@@ -22,16 +22,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
   @override
   void initState() {
     super.initState();
-    FirebaseAnalytics.instance
-        .setCurrentScreen(screenName: SuccessScreen.routeName);
-    _logScreenView();
-  }
-
-  Future<void> _logScreenView() async {
-    await FirebaseAnalytics.instance.logScreenView(
-      screenName: SuccessScreen.routeName,
-      screenClass: "SuccessScreen",
-    );
+    AnalyticsHelper.logScreenView(SuccessScreen.routeName);
   }
 
   @override
@@ -93,6 +84,9 @@ class _SuccessScreenState extends State<SuccessScreen> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
+                        AnalyticsHelper.logButtonPressedEvent(
+                            "Continue", SuccessScreen.routeName);
+
                         Navigator.of(context)
                             .pushNamed(GivyTipScreen.routeName);
                       },

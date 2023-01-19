@@ -3,13 +3,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:givt_app_kids/widgets/settings_drawer.dart';
 import 'package:givt_app_kids/screens/qr_code_scan_screen.dart';
 import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/widgets/transaction_item.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class WalletScreenV3 extends StatefulWidget {
   static const String routeName = "/wallet-v3";
@@ -28,7 +28,7 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
   @override
   void initState() {
     super.initState();
-    FirebaseAnalytics.instance.setCurrentScreen(screenName: WalletScreenV3.routeName);
+    AnalyticsHelper.logScreenView(WalletScreenV3.routeName);
   }
 
   @override
@@ -123,8 +123,13 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
                     Positioned(
                       left: 10,
                       child: GestureDetector(
-                        onLongPress: () =>
-                            _scaffoldKey.currentState!.openDrawer(),
+                        onLongPress: () {
+                          AnalyticsHelper.logButtonPressedEvent(
+                            "Settings Drawer",
+                            WalletScreenV3.routeName,
+                          );
+                          _scaffoldKey.currentState!.openDrawer();
+                        },
                         child: Image(
                           height: 140,
                           fit: BoxFit.fitHeight,
@@ -142,6 +147,11 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
                   child: ElevatedButton.icon(
                     onPressed: walletProvider.totalAmount > 0
                         ? () {
+                            AnalyticsHelper.logButtonPressedEvent(
+                              "I want to give",
+                              WalletScreenV3.routeName,
+                            );
+
                             Navigator.of(context).pushNamed(
                               QrCodeScanScreen.routeName,
                             );

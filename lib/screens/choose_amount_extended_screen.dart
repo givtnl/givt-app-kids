@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:givt_app_kids/screens/success_screen.dart';
 import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/models/transaction.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class ChooseAmountExtendedScreen extends StatefulWidget {
   static const String routeName = "/choose-ammount-exteded";
@@ -28,16 +28,7 @@ class _ChooseAmountExtendedScreenState
   @override
   void initState() {
     super.initState();
-    FirebaseAnalytics.instance
-        .setCurrentScreen(screenName: ChooseAmountExtendedScreen.routeName);
-    _logScreenView();
-  }
-
-  Future<void> _logScreenView() async {
-    await FirebaseAnalytics.instance.logScreenView(
-      screenName: ChooseAmountExtendedScreen.routeName,
-      screenClass: "ChooseAmountExtendedScreen",
-    );
+    AnalyticsHelper.logScreenView(ChooseAmountExtendedScreen.routeName);
   }
 
   void _handleAmountChanged(String newValue) {
@@ -190,7 +181,8 @@ class _ChooseAmountExtendedScreenState
                               hintText: "0",
                             ),
                             maxLines: 1,
-                            keyboardType: TextInputType.number,
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
                             onChanged: (value) {
                               _handleAmountChanged(value);
                             },
@@ -229,6 +221,10 @@ class _ChooseAmountExtendedScreenState
                                   amount: giveAmount,
                                 );
                                 walletProvider.createTransaction(transaction);
+
+                                AnalyticsHelper.logButtonPressedEvent(
+                                    "arrow icon button",
+                                    ChooseAmountExtendedScreen.routeName);
 
                                 Navigator.of(context).pushNamed(
                                   SuccessScreen.routeName,

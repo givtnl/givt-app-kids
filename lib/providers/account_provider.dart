@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class AccountProvider with ChangeNotifier {
   static const String nameKey = "nameKey";
@@ -26,16 +26,9 @@ class AccountProvider with ChangeNotifier {
     var savedAge = prefs.getInt(ageKey);
     _age = savedAge ?? ageDefault;
 
-    await _setFbDefaultParameters();
+    await AnalyticsHelper.setDefaultParameters(userName: _name, userAge: _age);
 
     notifyListeners();
-  }
-
-  Future<void> _setFbDefaultParameters() async {
-    await FirebaseAnalytics.instance.setDefaultEventParameters({
-      'user_name': _name,
-      'user_age': _age,
-    });
   }
 
   String get name => _name;
@@ -45,7 +38,7 @@ class AccountProvider with ChangeNotifier {
     _name = newName;
     var prefs = await SharedPreferences.getInstance();
     await prefs.setString(nameKey, newName);
-    await _setFbDefaultParameters();
+    await AnalyticsHelper.setDefaultParameters(userName: _name, userAge: _age);
     notifyListeners();
   }
 
@@ -53,7 +46,7 @@ class AccountProvider with ChangeNotifier {
     _age = newAge;
     var prefs = await SharedPreferences.getInstance();
     await prefs.setInt(ageKey, newAge);
-    await _setFbDefaultParameters();
+    await AnalyticsHelper.setDefaultParameters(userName: _name, userAge: _age);
     notifyListeners();
   }
 }
