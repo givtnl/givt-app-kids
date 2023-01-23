@@ -43,9 +43,8 @@ dependencies:
   intl: ^0.18.0
   lottie: ^2.1.0
   shared_preferences: ^2.0.15
-  firebase_core: ^2.4.1
-  firebase_analytics: ^10.1.0
-  currency_text_input_formatter: ^2.1.8  
+  currency_text_input_formatter: ^2.1.8
+  amplitude_flutter: ^3.13.0
 
 dev_dependencies:
   flutter_test:
