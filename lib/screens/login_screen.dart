@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:givt_app_kids/providers/auth_provider.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "/login";
@@ -21,6 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String _email = "";
   String _password = "";
+
+  bool _isPasswordVisible = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -170,39 +174,62 @@ class _LoginScreenState extends State<LoginScreen> {
                           horizontal: 10,
                           vertical: 5,
                         ),
-                        child: TextFormField(
-                          key: ValueKey("password"),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                          ),
-                          obscureText: true,
-                          textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.visiblePassword,
-                          validator: (value) {
-                            var password = value?.trim() ?? "";
-
-                            if (password.isEmpty) {
-                              return 'Please enter a password';
-                            }
-                            if (password.length < 7) {
-                              return 'Password must be at least 7 characters long';
-                            }
-                            if (password.contains(RegExp(r'[0-9]')) == false) {
-                              return 'Password must contain a digit';
-                            }
-                            if (password.contains(RegExp(r'[A-Z]')) == false) {
-                              return 'Password must contain an upper case character';
-                            }
-                            if (password.length > 100) {
-                              return 'Password cannot contain more than 100 characters';
-                            }
-
-                            _password = password;
-                            return null;
-                          },
-                          onFieldSubmitted: (_) {
-                            _saveForm();
-                          },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                key: ValueKey("password"),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                ),
+                                obscureText: !_isPasswordVisible,
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.visiblePassword,
+                                validator: (value) {
+                                  var password = value?.trim() ?? "";
+                                  if (password.isEmpty) {
+                                    return 'Please enter a password';
+                                  }
+                                  if (password.length < 7) {
+                                    return 'Password must be at least 7 characters long';
+                                  }
+                                  if (password.contains(RegExp(r'[0-9]')) ==
+                                      false) {
+                                    return 'Password must contain a digit';
+                                  }
+                                  if (password.contains(RegExp(r'[A-Z]')) ==
+                                      false) {
+                                    return 'Password must contain an upper case character';
+                                  }
+                                  if (password.length > 100) {
+                                    return 'Password cannot contain more than 100 characters';
+                                  }
+                                  _password = password;
+                                  return null;
+                                },
+                                onFieldSubmitted: (_) {
+                                  _saveForm();
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(right: 5),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _isPasswordVisible = !_isPasswordVisible;
+                                  });
+                                },
+                                child: SvgPicture.asset(
+                                  _isPasswordVisible
+                                      ? "assets/images/password_show.svg"
+                                      : "assets/images/password_hide.svg",
+                                  width: 20,
+                                  height: 20,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -221,9 +248,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      if(_isLoading) {
+                      if (_isLoading) {
                         return;
                       }
+                      AnalyticsHelper.logButtonPressedEvent(
+                          "Sign in", LoginScreen.routeName);
+
                       _saveForm();
                     },
                     style: ElevatedButton.styleFrom(

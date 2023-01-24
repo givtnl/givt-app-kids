@@ -87,7 +87,7 @@ class _GivyTipScreenState extends State<GivyTipScreen> {
                       AnalyticsHelper.logButtonPressedEvent(
                           "Continue", GivyTipScreen.routeName);
                       Navigator.of(context).popUntil(
-                        ModalRoute.withName(WalletScreenV3.routeName),
+                        ModalRoute.withName("/"),
                       );
                     },
                     style: ElevatedButton.styleFrom(
