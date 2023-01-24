@@ -104,7 +104,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                         child: Text(
                           "Continue",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 26,
                             color: Color(0xFF3B3240),
                             fontWeight: FontWeight.bold,
                           ),

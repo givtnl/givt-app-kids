@@ -10,6 +10,7 @@ import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/widgets/transaction_item.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/providers/auth_provider.dart';
 
 class WalletScreenV3 extends StatefulWidget {
   static const String routeName = "/wallet-v3";
@@ -29,6 +30,21 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
   void initState() {
     super.initState();
     AnalyticsHelper.logScreenView(WalletScreenV3.routeName);
+
+    var authProvider = Provider.of<AuthProvider>(context, listen: false);
+    Future.delayed(
+      Duration(seconds: 1),
+      (() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              authProvider.guid,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }),
+    );
   }
 
   @override

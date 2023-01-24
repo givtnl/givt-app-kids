@@ -104,7 +104,7 @@ class _GivyTipScreenState extends State<GivyTipScreen> {
                       child: Text(
                         "Continue",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 26,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
