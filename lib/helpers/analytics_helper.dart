@@ -1,4 +1,5 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:amplitude_flutter/amplitude.dart';
+import 'package:amplitude_flutter/identify.dart';
 import 'package:intl/intl.dart';
 
 import 'package:givt_app_kids/models/transaction.dart';
@@ -16,10 +17,11 @@ class AnalyticsHelper {
   static const String formattedDateKey = "formatted_date";
 
   static Future<void> setDefaultParameters({required String userName, required int userAge}) async {
-    await FirebaseAnalytics.instance.setDefaultEventParameters({
-      userNameKey: userName,
-      userAgeKey: userAge,
-    });
+    final identify = Identify()
+      ..set('username', userName)
+      ..set('age', userAge);
+
+    Amplitude.getInstance().identify(identify);
   }
 
   static String _getFormattedTime(DateTime now) {
@@ -29,9 +31,9 @@ class AnalyticsHelper {
 
   static Future<void> logNewTransactionEvent(Transaction transaction) async {
     var now = DateTime.now();
-    await FirebaseAnalytics.instance.logEvent(
-      name: newTransactionKey,
-      parameters: {
+
+    Amplitude.getInstance().logEvent(
+      newTransactionKey, eventProperties: {
         amountKey: transaction.amount,
         timestampKey: now.millisecondsSinceEpoch,
         formattedDateKey: _getFormattedTime(now),
@@ -41,9 +43,9 @@ class AnalyticsHelper {
 
   static Future<void> logWalletAmountEvent(double amount) async {
     var now = DateTime.now();
-    await FirebaseAnalytics.instance.logEvent(
-      name: walletAmountKey,
-      parameters: {
+    Amplitude.getInstance().logEvent(
+      walletAmountKey,
+      eventProperties: {
         amountKey: amount,
         timestampKey: now.millisecondsSinceEpoch,
         formattedDateKey: _getFormattedTime(now),
@@ -52,17 +54,17 @@ class AnalyticsHelper {
   }
 
   static Future<void> logScreenView(String screenName) async {
-    await FirebaseAnalytics.instance.logScreenView(
-      screenName: screenName,
-    );
+    // await FirebaseAnalytics.instance.logScreenView(
+    //   screenName: screenName,
+    // );
   }
 
   static Future<void> logButtonPressedEvent(
       String buttonName, String screenName) async {
     var now = DateTime.now();
-    await FirebaseAnalytics.instance.logEvent(
-      name: buttonPressedKey,
-      parameters: {
+    Amplitude.getInstance().logEvent(
+      buttonPressedKey,
+      eventProperties: {
         buttonNameKey: buttonName,
         screenNameKey: screenName,
         timestampKey: now.millisecondsSinceEpoch,
