@@ -55,7 +55,6 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
                 primaryColor: Color.fromARGB(255, 62, 73, 112),
                 fontFamily: "Raleway"),
-            // navigatorObservers: <NavigatorObserver>[observer],
             home: authProvider.isAuthenticated
                 ? WalletScreenV3()
                 : LoginScreen(),
