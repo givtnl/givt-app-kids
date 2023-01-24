@@ -12,7 +12,9 @@ import 'package:givt_app_kids/screens/choose_amount_extended_screen.dart';
 
 import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/providers/account_provider.dart';
+import 'package:givt_app_kids/providers/auth_provider.dart';
 import 'package:givt_app_kids/screens/givy_tip_screen.dart';
+import 'package:givt_app_kids/screens/login_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:givt_app_kids/firebase_options.dart';
@@ -37,6 +39,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (_) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => GoalsProvider(),
         ),
         ChangeNotifierProvider(
@@ -46,28 +51,28 @@ class MyApp extends StatelessWidget {
           create: (_) => AccountProvider(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Givt Kids',
-        theme: ThemeData(
-            primaryColor: Color.fromARGB(255, 62, 73, 112),
-            fontFamily: "Raleway"),
-        navigatorObservers: <NavigatorObserver>[observer],
-        initialRoute: WalletScreenV3.routeName,
-        routes: {
-          // WalletScreen.routeName: (_) => WalletScreen(),
-          // WalletScreenV2.routeName: (_) => WalletScreenV2(),
-          // GoalsListScreen.routeName: (_) => GoalsListScreen(),
-          // GoalDetailsScreen.routeName: (_) => GoalDetailsScreen(),
-          // ChooseAmountScreen.routeName: (_) => ChooseAmountScreen(),
-          SuccessScreen.routeName: (_) => SuccessScreen(),
-          // ChooseAmountScreenV2.routeName: (_) => ChooseAmountScreenV2(),
-          // ChooseAmountScreenV3.routeName: (_) => ChooseAmountScreenV3(),
-          QrCodeScanScreen.routeName: (_) => QrCodeScanScreen(),
-          WalletScreenV3.routeName: (_) => WalletScreenV3(),
-          ChooseAmountScreenV4.routeName: (_) => ChooseAmountScreenV4(),
-          ChooseAmountExtendedScreen.routeName: (_) =>
-              ChooseAmountExtendedScreen(),
-          GivyTipScreen.routeName: (_) => GivyTipScreen(),
+      child: Consumer<AuthProvider>(
+        builder: (ctx, authProvider, _) {
+          return MaterialApp(
+            title: 'Givt Kids',
+            theme: ThemeData(
+                primaryColor: Color.fromARGB(255, 62, 73, 112),
+                fontFamily: "Raleway"),
+            navigatorObservers: <NavigatorObserver>[observer],
+            home: authProvider.isAuthenticated
+                ? WalletScreenV3()
+                : LoginScreen(),
+            routes: {
+              SuccessScreen.routeName: (_) => SuccessScreen(),
+              QrCodeScanScreen.routeName: (_) => QrCodeScanScreen(),
+              WalletScreenV3.routeName: (_) => WalletScreenV3(),
+              ChooseAmountScreenV4.routeName: (_) => ChooseAmountScreenV4(),
+              ChooseAmountExtendedScreen.routeName: (_) =>
+                  ChooseAmountExtendedScreen(),
+              GivyTipScreen.routeName: (_) => GivyTipScreen(),
+              LoginScreen.routeName: (_) => LoginScreen(),
+            },
+          );
         },
       ),
     );
