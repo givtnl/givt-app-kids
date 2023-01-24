@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 
 import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/providers/account_provider.dart';
+import 'package:givt_app_kids/providers/auth_provider.dart';
 
 class SettingsDrawer extends StatefulWidget {
   const SettingsDrawer({Key? key}) : super(key: key);
@@ -195,7 +196,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ElevatedButton.icon(
                                 onPressed: walletProvider.transactions.isEmpty
@@ -235,6 +236,45 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                 icon: Icon(Icons.delete),
                                 label: Text(
                                   "Clear",
+                                ),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                            "Are you sure you want to logout?"),
+                                        actions: [
+                                          TextButton(
+                                            child: Text("OK"),
+                                            onPressed: () {
+                                              return Navigator.of(context)
+                                                  .pop(true);
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text("CANCEL"),
+                                            onPressed: () {
+                                              return Navigator.of(context)
+                                                  .pop(false);
+                                            },
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  ).then((value) {
+                                    if (value) {
+                                      Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .logout();
+                                    }
+                                  });
+                                },
+                                icon: Icon(Icons.logout),
+                                label: Text(
+                                  "Logout",
                                 ),
                               ),
                             ],
