@@ -33,8 +33,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Init SDK
-    analytics_amplitude.init("05353d3a94c0d52d75cc1e7d13faa8e1");
+
+  // Init SDK
+  analytics_amplitude.init("05353d3a94c0d52d75cc1e7d13faa8e1");
+  analytics_amplitude.trackingSessionEvents(true);
 
     return MultiProvider(
       providers: [
