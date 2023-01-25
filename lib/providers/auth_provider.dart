@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:givt_app_kids/helpers/api_helper.dart';
 
 class AuthProvider with ChangeNotifier {
-  static const String apiURL = "givt-debug-api.azurewebsites.net";
-
   static const String accessTokenKey = "accessTokenKey";
   static const String guidKey = "guidKey";
 
@@ -47,7 +46,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login({required String email, required String password}) async {
-    final url = Uri.https(apiURL, '/oauth2/token');
+    final url = Uri.https(ApiHelper.apiURL, ApiHelper.loginPath);
 
     try {
       var response = await http.post(

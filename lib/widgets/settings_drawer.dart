@@ -6,9 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:intl/intl.dart';
 
-import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/providers/auth_provider.dart';
+import 'package:givt_app_kids/providers/profiles_provider.dart';
 
 class SettingsDrawer extends StatefulWidget {
   const SettingsDrawer({Key? key}) : super(key: key);
@@ -41,8 +41,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    var walletProvider = Provider.of<WalletProvider>(context);
-    var accountProvider = Provider.of<AccountProvider>(context);
+//    var walletProvider = Provider.of<WalletProvider>(context);
+//    var accountProvider = Provider.of<AccountProvider>(context);
+    var profilesProvider = Provider.of<ProfilesProvider>(context);
 
     return Drawer(
       child: Container(
@@ -66,114 +67,114 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                width: double.infinity,
-                child: Card(
-                  color: Colors.grey[200],
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: Text(
-                            "Account",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        TextField(
-                          controller: _nameTextController,
-                          decoration: InputDecoration(hintText: "Name"),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 22),
-                          onChanged: (value) {
-                            accountProvider.setName(value);
-                          },
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                if (accountProvider.age > 0) {
-                                  accountProvider
-                                      .setAge(accountProvider.age - 1);
-                                }
-                              },
-                              icon: Icon(Icons.remove_circle_outline),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                "${accountProvider.age} y.o.",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                accountProvider.setAge(accountProvider.age + 1);
-                              },
-                              icon: Icon(Icons.add_circle_outline_outlined),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(
-                              onPressed: walletProvider.totalAmount >= 0
-                                  ? () {
-                                      var newAmount =
-                                          walletProvider.totalAmount -
-                                              _changeWalletAmmountStep;
-                                      if (newAmount < 0) {
-                                        newAmount = 0;
-                                      }
-                                      walletProvider.setAmount(newAmount);
-                                    }
-                                  : null,
-                              icon: Icon(Icons.remove_circle_outline),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                "\$${walletProvider.totalAmount.toStringAsFixed(2)}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                walletProvider.setAmount(
-                                    walletProvider.totalAmount +
-                                        _changeWalletAmmountStep);
-                              },
-                              icon: Icon(Icons.add_circle_outline_outlined),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   width: double.infinity,
+              //   child: Card(
+              //     color: Colors.grey[200],
+              //     child: Padding(
+              //       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              //       child: Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           SizedBox(
+              //             width: double.infinity,
+              //             child: Text(
+              //               "Account",
+              //               style: TextStyle(
+              //                 fontWeight: FontWeight.bold,
+              //               ),
+              //               textAlign: TextAlign.center,
+              //             ),
+              //           ),
+              //           TextField(
+              //             controller: _nameTextController,
+              //             decoration: InputDecoration(hintText: "Name"),
+              //             style: TextStyle(
+              //                 fontWeight: FontWeight.bold, fontSize: 22),
+              //             onChanged: (value) {
+              //               accountProvider.setName(value);
+              //             },
+              //           ),
+              //           SizedBox(
+              //             height: 5,
+              //           ),
+              //           Row(
+              //             mainAxisSize: MainAxisSize.max,
+              //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //             children: [
+              //               IconButton(
+              //                 onPressed: () {
+              //                   if (accountProvider.age > 0) {
+              //                     accountProvider
+              //                         .setAge(accountProvider.age - 1);
+              //                   }
+              //                 },
+              //                 icon: Icon(Icons.remove_circle_outline),
+              //               ),
+              //               Padding(
+              //                 padding: EdgeInsets.all(5),
+              //                 child: Text(
+              //                   "${accountProvider.age} y.o.",
+              //                   style: TextStyle(
+              //                     fontWeight: FontWeight.bold,
+              //                     fontSize: 20,
+              //                   ),
+              //                 ),
+              //               ),
+              //               IconButton(
+              //                 onPressed: () {
+              //                   accountProvider.setAge(accountProvider.age + 1);
+              //                 },
+              //                 icon: Icon(Icons.add_circle_outline_outlined),
+              //               ),
+              //             ],
+              //           ),
+              //           SizedBox(
+              //             height: 10,
+              //           ),
+              //           Row(
+              //             mainAxisSize: MainAxisSize.max,
+              //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //             children: [
+              //               IconButton(
+              //                 onPressed: walletProvider.totalAmount >= 0
+              //                     ? () {
+              //                         var newAmount =
+              //                             walletProvider.totalAmount -
+              //                                 _changeWalletAmmountStep;
+              //                         if (newAmount < 0) {
+              //                           newAmount = 0;
+              //                         }
+              //                         walletProvider.setAmount(newAmount);
+              //                       }
+              //                     : null,
+              //                 icon: Icon(Icons.remove_circle_outline),
+              //               ),
+              //               Padding(
+              //                 padding: EdgeInsets.all(5),
+              //                 child: Text(
+              //                   "\$${walletProvider.totalAmount.toStringAsFixed(2)}",
+              //                   style: TextStyle(
+              //                     fontWeight: FontWeight.bold,
+              //                     fontSize: 20,
+              //                   ),
+              //                 ),
+              //               ),
+              //               IconButton(
+              //                 onPressed: () {
+              //                   walletProvider.setAmount(
+              //                       walletProvider.totalAmount +
+              //                           _changeWalletAmmountStep);
+              //                 },
+              //                 icon: Icon(Icons.add_circle_outline_outlined),
+              //               ),
+              //             ],
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 width: double.infinity,
                 child: Card(
@@ -199,7 +200,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ElevatedButton.icon(
-                                onPressed: walletProvider.transactions.isEmpty
+                                onPressed: profilesProvider.transactions.isEmpty
                                     ? null
                                     : () {
                                         showDialog(
@@ -228,7 +229,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                           },
                                         ).then((value) {
                                           if (value) {
-                                            walletProvider.clearTransactions();
+                                            profilesProvider.clearTransactions();
                                             Navigator.of(context).pop();
                                           }
                                         });
@@ -269,6 +270,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                       Provider.of<AuthProvider>(context,
                                               listen: false)
                                           .logout();
+                                      Provider.of<ProfilesProvider>(context,
+                                              listen: false)
+                                          .clearProfiles();
                                     }
                                   });
                                 },
@@ -284,7 +288,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                           height: 2,
                           color: Theme.of(context).primaryColor,
                         ),
-                        if (walletProvider.transactions.isEmpty)
+                        if (profilesProvider.transactions.isEmpty)
                           Padding(
                             padding: const EdgeInsets.all(15.0),
                             child: Text(
@@ -292,10 +296,10 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
-                        if (walletProvider.transactions.isNotEmpty)
+                        if (profilesProvider.transactions.isNotEmpty)
                           Column(
                             children:
-                                walletProvider.transactions.map((transaction) {
+                                profilesProvider.transactions.map((transaction) {
                               var dateTime =
                                   DateTime.fromMillisecondsSinceEpoch(
                                       transaction.timestamp);

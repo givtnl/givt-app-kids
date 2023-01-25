@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -6,9 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:givt_app_kids/models/transaction.dart';
 import 'package:givt_app_kids/screens/success_screen.dart';
 import 'package:givt_app_kids/screens/choose_amount_extended_screen.dart';
-import 'package:givt_app_kids/providers/wallet_provider.dart';
-import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/widgets/wallet.dart';
+import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
+import 'package:givt_app_kids/providers/profiles_provider.dart';
 
 class ChooseAmountScreenV4 extends StatefulWidget {
   static const String routeName = "/choose-ammount-v4";
@@ -49,73 +50,17 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
   }
 
   Widget _createMainLayout(BuildContext context, bool addScroll) {
-    var walletProvider = Provider.of<WalletProvider>(context);
-
     return Column(
       children: [
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             SizedBox(height: 25),
-            Stack(
+            Row(
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                  margin: EdgeInsets.symmetric(vertical: 15),
-                  decoration: BoxDecoration(
-                      color: const Color(0xFF54A1EE),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      )),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(width: 85),
-                      Column(
-                        children: [
-                          Text(
-                            Provider.of<AccountProvider>(context).name,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: "\$",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: walletProvider.totalAmount
-                                      .toStringAsFixed(2),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  left: 10,
-                  top: 2,
-                  child: Image(
-                    height: 75,
-                    fit: BoxFit.fitHeight,
-                    image: AssetImage("assets/images/wallet.png"),
-                  ),
-                ),
+                custom_widgets.BackButton(),
+                Spacer(),
+                Wallet(),
               ],
             ),
             Container(
@@ -136,7 +81,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
               child: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: _createPickOptions(walletProvider),
+                  children: _createPickOptions(),
                 ),
                 TextButton(
                   onPressed: () {
@@ -169,22 +114,28 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
           child: ElevatedButton(
             onPressed: _currentAmountIndex == -1
                 ? null
-                : () {
+                : () async {
+                    var profilesProvider =
+                        Provider.of<ProfilesProvider>(context, listen: false);
+
                     var giveAmount = _amountOptions[_currentAmountIndex];
-                    if (giveAmount > walletProvider.totalAmount) {
-                      giveAmount = walletProvider.totalAmount;
+                    if (giveAmount > profilesProvider.activeProfile!.balance) {
+                      giveAmount = profilesProvider.activeProfile!.balance;
                     }
                     var transaction = Transaction(
                       timestamp: DateTime.now().millisecondsSinceEpoch,
                       amount: giveAmount,
                     );
-                    walletProvider.createTransaction(transaction);
 
-                    AnalyticsHelper.logButtonPressedEvent("Give to this goal", ChooseAmountScreenV4.routeName);
+                    profilesProvider
+                        .createTransaction(transaction)
+                        .then((_) => profilesProvider.fetchProfiles());
 
-                    Navigator.of(context).pushNamed(
-                      SuccessScreen.routeName,
-                    );
+                    AnalyticsHelper.logButtonPressedEvent(
+                        "Give to this goal", ChooseAmountScreenV4.routeName);
+
+                    Navigator.of(context).pushNamed(SuccessScreen.routeName,
+                        arguments: transaction);
                   },
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xFF54A1EE),
@@ -211,7 +162,9 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
     );
   }
 
-  List<Widget> _createPickOptions(WalletProvider walletProvider) {
+  List<Widget> _createPickOptions() {
+    var profilesProvider = Provider.of<ProfilesProvider>(context, listen: true);
+
     const double pickItemSize = 65;
 
     List<Widget> result = [];
@@ -220,8 +173,8 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
       double currentOptionAmount;
 
       bool noMoreMoney = false;
-      if (walletProvider.totalAmount <= _amountOptions[i]) {
-        currentOptionAmount = walletProvider.totalAmount;
+      if (profilesProvider.activeProfile!.balance <= _amountOptions[i]) {
+        currentOptionAmount = profilesProvider.activeProfile!.balance;
         noMoreMoney = true;
       } else {
         currentOptionAmount = _amountOptions[i];
@@ -240,7 +193,9 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                 _currentAmountIndex = -1;
               } else {
                 _currentAmountIndex = i;
-                 AnalyticsHelper.logButtonPressedEvent("\$$currentOptionAmountString", ChooseAmountScreenV4.routeName);
+                AnalyticsHelper.logButtonPressedEvent(
+                    "\$$currentOptionAmountString",
+                    ChooseAmountScreenV4.routeName);
               }
             });
           },
