@@ -2,12 +2,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 
-//import 'package:givt_app_kids/models/goal.dart';
-import 'package:givt_app_kids/providers/wallet_provider.dart';
 import 'package:givt_app_kids/screens/givy_tip_screen.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/models/transaction.dart';
 
 class SuccessScreen extends StatefulWidget {
   static const String routeName = "/success";
@@ -27,10 +25,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
-//    final goal = ModalRoute.of(context)?.settings.arguments as Goal;
-
-    var lastTransaction =
-        Provider.of<WalletProvider>(context, listen: false).transactions.first;
+    final transaction = ModalRoute.of(context)?.settings.arguments as Transaction;
 
     return SafeArea(
       child: Scaffold(
@@ -63,7 +58,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                       right: 50,
                     ),
                     child: Text(
-                      "You gave \$${lastTransaction.amount.toStringAsFixed(2)} to ${lastTransaction.goalName}",
+                      "You gave \$${transaction.amount.toStringAsFixed(2)} to ${transaction.goalName}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 30,

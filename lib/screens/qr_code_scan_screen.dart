@@ -1,14 +1,15 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_declarations
+// ignore_for_file: prefer_const_constructors, prefer_const_declarations, prefer_const_literals_to_create_immutables
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import "package:flutter/foundation.dart";
+import 'package:flutter/foundation.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
 import 'package:givt_app_kids/widgets/qr_code_target.dart';
+import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
 
 class QrCodeScanScreen extends StatefulWidget {
   static const String routeName = "/qr-code-scan";
@@ -47,26 +48,28 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
     return SafeArea(
       child: Scaffold(
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Container(
-                color: Color(0xFFEEEDE4),
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 50,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  "Scan the Givt QR code",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF3B3240),
-                  ),
-                ),
-              ),
+                  color: Color(0xFFEEEDE4),
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      custom_widgets.BackButton(),
+                      Expanded(
+                        child: Text(
+                          "Scan the Givt\nQR code",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF3B3240),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 55,),
+                    ],
+                  )),
             ),
             Expanded(
               flex: 4,

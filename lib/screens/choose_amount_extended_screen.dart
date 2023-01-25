@@ -5,10 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
 import 'package:givt_app_kids/screens/success_screen.dart';
-import 'package:givt_app_kids/providers/wallet_provider.dart';
-import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/models/transaction.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/widgets/wallet.dart';
+import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
+import 'package:givt_app_kids/providers/profiles_provider.dart';
 
 class ChooseAmountExtendedScreen extends StatefulWidget {
   static const String routeName = "/choose-ammount-exteded";
@@ -39,14 +40,15 @@ class _ChooseAmountExtendedScreenState
   }
 
   void _handleAmountChanged(String newValue) {
-    var walletProvider = Provider.of<WalletProvider>(context, listen: false);
+    var profilesProvider =
+        Provider.of<ProfilesProvider>(context, listen: false);
 
     newValue = newValue.isNotEmpty ? newValue.substring(1) : "0";
     double? amount = double.tryParse(newValue);
 
     if (amount != null) {
-      if (amount > walletProvider.totalAmount) {
-        amount = walletProvider.totalAmount;
+      if (amount > profilesProvider.activeProfile!.balance) {
+        amount = profilesProvider.activeProfile!.balance;
         setState(() {
           _textController.text =
               _currencyTextFormatter.format(amount!.toStringAsFixed(2));
@@ -62,75 +64,19 @@ class _ChooseAmountExtendedScreenState
 
   @override
   Widget build(BuildContext context) {
-    var walletProvider = Provider.of<WalletProvider>(context);
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFFF1EAE2),
         body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               SizedBox(height: 25),
-              Stack(
+              Row(
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                    margin: EdgeInsets.symmetric(vertical: 15),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF54A1EE),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                        )),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(width: 85),
-                        Column(
-                          children: [
-                            Text(
-                              Provider.of<AccountProvider>(context).name,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: "\$",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: walletProvider.totalAmount
-                                        .toStringAsFixed(2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    left: 10,
-                    top: 2,
-                    child: Image(
-                      height: 75,
-                      fit: BoxFit.fitHeight,
-                      image: AssetImage("assets/images/wallet.png"),
-                    ),
-                  ),
+                  custom_widgets.BackButton(),
+                  Spacer(),
+                  Wallet(),
                 ],
               ),
               Container(
@@ -166,17 +112,6 @@ class _ChooseAmountExtendedScreenState
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        // Padding(
-                        //   padding: EdgeInsets.only(bottom: 12, right: 5),
-                        //   child: Text(
-                        //     "\$",
-                        //     style: TextStyle(
-                        //       fontSize: 20,
-                        //       color: Color(0xFF3B3240),
-                        //       fontWeight: FontWeight.bold,
-                        //     ),
-                        //   ),
-                        // ),
                         Expanded(
                           child: TextField(
                             autofocus: true,
@@ -221,24 +156,34 @@ class _ChooseAmountExtendedScreenState
                         onPressed: _chosenAmount > 0
                             ? () {
                                 FocusManager.instance.primaryFocus?.unfocus();
+                                var profilesProvider =
+                                    Provider.of<ProfilesProvider>(context,
+                                        listen: false);
+
                                 var giveAmount = _chosenAmount;
-                                if (giveAmount > walletProvider.totalAmount) {
-                                  giveAmount = walletProvider.totalAmount;
+                                if (giveAmount >
+                                    profilesProvider.activeProfile!.balance) {
+                                  giveAmount =
+                                      profilesProvider.activeProfile!.balance;
                                 }
                                 var transaction = Transaction(
                                   timestamp:
                                       DateTime.now().millisecondsSinceEpoch,
                                   amount: giveAmount,
                                 );
-                                walletProvider.createTransaction(transaction);
+
+                                profilesProvider
+                                    .createTransaction(transaction)
+                                    .then((_) =>
+                                        profilesProvider.fetchProfiles());
 
                                 AnalyticsHelper.logButtonPressedEvent(
                                     "arrow icon button",
                                     ChooseAmountExtendedScreen.routeName);
 
                                 Navigator.of(context).pushNamed(
-                                  SuccessScreen.routeName,
-                                );
+                                    SuccessScreen.routeName,
+                                    arguments: transaction);
                               }
                             : null,
                         icon: Icon(
