@@ -4,6 +4,6 @@ class ApiHelper {
   static const String profilePath = "/profiles";
 
   static String transactionPath(String guid) {
-    return "profiles/$guid/transactions";
+    return "/profiles/$guid/transactions";
   }
 }
