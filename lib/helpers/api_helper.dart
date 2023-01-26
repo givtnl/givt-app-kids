@@ -1,5 +1,5 @@
 class ApiHelper {
-  static const String apiURL = "givt-debug-api.azurewebsites.net";
+  static const String apiURL = "api.givt.app";
   static const String loginPath = "/oauth2/token";
   static const String profilePath = "/profiles";
 
