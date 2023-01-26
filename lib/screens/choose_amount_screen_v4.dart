@@ -125,6 +125,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                     var transaction = Transaction(
                       timestamp: DateTime.now().millisecondsSinceEpoch,
                       amount: giveAmount,
+                      profileGuid: profilesProvider.activeProfile!.guid,
                     );
 
                     profilesProvider

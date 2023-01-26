@@ -253,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return;
                       }
                       AnalyticsHelper.logButtonPressedEvent(
-                          "Sign in", LoginScreen.routeName);
+                          "Log in", LoginScreen.routeName);
 
                       _saveForm();
                     },
@@ -279,7 +279,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: double.infinity,
                             alignment: Alignment.center,
                             child: Text(
-                              "Sign in",
+                              "Log in",
                               style: TextStyle(
                                 fontSize: 26,
                                 color: Colors.white,

@@ -208,7 +208,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                           builder: (BuildContext context) {
                                             return AlertDialog(
                                               title: Text(
-                                                  "Are you sure you want to clear all transactions from the device?"),
+                                                  "Are you sure you want to clear transactions of the current profile?"),
                                               actions: [
                                                 TextButton(
                                                   child: Text("OK"),

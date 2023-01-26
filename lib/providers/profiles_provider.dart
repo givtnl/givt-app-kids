@@ -21,7 +21,11 @@ class ProfilesProvider with ChangeNotifier {
   List<Transaction> _transactions = [];
 
   List<Transaction> get transactions {
-    var result = [..._transactions];
+    var result = _transactions
+        .where(
+          (transaction) => transaction.profileGuid == _activeProfile?.guid,
+        )
+        .toList();
     result.sort();
     return result;
   }
@@ -121,7 +125,7 @@ class ProfilesProvider with ChangeNotifier {
               j = 0;
             }
           }
-          
+
           _profiles = fetchedList;
           if (_activeProfile != null) {
             _activeProfile = _profiles
@@ -190,7 +194,11 @@ class ProfilesProvider with ChangeNotifier {
   }
 
   Future<void> clearTransactions() async {
-    _transactions.clear();
+    _transactions = _transactions
+        .takeWhile(
+          (transaction) => transaction.profileGuid != _activeProfile?.guid,
+        )
+        .toList();
     await _saveTransactions();
     notifyListeners();
   }

@@ -170,6 +170,8 @@ class _ChooseAmountExtendedScreenState
                                   timestamp:
                                       DateTime.now().millisecondsSinceEpoch,
                                   amount: giveAmount,
+                                  profileGuid:
+                                      profilesProvider.activeProfile!.guid,
                                 );
 
                                 profilesProvider

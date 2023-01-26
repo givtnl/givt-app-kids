@@ -2,19 +2,23 @@ class Transaction implements Comparable {
   final int timestamp;
   final double amount;
   final String goalName = "Presbyterian Church Tulsa";
+  final String profileGuid;
 
   Transaction({
     required this.timestamp,
     required amount,
+    required this.profileGuid
   }) : amount = double.parse(amount.toStringAsFixed(2));
 
   Transaction.fromJson(Map<String, dynamic> json)
-      : timestamp = json['timestamp'],
-        amount = json['amount'];
+      : timestamp = json["timestamp"],
+        amount = json["amount"],
+        profileGuid = json.containsKey("profileGuid") ? json["profileGuid"] : "";
 
   Map<String, dynamic> toJson() => {
-        'timestamp': timestamp,
-        'amount': amount,
+        "timestamp": timestamp,
+        "amount": amount,
+        "profileGuid": profileGuid,
       };
 
   @override
