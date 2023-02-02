@@ -7,9 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
-import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
+//import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
 import 'package:givt_app_kids/widgets/qr_code_target.dart';
 import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
+import 'package:givt_app_kids/screens/choose_amount_slider_screen.dart';
 
 class QrCodeScanScreen extends StatefulWidget {
   static const String routeName = "/qr-code-scan";
@@ -36,7 +37,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
       ).then(
         (_) {
           Navigator.of(context).pushNamed(
-            ChooseAmountScreenV4.routeName,
+            ChooseAmountSliderScreen.routeName,
           );
         },
       );
@@ -85,7 +86,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
                         if (!_isQrCodeDetected) {
                           _isQrCodeDetected = true;
                           Navigator.of(context).pushNamed(
-                            ChooseAmountScreenV4.routeName,
+                            ChooseAmountSliderScreen.routeName,
                           );
                           final String code = barcode.rawValue!;
                           print('Barcode found! $code');
