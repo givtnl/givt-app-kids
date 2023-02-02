@@ -1,16 +1,21 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_declarations, prefer_const_literals_to_create_immutables
 import 'dart:io';
+import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:givt_app_kids/models/profile.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:provider/provider.dart';
 
 //import 'package:givt_app_kids/screens/choose_amount_screen_v4.dart';
 import 'package:givt_app_kids/widgets/qr_code_target.dart';
 import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
 import 'package:givt_app_kids/screens/choose_amount_slider_screen.dart';
+import 'package:givt_app_kids/providers/profiles_provider.dart';
+import 'package:givt_app_kids/models/organisation.dart';
 
 class QrCodeScanScreen extends StatefulWidget {
   static const String routeName = "/qr-code-scan";
@@ -22,7 +27,7 @@ class QrCodeScanScreen extends StatefulWidget {
 }
 
 class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
-  bool _isQrCodeDetected = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -41,6 +46,50 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
           );
         },
       );
+    }
+  }
+
+  Future<Organisation?> _getOrganisationDetails(String? qrCode) async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      if (qrCode == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Please scan a Givt QR code.",
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Theme.of(context).errorColor,
+          ),
+        );
+        return null;
+      }
+
+      var organisation =
+          await Provider.of<ProfilesProvider>(context, listen: false)
+              .getOrganizationDetails(qrCode);
+      dev.log(organisation.name);
+      return organisation;
+    } catch (_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Cannot scan a QR code. Please try again later.",
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return null;
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -68,7 +117,9 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 55,),
+                      SizedBox(
+                        width: 55,
+                      ),
                     ],
                   )),
             ),
@@ -77,26 +128,32 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
               child: Stack(
                 children: [
                   MobileScanner(
-                    allowDuplicates: false,
+//                    allowDuplicates: false,
                     fit: BoxFit.fitWidth,
-                    onDetect: (barcode, args) {
-                      if (barcode.rawValue == null) {
-                        print('Failed to scan Barcode');
-                      } else {
-                        if (!_isQrCodeDetected) {
-                          _isQrCodeDetected = true;
-                          Navigator.of(context).pushNamed(
-                            ChooseAmountSliderScreen.routeName,
-                          );
-                          final String code = barcode.rawValue!;
-                          print('Barcode found! $code');
-                        }
+                    onDetect: (barcode, args) async {
+                      if (_isLoading) {
+                        return;
+                      }
+
+                      var organisation =
+                          await _getOrganisationDetails(barcode.rawValue);
+                      if (organisation != null && mounted) {
+                        Navigator.of(context).pushNamed(
+                          ChooseAmountSliderScreen.routeName,
+                          arguments: organisation,
+                        );
                       }
                     },
                   ),
                   Positioned.fill(
                     child: QrCodeTarget(),
                   ),
+                  if (_isLoading)
+                    Positioned.fill(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
                 ],
               ),
             ),

@@ -10,6 +10,7 @@ import 'package:givt_app_kids/models/profile.dart';
 import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:givt_app_kids/models/transaction.dart';
 import 'package:givt_app_kids/models/monsters.dart';
+import 'package:givt_app_kids/models/organisation.dart';
 
 class ProfilesProvider with ChangeNotifier {
   static const String profilesKey = "profilesKey";
@@ -201,5 +202,38 @@ class ProfilesProvider with ChangeNotifier {
         .toList();
     await _saveTransactions();
     notifyListeners();
+  }
+
+  Future<Organisation> getOrganizationDetails(String barcode) async {
+    try {
+      final barcodeUri = Uri.parse(barcode);
+      final mediumId = barcodeUri.queryParameters['code'];
+
+      final url = Uri.https(
+        ApiHelper.apiURL,
+        ApiHelper.campaignsPath,
+        {
+          'code': mediumId,
+        },
+      );
+      var response = await http.get(
+        url,
+        // headers: {
+        //   "Authorization": "Bearer $_accessToken",
+        // },
+      );
+
+      dev.log("[getOrganizationDetails] STATUS CODE: ${response.statusCode}");
+      if (response.statusCode < 400) {
+        Map<String, dynamic> decoded = json.decode(response.body);
+        var organisation = Organisation.fromJson(decoded);
+        return organisation;
+      } else {
+        throw Exception(response.body);
+      }
+    } catch (error, stackTrace) {
+      dev.log(error.toString(), stackTrace: stackTrace);
+      rethrow;
+    }
   }
 }

@@ -9,6 +9,7 @@ import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
 import 'package:givt_app_kids/widgets/wallet.dart';
 import 'package:givt_app_kids/models/transaction.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/models/organisation.dart';
 
 class ChooseAmountSliderScreen extends StatefulWidget {
   static const String routeName = "/choose-ammount-slider";
@@ -25,6 +26,9 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final organisation =
+        ModalRoute.of(context)?.settings.arguments as Organisation;
+
     var profilesProvider = Provider.of<ProfilesProvider>(context);
 
     return SafeArea(
@@ -48,7 +52,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                 padding:
                     EdgeInsets.only(left: 50, right: 50, top: 25, bottom: 15),
                 child: Text(
-                  "Presbyterian Church Tulsa",
+                  organisation.name,
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -162,7 +166,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
 
                           Navigator.of(context).pushNamed(
                               SuccessScreen.routeName,
-                              arguments: transaction);
+                              arguments: [organisation, transaction]);
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF54A1EE),

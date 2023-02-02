@@ -7,6 +7,7 @@ import 'package:vibration/vibration.dart';
 import 'package:givt_app_kids/screens/givy_tip_screen.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/models/transaction.dart';
+import 'package:givt_app_kids/models/organisation.dart';
 
 class SuccessScreen extends StatefulWidget {
   static const String routeName = "/success";
@@ -34,8 +35,9 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final transaction =
-        ModalRoute.of(context)?.settings.arguments as Transaction;
+    final args = ModalRoute.of(context)?.settings.arguments as List;
+    final organisation = args[0] as Organisation;
+    final transaction = args[1] as Transaction;
 
     return SafeArea(
       child: Scaffold(
@@ -68,7 +70,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                       right: 50,
                     ),
                     child: Text(
-                      "You gave \$${transaction.amount.toStringAsFixed(2)} to ${transaction.goalName}",
+                      "You gave \$${transaction.amount.toStringAsFixed(2)} to ${organisation.name}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 30,
