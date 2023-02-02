@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
+import 'package:vibration/vibration.dart';
 
 import 'package:givt_app_kids/screens/givy_tip_screen.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -21,11 +22,20 @@ class _SuccessScreenState extends State<SuccessScreen> {
   void initState() {
     super.initState();
     AnalyticsHelper.logScreenView(SuccessScreen.routeName);
+    _tryVibrate();
+  }
+
+  Future<void> _tryVibrate() async {
+    var hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator == true) {
+      Vibration.vibrate();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final transaction = ModalRoute.of(context)?.settings.arguments as Transaction;
+    final transaction =
+        ModalRoute.of(context)?.settings.arguments as Transaction;
 
     return SafeArea(
       child: Scaffold(
