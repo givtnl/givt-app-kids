@@ -18,10 +18,13 @@ class ProfileItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(
-            image,
-            width: 100,
-            height: 100,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: SvgPicture.asset(
+              image,
+              width: 100,
+              height: 100,
+            ),
           ),
           SizedBox(
             height: 5,

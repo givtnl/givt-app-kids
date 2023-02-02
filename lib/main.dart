@@ -19,6 +19,7 @@ import 'package:givt_app_kids/screens/login_screen.dart';
 import 'package:givt_app_kids/providers/profiles_provider.dart';
 import 'package:givt_app_kids/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/screens/profile_selection_overlay_screen.dart';
+import 'package:givt_app_kids/screens/choose_amount_slider_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -87,6 +88,8 @@ class MyApp extends StatelessWidget {
                       ProfileSelectionScreen(),
                   ProfileSelectionOverlayScreen.routeName: (_) =>
                       ProfileSelectionOverlayScreen(),
+                  ChooseAmountSliderScreen.routeName: (_) =>
+                      ChooseAmountSliderScreen(),
                 },
               );
             },
