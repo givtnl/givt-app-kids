@@ -29,7 +29,6 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
   @override
   void initState() {
     super.initState();
-    AnalyticsHelper.logScreenView(WalletScreenV3.routeName);
   }
 
   @override

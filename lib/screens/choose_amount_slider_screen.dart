@@ -96,6 +96,10 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                           setState(() {
                             _selectedAmount = value;
                           });
+                          AnalyticsHelper.logButtonPressedEvent(
+                              "Slider changed to: \$$_selectedAmount",
+                              ChooseAmountSliderScreen.routeName);
+
                         },
                       ),
                       Padding(

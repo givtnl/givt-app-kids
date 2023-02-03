@@ -20,7 +20,6 @@ class _GivyTipScreenState extends State<GivyTipScreen> {
   @override
   void initState() {
     super.initState();
-    AnalyticsHelper.logScreenView(GivyTipScreen.routeName);
   }
 
   @override

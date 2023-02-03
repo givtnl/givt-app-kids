@@ -36,7 +36,6 @@ class _ChooseAmountExtendedScreenState
   @override
   void initState() {
     super.initState();
-    AnalyticsHelper.logScreenView(ChooseAmountExtendedScreen.routeName);
   }
 
   void _handleAmountChanged(String newValue) {

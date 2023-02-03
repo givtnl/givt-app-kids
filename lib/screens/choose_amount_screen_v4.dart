@@ -30,7 +30,6 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
   @override
   void initState() {
     super.initState();
-    AnalyticsHelper.logScreenView(ChooseAmountScreenV4.routeName);
   }
 
   @override
