@@ -10,6 +10,7 @@ import 'package:givt_app_kids/models/profile.dart';
 import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:givt_app_kids/models/transaction.dart';
 import 'package:givt_app_kids/models/monsters.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class ProfilesProvider with ChangeNotifier {
   static const String profilesKey = "profilesKey";
@@ -166,6 +167,8 @@ class ProfilesProvider with ChangeNotifier {
 
         _transactions.add(transaction);
         await _saveTransactions();
+
+        await AnalyticsHelper.logNewTransactionEvent(transaction);
 
         notifyListeners();
       } else {
