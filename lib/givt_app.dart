@@ -22,12 +22,18 @@ import 'package:givt_app_kids/screens/choose_amount_slider_screen.dart';
 import 'app_config.dart';
 
 class GivtApp extends StatelessWidget {
-  const GivtApp({super.key});
+  final AppConfig config;
+  const GivtApp(this.config, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    setEnvContext(context);
-    initAmplitude(context);
+    //Set current env API url
+    ApiHelper.apiURL = config.apiBaseUrl;
+
+    //Init Amplitude
+    final analyticsAmplitude = Amplitude.getInstance();
+    analyticsAmplitude.init(config.amplitudePublicKey);
+    analyticsAmplitude.trackingSessionEvents(true);
 
     return MultiProvider(
       providers: [
@@ -87,19 +93,5 @@ class GivtApp extends StatelessWidget {
         },
       ),
     );
-  }
-
-  void initAmplitude(BuildContext context) {
-    final config = AppConfig.of(context)!;
-    final analyticsAmplitude = Amplitude.getInstance();
-
-    analyticsAmplitude.init(config.amplitudePublicKey);
-    analyticsAmplitude.trackingSessionEvents(true);
-  }
-
-  void setEnvContext(BuildContext context) {
-    final config = AppConfig.of(context)!; 
-
-    ApiHelper.apiURL = config.apiBaseUrl;
   }
 }
