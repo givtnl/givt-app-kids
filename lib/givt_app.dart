@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/material.dart';
 
@@ -21,24 +19,11 @@ import 'package:givt_app_kids/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/screens/profile_selection_overlay_screen.dart';
 import 'package:givt_app_kids/screens/choose_amount_slider_screen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  static Amplitude analytics_amplitude = Amplitude.getInstance();
+class GivtApp extends StatelessWidget {
+  const GivtApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-  // Init SDK
-  analytics_amplitude.init("05353d3a94c0d52d75cc1e7d13faa8e1");
-  analytics_amplitude.trackingSessionEvents(true);
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
