@@ -46,6 +46,7 @@ platform :ios do
         sh("flutter", "build", "ipa", "--flavor", flavor, "--target", "lib/main_#{flavor}.dart", "--dart-define=API_URL=#{api_url}", "--build-number=#{build_number}")
     end
     build_app(
+      scheme: flavor,
       skip_build_archive: true, 
       include_symbols: true, 
       archive_path: "../build/ios/archive/Runner.xcarchive"
