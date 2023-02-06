@@ -627,7 +627,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.givtapp.kids.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.givtapp.kids";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.givtapp.kids.test";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -707,7 +707,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.givtapp.kids.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.givtapp.kids";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.givtapp.kids.test";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -784,7 +784,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.givtapp.kids.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.givtapp.kids";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.givtapp.kids.test";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
