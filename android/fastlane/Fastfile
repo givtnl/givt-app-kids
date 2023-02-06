@@ -35,7 +35,6 @@ platform :android do
       package_name = "net.givtapp.kids"
       flavor = "production"
     end
-    flavor = "production"
     build_number = google_play_track_version_codes(track: "internal", json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'])[0] + 1
     Dir.chdir "../.." do
         sh("flutter", "packages", "get")
