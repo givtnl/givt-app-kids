@@ -28,15 +28,19 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :build_and_deploy do
+    package_name = "net.givtapp.kids"
+    flavor = "production"
+    api_url = "api.givt.app"
     build_number = google_play_track_version_codes(track: "internal", json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'])[0] + 1
     Dir.chdir "../.." do
         sh("flutter", "packages", "get")
         sh("flutter", "clean")
         sh("flutter", "build", "appbundle", "--build-number=#{build_number}")
+        sh("flutter", "build", "appbundle", "--flavor", flavor, "--target", "lib/main_#{flavor}.dart", "--dart-define=API_URL=#{api_url}", "--build-number=#{build_number}")
     end
     signed_aab_path = match_keystore(git_url: "git@github.com:givtnl/givt.apps.codesigning.git", 
-                    package_name: "net.givtapp.kids",
-                    aab_path: "../build/app/outputs/bundle/release/app-release.aab",
+                    package_name: package_name,
+                    aab_path: "../build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab",
                     match_secret: ENV['MATCH_PASSWORD'],
                     override_keystore: false)
     upload_to_play_store(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], 
