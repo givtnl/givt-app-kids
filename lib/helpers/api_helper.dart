@@ -1,5 +1,5 @@
 class ApiHelper {
-  static const String apiURL = "api.givt.app";
+  static String apiURL = const String.fromEnvironment('API_URL');
   static const String loginPath = "/oauth2/token";
   static const String profilePath = "/profiles";
 
