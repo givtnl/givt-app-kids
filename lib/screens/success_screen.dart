@@ -22,7 +22,6 @@ class _SuccessScreenState extends State<SuccessScreen> {
   @override
   void initState() {
     super.initState();
-    AnalyticsHelper.logScreenView(SuccessScreen.routeName);
     _tryVibrate();
   }
 

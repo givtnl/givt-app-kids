@@ -33,8 +33,6 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
   void initState() {
     super.initState();
 
-    AnalyticsHelper.logScreenView(QrCodeScanScreen.routeName);
-
     //temporary code to test on iOS simulators
     if (kDebugMode && Platform.isIOS) {
       Future.delayed(

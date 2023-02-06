@@ -41,23 +41,17 @@ class AnalyticsHelper {
     );
   }
 
-  static Future<void> logWalletAmountEvent(double amount) async {
-    var now = DateTime.now();
-    Amplitude.getInstance().logEvent(
-      walletAmountKey,
-      eventProperties: {
-        amountKey: amount,
-        timestampKey: now.millisecondsSinceEpoch,
-        formattedDateKey: _getFormattedTime(now),
-      },
-    );
-  }
-
-  static Future<void> logScreenView(String screenName) async {
-    // await FirebaseAnalytics.instance.logScreenView(
-    //   screenName: screenName,
-    // );
-  }
+  // static Future<void> logWalletAmountEvent(double amount) async {
+  //   var now = DateTime.now();
+  //   Amplitude.getInstance().logEvent(
+  //     walletAmountKey,
+  //     eventProperties: {
+  //       amountKey: amount,
+  //       timestampKey: now.millisecondsSinceEpoch,
+  //       formattedDateKey: _getFormattedTime(now),
+  //     },
+  //   );
+  // }
 
   static Future<void> logButtonPressedEvent(
       String buttonName, String screenName) async {
