@@ -1,6 +1,6 @@
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/material.dart';
-
+import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:provider/provider.dart';
 
 import 'package:givt_app_kids/providers/goals_provider.dart';
@@ -19,11 +19,16 @@ import 'package:givt_app_kids/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/screens/profile_selection_overlay_screen.dart';
 import 'package:givt_app_kids/screens/choose_amount_slider_screen.dart';
 
+import 'app_config.dart';
+
 class GivtApp extends StatelessWidget {
   const GivtApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    setEnvContext(context);
+    initAmplitude(context);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -82,5 +87,19 @@ class GivtApp extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void initAmplitude(BuildContext context) {
+    final config = AppConfig.of(context)!;
+    final analyticsAmplitude = Amplitude.getInstance();
+
+    analyticsAmplitude.init(config.amplitudePublicKey);
+    analyticsAmplitude.trackingSessionEvents(true);
+  }
+
+  void setEnvContext(BuildContext context) {
+    final config = AppConfig.of(context)!; 
+
+    ApiHelper.apiURL = config.apiBaseUrl;
   }
 }
