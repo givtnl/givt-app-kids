@@ -158,6 +158,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                             timestamp: DateTime.now().millisecondsSinceEpoch,
                             amount: _selectedAmount,
                             profileGuid: profilesProvider.activeProfile!.guid,
+                            goalName: organisation.name,
                           );
 
                           profilesProvider

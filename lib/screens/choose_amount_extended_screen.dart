@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/models/organisation.dart';
 
 import 'package:provider/provider.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
@@ -63,6 +64,8 @@ class _ChooseAmountExtendedScreenState
 
   @override
   Widget build(BuildContext context) {
+    final organisation =
+        ModalRoute.of(context)?.settings.arguments as Organisation;
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFFF1EAE2),
@@ -166,12 +169,12 @@ class _ChooseAmountExtendedScreenState
                                       profilesProvider.activeProfile!.balance;
                                 }
                                 var transaction = Transaction(
-                                  timestamp:
-                                      DateTime.now().millisecondsSinceEpoch,
-                                  amount: giveAmount,
-                                  profileGuid:
-                                      profilesProvider.activeProfile!.guid,
-                                );
+                                    timestamp:
+                                        DateTime.now().millisecondsSinceEpoch,
+                                    amount: giveAmount,
+                                    profileGuid:
+                                        profilesProvider.activeProfile!.guid,
+                                    goalName: organisation.name);
 
                                 profilesProvider
                                     .createTransaction(transaction)
