@@ -24,11 +24,11 @@ platform :ios do
   desc "Push a new build to Testflight"
   lane :release do
     if git_branch == "main"
-      app_identifier = "net.givtapp.kids.test"
-      flavor = "development"
-    else
       app_identifier = "net.givtapp.kids"
       flavor = "production"
+    else
+      app_identifier = "net.givtapp.kids.test"
+      flavor = "development"
     end
     setup_ci
     sync_code_signing(type: "appstore", readonly: true, app_identifier: app_identifier, git_url: git_url)
