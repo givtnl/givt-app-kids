@@ -9,6 +9,7 @@ class AnalyticsHelper {
   static const String userAgeKey = "user_age";
   static const String newTransactionKey = "new_transaction";
   static const String amountKey = "amount";
+  static const String goalKey = "goal_name";
   static const String walletAmountKey = "wallet_amount";
   static const String buttonPressedKey = "button_pressed";
   static const String buttonNameKey = "button_name";
@@ -35,6 +36,7 @@ class AnalyticsHelper {
     Amplitude.getInstance().logEvent(
       newTransactionKey, eventProperties: {
         amountKey: transaction.amount,
+        goalKey: transaction.goalName,
         timestampKey: now.millisecondsSinceEpoch,
         formattedDateKey: _getFormattedTime(now),
       },
