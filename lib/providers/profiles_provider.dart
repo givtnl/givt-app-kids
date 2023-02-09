@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/models/child_transaction.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -158,7 +159,8 @@ class ProfilesProvider with ChangeNotifier {
           'Content-Type': 'application/json',
         },
         body: json.encode({
-          "amount": transaction.amount,
+        "destinationName": transaction.goalName,
+        "amount":transaction.amount,
         }),
       );
       dev.log("[createTransaction] STATUS CODE: ${response.statusCode}");

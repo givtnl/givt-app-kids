@@ -8,7 +8,7 @@ class Transaction implements Comparable {
       {required this.timestamp,
       required amount,
       required this.profileGuid,
-      required this.goalName})
+       this.goalName = "Christ Pres Chruch -b"})
       : amount = double.parse(amount.toStringAsFixed(2));
 
   Transaction.fromJson(Map<String, dynamic> json)
