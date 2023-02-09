@@ -28,6 +28,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
   }
 
   Future<void> _fetchProfiles() async {
+    if (!mounted) return;
     try {
       setState(() {
         _isLoading = true;
