@@ -180,6 +180,45 @@ class ProfilesProvider with ChangeNotifier {
       rethrow;
     }
   }
+    Future<void> createTransactionNew(ChildTransaction transaction) async {
+    try {
+      final url = Uri.https(
+        /*ApiHelper.apiURL*/ "kids-production-api.azurewebsites.net",
+        ApiHelper.transactionPath(_activeProfile!.guid),
+      );
+      var response = await http.post(
+        url,
+        headers: {
+          "Authorization": "Bearer $_accessToken",
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+        "destinationID": transaction.destinationID,
+        "destinationName": transaction.destinationName,
+        "destinationCampaignName": transaction.destinationCampaignName,
+        "amount":transaction.amount,
+        }),
+      );
+      dev.log("[createTransaction] STATUS CODE: ${response.statusCode}");
+      if (response.statusCode < 400) {
+        var decodedBody = json.decode(response.body);
+        dev.log(decodedBody.toString());
+
+// TO DO: IMPLEMENT NORMAL TRANSACTION FUNCTIONALITY WITH THE UPDATED CLASS
+        // _transactions.add(transaction);
+        // await _saveTransactions();
+
+        // await AnalyticsHelper.logNewTransactionEvent(transaction);
+
+        notifyListeners();
+      } else {
+        throw Exception(jsonDecode(response.body));
+      }
+    } catch (error, stackTrace) {
+      dev.log(error.toString(), stackTrace: stackTrace);
+      rethrow;
+    }
+  }
 
   Future<void> clearProfiles() async {
     _profiles.clear();
