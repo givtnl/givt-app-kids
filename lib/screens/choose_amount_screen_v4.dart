@@ -11,6 +11,8 @@ import 'package:givt_app_kids/widgets/wallet.dart';
 import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
 import 'package:givt_app_kids/providers/profiles_provider.dart';
 
+import '../models/organisation.dart';
+
 class ChooseAmountScreenV4 extends StatefulWidget {
   static const String routeName = "/choose-ammount-v4";
 
@@ -26,6 +28,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
   final double addScrollThreshold = 500;
 
   int _currentAmountIndex = -1;
+  
 
   @override
   void initState() {
@@ -49,6 +52,8 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
   }
 
   Widget _createMainLayout(BuildContext context, bool addScroll) {
+        final organisation =
+        ModalRoute.of(context)?.settings.arguments as Organisation;
     return Column(
       children: [
         Column(
@@ -125,6 +130,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                       timestamp: DateTime.now().millisecondsSinceEpoch,
                       amount: giveAmount,
                       profileGuid: profilesProvider.activeProfile!.guid,
+                      goalName: organisation.name,
                     );
 
                     profilesProvider

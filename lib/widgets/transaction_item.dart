@@ -32,7 +32,7 @@ class TransactionItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            transaction.goalName,
+            transaction.goalName ?? 'Christ Pres Chruch -f',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
