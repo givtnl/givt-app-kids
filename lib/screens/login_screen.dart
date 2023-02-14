@@ -223,8 +223,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                                 child: SvgPicture.asset(
                                   _isPasswordVisible
-                                      ? "assets/images/password_show.svg"
-                                      : "assets/images/password_hide.svg",
+                                      ? "assets/images/password_hide.svg"
+                                      : "assets/images/password_show.svg",
                                   width: 20,
                                   height: 20,
                                 ),
