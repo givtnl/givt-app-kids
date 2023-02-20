@@ -46,7 +46,9 @@ platform :android do
                     aab_path: "../build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab",
                     match_secret: ENV['MATCH_PASSWORD'],
                     override_keystore: false)
-    upload_to_play_store(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], 
+    upload_to_play_store(
+                        package_name: package_name,
+                        json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], 
                         aab: signed_aab_path,
                         release_status: "completed",
                         track: "internal")
