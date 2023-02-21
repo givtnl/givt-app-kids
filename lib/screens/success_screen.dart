@@ -54,9 +54,9 @@ class _SuccessScreenState extends State<SuccessScreen> {
                     width: double.infinity,
                     alignment: Alignment.center,
                     child: SvgPicture.asset(
-                      "assets/images/givy_celebrates.svg",
                       width: 160,
                       fit: BoxFit.fitWidth,
+                      "assets/images/givy_confetti_2.svg",
                     ),
                   ),
                   SizedBox(
