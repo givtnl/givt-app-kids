@@ -212,9 +212,7 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        icon: Image(
-                          image: AssetImage("assets/images/qr.png"),
-                        ),
+                        icon:  SvgPicture.asset("assets/images/qr_icon.svg"),
                         label: Padding(
                           padding: EdgeInsets.only(
                             top: 12,
