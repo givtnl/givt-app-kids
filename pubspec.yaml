@@ -38,33 +38,7 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
-    - assets/images/xmas.jpg
-    - assets/images/shelter.jpg
-    - assets/images/givy_superman.png
-    - assets/images/child.svg
-    - assets/images/dog.svg
-    - assets/icon/app_icon_test.png
-    - assets/images/avatar.svg
-    - assets/images/givy_celebrates.png
-    - assets/images/reconstruction.jpg
-    - assets/images/church.svg
-    - assets/images/wallet.png
-    - assets/images/qr.png
-    - assets/images/home.svg
-    - assets/images/givy_superman.svg
-    - assets/images/givy_celebrates.svg
-    - assets/images/givy_tip.svg
-    - assets/images/target_left_top.svg
-    - assets/images/target_left_bottom.svg
-    - assets/images/target_right_top.svg
-    - assets/images/target_right_bottom.svg
-    - assets/lotties/confetti.json
-    - assets/images/password_show.svg
-    - assets/images/password_hide.svg
-    - assets/images/monster1.svg
-    - assets/images/monster2.svg
-    - assets/images/monster3.svg
-    - assets/images/monster4.svg
+    - assets/images/
 
   fonts:
     - family: Raleway
