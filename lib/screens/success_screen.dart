@@ -56,7 +56,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                     child: SvgPicture.asset(
                       width: 160,
                       fit: BoxFit.fitWidth,
-                      "assets/images/givy_confetti_2.svg",
+                      "assets/images/givy_confetti.svg",
                     ),
                   ),
                   SizedBox(
