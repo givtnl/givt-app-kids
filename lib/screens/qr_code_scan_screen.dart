@@ -27,7 +27,7 @@ class QrCodeScanScreen extends StatefulWidget {
 }
 
 class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
-  MobileScannerController cameraController = MobileScannerController();
+  final MobileScannerController _cameraController = MobileScannerController();
   bool _isLoading = false;
 
   @override
@@ -94,7 +94,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
 
   @override
   void dispose() {
-    cameraController.dispose();
+    _cameraController.dispose();
     super.dispose();
   }
 
@@ -134,7 +134,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
                 children: [
                   MobileScanner(
 //                    allowDuplicates: false,
-                    controller: cameraController,
+                    controller: _cameraController,
                     fit: BoxFit.fitWidth,
                     onDetect: (barcode, args) async {
                       if (_isLoading) {
