@@ -58,7 +58,7 @@ flutter:
     - assets/images/target_left_bottom.svg
     - assets/images/target_right_top.svg
     - assets/images/target_right_bottom.svg
-    - assets/lotties/confetti.json
+    - assets/lotties/donation.json
     - assets/images/password_show.svg
     - assets/images/password_hide.svg
     - assets/images/monster1.svg
