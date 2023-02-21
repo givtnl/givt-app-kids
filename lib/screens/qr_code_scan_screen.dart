@@ -144,7 +144,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
                       var organisation =
                           await _getOrganisationDetails(barcode.rawValue);
                       if (organisation != null && mounted) {
-                        Navigator.of(context).pushNamed(
+                        Navigator.of(context).pushReplacementNamed(
                           ChooseAmountSliderScreen.routeName,
                           arguments: organisation,
                         );
