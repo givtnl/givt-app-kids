@@ -27,6 +27,7 @@ class QrCodeScanScreen extends StatefulWidget {
 }
 
 class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
+  final MobileScannerController _cameraController = MobileScannerController();
   bool _isLoading = false;
 
   @override
@@ -95,6 +96,12 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
   }
 
   @override
+  void dispose() {
+    _cameraController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -130,6 +137,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
                 children: [
                   MobileScanner(
 //                    allowDuplicates: false,
+                    controller: _cameraController,
                     fit: BoxFit.fitWidth,
                     onDetect: (barcode, args) async {
                       if (_isLoading) {
@@ -139,7 +147,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
                       var organisation =
                           await _getOrganisationDetails(barcode.rawValue);
                       if (organisation != null && mounted) {
-                        Navigator.of(context).pushNamed(
+                        Navigator.of(context).pushReplacementNamed(
                           ChooseAmountSliderScreen.routeName,
                           arguments: organisation,
                         );
