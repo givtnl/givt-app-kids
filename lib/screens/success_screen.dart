@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:vibration/vibration.dart';
@@ -52,12 +53,10 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   Container(
                     width: double.infinity,
                     alignment: Alignment.center,
-                    child: Image(
+                    child: SvgPicture.asset(
                       width: 160,
                       fit: BoxFit.fitWidth,
-                      image: AssetImage(
-                        "assets/images/givy_celebrates.png",
-                      ),
+                      "assets/images/givy_confetti.svg",
                     ),
                   ),
                   SizedBox(

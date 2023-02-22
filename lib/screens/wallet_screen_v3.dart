@@ -180,11 +180,10 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
                               );
                               _scaffoldKey.currentState!.openDrawer();
                             },
-                            child: Image(
-                              height: 140,
-                              fit: BoxFit.fitHeight,
-                              image: AssetImage("assets/images/wallet.png"),
-                            ),
+                            child: SvgPicture.asset(
+                                height: 140,
+                                fit: BoxFit.fitHeight,
+                                "assets/images/wallet.svg"),
                           ),
                         ),
                       ],
@@ -213,9 +212,7 @@ class _WalletScreenV3State extends State<WalletScreenV3> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        icon: Image(
-                          image: AssetImage("assets/images/qr.png"),
-                        ),
+                        icon:  SvgPicture.asset("assets/images/qr_icon.svg"),
                         label: Padding(
                           padding: EdgeInsets.only(
                             top: 12,
