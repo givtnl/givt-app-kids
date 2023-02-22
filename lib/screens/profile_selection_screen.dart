@@ -36,6 +36,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
       await Provider.of<ProfilesProvider>(context, listen: false)
           .fetchProfiles();
     } catch (_) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
