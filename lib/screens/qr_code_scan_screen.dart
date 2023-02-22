@@ -41,6 +41,9 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
         (_) {
           Navigator.of(context).pushNamed(
             ChooseAmountSliderScreen.routeName,
+            arguments: Organisation(
+              name: "Mock Organisation",
+            ),
           );
         },
       );

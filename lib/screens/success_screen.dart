@@ -43,22 +43,24 @@ class _SuccessScreenState extends State<SuccessScreen> {
       child: Scaffold(
         body: Container(
           width: double.infinity,
-          color: Color(0xFF54A1EE),
+          color: Color(0xFFB9D7FF),
           child: Stack(
             children: [
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Lottie.asset(
+                      "assets/lotties/donation.json",
+                      fit: BoxFit.fitWidth,
+                      width: double.infinity,
+                    ),
+                  ),
+                ),
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Spacer(flex: 2),
-                  Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    child: SvgPicture.asset(
-                      width: 160,
-                      fit: BoxFit.fitWidth,
-                      "assets/images/givy_confetti.svg",
-                    ),
-                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -77,9 +79,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                       ),
                     ),
                   ),
-                  Spacer(
-                    flex: 2,
-                  ),
+                  Spacer(),
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.only(
@@ -118,16 +118,6 @@ class _SuccessScreenState extends State<SuccessScreen> {
                     ),
                   ),
                 ],
-              ),
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: Lottie.asset(
-                    "assets/lotties/confetti.json",
-                    fit: BoxFit.fitHeight,
-                    height: double.infinity,
-                    width: double.infinity,
-                  ),
-                ),
               ),
             ],
           ),
