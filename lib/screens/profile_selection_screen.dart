@@ -28,7 +28,6 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
   }
 
   Future<void> _fetchProfiles() async {
-    if (!mounted) return;
     try {
       setState(() {
         _isLoading = true;
@@ -93,14 +92,27 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                 ? Center(
                     child: Padding(
                       padding: EdgeInsets.all(50),
-                      child: Text(
-                        "There is no profiles attached to the current user.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF54A1EE),
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "There are no profiles attached to the current user.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF54A1EE),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () => _fetchProfiles(),
+                            icon: Icon(Icons.refresh_rounded),
+                            label: Text("Retry"),
+                          ),
+                        ],
                       ),
                     ),
                   )
