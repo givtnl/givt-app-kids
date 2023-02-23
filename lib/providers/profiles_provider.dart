@@ -156,9 +156,6 @@ class ProfilesProvider with ChangeNotifier {
           for (var element in decodedBody) {
             var profileGuid = element["guid"];
 
-            var profileTransactions = await _fetchTransactions(profileGuid);
-            fetchedTransactions.addAll(profileTransactions);
-
             fetchedProfiles.add(
               Profile(
                 guid: profileGuid,
@@ -169,11 +166,15 @@ class ProfilesProvider with ChangeNotifier {
               ),
             );
           }
-          fetchedList.sort();
+          fetchedProfiles.sort();
 
-          for (var i = 0, j = 0; i < fetchedList.length; i++, j++) {
-            var profile = fetchedList[i];
-            sortedList.add(
+          for (var i = 0, j = 0; i < fetchedProfiles.length; i++, j++) {
+            var profile = fetchedProfiles[i];
+
+            var profileTransactions = await _fetchTransactions(profile.guid);
+            fetchedTransactions.addAll(profileTransactions);
+
+            sortedProfiles.add(
               Profile(
                 guid: profile.guid,
                 name: profile.name,
