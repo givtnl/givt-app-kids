@@ -28,7 +28,6 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
   final double addScrollThreshold = 500;
 
   int _currentAmountIndex = -1;
-  
 
   @override
   void initState() {
@@ -52,7 +51,7 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
   }
 
   Widget _createMainLayout(BuildContext context, bool addScroll) {
-        final organisation =
+    final organisation =
         ModalRoute.of(context)?.settings.arguments as Organisation;
     return Column(
       children: [
@@ -127,15 +126,13 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                       giveAmount = profilesProvider.activeProfile!.balance;
                     }
                     var transaction = Transaction(
-                      timestamp: DateTime.now().millisecondsSinceEpoch,
+                      createdAt: DateTime.now().toIso8601String(),
                       amount: giveAmount,
-                      profileGuid: profilesProvider.activeProfile!.guid,
-                      goalName: organisation.name,
+                      parentGuid: profilesProvider.activeProfile!.guid,
+                      destinationName: organisation.name,
                     );
 
-                    profilesProvider
-                        .createTransaction(transaction)
-                        .then((_) => profilesProvider.fetchProfiles());
+                    profilesProvider.createTransaction(transaction);
 
                     AnalyticsHelper.logButtonPressedEvent(
                         "Give to this goal", ChooseAmountScreenV4.routeName);

@@ -157,15 +157,13 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                               listen: false);
 
                           var transaction = Transaction(
-                            timestamp: DateTime.now().millisecondsSinceEpoch,
+                            createdAt: DateTime.now().toIso8601String(),
                             amount: _selectedAmount,
-                            profileGuid: profilesProvider.activeProfile!.guid,
-                            goalName: organisation.name,
+                            parentGuid: profilesProvider.activeProfile!.guid,
+                            destinationName: organisation.name,
                           );
 
-                          profilesProvider
-                              .createTransaction(transaction)
-                              .then((_) => profilesProvider.fetchProfiles());
+                          profilesProvider.createTransaction(transaction);
 
                           AnalyticsHelper.logButtonPressedEvent(
                               "Give to this goal",
