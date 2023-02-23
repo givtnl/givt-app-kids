@@ -1,33 +1,38 @@
 class Transaction implements Comparable {
-  final int timestamp;
+  final String createdAt;
   final double amount;
-  final String goalName;
-  final String profileGuid;
+  final String destinationName;
+  final String parentGuid;
 
   Transaction(
-      {required this.timestamp,
+      {required this.createdAt,
       required amount,
-      required this.profileGuid,
-       this.goalName = "Christ Pres Chruch -b"})
+      required this.parentGuid,
+      this.destinationName = "Christ Pres Chruch -b"})
       : amount = double.parse(amount.toStringAsFixed(2));
 
   Transaction.fromJson(Map<String, dynamic> json)
-      : timestamp = json["timestamp"],
+      : parentGuid = json["parentGuid"],
+        createdAt = json["createdAt"],
         amount = json["amount"],
-        goalName = json["goalName"],
-        profileGuid =
-            json.containsKey("profileGuid") ? json["profileGuid"] : "";
+        destinationName = json["destinationName"];
 
   Map<String, dynamic> toJson() => {
-        "timestamp": timestamp,
+        "parentGuid": parentGuid,
+        "createdAt": createdAt,
         "amount": amount,
-        "profileGuid": profileGuid,
-        "goalName" : goalName,
+        "destinationName": destinationName,
       };
 
   @override
   int compareTo(other) {
-    if (timestamp == other.timestamp) return 0;
-    return timestamp > other.timestamp ? -1 : 1;
+    DateTime createdAtDateTimeThis = DateTime.parse(createdAt);
+    DateTime createdAtDateTimeOther = DateTime.parse(other.createdAt);
+    if (createdAtDateTimeThis.millisecondsSinceEpoch ==
+        createdAtDateTimeOther.millisecondsSinceEpoch) return 0;
+    return createdAtDateTimeThis.millisecondsSinceEpoch >
+            createdAtDateTimeOther.millisecondsSinceEpoch
+        ? -1
+        : 1;
   }
 }
