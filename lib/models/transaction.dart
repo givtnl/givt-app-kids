@@ -4,12 +4,12 @@ class Transaction implements Comparable {
   final String destinationName;
   final String parentGuid;
 
-  Transaction(
-      {required this.createdAt,
-      required amount,
-      required this.parentGuid,
-      this.destinationName = "Christ Pres Chruch -b"})
-      : amount = double.parse(amount.toStringAsFixed(2));
+  Transaction({
+    required this.createdAt,
+    required amount,
+    required this.parentGuid,
+    required this.destinationName,
+  }) : amount = double.parse(amount.toStringAsFixed(2));
 
   Transaction.fromJson(Map<String, dynamic> json)
       : parentGuid = json["parentGuid"],
@@ -26,13 +26,8 @@ class Transaction implements Comparable {
 
   @override
   int compareTo(other) {
-    DateTime createdAtDateTimeThis = DateTime.parse(createdAt);
-    DateTime createdAtDateTimeOther = DateTime.parse(other.createdAt);
-    if (createdAtDateTimeThis.millisecondsSinceEpoch ==
-        createdAtDateTimeOther.millisecondsSinceEpoch) return 0;
-    return createdAtDateTimeThis.millisecondsSinceEpoch >
-            createdAtDateTimeOther.millisecondsSinceEpoch
-        ? -1
-        : 1;
+    var createdAtThis = DateTime.parse(createdAt);
+    var createdAtOther = DateTime.parse(other.createdAt);
+    return createdAtOther.compareTo(createdAtThis);
   }
 }

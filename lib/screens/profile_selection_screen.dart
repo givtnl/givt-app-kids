@@ -96,7 +96,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "There is no profiles attached to the current user.",
+                            "There are no profiles attached to the current user.",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Color(0xFF54A1EE),
