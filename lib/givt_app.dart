@@ -12,7 +12,6 @@ import 'package:givt_app_kids/screens/choose_amount_extended_screen.dart';
 
 import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/providers/auth_provider.dart';
-import 'package:givt_app_kids/screens/givy_tip_screen.dart';
 import 'package:givt_app_kids/screens/login_screen.dart';
 import 'package:givt_app_kids/providers/profiles_provider.dart';
 import 'package:givt_app_kids/screens/profile_selection_screen.dart';
@@ -78,7 +77,6 @@ class GivtApp extends StatelessWidget {
                   ChooseAmountScreenV4.routeName: (_) => ChooseAmountScreenV4(),
                   ChooseAmountExtendedScreen.routeName: (_) =>
                       ChooseAmountExtendedScreen(),
-                  GivyTipScreen.routeName: (_) => GivyTipScreen(),
                   LoginScreen.routeName: (_) => LoginScreen(),
                   ProfileSelectionScreen.routeName: (_) =>
                       ProfileSelectionScreen(),

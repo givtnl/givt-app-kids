@@ -14,7 +14,7 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dateTime = DateTime.fromMillisecondsSinceEpoch(transaction.timestamp);
+    var dateTime = DateTime.parse(transaction.createdAt);
     var dateString = DateFormat("MM/dd").format(dateTime);
 
     return Container(
@@ -32,7 +32,7 @@ class TransactionItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            transaction.goalName ?? 'Christ Pres Chruch -f',
+            transaction.destinationName,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -40,7 +40,9 @@ class TransactionItem extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 5,),
+          SizedBox(
+            height: 5,
+          ),
           Row(
             children: [
               Text(
@@ -56,7 +58,6 @@ class TransactionItem extends StatelessWidget {
                   color: Color(0xFF3B3240),
                 ),
               ),
-
             ],
           ),
         ],

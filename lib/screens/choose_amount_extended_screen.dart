@@ -169,17 +169,13 @@ class _ChooseAmountExtendedScreenState
                                       profilesProvider.activeProfile!.balance;
                                 }
                                 var transaction = Transaction(
-                                    timestamp:
-                                        DateTime.now().millisecondsSinceEpoch,
+                                    createdAt: DateTime.now().toIso8601String(),
                                     amount: giveAmount,
-                                    profileGuid:
+                                    parentGuid:
                                         profilesProvider.activeProfile!.guid,
-                                    goalName: organisation.name);
+                                    destinationName: organisation.name);
 
-                                profilesProvider
-                                    .createTransaction(transaction)
-                                    .then((_) =>
-                                        profilesProvider.fetchProfiles());
+                                profilesProvider.createTransaction(transaction);
 
                                 AnalyticsHelper.logButtonPressedEvent(
                                     "arrow icon button",
