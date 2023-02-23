@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/providers/profiles_provider.dart';
 
 import 'package:provider/provider.dart';
 
@@ -10,6 +9,8 @@ import 'package:givt_app_kids/widgets/wallet.dart';
 import 'package:givt_app_kids/models/transaction.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/models/organisation.dart';
+import 'package:givt_app_kids/providers/profiles_provider.dart';
+import 'package:givt_app_kids/helpers/vibrator.dart';
 
 class ChooseAmountSliderScreen extends StatefulWidget {
   static const String routeName = "/choose-ammount-slider";
@@ -97,6 +98,8 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                         divisions:
                             profilesProvider.activeProfile!.balance.round(),
                         onChanged: (value) {
+                          Vibrator.tryVibrate(
+                              duration: Duration(milliseconds: 300));
                           setState(() {
                             _selectedAmount = value;
                           });

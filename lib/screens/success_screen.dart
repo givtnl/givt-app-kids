@@ -4,13 +4,11 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
-import 'package:vibration/vibration.dart';
-import 'package:provider/provider.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/models/transaction.dart';
 import 'package:givt_app_kids/models/organisation.dart';
-import 'package:givt_app_kids/providers/profiles_provider.dart';
+import 'package:givt_app_kids/helpers/vibrator.dart';
 
 class SuccessScreen extends StatefulWidget {
   static const String routeName = "/success";
@@ -27,14 +25,8 @@ class _SuccessScreenState extends State<SuccessScreen> {
   @override
   void initState() {
     super.initState();
-    _tryVibrate();
-  }
 
-  Future<void> _tryVibrate() async {
-    var hasVibrator = await Vibration.hasVibrator();
-    if (hasVibrator == true) {
-      Vibration.vibrate();
-    }
+    Vibrator.tryVibrate(duration: Duration(milliseconds: 2500));
   }
 
   Future<void> _completeDonation() async {
