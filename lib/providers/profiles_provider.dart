@@ -112,16 +112,32 @@ class ProfilesProvider with ChangeNotifier {
       if (response.statusCode < 400) {
         var decodedBody = json.decode(response.body);
         List<Profile> fetchedList = [];
+        List<Profile> sortedList = [];
 
         if (decodedBody is List) {
-          for (var i = 0, j = 0; i < decodedBody.length; i++, j++) {
-            var element = decodedBody[i];
+          for (var element in decodedBody) {
             fetchedList.add(
               Profile(
-                  guid: element["guid"],
-                  name: element["name"],
-                  balance: element["balance"],
-                  monster: Monsters.values[j]),
+                guid: element["guid"],
+                name: element["name"],
+                balance: element["balance"],
+                monster: Monsters.blue,
+                createdAt: element["createdAt"],
+              ),
+            );
+          }
+          fetchedList.sort();
+
+          for (var i = 0, j = 0; i < fetchedList.length; i++, j++) {
+            var profile = fetchedList[i];
+            sortedList.add(
+              Profile(
+                guid: profile.guid,
+                name: profile.name,
+                balance: profile.balance,
+                monster: Monsters.values[j],
+                createdAt: profile.createdAt,
+              ),
             );
 
             if (j == Monsters.values.length - 1) {
@@ -129,7 +145,7 @@ class ProfilesProvider with ChangeNotifier {
             }
           }
 
-          _profiles = fetchedList;
+          _profiles = sortedList;
           if (_activeProfile != null) {
             _activeProfile = _profiles
                 .firstWhere((profile) => profile.guid == _activeProfile!.guid);
@@ -159,8 +175,8 @@ class ProfilesProvider with ChangeNotifier {
           'Content-Type': 'application/json',
         },
         body: json.encode({
-        "destinationName": transaction.goalName,
-        "amount":transaction.amount,
+          "destinationName": transaction.goalName,
+          "amount": transaction.amount,
         }),
       );
       dev.log("[createTransaction] STATUS CODE: ${response.statusCode}");
@@ -182,7 +198,8 @@ class ProfilesProvider with ChangeNotifier {
       rethrow;
     }
   }
-    Future<void> createTransactionNew(ChildTransaction transaction) async {
+
+  Future<void> createTransactionNew(ChildTransaction transaction) async {
     try {
       final url = Uri.https(
         /*ApiHelper.apiURL*/ "kids-production-api.azurewebsites.net",
@@ -195,10 +212,10 @@ class ProfilesProvider with ChangeNotifier {
           'Content-Type': 'application/json',
         },
         body: json.encode({
-        "destinationID": transaction.destinationID,
-        "destinationName": transaction.destinationName,
-        "destinationCampaignName": transaction.destinationCampaignName,
-        "amount":transaction.amount,
+          "destinationID": transaction.destinationID,
+          "destinationName": transaction.destinationName,
+          "destinationCampaignName": transaction.destinationCampaignName,
+          "amount": transaction.amount,
         }),
       );
       dev.log("[createTransaction] STATUS CODE: ${response.statusCode}");
