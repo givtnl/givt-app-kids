@@ -115,7 +115,6 @@ class ProfilesProvider with ChangeNotifier {
 
         if (decodedBody is List) {
           for (var transactionItem in decodedBody) {
-            print(transactionItem);
             fetchedList.add(
               Transaction(
                 parentGuid: profileGuid,
