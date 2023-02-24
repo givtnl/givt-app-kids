@@ -167,6 +167,8 @@ class ProfilesProvider with ChangeNotifier {
           }
           fetchedProfiles.sort();
 
+          fetchedProfiles = fetchedProfiles.reversed.toList();
+
           for (var i = 0, j = 0; i < fetchedProfiles.length; i++, j++) {
             var profile = fetchedProfiles[i];
 
@@ -187,6 +189,8 @@ class ProfilesProvider with ChangeNotifier {
               j = 0;
             }
           }
+
+          sortedProfiles = sortedProfiles.reversed.toList();
 
           _transactions = fetchedTransactions;
           _profiles = sortedProfiles;
