@@ -136,8 +136,11 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 130,
+              Flexible(
+                fit: FlexFit.loose,
+                child: SizedBox(
+                  height: 167,
+                ),
               ),
               Container(
                 width: double.infinity,
@@ -145,8 +148,8 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                 padding: EdgeInsets.only(
                   top: 30,
                   bottom: 30,
-                  left: 50,
-                  right: 50,
+                  left: 45,
+                  right: 45,
                 ),
                 child: ElevatedButton(
                   onPressed: _selectedAmount == 0

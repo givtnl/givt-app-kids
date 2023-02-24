@@ -102,8 +102,8 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.only(
-                      left: 50,
-                      right: 50,
+                      left: 45,
+                      right: 45,
                       bottom: 30,
                     ),
                     child: ElevatedButton(
