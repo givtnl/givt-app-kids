@@ -28,7 +28,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
   void initState() {
     super.initState();
 
-    Vibrator.tryVibrate(duration: Duration(milliseconds: 2500));
+    Vibrator.tryVibratePattern();
   }
 
   Future<void> _completeDonation() async {

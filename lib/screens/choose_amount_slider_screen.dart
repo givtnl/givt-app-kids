@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 
@@ -98,8 +99,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                         divisions:
                             profilesProvider.activeProfile!.balance.round(),
                         onChanged: (value) {
-                          Vibrator.tryVibrate(
-                              duration: Duration(milliseconds: 300));
+                          HapticFeedback.lightImpact();
                           setState(() {
                             _selectedAmount = value;
                           });
