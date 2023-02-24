@@ -115,7 +115,6 @@ class ProfilesProvider with ChangeNotifier {
 
         if (decodedBody is List) {
           for (var transactionItem in decodedBody) {
-            print(transactionItem);
             fetchedList.add(
               Transaction(
                 parentGuid: profileGuid,
@@ -149,22 +148,41 @@ class ProfilesProvider with ChangeNotifier {
       if (response.statusCode < 400) {
         var decodedBody = json.decode(response.body);
         List<Profile> fetchedProfiles = [];
+        List<Profile> sortedProfiles = [];
         List<Transaction> fetchedTransactions = [];
 
         if (decodedBody is List) {
-          for (var i = 0, j = 0; i < decodedBody.length; i++, j++) {
-            var element = decodedBody[i];
+          for (var element in decodedBody) {
             var profileGuid = element["guid"];
-
-            var profileTransactions = await _fetchTransactions(profileGuid);
-            fetchedTransactions.addAll(profileTransactions);
 
             fetchedProfiles.add(
               Profile(
-                  guid: profileGuid,
-                  name: element["name"],
-                  balance: element["balance"],
-                  monster: Monsters.values[j]),
+                guid: profileGuid,
+                name: element["name"],
+                balance: element["balance"],
+                monster: Monsters.blue,
+                createdAt: element["createdAt"],
+              ),
+            );
+          }
+          fetchedProfiles.sort();
+
+          fetchedProfiles = fetchedProfiles.reversed.toList();
+
+          for (var i = 0, j = 0; i < fetchedProfiles.length; i++, j++) {
+            var profile = fetchedProfiles[i];
+
+            var profileTransactions = await _fetchTransactions(profile.guid);
+            fetchedTransactions.addAll(profileTransactions);
+
+            sortedProfiles.add(
+              Profile(
+                guid: profile.guid,
+                name: profile.name,
+                balance: profile.balance,
+                monster: Monsters.values[j],
+                createdAt: profile.createdAt,
+              ),
             );
 
             if (j == Monsters.values.length - 1) {
@@ -172,8 +190,10 @@ class ProfilesProvider with ChangeNotifier {
             }
           }
 
+          sortedProfiles = sortedProfiles.reversed.toList();
+
           _transactions = fetchedTransactions;
-          _profiles = fetchedProfiles;
+          _profiles = sortedProfiles;
 
           if (_activeProfile != null) {
             _activeProfile = _profiles
