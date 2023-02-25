@@ -73,8 +73,10 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
           onTap: () {
             _selectProfile(profilesProvider.profiles[i]);
           },
-          child: ProfileItem(profilesProvider.profiles[i].name,
-              profilesProvider.profiles[i].monster.image),
+          child: ProfileItem(
+            name: profilesProvider.profiles[i].name,
+            image: profilesProvider.profiles[i].monster.image,
+          ),
         ),
       );
     }

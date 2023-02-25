@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:intl/intl.dart';
 
 import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/providers/auth_provider.dart';
@@ -20,8 +19,6 @@ class SettingsDrawer extends StatefulWidget {
 class _SettingsDrawerState extends State<SettingsDrawer> {
   final TextEditingController _nameTextController = TextEditingController();
 
-  final double _changeWalletAmmountStep = 5;
-
   String _appVersion = "None";
 
   @override
@@ -35,7 +32,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     setState(() {
       _nameTextController.text = userName;
-      _appVersion = packageInfo.version;
+      _appVersion = "${packageInfo.version}(${packageInfo.buildNumber})";
     });
   }
 
