@@ -236,60 +236,64 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                Flexible(
-                  fit: FlexFit.loose,
-                  child: SizedBox(
-                    height: 180,
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(
-                    bottom: 30,
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_isLoading) {
-                        return;
-                      }
-                      AnalyticsHelper.logButtonPressedEvent(
-                          "Log in", LoginScreen.routeName);
-
-                      _saveForm();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFE28D4D),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    child: _isLoading
-                        ? Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 9, horizontal: 25),
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            child: CircularProgressIndicator(
-                              color: Color(0xFF54A1EE),
-                            ),
-                          )
-                        : Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 25),
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Log in",
-                              style: TextStyle(
-                                fontSize: 26,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                  ),
+                SizedBox(
+                  height: 120,
                 ),
               ],
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Container(
+          height: 60,
+          margin: const EdgeInsets.only(bottom: 25),
+          child: Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(
+              left: 40,
+              right: 40,
+            ),
+            child: ElevatedButton(
+              onPressed: () {
+                if (_isLoading) {
+                  return;
+                }
+                AnalyticsHelper.logButtonPressedEvent(
+                    "Log in", LoginScreen.routeName);
+
+                _saveForm();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFE28D4D),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              child: _isLoading
+                  ? Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 9, horizontal: 25),
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator(
+                        color: Color(0xFF54A1EE),
+                      ),
+                    )
+                  : Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 25),
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Log in",
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
             ),
           ),
         ),

@@ -242,18 +242,20 @@ class _WalletScreenV3State extends State<WalletScreenV3>
                       Container(
                         width: double.infinity,
                         child: ElevatedButton.icon(
-                          onPressed: profilesProvider.activeProfile!.balance > 0
-                              ? () {
-                                  AnalyticsHelper.logButtonPressedEvent(
-                                    "I want to give",
-                                    WalletScreenV3.routeName,
-                                  );
+                          onPressed:
+                              profilesProvider.activeProfile!.balance > 0 &&
+                                      !_isProfilesFetching
+                                  ? () {
+                                      AnalyticsHelper.logButtonPressedEvent(
+                                        "I want to give",
+                                        WalletScreenV3.routeName,
+                                      );
 
-                                  Navigator.of(context).pushNamed(
-                                    QrCodeScanScreen.routeName,
-                                  );
-                                }
-                              : null,
+                                      Navigator.of(context).pushNamed(
+                                        QrCodeScanScreen.routeName,
+                                      );
+                                    }
+                                  : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFE28D4D),
                             shape: RoundedRectangleBorder(
