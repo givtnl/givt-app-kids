@@ -24,6 +24,7 @@ dependencies:
   amplitude_flutter: ^3.13.0
   http: ^0.13.5
   vibration: ^1.7.6
+  visibility_detector: ^0.3.3
 
 dev_dependencies:
   flutter_test:

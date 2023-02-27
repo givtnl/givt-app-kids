@@ -22,34 +22,11 @@ class SuccessScreen extends StatefulWidget {
 }
 
 class _SuccessScreenState extends State<SuccessScreen> {
-  bool _isLoading = false;
-
   @override
   void initState() {
     super.initState();
 
     Vibrator.tryVibratePattern();
-  }
-
-  Future<void> _completeDonation() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-      await Provider.of<ProfilesProvider>(context, listen: false)
-          .fetchProfiles();
-    } catch (error, stackTrace) {
-      dev.log(error.toString(), stackTrace: stackTrace);
-    } finally {
-      if (mounted) {
-        Navigator.of(context).popUntil(
-          ModalRoute.withName("/"),
-        );
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
   }
 
   @override
@@ -108,13 +85,11 @@ class _SuccessScreenState extends State<SuccessScreen> {
                     ),
                     child: ElevatedButton(
                       onPressed: () async {
-                        if (_isLoading) {
-                          return;
-                        }
+                        Navigator.of(context).popUntil(
+                          ModalRoute.withName("/"),
+                        );
                         await AnalyticsHelper.logButtonPressedEvent(
                             "Continue", SuccessScreen.routeName);
-
-                        await _completeDonation();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFF2DF7F),
@@ -122,30 +97,20 @@ class _SuccessScreenState extends State<SuccessScreen> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      child: _isLoading
-                          ? Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 25),
-                              width: double.infinity,
-                              alignment: Alignment.center,
-                              child: CircularProgressIndicator(
-                                color: Color(0xFF54A1EE),
-                              ),
-                            )
-                          : Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 25),
-                              width: double.infinity,
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Continue",
-                                style: TextStyle(
-                                  fontSize: 26,
-                                  color: Color(0xFF3B3240),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 25),
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Continue",
+                          style: TextStyle(
+                            fontSize: 26,
+                            color: Color(0xFF3B3240),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
