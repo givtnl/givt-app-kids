@@ -245,7 +245,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Container(
-          height: 60,
+          height: 55,
           margin: const EdgeInsets.only(bottom: 25),
           child: Container(
             width: double.infinity,
