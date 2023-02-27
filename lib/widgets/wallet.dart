@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:provider/provider.dart';
 
@@ -67,10 +68,10 @@ class Wallet extends StatelessWidget {
         Positioned(
           right: 10,
           top: 2,
-          child: Image(
+          child: SvgPicture.asset(
             height: 75,
             fit: BoxFit.fitHeight,
-            image: AssetImage("assets/images/wallet.png"),
+            "assets/images/wallet.svg",
           ),
         ),
       ],

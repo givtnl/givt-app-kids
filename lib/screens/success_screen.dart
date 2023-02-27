@@ -1,13 +1,16 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
-import 'package:vibration/vibration.dart';
+import 'package:provider/provider.dart';
 
-import 'package:givt_app_kids/screens/givy_tip_screen.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/models/transaction.dart';
 import 'package:givt_app_kids/models/organisation.dart';
+import 'package:givt_app_kids/helpers/vibrator.dart';
+import 'package:givt_app_kids/providers/profiles_provider.dart';
 
 class SuccessScreen extends StatefulWidget {
   static const String routeName = "/success";
@@ -22,14 +25,8 @@ class _SuccessScreenState extends State<SuccessScreen> {
   @override
   void initState() {
     super.initState();
-    _tryVibrate();
-  }
 
-  Future<void> _tryVibrate() async {
-    var hasVibrator = await Vibration.hasVibrator();
-    if (hasVibrator == true) {
-      Vibration.vibrate();
-    }
+    Vibrator.tryVibratePattern();
   }
 
   @override
@@ -40,97 +37,74 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          width: double.infinity,
-          color: Color(0xFF54A1EE),
-          child: Stack(
+        backgroundColor: Color(0xFFB9D7FF),
+        body: SingleChildScrollView(
+          child: Column(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Spacer(flex: 2),
-                  Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    child: Image(
-                      width: 160,
-                      fit: BoxFit.fitWidth,
-                      image: AssetImage(
-                        "assets/images/givy_celebrates.png",
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 50,
-                      right: 50,
-                    ),
-                    child: Text(
-                      "You gave \$${transaction.amount.toStringAsFixed(2)} to ${organisation.name}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Spacer(
-                    flex: 2,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(
-                      left: 50,
-                      right: 50,
-                      bottom: 30,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        AnalyticsHelper.logButtonPressedEvent(
-                            "Continue", SuccessScreen.routeName);
-
-                        Navigator.of(context)
-                            .pushNamed(GivyTipScreen.routeName);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFF2DF7F),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 25),
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Continue",
-                          style: TextStyle(
-                            fontSize: 26,
-                            color: Color(0xFF3B3240),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: Lottie.asset(
-                    "assets/lotties/confetti.json",
-                    fit: BoxFit.fitHeight,
-                    height: double.infinity,
-                    width: double.infinity,
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(
+                  top: 40,
+                  left: 40,
+                  right: 40,
+                ),
+                child: Text(
+                  "You gave \$${transaction.amount.toStringAsFixed(2)} to ${organisation.name}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
+              Lottie.asset(
+                "assets/lotties/donation.json",
+                fit: BoxFit.fitWidth,
+                width: double.infinity,
+              ),
             ],
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Container(
+          height: 55,
+          margin: const EdgeInsets.only(bottom: 25),
+          child: Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(
+              left: 40,
+              right: 40,
+            ),
+            child: ElevatedButton(
+              onPressed: () async {
+                Navigator.of(context).popUntil(
+                  ModalRoute.withName("/"),
+                );
+                await AnalyticsHelper.logButtonPressedEvent(
+                    "Continue", SuccessScreen.routeName);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFF2DF7F),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 25),
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: Text(
+                  "Continue",
+                  style: TextStyle(
+                    fontSize: 26,
+                    color: Color(0xFF3B3240),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:intl/intl.dart';
 
 import 'package:givt_app_kids/providers/account_provider.dart';
 import 'package:givt_app_kids/providers/auth_provider.dart';
@@ -20,8 +19,6 @@ class SettingsDrawer extends StatefulWidget {
 class _SettingsDrawerState extends State<SettingsDrawer> {
   final TextEditingController _nameTextController = TextEditingController();
 
-  final double _changeWalletAmmountStep = 5;
-
   String _appVersion = "None";
 
   @override
@@ -35,7 +32,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     setState(() {
       _nameTextController.text = userName;
-      _appVersion = packageInfo.version;
+      _appVersion = "${packageInfo.version}(${packageInfo.buildNumber})";
     });
   }
 
@@ -187,7 +184,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                         SizedBox(
                           width: double.infinity,
                           child: Text(
-                            "Transactions",
+                            "Account",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -197,48 +194,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              ElevatedButton.icon(
-                                onPressed: profilesProvider.transactions.isEmpty
-                                    ? null
-                                    : () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  "Are you sure you want to clear transactions of the current profile?"),
-                                              actions: [
-                                                TextButton(
-                                                  child: Text("OK"),
-                                                  onPressed: () {
-                                                    return Navigator.of(context)
-                                                        .pop(true);
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child: Text("CANCEL"),
-                                                  onPressed: () {
-                                                    return Navigator.of(context)
-                                                        .pop(false);
-                                                  },
-                                                )
-                                              ],
-                                            );
-                                          },
-                                        ).then((value) {
-                                          if (value) {
-                                            profilesProvider.clearTransactions();
-                                            Navigator.of(context).pop();
-                                          }
-                                        });
-                                      },
-                                icon: Icon(Icons.delete),
-                                label: Text(
-                                  "Clear",
-                                ),
-                              ),
                               ElevatedButton.icon(
                                 onPressed: () {
                                   showDialog(
@@ -284,43 +242,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             ],
                           ),
                         ),
-                        Divider(
-                          height: 2,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        if (profilesProvider.transactions.isEmpty)
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                              "There are no trasactions. Please donate first.",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        if (profilesProvider.transactions.isNotEmpty)
-                          Column(
-                            children:
-                                profilesProvider.transactions.map((transaction) {
-                              var dateTime =
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                      transaction.timestamp);
-                              var dateString = DateFormat("MMM dd hh:mm aaa")
-                                  .format(dateTime);
-
-                              return ListTile(
-                                title: Text(
-                                  dateString,
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                trailing: Text(
-                                  "\$${transaction.amount.toStringAsFixed(2)}",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
                       ],
                     ),
                   ),

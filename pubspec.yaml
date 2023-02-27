@@ -24,12 +24,11 @@ dependencies:
   amplitude_flutter: ^3.13.0
   http: ^0.13.5
   vibration: ^1.7.6
+  visibility_detector: ^0.3.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.3.2
-  json_serializable: ^6.5.4
 
   flutter_lints: ^2.0.0
   flutter_launcher_icons: "^0.11.0"  
@@ -38,33 +37,8 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
-    - assets/images/xmas.jpg
-    - assets/images/shelter.jpg
-    - assets/images/givy_superman.png
-    - assets/images/child.svg
-    - assets/images/dog.svg
-    - assets/icon/app_icon_test.png
-    - assets/images/avatar.svg
-    - assets/images/givy_celebrates.png
-    - assets/images/reconstruction.jpg
-    - assets/images/church.svg
-    - assets/images/wallet.png
-    - assets/images/qr.png
-    - assets/images/home.svg
-    - assets/images/givy_superman.svg
-    - assets/images/givy_celebrates.svg
-    - assets/images/givy_tip.svg
-    - assets/images/target_left_top.svg
-    - assets/images/target_left_bottom.svg
-    - assets/images/target_right_top.svg
-    - assets/images/target_right_bottom.svg
-    - assets/lotties/confetti.json
-    - assets/images/password_show.svg
-    - assets/images/password_hide.svg
-    - assets/images/monster1.svg
-    - assets/images/monster2.svg
-    - assets/images/monster3.svg
-    - assets/images/monster4.svg
+    - assets/images/
+    - assets/lotties/
 
   fonts:
     - family: Raleway

@@ -22,6 +22,13 @@ class ProfileSelectionOverlayScreen extends StatefulWidget {
 class _ProfileSelectionOverlayScreenState
     extends State<ProfileSelectionOverlayScreen> {
   bool _isLoading = false;
+  bool _isProfilesFetching = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateProfiles();
+  }
 
   Future<void> _selectProfile(Profile profile) async {
     setState(() {
@@ -36,6 +43,33 @@ class _ProfileSelectionOverlayScreenState
 
     if (mounted) {
       Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _updateProfiles() async {
+    try {
+      setState(() {
+        _isProfilesFetching = true;
+      });
+      await Provider.of<ProfilesProvider>(context, listen: false)
+          .fetchProfiles();
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Cannot download profiles. Please try again later.",
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isProfilesFetching = false;
+        });
+      }
     }
   }
 
@@ -56,7 +90,7 @@ class _ProfileSelectionOverlayScreenState
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromARGB(204, 59, 50, 64),
-        body: _isLoading
+        body: _isLoading || _isProfilesFetching
             ? Center(
                 child: CircularProgressIndicator(
                   color: Color(0xFF54A1EE),

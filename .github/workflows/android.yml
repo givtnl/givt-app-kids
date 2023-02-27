@@ -1,7 +1,7 @@
 name: Build Android and upload to Play Store
 on: 
   push: 
-    branches: [ pre-main ]
+    branches: [ main,pre-main ]
 jobs:
   build-ios: 
     name: Build Flutter Android

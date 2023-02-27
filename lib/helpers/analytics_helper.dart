@@ -17,7 +17,8 @@ class AnalyticsHelper {
   static const String timestampKey = "timestamp";
   static const String formattedDateKey = "formatted_date";
 
-  static Future<void> setDefaultParameters({required String userName, required int userAge}) async {
+  static Future<void> setDefaultParameters(
+      {required String userName, required int userAge}) async {
     final identify = Identify()
       ..set('username', userName)
       ..set('age', userAge);
@@ -34,9 +35,10 @@ class AnalyticsHelper {
     var now = DateTime.now();
 
     Amplitude.getInstance().logEvent(
-      newTransactionKey, eventProperties: {
+      newTransactionKey,
+      eventProperties: {
         amountKey: transaction.amount,
-        goalKey: transaction.goalName,
+        goalKey: transaction.destinationName,
         timestampKey: now.millisecondsSinceEpoch,
         formattedDateKey: _getFormattedTime(now),
       },
