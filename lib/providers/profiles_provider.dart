@@ -237,7 +237,7 @@ class ProfilesProvider with ChangeNotifier {
         _transactions.add(transaction);
         await _saveTransactions();
 
-        await AnalyticsHelper.logNewTransactionEvent(transaction);
+        // await AnalyticsHelper.logNewTransactionEvent(transaction);
 
         notifyListeners();
       } else {
