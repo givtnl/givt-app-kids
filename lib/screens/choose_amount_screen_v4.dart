@@ -196,9 +196,11 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                 _currentAmountIndex = -1;
               } else {
                 _currentAmountIndex = i;
-                AnalyticsHelper.logButtonPressedEvent(
-                    "\$$currentOptionAmountString",
-                    ChooseAmountScreenV4.routeName);
+                AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.amountPressed,
+                    eventProperties: {
+                      'amount': currentOptionAmount,
+                    });
               }
             });
           },

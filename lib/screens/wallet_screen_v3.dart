@@ -99,9 +99,8 @@ class _WalletScreenV3State extends State<WalletScreenV3>
                             ),
                           );
 
-                          AnalyticsHelper.logButtonPressedEvent(
-                            "Monster",
-                            WalletScreenV3.routeName,
+                          AnalyticsHelper.logEvent(
+                            eventName: AmplitudeEvent.profileSwitchPressed,
                           );
                         },
                   child: Container(

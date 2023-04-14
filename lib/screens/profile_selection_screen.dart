@@ -57,9 +57,11 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
   Future<void> _selectProfile(Profile selectedProfile) async {
     await Provider.of<ProfilesProvider>(context, listen: false)
         .setActiveProfile(selectedProfile);
-    await AnalyticsHelper.logButtonPressedEvent(
-      "Profile [${selectedProfile.name}] selected",
-      ProfileSelectionScreen.routeName,
+    await AnalyticsHelper.logEvent(
+      eventName: AmplitudeEvent.profilePressed,
+      eventProperties: {
+        "profile_name": selectedProfile.name,
+      },
     );
   }
 
