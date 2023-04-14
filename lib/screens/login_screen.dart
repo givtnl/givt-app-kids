@@ -259,8 +259,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (_isLoading) {
                   return;
                 }
-                AnalyticsHelper.logButtonPressedEvent(
-                    "Log in", LoginScreen.routeName);
+                AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.loginPressed,
+                    eventProperties: {'email_address': _email});
 
                 _saveForm();
               },

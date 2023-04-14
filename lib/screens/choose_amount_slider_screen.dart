@@ -103,9 +103,11 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                         setState(() {
                           _selectedAmount = value;
                         });
-                        AnalyticsHelper.logButtonPressedEvent(
-                            "Slider changed to: \$$_selectedAmount",
-                            ChooseAmountSliderScreen.routeName);
+
+                        AnalyticsHelper.logEvent(
+                          eventName: AmplitudeEvent.amountPressed,
+                          eventProperties: {'amount': _selectedAmount},
+                        );
                       },
                     ),
                     Padding(
@@ -168,8 +170,14 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
 
                       profilesProvider.createTransaction(transaction);
 
-                      AnalyticsHelper.logButtonPressedEvent("Give to this goal",
-                          ChooseAmountSliderScreen.routeName);
+                      AnalyticsHelper.logEvent(
+                          eventName: AmplitudeEvent.giveToThisGoalPressed,
+                          eventProperties: {
+                            'amount': _selectedAmount,
+                            'formatted_date': transaction.createdAt,
+                            'timestamp': DateTime.now().toIso8601String(),
+                            'goal_name': organisation.name,
+                          });
 
                       Navigator.of(context).pushNamed(SuccessScreen.routeName,
                           arguments: [organisation, transaction]);

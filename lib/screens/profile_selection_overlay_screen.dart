@@ -36,9 +36,11 @@ class _ProfileSelectionOverlayScreenState
     });
     await Provider.of<ProfilesProvider>(context, listen: false)
         .setActiveProfile(profile);
-    await AnalyticsHelper.logButtonPressedEvent(
-      "Profile [${profile.name}] selected",
-      ProfileSelectionOverlayScreen.routeName,
+    await AnalyticsHelper.logEvent(
+      eventName: AmplitudeEvent.profilePressed,
+      eventProperties: {
+        "profile_name": profile.name,
+      },
     );
 
     if (mounted) {
