@@ -10,9 +10,11 @@ import 'package:givt_app_kids/helpers/api_helper.dart';
 class AuthProvider with ChangeNotifier {
   static const String accessTokenKey = "accessTokenKey";
   static const String guidKey = "guidKey";
+  static const String emailKey = "emailKey";
 
   String _accessToken = "";
   String _guid = "";
+  String _email = "";
 
   AuthProvider() {
     _initFromStorage();
@@ -24,12 +26,16 @@ class AuthProvider with ChangeNotifier {
 
   String get accessToken => _accessToken;
   String get guid => _guid;
+  String get email => _email;
 
   Future<void> _initFromStorage() async {
     var prefs = await SharedPreferences.getInstance();
 
     var savedAccessToken = prefs.getString(accessTokenKey);
     _accessToken = savedAccessToken ?? "";
+
+    var savedEmail = prefs.getString(emailKey);
+    _email = savedEmail ?? "";
 
     var savedGuid = prefs.getString(guidKey);
     _guid = savedGuid ?? "";
@@ -42,6 +48,7 @@ class AuthProvider with ChangeNotifier {
     var prefs = await SharedPreferences.getInstance();
     await prefs.setString(accessTokenKey, _accessToken);
     await prefs.setString(guidKey, _guid);
+    await prefs.setString(emailKey, _email);
     dev.log("SAVED TOKEN: $_accessToken");
   }
 
@@ -63,6 +70,7 @@ class AuthProvider with ChangeNotifier {
         final responseDecodedData = decodedBody as Map<String, dynamic>;
         _accessToken = responseDecodedData["access_token"];
         _guid = responseDecodedData["GUID"];
+        _email = email;
 //        final refresh_token = responseDecodedData["refresh_token"];
         await _saveToStorage();
         notifyListeners();

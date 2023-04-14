@@ -60,6 +60,10 @@ class GivtApp extends StatelessWidget {
         builder: (ctx, authProvider, _) {
           return Consumer<ProfilesProvider>(
             builder: (ctx, profilesProvider, _) {
+              Amplitude.getInstance().setUserId(
+                authProvider.email,
+                startNewSession: authProvider.email.isNotEmpty,
+              );
               return MaterialApp(
                 title: 'Givt Kids',
                 theme: ThemeData(
