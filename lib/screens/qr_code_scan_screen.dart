@@ -147,6 +147,11 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
                       var organisation =
                           await _getOrganisationDetails(barcode.rawValue);
                       if (organisation != null && mounted) {
+                        AnalyticsHelper.logEvent(
+                            eventName: AmplitudeEvent.qrCodeScanned,
+                            eventProperties: {
+                              'goal_name': organisation.name,
+                            });
                         Navigator.of(context).pushReplacementNamed(
                           ChooseAmountSliderScreen.routeName,
                           arguments: organisation,
