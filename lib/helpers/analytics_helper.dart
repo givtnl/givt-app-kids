@@ -18,6 +18,8 @@ enum AmplitudeEvent {
   newTransaction('new_transaction'),
   buttonPressed('button_pressed'),
   qrCodeScanned('qr_code_scanned'),
+  drawerLongPressed('drawer_long_pressed'),
+  logoutPressed('logout_pressed'),
   ;
 
   final String value;
