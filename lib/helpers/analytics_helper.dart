@@ -42,11 +42,17 @@ class AnalyticsHelper {
 
   static Future<void> setDefaultParameters(
       {required String userName, required int userAge}) async {
-    final identify = Identify()
-      ..set('username', userName)
-      ..set('age', userAge);
+    // final identify = Identify()
+    //   ..set('username', userName)
+    //   ..set('age', userAge);
 
-    Amplitude.getInstance().identify(identify);
+    // Amplitude.getInstance().identify(identify);
+  }
+
+  static Future<void> setUserId(String profileName) async {
+    final currentUserId = await Amplitude.getInstance().getUserId();
+    await Amplitude.getInstance()
+        .setUserId(profileName, startNewSession: profileName != currentUserId);
   }
 
   static String _getFormattedTime(DateTime now) {
