@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -209,6 +210,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                           TextButton(
                                             child: Text("OK"),
                                             onPressed: () {
+                                              AnalyticsHelper.logEvent(
+                                                  eventName: AmplitudeEvent
+                                                      .drawerLongPressed);
                                               return Navigator.of(context)
                                                   .pop(true);
                                             },

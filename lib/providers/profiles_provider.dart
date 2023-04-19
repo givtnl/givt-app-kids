@@ -62,6 +62,7 @@ class ProfilesProvider with ChangeNotifier {
     if (savedActiveProfileGuid != null && savedActiveProfileGuid.isNotEmpty) {
       _activeProfile = _profiles
           .firstWhere((profile) => profile.guid == savedActiveProfileGuid);
+      await AnalyticsHelper.setUserId(_activeProfile!.name);
       dev.log("Active profile guid ${_activeProfile?.guid}");
     }
 
@@ -84,6 +85,7 @@ class ProfilesProvider with ChangeNotifier {
     var prefs = await SharedPreferences.getInstance();
     await prefs.setString(activeProfileGuidKey, profileGuid);
     _activeProfile = activeProfile;
+    await AnalyticsHelper.setUserId(_activeProfile!.name);
     notifyListeners();
   }
 
@@ -198,6 +200,7 @@ class ProfilesProvider with ChangeNotifier {
           if (_activeProfile != null) {
             _activeProfile = _profiles
                 .firstWhere((profile) => profile.guid == _activeProfile!.guid);
+            await AnalyticsHelper.setUserId(_activeProfile!.name);
           }
           await _saveProfiles();
           await _saveTransactions();
@@ -237,7 +240,7 @@ class ProfilesProvider with ChangeNotifier {
         _transactions.add(transaction);
         await _saveTransactions();
 
-        await AnalyticsHelper.logNewTransactionEvent(transaction);
+        // await AnalyticsHelper.logNewTransactionEvent(transaction);
 
         notifyListeners();
       } else {

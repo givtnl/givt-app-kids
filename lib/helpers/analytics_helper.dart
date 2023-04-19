@@ -1,8 +1,31 @@
+import 'dart:developer';
+
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:amplitude_flutter/identify.dart';
 import 'package:intl/intl.dart';
 
 import 'package:givt_app_kids/models/transaction.dart';
+
+enum AmplitudeEvent {
+  amountPressed('amount_pressed'),
+  backButtonPressed('back_button_pressed'),
+  continuePressed('continue_pressed'),
+  giveToThisGoalPressed('give_to_this_goal_pressed'),
+  iWantToGiveToPressed('i_want_to_give_pressed'),
+  loginPressed('login_pressed'),
+  profilePressed('profile_pressed'),
+  profileSwitchPressed('profile_switch_pressed'),
+  newTransaction('new_transaction'),
+  buttonPressed('button_pressed'),
+  qrCodeScanned('qr_code_scanned'),
+  drawerLongPressed('drawer_long_pressed'),
+  logoutPressed('logout_pressed'),
+  ;
+
+  final String value;
+
+  const AmplitudeEvent(this.value);
+}
 
 class AnalyticsHelper {
   static const String userNameKey = "user_name";
@@ -19,11 +42,17 @@ class AnalyticsHelper {
 
   static Future<void> setDefaultParameters(
       {required String userName, required int userAge}) async {
-    final identify = Identify()
-      ..set('username', userName)
-      ..set('age', userAge);
+    // final identify = Identify()
+    //   ..set('username', userName)
+    //   ..set('age', userAge);
 
-    Amplitude.getInstance().identify(identify);
+    // Amplitude.getInstance().identify(identify);
+  }
+
+  static Future<void> setUserId(String profileName) async {
+    final currentUserId = await Amplitude.getInstance().getUserId();
+    await Amplitude.getInstance()
+        .setUserId(profileName, startNewSession: profileName != currentUserId);
   }
 
   static String _getFormattedTime(DateTime now) {
@@ -45,17 +74,17 @@ class AnalyticsHelper {
     );
   }
 
-  // static Future<void> logWalletAmountEvent(double amount) async {
-  //   var now = DateTime.now();
-  //   Amplitude.getInstance().logEvent(
-  //     walletAmountKey,
-  //     eventProperties: {
-  //       amountKey: amount,
-  //       timestampKey: now.millisecondsSinceEpoch,
-  //       formattedDateKey: _getFormattedTime(now),
-  //     },
-  //   );
-  // }
+  static Future<void> logEvent({
+    required AmplitudeEvent eventName,
+    Map<String, dynamic>? eventProperties,
+  }) async {
+    await Amplitude.getInstance().logEvent(
+      eventName.value,
+      eventProperties: eventProperties,
+    );
+
+    log('${eventName.value} pressed with properties: $eventProperties');
+  }
 
   static Future<void> logButtonPressedEvent(
       String buttonName, String screenName) async {

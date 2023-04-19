@@ -17,7 +17,8 @@ class BackButton extends StatelessWidget {
         child: IconButton(
           iconSize: 25,
           onPressed: () {
-            AnalyticsHelper.logButtonPressedEvent("back button", "");
+            AnalyticsHelper.logEvent(
+                eventName: AmplitudeEvent.backButtonPressed);
             Navigator.of(context).pop();
           },
           icon: Icon(

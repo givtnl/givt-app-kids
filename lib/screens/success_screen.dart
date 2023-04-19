@@ -82,8 +82,9 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 Navigator.of(context).popUntil(
                   ModalRoute.withName("/"),
                 );
-                await AnalyticsHelper.logButtonPressedEvent(
-                    "Continue", SuccessScreen.routeName);
+                await AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.continuePressed,
+                    eventProperties: {'screen_name': SuccessScreen.routeName});
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFF2DF7F),

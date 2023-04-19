@@ -134,8 +134,14 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
 
                     profilesProvider.createTransaction(transaction);
 
-                    AnalyticsHelper.logButtonPressedEvent(
-                        "Give to this goal", ChooseAmountScreenV4.routeName);
+                    AnalyticsHelper.logEvent(
+                      eventName: AmplitudeEvent.giveToThisGoalPressed,
+                      eventProperties: {
+                        "amount": giveAmount,
+                        "formatted_date": transaction.createdAt,
+                        "goal_name": organisation.name,
+                      },
+                    );
 
                     Navigator.of(context).pushNamed(SuccessScreen.routeName,
                         arguments: transaction);
@@ -196,9 +202,11 @@ class _ChooseAmountScreenStateV4 extends State<ChooseAmountScreenV4> {
                 _currentAmountIndex = -1;
               } else {
                 _currentAmountIndex = i;
-                AnalyticsHelper.logButtonPressedEvent(
-                    "\$$currentOptionAmountString",
-                    ChooseAmountScreenV4.routeName);
+                AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.amountPressed,
+                    eventProperties: {
+                      'amount': currentOptionAmount,
+                    });
               }
             });
           },

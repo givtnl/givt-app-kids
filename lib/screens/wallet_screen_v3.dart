@@ -99,9 +99,8 @@ class _WalletScreenV3State extends State<WalletScreenV3>
                             ),
                           );
 
-                          AnalyticsHelper.logButtonPressedEvent(
-                            "Monster",
-                            WalletScreenV3.routeName,
+                          AnalyticsHelper.logEvent(
+                            eventName: AmplitudeEvent.profileSwitchPressed,
                           );
                         },
                   child: Container(
@@ -222,9 +221,8 @@ class _WalletScreenV3State extends State<WalletScreenV3>
                             left: 10,
                             child: GestureDetector(
                               onLongPress: () {
-                                AnalyticsHelper.logButtonPressedEvent(
-                                  "Settings Drawer",
-                                  WalletScreenV3.routeName,
+                                AnalyticsHelper.logEvent(
+                                  eventName: AmplitudeEvent.drawerLongPressed,
                                 );
                                 _scaffoldKey.currentState!.openDrawer();
                               },
@@ -246,9 +244,14 @@ class _WalletScreenV3State extends State<WalletScreenV3>
                               profilesProvider.activeProfile!.balance > 0 &&
                                       !_isProfilesFetching
                                   ? () {
-                                      AnalyticsHelper.logButtonPressedEvent(
-                                        "I want to give",
-                                        WalletScreenV3.routeName,
+                                      AnalyticsHelper.logEvent(
+                                        eventName:
+                                            AmplitudeEvent.iWantToGiveToPressed,
+                                        eventProperties: {
+                                          'current_amount_in_wallet':
+                                              profilesProvider
+                                                  .activeProfile!.balance,
+                                        },
                                       );
 
                                       Navigator.of(context).pushNamed(
