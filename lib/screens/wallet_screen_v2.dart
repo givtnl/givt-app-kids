@@ -2,10 +2,8 @@
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/svg.dart';
-
 // import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 // import 'package:provider/provider.dart';
-
 // import 'package:givt_app_kids/widgets/settings_drawer.dart';
 // import 'package:givt_app_kids/screens/qr_code_scan_screen.dart';
 // import 'package:givt_app_kids/providers/wallet_provider.dart';
