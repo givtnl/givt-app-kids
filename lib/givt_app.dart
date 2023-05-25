@@ -1,5 +1,6 @@
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -30,9 +31,7 @@ class GivtApp extends StatelessWidget {
     ApiHelper.apiURL = config.apiBaseUrl;
 
     //Init Amplitude
-    final analyticsAmplitude = Amplitude.getInstance();
-    analyticsAmplitude.init(config.amplitudePublicKey);
-    analyticsAmplitude.trackingSessionEvents(true);
+    AnalyticsHelper.init(config.amplitudePublicKey);
 
     return MultiProvider(
       providers: [

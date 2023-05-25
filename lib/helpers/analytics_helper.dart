@@ -48,11 +48,19 @@ class AnalyticsHelper {
 
     // Amplitude.getInstance().identify(identify);
   }
+  static Amplitude? _amplitude;
+
+  static Future<void> init(String key) async {
+    _amplitude = Amplitude.getInstance();
+    await _amplitude!.init(key);
+    await _amplitude!.enableCoppaControl();
+    await _amplitude!.trackingSessionEvents(true);
+  }
 
   static Future<void> setUserId(String profileName) async {
-    final currentUserId = await Amplitude.getInstance().getUserId();
-    await Amplitude.getInstance()
-        .setUserId(profileName, startNewSession: profileName != currentUserId);
+    final currentUserId = await _amplitude?.getUserId();
+    await _amplitude?.setUserId(profileName,
+        startNewSession: profileName != currentUserId);
   }
 
   static String _getFormattedTime(DateTime now) {
@@ -63,7 +71,7 @@ class AnalyticsHelper {
   static Future<void> logNewTransactionEvent(Transaction transaction) async {
     var now = DateTime.now();
 
-    Amplitude.getInstance().logEvent(
+    _amplitude?.logEvent(
       newTransactionKey,
       eventProperties: {
         amountKey: transaction.amount,
@@ -78,7 +86,7 @@ class AnalyticsHelper {
     required AmplitudeEvent eventName,
     Map<String, dynamic>? eventProperties,
   }) async {
-    await Amplitude.getInstance().logEvent(
+    await _amplitude?.logEvent(
       eventName.value,
       eventProperties: eventProperties,
     );
@@ -89,7 +97,7 @@ class AnalyticsHelper {
   static Future<void> logButtonPressedEvent(
       String buttonName, String screenName) async {
     var now = DateTime.now();
-    Amplitude.getInstance().logEvent(
+    _amplitude?.logEvent(
       buttonPressedKey,
       eventProperties: {
         buttonNameKey: buttonName,
