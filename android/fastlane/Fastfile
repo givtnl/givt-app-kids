@@ -18,7 +18,7 @@ default_platform(:android)
 platform :android do
   desc "Generate keystore"
   lane :keystore do
-    match_keystore(git_url: "git@github.com:givtnl/givt.apps.codesigning.git", package_name: ENV['PACKAGE_NAME'], override_keystore: true)
+    match_keystore(git_url: "git@github.com:givtnl/givt.apps.codesigning.git", package_name: "net.givtapp.kids", override_keystore: true)
   end
 
   desc "Runs all the tests"
