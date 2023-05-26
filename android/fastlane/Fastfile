@@ -36,7 +36,7 @@ platform :android do
         sh("flutter", "build", "appbundle", "--flavor", ENV['FLAVOR'], "--target", "lib/main_#{flavor}.dart", "--build-number=#{build_number}")
     end
     signed_aab_path = match_keystore(git_url: "git@github.com:givtnl/givt.apps.codesigning.git", 
-                    package_name: net.givtapp.kids,
+                    package_name: "net.givtapp.kids",
                     aab_path: "../build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab",
                     match_secret: ENV['MATCH_PASSWORD'],
                     override_keystore: false)
