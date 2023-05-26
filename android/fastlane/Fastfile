@@ -28,7 +28,6 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :build_and_deploy do
-    sh("git config --global --add safe.directory /opt/hostedtoolcache/flutter/stable-3.10.2-x64")
     build_number = google_play_track_version_codes(package_name: ENV['PACKAGE_NAME'], track: ENV['TRACK'], json_key_data: ENV['GOOGLE_PLAY_JSON_KEY'])[0] + 1
     flavor = ENV['FLAVOR']
     Dir.chdir "../.." do
