@@ -18,7 +18,7 @@ default_platform(:android)
 platform :android do
   desc "Generate keystore"
   lane :keystore do
-    match_keystore(git_url: "git@github.com:givtnl/givt.apps.codesigning.git", package_name: "net.givtapp.kids", override_keystore: true)
+    match_keystore(git_url: "git@github.com:givtnl/givt.apps.codesigning.git", package_name: ENV['package_name'], override_keystore: true)
   end
 
   desc "Runs all the tests"
@@ -28,21 +28,15 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :build_and_deploy do
-    if git_branch == "main"
-      package_name = "net.givtapp.kids"
-      flavor = "production"
-    else
-      package_name = "net.givtapp.kids.test"
-      flavor = "development"
-    end
-    build_number = google_play_track_version_codes(package_name: package_name, track: "internal", json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'])[0] + 1
+    build_number = google_play_track_version_codes(package_name: ENV['package_name'], track: ENV['track'], json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'])[0] + 1
+    flavor = ENV['flavor']
     Dir.chdir "../.." do
         sh("flutter", "packages", "get")
         sh("flutter", "clean")
-        sh("flutter", "build", "appbundle", "--flavor", flavor, "--target", "lib/main_#{flavor}.dart", "--build-number=#{build_number}")
+        sh("flutter", "build", "appbundle", "--flavor", ENV['flavor'], "--target", "lib/main_#{flavor}.dart", "--build-number=#{build_number}")
     end
     signed_aab_path = match_keystore(git_url: "git@github.com:givtnl/givt.apps.codesigning.git", 
-                    package_name: "net.givtapp.kids",
+                    package_name: ENV['package_name'],
                     aab_path: "../build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab",
                     match_secret: ENV['MATCH_PASSWORD'],
                     override_keystore: false)
@@ -51,6 +45,6 @@ platform :android do
                         json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], 
                         aab: signed_aab_path,
                         release_status: "completed",
-                        track: "internal")
+                        track: ENV['flavor'])
   end
 end
