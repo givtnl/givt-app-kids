@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - pre-main
+      - new_pipeline
 
 jobs:
     droid:
