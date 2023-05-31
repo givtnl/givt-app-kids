@@ -129,7 +129,7 @@ class ProfilesProvider with ChangeNotifier {
         }
         return fetchedList;
       } else {
-        throw Exception(jsonDecode(response.body));
+        throw Exception(response.body);
       }
     } catch (error, stackTrace) {
       dev.log(error.toString(), stackTrace: stackTrace);
@@ -207,7 +207,7 @@ class ProfilesProvider with ChangeNotifier {
           notifyListeners();
         }
       } else {
-        throw Exception(jsonDecode(response.body));
+        throw Exception(response.body);
       }
     } catch (error, stackTrace) {
       dev.log(error.toString(), stackTrace: stackTrace);
