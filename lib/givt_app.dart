@@ -1,5 +1,8 @@
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:provider/provider.dart';
@@ -33,61 +36,66 @@ class GivtApp extends StatelessWidget {
     //Init Amplitude
     AnalyticsHelper.init(config.amplitudePublicKey);
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => AuthProvider(),
-        ),
-        ChangeNotifierProxyProvider<AuthProvider, ProfilesProvider>(
-          create: (_) => ProfilesProvider("", []),
-          update: (ctx, authProvider, oldProvider) => ProfilesProvider(
-            authProvider.accessToken,
-            oldProvider != null ? oldProvider.profiles : [],
+    return BlocProvider(
+      create: (BuildContext context) => AuthCubit(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => AuthProvider(),
           ),
+          ChangeNotifierProxyProvider<AuthProvider, ProfilesProvider>(
+            create: (_) => ProfilesProvider("", []),
+            update: (ctx, authProvider, oldProvider) => ProfilesProvider(
+              authProvider.accessToken,
+              oldProvider != null ? oldProvider.profiles : [],
+            ),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => GoalsProvider(),
+          ),
+          // ChangeNotifierProvider(
+          //   create: (_) => WalletProvider(),
+          // ),
+          ChangeNotifierProvider(
+            create: (_) => AccountProvider(),
+          ),
+        ],
+        child: Consumer<AuthProvider>(
+          builder: (ctx, authProvider, _) {
+            return Consumer<ProfilesProvider>(
+              builder: (ctx, profilesProvider, _) {
+                return MaterialApp(
+                  title: 'Givt Kids',
+                  theme: ThemeData(
+                      primaryColor: Color.fromARGB(255, 62, 73, 112),
+                      fontFamily: "Raleway"),
+                  home: authProvider.isAuthenticated
+                      ? profilesProvider.isProfileSelected
+                          ? WalletScreenV3()
+                          : ProfileSelectionScreen()
+                      : LoginScreen(),
+                  routes: {
+                    SuccessScreen.routeName: (_) => SuccessScreen(),
+                    QrCodeScanScreen.routeName: (_) => QrCodeScanScreen(),
+                    WalletScreenV3.routeName: (_) => WalletScreenV3(),
+                    ChooseAmountScreenV4.routeName: (_) =>
+                        ChooseAmountScreenV4(),
+                    ChooseAmountExtendedScreen.routeName: (_) =>
+                        ChooseAmountExtendedScreen(),
+                    LoginScreen.routeName: (_) => LoginScreen(),
+                    ProfileSelectionScreen.routeName: (_) =>
+                        ProfileSelectionScreen(),
+                    ProfileSelectionOverlayScreen.routeName: (_) =>
+                        ProfileSelectionOverlayScreen(),
+                    ChooseAmountSliderScreen.routeName: (_) =>
+                        ChooseAmountSliderScreen(),
+                    LoginBlocScreen.routeName: (_) => LoginBlocScreen(),
+                  },
+                );
+              },
+            );
+          },
         ),
-        ChangeNotifierProvider(
-          create: (_) => GoalsProvider(),
-        ),
-        // ChangeNotifierProvider(
-        //   create: (_) => WalletProvider(),
-        // ),
-        ChangeNotifierProvider(
-          create: (_) => AccountProvider(),
-        ),
-      ],
-      child: Consumer<AuthProvider>(
-        builder: (ctx, authProvider, _) {
-          return Consumer<ProfilesProvider>(
-            builder: (ctx, profilesProvider, _) {
-              return MaterialApp(
-                title: 'Givt Kids',
-                theme: ThemeData(
-                    primaryColor: Color.fromARGB(255, 62, 73, 112),
-                    fontFamily: "Raleway"),
-                home: authProvider.isAuthenticated
-                    ? profilesProvider.isProfileSelected
-                        ? WalletScreenV3()
-                        : ProfileSelectionScreen()
-                    : LoginScreen(),
-                routes: {
-                  SuccessScreen.routeName: (_) => SuccessScreen(),
-                  QrCodeScanScreen.routeName: (_) => QrCodeScanScreen(),
-                  WalletScreenV3.routeName: (_) => WalletScreenV3(),
-                  ChooseAmountScreenV4.routeName: (_) => ChooseAmountScreenV4(),
-                  ChooseAmountExtendedScreen.routeName: (_) =>
-                      ChooseAmountExtendedScreen(),
-                  LoginScreen.routeName: (_) => LoginScreen(),
-                  ProfileSelectionScreen.routeName: (_) =>
-                      ProfileSelectionScreen(),
-                  ProfileSelectionOverlayScreen.routeName: (_) =>
-                      ProfileSelectionOverlayScreen(),
-                  ChooseAmountSliderScreen.routeName: (_) =>
-                      ChooseAmountSliderScreen(),
-                },
-              );
-            },
-          );
-        },
       ),
     );
   }

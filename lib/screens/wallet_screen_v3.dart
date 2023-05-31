@@ -2,6 +2,7 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/svg.dart';
@@ -244,18 +245,21 @@ class _WalletScreenV3State extends State<WalletScreenV3>
                               profilesProvider.activeProfile!.balance > 0 &&
                                       !_isProfilesFetching
                                   ? () {
-                                      AnalyticsHelper.logEvent(
-                                        eventName:
-                                            AmplitudeEvent.iWantToGiveToPressed,
-                                        eventProperties: {
-                                          'current_amount_in_wallet':
-                                              profilesProvider
-                                                  .activeProfile!.balance,
-                                        },
-                                      );
+                                      // AnalyticsHelper.logEvent(
+                                      //   eventName:
+                                      //       AmplitudeEvent.iWantToGiveToPressed,
+                                      //   eventProperties: {
+                                      //     'current_amount_in_wallet':
+                                      //         profilesProvider
+                                      //             .activeProfile!.balance,
+                                      //   },
+                                      // );
 
+                                      // Navigator.of(context).pushNamed(
+                                      //   QrCodeScanScreen.routeName,
+                                      // );
                                       Navigator.of(context).pushNamed(
-                                        QrCodeScanScreen.routeName,
+                                        LoginBlocScreen.routeName,
                                       );
                                     }
                                   : null,
