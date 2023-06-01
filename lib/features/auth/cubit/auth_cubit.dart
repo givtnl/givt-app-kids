@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/auth/models/auth_request.dart';
 import 'package:givt_app_kids/features/auth/repositoriy/auth_repository.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'auth_state.dart';
@@ -19,6 +20,11 @@ class AuthCubit extends HydratedCubit<AuthState> {
     if (!_validateInputFields(email, password)) {
       return;
     }
+
+    AnalyticsHelper.logEvent(
+        eventName: AmplitudeEvent.loginPressed,
+        eventProperties: {'email_address': email});
+
     emit(const LoadingState());
     final authRepository = AuthRepository();
     try {

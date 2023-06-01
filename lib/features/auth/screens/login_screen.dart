@@ -8,9 +8,6 @@ import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
 import 'package:flutter_svg/svg.dart';
 
-import 'package:givt_app_kids/providers/auth_provider.dart';
-import 'package:givt_app_kids/helpers/analytics_helper.dart';
-
 class LoginBlocScreen extends StatefulWidget {
   static const String routeName = "/login-bloc";
 
@@ -208,9 +205,6 @@ class _LoginScreenState extends State<LoginBlocScreen> {
                   if (state is LoadingState) {
                     return;
                   }
-                  // AnalyticsHelper.logEvent(
-                  //     eventName: AmplitudeEvent.loginPressed,
-                  //     eventProperties: {'email_address': _email});
 
                   _login();
                 },
