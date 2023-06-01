@@ -90,17 +90,18 @@ class AuthCubit extends HydratedCubit<AuthState> {
 
     log("fromJSON: $json");
 
-    if (instanceType == const LoggedOutState().runtimeType.toString()) {
-      return const LoggedOutState();
-    } else if (instanceType == const LoadingState().runtimeType.toString()) {
-      return const LoadingState();
-    } else if (instanceType ==
-        const InputFieldErrorState().runtimeType.toString()) {
-      return InputFieldErrorState.fromJson(instance);
-    } else if (instanceType ==
-        const ExternalErrorState().runtimeType.toString()) {
-      return ExternalErrorState.fromJson(instance);
-    } else if (instanceType == const LoggedInState().runtimeType.toString()) {
+    // if (instanceType == const LoggedOutState().runtimeType.toString()) {
+    //   return const LoggedOutState();
+    // } else if (instanceType == const LoadingState().runtimeType.toString()) {
+    //   return const LoadingState();
+    // } else if (instanceType ==
+    //     const InputFieldErrorState().runtimeType.toString()) {
+    //   return InputFieldErrorState.fromJson(instance);
+    // } else if (instanceType ==
+    //     const ExternalErrorState().runtimeType.toString()) {
+    //   return ExternalErrorState.fromJson(instance);
+    // } else
+    if (instanceType == const LoggedInState().runtimeType.toString()) {
       return LoggedInState.fromJson(instance);
     } else {
       return null;
