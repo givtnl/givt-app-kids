@@ -4,31 +4,30 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:givt_app_kids/features/auth/models/auth_request.dart';
-import 'package:givt_app_kids/helpers/api_helper.dart';
 
-class LegacyBackendDataProvider {
+class BffBackendDataProvider {
   Future<Map<String, dynamic>> login(AuthRequest authRequest) async {
-    final url = Uri.https(ApiHelper.apiURL, ApiHelper.loginPath);
+    final url = Uri.https(
+        'dev-backend.givtapp.net', '/givt4kidsservice/v1/Authentication/login');
 
     try {
       var response = await http.post(
         url,
         body: {
-          'grant_type': 'password',
           'userName': authRequest.email,
           'password': authRequest.password,
         },
       );
 
-      log('legacy login status code: ${response.statusCode}');
+      log('bff login status code: ${response.statusCode}');
 
       if (response.statusCode < 400) {
         var decodedBody = json.decode(response.body);
-        final responseMap = decodedBody as Map<String, dynamic>;
+        final itemMap = decodedBody['item'];
         return {
-          'email': responseMap['Email'],
-          'guid': responseMap['GUID'],
-          'accessToken': responseMap['access_token'],
+          'email': itemMap['email'],
+          'guid': itemMap['userId'],
+          'accessToken': itemMap['accessToken'],
         };
       } else {
         throw Exception(response.body);
