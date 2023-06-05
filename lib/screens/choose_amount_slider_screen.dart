@@ -193,7 +193,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                 child: Text(
-                  "Give to this goal",
+                  "Next",
                   style: TextStyle(
                     fontSize: 26,
                     color: Colors.white,
