@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 import 'package:provider/provider.dart';
@@ -241,6 +242,49 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                 icon: Icon(Icons.logout),
                                 label: Text(
                                   "Logout",
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Card(
+                  color: Colors.grey[200],
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "BLOC ARCHITECTURE FEATURES",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                    LoginBlocScreen.routeName,
+                                  );
+                                },
+                                child: Text(
+                                  "LOGIN FEATURE",
                                 ),
                               ),
                             ],

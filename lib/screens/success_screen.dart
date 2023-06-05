@@ -49,11 +49,28 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   right: 40,
                 ),
                 child: Text(
-                  "You gave \$${transaction.amount.toStringAsFixed(2)} to ${organisation.name}",
+                  "Thank you!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
-                    color: Colors.white,
+                    color: Color(0xFF3B3240),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(
+                  top: 40,
+                  left: 40,
+                  right: 40,
+                ),
+                child: Text(
+                  "Your parents can now approve \n your donation suggestion",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF3B3240),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -97,7 +114,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 width: double.infinity,
                 alignment: Alignment.center,
                 child: Text(
-                  "Continue",
+                  "Back to home",
                   style: TextStyle(
                     fontSize: 26,
                     color: Color(0xFF3B3240),
