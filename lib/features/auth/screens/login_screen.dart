@@ -7,9 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
 import 'package:flutter_svg/svg.dart';
-
-import 'package:givt_app_kids/providers/auth_provider.dart';
-import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/features/auth/screens/logged_in_temp_screen.dart';
 
 class LoginBlocScreen extends StatefulWidget {
   static const String routeName = "/login-bloc";
@@ -31,6 +29,16 @@ class _LoginScreenState extends State<LoginBlocScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      if (context.read<AuthCubit>().state is LoggedInState) {
+        Navigator.of(context).push(LoggedInTempScreen.route());
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocConsumer<AuthCubit, AuthState>(
@@ -48,14 +56,15 @@ class _LoginScreenState extends State<LoginBlocScreen> {
               ),
             );
           } else if (state is LoggedInState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  "Logged in with token: ${state.accessToken}",
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            );
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   SnackBar(
+            //     content: Text(
+            //       "Logged in with token: ${state.accessToken}",
+            //       textAlign: TextAlign.center,
+            //     ),
+            //   ),
+            // );
+            Navigator.of(context).push(LoggedInTempScreen.route());
           }
         },
         builder: (context, state) => Scaffold(
@@ -208,9 +217,6 @@ class _LoginScreenState extends State<LoginBlocScreen> {
                   if (state is LoadingState) {
                     return;
                   }
-                  // AnalyticsHelper.logEvent(
-                  //     eventName: AmplitudeEvent.loginPressed,
-                  //     eventProperties: {'email_address': _email});
 
                   _login();
                 },

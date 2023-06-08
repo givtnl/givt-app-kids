@@ -1,12 +1,18 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/auth/models/auth_request.dart';
 import 'package:givt_app_kids/features/auth/repositoriy/auth_repository.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(const LoggedOutState());
+class AuthCubit extends HydratedCubit<AuthState> {
+  AuthCubit() : super(const LoggedOutState()) {
+    hydrate();
+  }
 
   void logout() => emit(const LoggedOutState());
 
@@ -14,6 +20,11 @@ class AuthCubit extends Cubit<AuthState> {
     if (!_validateInputFields(email, password)) {
       return;
     }
+
+    AnalyticsHelper.logEvent(
+        eventName: AmplitudeEvent.loginPressed,
+        eventProperties: {'email_address': email});
+
     emit(const LoadingState());
     final authRepository = AuthRepository();
     try {
@@ -70,5 +81,40 @@ class AuthCubit extends Cubit<AuthState> {
       return 'Password cannot contain more than 100 characters';
     }
     return null;
+  }
+
+  @override
+  AuthState? fromJson(Map<String, dynamic> json) {
+    final instanceType = json['instanceType'];
+    final instance = jsonDecode(json['instance']);
+
+    log("fromJSON: $json");
+
+    // if (instanceType == const LoggedOutState().runtimeType.toString()) {
+    //   return const LoggedOutState();
+    // } else if (instanceType == const LoadingState().runtimeType.toString()) {
+    //   return const LoadingState();
+    // } else if (instanceType ==
+    //     const InputFieldErrorState().runtimeType.toString()) {
+    //   return InputFieldErrorState.fromJson(instance);
+    // } else if (instanceType ==
+    //     const ExternalErrorState().runtimeType.toString()) {
+    //   return ExternalErrorState.fromJson(instance);
+    // } else
+    if (instanceType == const LoggedInState().runtimeType.toString()) {
+      return LoggedInState.fromJson(instance);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(AuthState state) {
+    final result = {
+      'instanceType': state.runtimeType.toString(),
+      'instance': jsonEncode(state.toJson()),
+    };
+    log("toJSON: $result");
+    return result;
   }
 }

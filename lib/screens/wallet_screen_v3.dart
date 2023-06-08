@@ -245,21 +245,18 @@ class _WalletScreenV3State extends State<WalletScreenV3>
                               profilesProvider.activeProfile!.balance > 0 &&
                                       !_isProfilesFetching
                                   ? () {
-                                      // AnalyticsHelper.logEvent(
-                                      //   eventName:
-                                      //       AmplitudeEvent.iWantToGiveToPressed,
-                                      //   eventProperties: {
-                                      //     'current_amount_in_wallet':
-                                      //         profilesProvider
-                                      //             .activeProfile!.balance,
-                                      //   },
-                                      // );
+                                      AnalyticsHelper.logEvent(
+                                        eventName:
+                                            AmplitudeEvent.iWantToGiveToPressed,
+                                        eventProperties: {
+                                          'current_amount_in_wallet':
+                                              profilesProvider
+                                                  .activeProfile!.balance,
+                                        },
+                                      );
 
-                                      // Navigator.of(context).pushNamed(
-                                      //   QrCodeScanScreen.routeName,
-                                      // );
                                       Navigator.of(context).pushNamed(
-                                        LoginBlocScreen.routeName,
+                                        QrCodeScanScreen.routeName,
                                       );
                                     }
                                   : null,
