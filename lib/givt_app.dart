@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
+import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:provider/provider.dart';
@@ -35,9 +36,17 @@ class GivtApp extends StatelessWidget {
     //Init Amplitude
     AnalyticsHelper.init(config.amplitudePublicKey);
 
-    return BlocProvider(
-      create: (BuildContext context) => AuthCubit(),
-      lazy: false,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthCubit>(
+          create: (BuildContext context) => AuthCubit(),
+          lazy: false,
+        ),
+        BlocProvider<ProfilesCubit>(
+          create: (BuildContext context) => ProfilesCubit(),
+          lazy: false,
+        ),
+      ],
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 
 class LoggedInTempScreen extends StatelessWidget {
   const LoggedInTempScreen({super.key});
@@ -14,6 +15,10 @@ class LoggedInTempScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.read<AuthCubit>().state as LoggedInState;
+
+    final profilesState = context.read<ProfilesCubit>().state;
+    print(
+        'Active profile first name: ${profilesState.activeProfile.firstName}');
 
     return SafeArea(
       child: Scaffold(
