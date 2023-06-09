@@ -7,18 +7,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
 import 'package:flutter_svg/svg.dart';
-import 'package:givt_app_kids/features/auth/screens/logged_in_temp_screen.dart';
+import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 
-class LoginBlocScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   static const String routeName = "/login-bloc";
 
-  const LoginBlocScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginBlocScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginBlocScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   String _email = "";
   String _password = "";
 
@@ -26,16 +26,6 @@ class _LoginScreenState extends State<LoginBlocScreen> {
 
   Future<void> _login() async {
     context.read<AuthCubit>().login(_email, _password);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () {
-      if (context.read<AuthCubit>().state is LoggedInState) {
-        Navigator.of(context).push(LoggedInTempScreen.route());
-      }
-    });
   }
 
   @override
@@ -56,15 +46,8 @@ class _LoginScreenState extends State<LoginBlocScreen> {
               ),
             );
           } else if (state is LoggedInState) {
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   SnackBar(
-            //     content: Text(
-            //       "Logged in with token: ${state.accessToken}",
-            //       textAlign: TextAlign.center,
-            //     ),
-            //   ),
-            // );
-            Navigator.of(context).push(LoggedInTempScreen.route());
+            Navigator.of(context)
+                .pushReplacementNamed(ProfileSelectionScreen.routeName);
           }
         },
         builder: (context, state) => Scaffold(

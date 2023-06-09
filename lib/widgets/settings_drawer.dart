@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
+import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 import 'package:provider/provider.dart';
@@ -279,9 +281,16 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).pushNamed(
-                                    LoginBlocScreen.routeName,
-                                  );
+                                  if (context.read<AuthCubit>().state
+                                      is LoggedInState) {
+                                    Navigator.of(context).pushNamed(
+                                      ProfileSelectionScreen.routeName,
+                                    );
+                                  } else {
+                                    Navigator.of(context).pushNamed(
+                                      LoginScreen.routeName,
+                                    );
+                                  }
                                 },
                                 child: Text(
                                   "LOGIN FEATURE",
