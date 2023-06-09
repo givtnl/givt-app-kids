@@ -9,7 +9,7 @@ import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_item.dart';
-import 'package:givt_app_kids/features/wallet/wallet_screen.dart';
+import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
