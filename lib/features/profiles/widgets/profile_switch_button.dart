@@ -30,7 +30,7 @@ class ProfileSwitchButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(
-              Icons.keyboard_arrow_down_rounded,
+              Icons.keyboard_arrow_left_rounded,
               size: 25,
             ),
             const SizedBox(
