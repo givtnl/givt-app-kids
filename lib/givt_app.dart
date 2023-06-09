@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart'
     as login_bloc;
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -102,6 +103,7 @@ class GivtApp extends StatelessWidget {
                         ProfileSelectionOverlayScreen(),
                     ChooseAmountSliderScreen.routeName: (_) =>
                         ChooseAmountSliderScreen(),
+                    WalletScreenCubit.routeName: (_) => WalletScreenCubit(),
                     login_bloc.LoginScreen.routeName: (_) =>
                         login_bloc.LoginScreen(),
                     profiles_bloc.ProfileSelectionScreen.routeName: (_) =>
