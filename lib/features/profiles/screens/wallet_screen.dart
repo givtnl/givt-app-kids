@@ -6,6 +6,7 @@ import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.da
 import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/features/profiles/widgets/name_bold.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class WalletScreenCubit extends StatefulWidget {
   static const String routeName = "/wallet-cubit";
@@ -34,6 +35,9 @@ class _WalletScreenCubitState extends State<WalletScreenCubit> {
             onClicked: () {
               Navigator.of(context)
                   .pushReplacementNamed(ProfileSelectionScreen.routeName);
+              AnalyticsHelper.logEvent(
+                eventName: AmplitudeEvent.profileSwitchPressed,
+              );
             }),
         fabLocation: FloatingActionButtonLocation.startFloat,
       );
