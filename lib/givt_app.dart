@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
+import 'package:givt_app_kids/features/auth/screens/login_screen.dart'
+    as login_bloc;
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/api_helper.dart';
@@ -21,6 +22,9 @@ import 'package:givt_app_kids/providers/profiles_provider.dart';
 import 'package:givt_app_kids/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/screens/profile_selection_overlay_screen.dart';
 import 'package:givt_app_kids/screens/choose_amount_slider_screen.dart';
+
+import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart'
+    as profiles_bloc;
 
 import 'app_config.dart';
 
@@ -98,7 +102,10 @@ class GivtApp extends StatelessWidget {
                         ProfileSelectionOverlayScreen(),
                     ChooseAmountSliderScreen.routeName: (_) =>
                         ChooseAmountSliderScreen(),
-                    LoginBlocScreen.routeName: (_) => LoginBlocScreen(),
+                    login_bloc.LoginScreen.routeName: (_) =>
+                        login_bloc.LoginScreen(),
+                    profiles_bloc.ProfileSelectionScreen.routeName: (_) =>
+                        profiles_bloc.ProfileSelectionScreen(),
                   },
                 );
               },

@@ -10,10 +10,32 @@ abstract class ProfilesState extends Equatable {
   final Profile activeProfile;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [profiles, activeProfile];
 }
 
-class ProfilesInitial extends ProfilesState {
-  const ProfilesInitial()
-      : super(profiles: const [], activeProfile: const Profile.empty());
+class ProfilesInitialState extends ProfilesState {
+  const ProfilesInitialState(
+      {super.profiles = const [], super.activeProfile = const Profile.empty()});
+}
+
+class ProfilesLoadingState extends ProfilesState {
+  const ProfilesLoadingState(
+      {super.profiles = const [], super.activeProfile = const Profile.empty()});
+}
+
+class ProfilesUpdatedState extends ProfilesState {
+  const ProfilesUpdatedState(
+      {required super.profiles, required super.activeProfile});
+}
+
+class ProfilesExternalErrorState extends ProfilesState {
+  const ProfilesExternalErrorState(
+      {super.profiles = const [],
+      super.activeProfile = const Profile.empty(),
+      this.errorMessage = ''});
+
+  final String errorMessage;
+
+  @override
+  List<Object> get props => [profiles, activeProfile, errorMessage];
 }
