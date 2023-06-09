@@ -103,7 +103,6 @@ class GivtApp extends StatelessWidget {
                         ProfileSelectionOverlayScreen(),
                     ChooseAmountSliderScreen.routeName: (_) =>
                         ChooseAmountSliderScreen(),
-                    LoginBlocScreen.routeName: (_) => LoginBlocScreen(),
                     WalletScreenCubit.routeName: (_) => WalletScreenCubit(),
                     login_bloc.LoginScreen.routeName: (_) =>
                         login_bloc.LoginScreen(),
