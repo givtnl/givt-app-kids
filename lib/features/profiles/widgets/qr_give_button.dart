@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/profiles/screens/camera_screen.dart';
+import 'package:givt_app_kids/screens/qr_code_scan_screen.dart';
 
 class QrGiveButton extends StatelessWidget {
   const QrGiveButton({super.key});
@@ -9,7 +10,7 @@ class QrGiveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
-        Navigator.of(context).pushReplacementNamed(CameraScreen.routeName);
+        Navigator.of(context).pushNamed(CameraScreen.routeName);
       },
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(double.maxFinite, 60),

@@ -35,20 +35,20 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
     super.initState();
 
     //temporary code to test on iOS simulators
-    if (kDebugMode && Platform.isIOS) {
-      Future.delayed(
-        Duration(seconds: 3),
-      ).then(
-        (_) {
-          Navigator.of(context).pushNamed(
-            ChooseAmountSliderScreen.routeName,
-            arguments: Organisation(
-              name: "Mock Organisation Long Name",
-            ),
-          );
-        },
-      );
-    }
+    // if (kDebugMode && Platform.isIOS) {
+    //   Future.delayed(
+    //     Duration(seconds: 3),
+    //   ).then(
+    //     (_) {
+    //       Navigator.of(context).pushNamed(
+    //         ChooseAmountSliderScreen.routeName,
+    //         arguments: Organisation(
+    //           name: "Mock Organisation Long Name",
+    //         ),
+    //       );
+    //     },
+    //   );
+    // }
   }
 
   Future<Organisation?> _getOrganisationDetails(String? qrCode) async {
