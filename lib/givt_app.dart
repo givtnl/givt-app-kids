@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/profiles/screens/camera_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart'
     as login_bloc;
@@ -89,6 +90,7 @@ class GivtApp extends StatelessWidget {
                           : ProfileSelectionScreen()
                       : LoginScreen(),
                   routes: {
+                    CameraScreen.routeName: (_) => CameraScreen(),
                     SuccessScreen.routeName: (_) => SuccessScreen(),
                     QrCodeScanScreen.routeName: (_) => QrCodeScanScreen(),
                     WalletScreenV3.routeName: (_) => WalletScreenV3(),

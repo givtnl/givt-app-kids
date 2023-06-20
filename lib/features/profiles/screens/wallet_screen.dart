@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
+import 'package:givt_app_kids/features/profiles/widgets/qr_give_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/features/profiles/widgets/name_bold.dart';
@@ -27,6 +28,8 @@ class _WalletScreenCubitState extends State<WalletScreenCubit> {
           children: [
             NameBold(name: state.activeProfile.firstName),
             WalletWidget(balance: state.activeProfile.balance),
+            SizedBox(height: size.height * 0.01),
+            const QrGiveButton(),
           ],
         ),
         fab: ProfileSwitchButton(
