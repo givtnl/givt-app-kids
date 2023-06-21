@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/organisation/cubit/cubit/camera_cubit.dart';
-import 'package:givt_app_kids/features/organisation/presentation/camera_screen.dart';
+import 'package:givt_app_kids/features/organisation/cubit/organisation_cubit.dart';
+import 'package:givt_app_kids/features/qr_scanner/cubit/camera_cubit.dart';
+import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
+import 'package:givt_app_kids/features/organisation/presentation/mock_slider_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart'
     as login_bloc;
@@ -55,7 +57,11 @@ class GivtApp extends StatelessWidget {
         ),
         BlocProvider<CameraCubit>(
           create: (BuildContext context) => CameraCubit(),
-          lazy: false,
+          lazy: true,
+        ),
+        BlocProvider<OrganisationCubit>(
+          create: (BuildContext context) => OrganisationCubit(),
+          lazy: true,
         ),
       ],
       child: MultiProvider(
@@ -95,6 +101,7 @@ class GivtApp extends StatelessWidget {
                           : ProfileSelectionScreen()
                       : LoginScreen(),
                   routes: {
+                    MockSliderScreen.routeName: (_) => MockSliderScreen(),
                     CameraScreen.routeName: (_) => CameraScreen(),
                     SuccessScreen.routeName: (_) => SuccessScreen(),
                     QrCodeScanScreen.routeName: (_) => QrCodeScanScreen(),
