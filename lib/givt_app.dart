@@ -97,7 +97,7 @@ class GivtApp extends StatelessWidget {
                       fontFamily: "Raleway"),
                   home: authProvider.isAuthenticated
                       ? profilesProvider.isProfileSelected
-                          ? WalletScreenCubit()
+                          ? WalletScreenV3()
                           : ProfileSelectionScreen()
                       : LoginScreen(),
                   routes: {
