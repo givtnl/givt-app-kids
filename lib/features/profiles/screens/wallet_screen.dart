@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/features/create_transaction/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
@@ -28,6 +29,12 @@ class _WalletScreenCubitState extends State<WalletScreenCubit> {
           children: [
             NameBold(name: state.activeProfile.firstName),
             WalletWidget(balance: state.activeProfile.balance),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(ChooseAmountSliderScreen.routeName);
+                },
+                child: Text("DONATE")),
           ],
         ),
         fab: ProfileSwitchButton(

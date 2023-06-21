@@ -27,6 +27,12 @@ import 'package:givt_app_kids/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart'
     as profiles_bloc;
 
+import 'package:givt_app_kids/features/create_transaction/screens/choose_amount_slider_screen.dart'
+    as create_transaction_bloc;
+
+import 'package:givt_app_kids/features/create_transaction/screens/success_screen.dart'
+    as create_transaction_bloc;
+
 import 'app_config.dart';
 
 class GivtApp extends StatelessWidget {
@@ -108,6 +114,11 @@ class GivtApp extends StatelessWidget {
                         login_bloc.LoginScreen(),
                     profiles_bloc.ProfileSelectionScreen.routeName: (_) =>
                         profiles_bloc.ProfileSelectionScreen(),
+                    create_transaction_bloc.ChooseAmountSliderScreen.routeName:
+                        (_) =>
+                            create_transaction_bloc.ChooseAmountSliderScreen(),
+                    create_transaction_bloc.SuccessScreen.routeName: (_) =>
+                        create_transaction_bloc.SuccessScreen(),
                   },
                 );
               },
