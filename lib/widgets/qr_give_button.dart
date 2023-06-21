@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:givt_app_kids/features/profiles/screens/camera_screen.dart';
-import 'package:givt_app_kids/screens/qr_code_scan_screen.dart';
+import 'package:givt_app_kids/features/organisation/presentation/camera_screen.dart';
 
 class QrGiveButton extends StatelessWidget {
   const QrGiveButton({super.key});

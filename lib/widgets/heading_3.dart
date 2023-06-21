@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NameBold extends StatelessWidget {
-  NameBold({super.key, required this.name});
+class Header3 extends StatelessWidget {
+  Header3({super.key, required this.name});
   String name;
   @override
   Widget build(BuildContext context) {

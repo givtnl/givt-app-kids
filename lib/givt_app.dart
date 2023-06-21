@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/profiles/screens/camera_screen.dart';
+import 'package:givt_app_kids/features/organisation/cubit/cubit/camera_cubit.dart';
+import 'package:givt_app_kids/features/organisation/presentation/camera_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart'
     as login_bloc;
@@ -52,6 +53,10 @@ class GivtApp extends StatelessWidget {
           create: (BuildContext context) => ProfilesCubit(),
           lazy: false,
         ),
+        BlocProvider<CameraCubit>(
+          create: (BuildContext context) => CameraCubit(),
+          lazy: false,
+        ),
       ],
       child: MultiProvider(
         providers: [
@@ -86,7 +91,7 @@ class GivtApp extends StatelessWidget {
                       fontFamily: "Raleway"),
                   home: authProvider.isAuthenticated
                       ? profilesProvider.isProfileSelected
-                          ? WalletScreenV3()
+                          ? WalletScreenCubit()
                           : ProfileSelectionScreen()
                       : LoginScreen(),
                   routes: {
