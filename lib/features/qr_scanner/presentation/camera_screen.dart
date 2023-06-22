@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/organisation/cubit/organisation_cubit.dart';
 import 'package:givt_app_kids/features/qr_scanner/cubit/camera_cubit.dart';
-import 'package:givt_app_kids/features/organisation/presentation/mock_slider_screen.dart';
 import 'package:givt_app_kids/features/qr_scanner/widgets/camera_screen_frame.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/widgets/qr_code_target.dart';
@@ -50,9 +49,7 @@ class _CameraScreenState extends State<CameraScreen> {
                           eventProperties: {
                             'goal_name': orgState.organisation.name,
                           });
-                      Navigator.of(context).pushReplacementNamed(
-                        MockSliderScreen.routeName,
-                      );
+                      // TODO: Add navigation to the next screen
                     }
                   },
                   child: MobileScanner(
