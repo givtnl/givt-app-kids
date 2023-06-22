@@ -18,7 +18,6 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   final MobileScannerController _cameraController = MobileScannerController();
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -28,57 +27,60 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CameraCubit, CameraState>(
-      listener: (context, state) {
-        if (state is CameraScanned) {
-          context
-              .read<OrganisationCubit>()
-              .getOrganisationDetails(state.qrValue);
-        }
-      },
-      builder: (context, state) {
-        return CameraScreenFrame(
-          feedback: state.feedback,
-          child: Stack(
-            children: [
-              BlocListener<OrganisationCubit, OrganisationState>(
-                listener: (context, orgState) {
-                  if (orgState is OrganisationSet) {
-                    AnalyticsHelper.logEvent(
-                        eventName: AmplitudeEvent.qrCodeScanned,
-                        eventProperties: {
-                          'goal_name': orgState.organisation.name,
-                        });
-                    Navigator.of(context).pushReplacementNamed(
-                      MockSliderScreen.routeName,
-                    );
-                  }
-                },
-                child: MobileScanner(
-                  controller: _cameraController,
-                  onDetect: (barcode, args) async {
-                    if (state.isLoading) {
-                      return;
-                    }
-                    if (state is CameraScanned == false) {
-                      await context
-                          .read<CameraCubit>()
-                          .scanQrCode(barcode.rawValue);
+    return BlocProvider(
+      create: (context) => CameraCubit(),
+      child: BlocConsumer<CameraCubit, CameraState>(
+        listener: (context, state) {
+          if (state is CameraScanned) {
+            context
+                .read<OrganisationCubit>()
+                .getOrganisationDetails(state.qrValue);
+          }
+        },
+        builder: (context, state) {
+          return CameraScreenFrame(
+            feedback: state.feedback,
+            child: Stack(
+              children: [
+                BlocListener<OrganisationCubit, OrganisationState>(
+                  listener: (context, orgState) {
+                    if (orgState is OrganisationSet) {
+                      AnalyticsHelper.logEvent(
+                          eventName: AmplitudeEvent.qrCodeScanned,
+                          eventProperties: {
+                            'goal_name': orgState.organisation.name,
+                          });
+                      Navigator.of(context).pushReplacementNamed(
+                        MockSliderScreen.routeName,
+                      );
                     }
                   },
+                  child: MobileScanner(
+                    controller: _cameraController,
+                    onDetect: (barcode, args) async {
+                      if (state.isLoading) {
+                        return;
+                      }
+                      if (state is CameraScanned == false) {
+                        await context
+                            .read<CameraCubit>()
+                            .scanQrCode(barcode.rawValue);
+                      }
+                    },
+                  ),
                 ),
-              ),
-              Positioned.fill(
-                child: state.isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : const QrCodeTarget(),
-              ),
-            ],
-          ),
-        );
-      },
+                Positioned.fill(
+                  child: state.isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : const QrCodeTarget(),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

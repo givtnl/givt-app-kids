@@ -55,10 +55,6 @@ class GivtApp extends StatelessWidget {
           create: (BuildContext context) => ProfilesCubit(),
           lazy: false,
         ),
-        BlocProvider<CameraCubit>(
-          create: (BuildContext context) => CameraCubit(),
-          lazy: true,
-        ),
         BlocProvider<OrganisationCubit>(
           create: (BuildContext context) => OrganisationCubit(),
           lazy: true,
