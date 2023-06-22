@@ -19,15 +19,14 @@ class CreateTransactionCubit extends Cubit<CreateTransactionState> {
         maxAmaount: profilesCubit.state.activeProfile.balance.roundToDouble()));
   }
 
-  Future<void> createTransaction(
-      {required Transaction transaction, String accessToken = ''}) async {
+  Future<void> createTransaction({required Transaction transaction}) async {
     emit(CreateTransactionUploadingState(
         amount: state.amount, maxAmaount: state.maxAmaount));
 
     final createTransactionRepository = CreateTransactionRepository();
     try {
       await createTransactionRepository.createTransaction(
-          transaction: transaction, accessToken: accessToken);
+          transaction: transaction);
       emit(CreateTransactionSuccessState(
           amount: state.amount, maxAmaount: state.maxAmaount));
     } catch (error) {

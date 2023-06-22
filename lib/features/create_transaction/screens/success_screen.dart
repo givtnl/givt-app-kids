@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';

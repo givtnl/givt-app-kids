@@ -1,20 +1,27 @@
 class Transaction {
-  const Transaction(
-      {this.amount = 0.0,
-      this.destinationName = '',
-      this.parentGuid = '',
-      this.userId = '',
-      this.donationType = DonationType.AdHocDonation,
-      this.collectId = '',
-      this.createdAt = ''});
+  const Transaction({
+    required this.userId,
+    required this.campaignId,
+    required this.collectId,
+    this.donationType = DonationType.AdHocDonation,
+    required this.amount,
+  });
 
-  final double amount;
-  final String destinationName;
-  final String parentGuid;
   final String userId;
-  final DonationType donationType;
+  final String campaignId;
   final String collectId;
-  final String createdAt;
+  final DonationType donationType;
+  final double amount;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userId': userId,
+      'campaignId': campaignId,
+      'collectId': collectId,
+      'donationType': donationType.name,
+      'amount': amount,
+    };
+  }
 }
 
 enum DonationType { AdHocDonation, RecurringDonation }

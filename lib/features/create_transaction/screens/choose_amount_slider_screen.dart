@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/create_transaction/models/transaction.dart';
 import 'package:givt_app_kids/features/create_transaction/screens/success_screen.dart';
@@ -190,22 +189,18 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                             if (state is CreateTransactionUploadingState) {
                               return;
                             }
-
-                            final authState = (context.read<AuthCubit>().state
-                                as LoggedInState);
-
                             var transaction = Transaction(
-                              createdAt: DateTime.now().toIso8601String(),
+                              userId: _profilesCubit.state.activeProfile.id,
+                              campaignId:
+                                  '3fa85f64-5717-4562-b3fc-2c963f66afa6', // TODO use real value
+                              collectId:
+                                  '3fa85f64-5717-4562-b3fc-2c963f66afa6', // TODO use real value
                               amount: state.amount,
-                              parentGuid: authState.guid,
-                              destinationName: 'TODO: Org Name',
                             );
 
                             context
                                 .read<CreateTransactionCubit>()
-                                .createTransaction(
-                                    transaction: transaction,
-                                    accessToken: authState.accessToken);
+                                .createTransaction(transaction: transaction);
 
                             // AnalyticsHelper.logEvent(
                             //     eventName: AmplitudeEvent.giveToThisGoalPressed,
