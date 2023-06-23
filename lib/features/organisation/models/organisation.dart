@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Organisation extends Equatable {
   const Organisation({
-    required this.organisationId,
+    required this.collectGroupId,
     required this.name,
     required this.goal,
     this.logoLink,
@@ -11,22 +11,22 @@ class Organisation extends Equatable {
 
   const Organisation.empty()
       : this(
-            organisationId: '',
+            collectGroupId: '',
             name: 'Mock Organisation Long Name',
             goal: 'mock goal');
 
-  final String organisationId;
+  final String collectGroupId;
   final String name;
   final String goal;
   final String? logoLink;
   final String? thankYou;
 
   @override
-  List<Object?> get props => [organisationId, name, goal];
+  List<Object?> get props => [collectGroupId, name, goal];
 
   factory Organisation.fromMap(Map<String, dynamic> map) {
     return Organisation(
-      organisationId: map['campaignId'] ?? 'no id fetched',
+      collectGroupId: map['collectGroupId'] ?? 'no id fetched',
       name: map['title'] ?? 'no name fetched',
       goal: map['goal'] ?? 'no description of goal',
       logoLink: map['logo'],
@@ -36,7 +36,7 @@ class Organisation extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
-      'organisationId': organisationId,
+      'organisationId': collectGroupId,
       'organisationName': name,
       'goal': goal,
     };
