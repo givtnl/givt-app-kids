@@ -5,7 +5,7 @@ abstract class OrganisationState extends Equatable {
   final Organisation organisation;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [organisation];
 }
 
 class OrganisationInitial extends OrganisationState {

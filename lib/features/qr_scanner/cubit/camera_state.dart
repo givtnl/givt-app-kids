@@ -27,19 +27,6 @@ class CameraInitial extends CameraState {
         );
 }
 
-class CameraLoading extends CameraState {
-  const CameraLoading({
-    isLoading = true,
-    qrValue = '',
-    feedback = 'Loading...',
-    organisation = const Organisation.empty(),
-  }) : super(
-          isLoading: isLoading,
-          qrValue: qrValue,
-          feedback: feedback,
-        );
-}
-
 class CameraScanned extends CameraState {
   final String qrValue;
   const CameraScanned({

@@ -55,19 +55,17 @@ class _CameraScreenState extends State<CameraScreen> {
                   child: MobileScanner(
                     controller: _cameraController,
                     onDetect: (barcode, args) async {
-                      if (state.isLoading) {
+                      if (state is CameraScanned) {
                         return;
                       }
-                      if (state is CameraScanned == false) {
-                        await context
-                            .read<CameraCubit>()
-                            .scanQrCode(barcode.rawValue);
-                      }
+                      await context
+                          .read<CameraCubit>()
+                          .scanQrCode(barcode.rawValue);
                     },
                   ),
                 ),
                 Positioned.fill(
-                  child: state.isLoading
+                  child: state is CameraScanned
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )

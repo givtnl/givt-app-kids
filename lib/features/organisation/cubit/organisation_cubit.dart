@@ -10,7 +10,6 @@ class OrganisationCubit extends Cubit<OrganisationState> {
   OrganisationCubit() : super(OrganisationInitial());
 
   Future<void> getOrganisationDetails(String qrCode) async {
-    await Future.delayed(const Duration(seconds: 2));
     final organisationRepository = OrganisationRepository();
     try {
       final response =
