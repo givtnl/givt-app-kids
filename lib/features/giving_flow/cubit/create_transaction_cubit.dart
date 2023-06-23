@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/features/create_transaction/models/transaction.dart';
-import 'package:givt_app_kids/features/create_transaction/repository/create_transaction_repository.dart';
+import 'package:givt_app_kids/features/giving_flow/models/transaction.dart';
+import 'package:givt_app_kids/features/giving_flow/repository/create_transaction_repository.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 
 part 'create_transaction_state.dart';

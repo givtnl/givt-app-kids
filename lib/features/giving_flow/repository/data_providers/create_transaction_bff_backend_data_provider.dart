@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:givt_app_kids/features/create_transaction/models/transaction.dart';
+import 'package:givt_app_kids/features/giving_flow/models/transaction.dart';
 
 class CreateTransactionBffBackendDataProvider {
   Future<void> createTransaction({required Transaction transaction}) async {

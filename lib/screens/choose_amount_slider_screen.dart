@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisation_cubit.dart';
 
 import 'package:provider/provider.dart';
 
@@ -27,8 +29,8 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final organisation =
-        ModalRoute.of(context)?.settings.arguments as Organisation;
+    // final organisation =
+    //     ModalRoute.of(context)?.settings.arguments as Organisation;
 
     var profilesProvider = Provider.of<ProfilesProvider>(context);
 
@@ -53,13 +55,17 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                 padding: EdgeInsets.only(left: 40, right: 40, top: 35),
                 child: Column(
                   children: [
-                    Text(
-                      organisation.name,
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF3B3240),
-                      ),
+                    BlocBuilder<OrganisationCubit, OrganisationState>(
+                      builder: (context, orgState) {
+                        return Text(
+                          orgState.organisation.name,
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF3B3240),
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(
                       height: 25,
@@ -154,53 +160,59 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
               left: 40,
               right: 40,
             ),
-            child: ElevatedButton(
-              onPressed: _selectedAmount == 0
-                  ? null
-                  : () async {
-                      var profilesProvider =
-                          Provider.of<ProfilesProvider>(context, listen: false);
+            child: BlocBuilder<OrganisationCubit, OrganisationState>(
+              builder: (context, orgState) {
+                return ElevatedButton(
+                  onPressed: _selectedAmount == 0
+                      ? null
+                      : () async {
+                          var profilesProvider = Provider.of<ProfilesProvider>(
+                              context,
+                              listen: false);
 
-                      var transaction = Transaction(
-                        createdAt: DateTime.now().toIso8601String(),
-                        amount: _selectedAmount,
-                        parentGuid: profilesProvider.activeProfile!.guid,
-                        destinationName: organisation.name,
-                      );
+                          var transaction = Transaction(
+                            createdAt: DateTime.now().toIso8601String(),
+                            amount: _selectedAmount,
+                            parentGuid: profilesProvider.activeProfile!.guid,
+                            destinationName: orgState.organisation.name,
+                          );
 
-                      profilesProvider.createTransaction(transaction);
+                          profilesProvider.createTransaction(transaction);
 
-                      AnalyticsHelper.logEvent(
-                          eventName: AmplitudeEvent.giveToThisGoalPressed,
-                          eventProperties: {
-                            'amount': _selectedAmount,
-                            'formatted_date': transaction.createdAt,
-                            'timestamp': DateTime.now().toIso8601String(),
-                            'goal_name': organisation.name,
-                          });
+                          AnalyticsHelper.logEvent(
+                              eventName: AmplitudeEvent.giveToThisGoalPressed,
+                              eventProperties: {
+                                'amount': _selectedAmount,
+                                'formatted_date': transaction.createdAt,
+                                'timestamp': DateTime.now().toIso8601String(),
+                                'goal_name': orgState.organisation.name,
+                              });
 
-                      Navigator.of(context).pushNamed(SuccessScreen.routeName,
-                          arguments: [organisation, transaction]);
-                    },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF54A1EE),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              child: Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                child: Text(
-                  "Next",
-                  style: TextStyle(
-                    fontSize: 26,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                          Navigator.of(context).pushNamed(
+                              SuccessScreen.routeName,
+                              arguments: [orgState.organisation, transaction]);
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF54A1EE),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
-                ),
-              ),
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    child: Text(
+                      "Next",
+                      style: TextStyle(
+                        fontSize: 26,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ),

@@ -4,16 +4,17 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/features/create_transaction/cubit/create_transaction_cubit.dart';
-import 'package:givt_app_kids/features/create_transaction/models/transaction.dart';
-import 'package:givt_app_kids/features/create_transaction/screens/success_screen.dart';
+import 'package:givt_app_kids/features/giving_flow/cubit/create_transaction_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisation_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/models/transaction.dart';
+import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
 import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
 
 class ChooseAmountSliderScreen extends StatefulWidget {
-  static const String routeName = "/choose-ammount-slider-bloc";
+  static const String routeName = "/choose-amount-slider-bloc";
 
   const ChooseAmountSliderScreen({Key? key}) : super(key: key);
 
@@ -80,13 +81,17 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                       padding: EdgeInsets.only(left: 40, right: 40, top: 35),
                       child: Column(
                         children: [
-                          Text(
-                            'TODO: Org Name',
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF3B3240),
-                            ),
+                          BlocBuilder<OrganisationCubit, OrganisationState>(
+                            builder: (context, orgState) {
+                              return Text(
+                                orgState.organisation.name,
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF3B3240),
+                                ),
+                              );
+                            },
                           ),
                           SizedBox(
                             height: 25,

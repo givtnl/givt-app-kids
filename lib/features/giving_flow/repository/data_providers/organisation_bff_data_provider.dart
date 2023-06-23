@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../models/organisation.dart';
+import '../../models/organisation.dart';
 
 class OrganisationBffDataProvider {
   Future<Organisation> fetchOrganisationDetails(String? mediumId) async {

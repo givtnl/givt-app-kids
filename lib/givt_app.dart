@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/organisation/cubit/organisation_cubit.dart';
-import 'package:givt_app_kids/features/qr_scanner/cubit/camera_cubit.dart';
 import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart'
@@ -30,13 +28,14 @@ import 'package:givt_app_kids/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart'
     as profiles_bloc;
 
-import 'package:givt_app_kids/features/create_transaction/screens/choose_amount_slider_screen.dart'
+import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart'
     as create_transaction_bloc;
 
-import 'package:givt_app_kids/features/create_transaction/screens/success_screen.dart'
+import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart'
     as create_transaction_bloc;
 
 import 'app_config.dart';
+import 'features/giving_flow/cubit/organisation/organisation_cubit.dart';
 
 class GivtApp extends StatelessWidget {
   final AppConfig config;

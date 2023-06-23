@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/features/organisation/repository/organisation_repository.dart';
+import 'package:givt_app_kids/features/giving_flow/repository/organisation_repository.dart';
 
-import '../models/organisation.dart';
+import '../../models/organisation.dart';
 
 part 'organisation_state.dart';
 

@@ -1,5 +1,5 @@
-import 'package:givt_app_kids/features/organisation/models/organisation.dart';
-import 'package:givt_app_kids/features/organisation/repository/organisation_bff_data_provider.dart';
+import 'package:givt_app_kids/features/giving_flow/models/organisation.dart';
+import 'package:givt_app_kids/features/giving_flow/repository/data_providers/organisation_bff_data_provider.dart';
 
 class OrganisationRepository {
   Future<Organisation> fetchOrganosationDetails(String mediumId) async {
