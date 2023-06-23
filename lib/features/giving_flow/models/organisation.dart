@@ -14,6 +14,11 @@ class Organisation extends Equatable {
             collectGroupId: '',
             name: 'Mock Organisation Long Name',
             goal: 'mock goal');
+  const Organisation.error()
+      : this(
+            collectGroupId: '',
+            name: 'Something went wrong \n Please try again later',
+            goal: 'mock goal');
 
   final String collectGroupId;
   final String name;

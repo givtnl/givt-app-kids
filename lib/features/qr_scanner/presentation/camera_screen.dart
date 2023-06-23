@@ -42,45 +42,49 @@ class _CameraScreenState extends State<CameraScreen> {
           }
         },
         builder: (context, state) {
-          return CameraScreenFrame(
-            feedback: state.feedback,
-            child: Stack(
-              children: [
-                BlocListener<OrganisationCubit, OrganisationState>(
-                  listener: (context, orgState) {
-                    if (orgState is OrganisationSet) {
-                      log("Organisation is set: ${orgState.organisation.name}");
-                      // AnalyticsHelper.logEvent(
-                      //     eventName: AmplitudeEvent.qrCodeScanned,
-                      //     eventProperties: {
-                      //       'goal_name': orgState.organisation.name,
-                      //     });
-                      // TODO: Add navigation to the next screen
-                      Navigator.of(context).pushReplacementNamed(
-                          ChooseAmountSliderScreen.routeName);
-                    }
-                  },
-                  child: MobileScanner(
-                    controller: _cameraController,
-                    onDetect: (barcode, args) async {
-                      if (state is CameraScanned) {
-                        return;
-                      }
-                      await context
-                          .read<CameraCubit>()
-                          .scanQrCode(barcode.rawValue);
-                    },
-                  ),
+          return BlocConsumer<OrganisationCubit, OrganisationState>(
+            listener: (context, orgState) {
+              if (orgState is OrganisationSet) {
+                log("Organisation is set: ${orgState.organisation.name}");
+                // AnalyticsHelper.logEvent(
+                //     eventName: AmplitudeEvent.qrCodeScanned,
+                //     eventProperties: {
+                //       'goal_name': orgState.organisation.name,
+                //     });
+                Navigator.of(context)
+                    .pushReplacementNamed(ChooseAmountSliderScreen.routeName);
+              }
+              ;
+            },
+            builder: (context, orgState) {
+              return CameraScreenFrame(
+                feedback: orgState is OrganisationError
+                    ? orgState.organisation.name
+                    : state.feedback,
+                child: Stack(
+                  children: [
+                    MobileScanner(
+                      controller: _cameraController,
+                      onDetect: (barcode, args) async {
+                        if (state is CameraScanned) {
+                          return;
+                        }
+                        await context
+                            .read<CameraCubit>()
+                            .scanQrCode(barcode.rawValue);
+                      },
+                    ),
+                    Positioned.fill(
+                      child: state is CameraScanned
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : const QrCodeTarget(),
+                    ),
+                  ],
                 ),
-                Positioned.fill(
-                  child: state is CameraScanned
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : const QrCodeTarget(),
-                ),
-              ],
-            ),
+              );
+            },
           );
         },
       ),

@@ -14,6 +14,12 @@ class OrganisationInitial extends OrganisationState {
   }) : super(organisation: organisation);
 }
 
+class OrganisationError extends OrganisationState {
+  const OrganisationError({
+    organisation = const Organisation.error(),
+  }) : super(organisation: organisation);
+}
+
 class OrganisationSet extends OrganisationState {
   const OrganisationSet({
     required Organisation organisation,
