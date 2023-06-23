@@ -19,4 +19,8 @@ class OrganisationCubit extends Cubit<OrganisationState> {
       // TODO: implement error handling
     }
   }
+
+  void clearOrganisation() {
+    emit(OrganisationInitial());
+  }
 }

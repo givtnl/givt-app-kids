@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisation_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/models/organisation.dart';
 
 import 'package:lottie/lottie.dart';
 
@@ -24,6 +27,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final organisation = context.read<OrganisationCubit>().state.organisation;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFB9D7FF),
@@ -38,7 +42,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   right: 40,
                 ),
                 child: Text(
-                  "Thank you!",
+                  organisation.thankYou ?? "Thank you!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -55,7 +59,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   right: 40,
                 ),
                 child: Text(
-                  "Your parents can now approve \n your donation suggestion",
+                  "Your parents can now approve \n your donation suggestion to \n ${organisation.name}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -88,6 +92,8 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 Navigator.of(context).popUntil(
                   ModalRoute.withName("/"),
                 );
+                //CLEAR ORGANISATION STATE
+                context.read<OrganisationCubit>().clearOrganisation();
                 // await AnalyticsHelper.logEvent(
                 //     eventName: AmplitudeEvent.continuePressed,
                 //     eventProperties: {'screen_name': SuccessScreen.routeName});

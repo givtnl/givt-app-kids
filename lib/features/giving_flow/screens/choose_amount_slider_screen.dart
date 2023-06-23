@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/giving_flow/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisation_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/models/organisation.dart';
 import 'package:givt_app_kids/features/giving_flow/models/transaction.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -34,9 +35,8 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final organisation =
-    //     ModalRoute.of(context)?.settings.arguments as Organisation;
-
+    final Organisation organisation =
+        context.read<OrganisationCubit>().state.organisation;
     return BlocProvider<CreateTransactionCubit>(
       create: (BuildContext context) =>
           CreateTransactionCubit(profilesCubit: _profilesCubit),
