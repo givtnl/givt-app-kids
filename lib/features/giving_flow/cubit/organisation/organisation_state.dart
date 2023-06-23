@@ -9,19 +9,15 @@ abstract class OrganisationState extends Equatable {
 }
 
 class OrganisationInitial extends OrganisationState {
-  const OrganisationInitial({
-    organisation = const Organisation.empty(),
-  }) : super(organisation: organisation);
+  const OrganisationInitial({super.organisation = const Organisation.empty()});
 }
 
 class OrganisationError extends OrganisationState {
   const OrganisationError({
-    organisation = const Organisation.error(),
-  }) : super(organisation: organisation);
+    super.organisation = const Organisation.error(),
+  });
 }
 
 class OrganisationSet extends OrganisationState {
-  const OrganisationSet({
-    required Organisation organisation,
-  }) : super(organisation: organisation);
+  const OrganisationSet({required super.organisation});
 }

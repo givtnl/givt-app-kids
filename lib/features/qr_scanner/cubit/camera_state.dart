@@ -16,39 +16,24 @@ abstract class CameraState extends Equatable {
 
 class CameraInitial extends CameraState {
   const CameraInitial({
-    isLoading = false,
-    qrValue = '',
-    feedback = 'No QR code scanned yet.',
-    organisation = const Organisation.empty(),
-  }) : super(
-          isLoading: isLoading,
-          qrValue: qrValue,
-          feedback: feedback,
-        );
+    super.isLoading = false,
+    super.qrValue = '',
+    super.feedback = 'No QR code scanned yet.',
+  });
 }
 
 class CameraScanned extends CameraState {
-  final String qrValue;
   const CameraScanned({
-    required this.qrValue,
-    isLoading = false,
-    feedback = 'QR code scanned successfully!\nLoading data...',
-  }) : super(
-          isLoading: isLoading,
-          qrValue: qrValue,
-          feedback: feedback,
-        );
+    required super.qrValue,
+    super.isLoading = false,
+    super.feedback = 'QR code scanned successfully!\nLoading data...',
+  });
 }
 
 class CameraError extends CameraState {
-  final String feedback;
   const CameraError({
-    required this.feedback,
-    isLoading = false,
-    qrValue = '',
-  }) : super(
-          isLoading: isLoading,
-          qrValue: qrValue,
-          feedback: feedback,
-        );
+    required super.feedback,
+    super.isLoading = false,
+    super.qrValue = '',
+  });
 }
