@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisation_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/models/organisation.dart';
@@ -58,6 +59,11 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                 ),
               );
             } else if (state is CreateTransactionSuccessState) {
+              // REFETCH PROFILES
+              final parentGuid =
+                  (context.read<AuthCubit>().state as LoggedInState).guid;
+              context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+
               Navigator.of(context).pushNamed(SuccessScreen.routeName);
             }
           },
