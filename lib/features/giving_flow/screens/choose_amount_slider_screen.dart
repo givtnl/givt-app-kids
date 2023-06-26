@@ -35,7 +35,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Organisation organisation =
+    final Organisation _organisation =
         context.read<OrganisationCubit>().state.organisation;
     return BlocProvider<CreateTransactionCubit>(
       create: (BuildContext context) =>
@@ -81,17 +81,13 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                       padding: EdgeInsets.only(left: 40, right: 40, top: 35),
                       child: Column(
                         children: [
-                          BlocBuilder<OrganisationCubit, OrganisationState>(
-                            builder: (context, orgState) {
-                              return Text(
-                                orgState.organisation.name,
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF3B3240),
-                                ),
-                              );
-                            },
+                          Text(
+                            _organisation.name,
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF3B3240),
+                            ),
                           ),
                           SizedBox(
                             height: 25,
@@ -196,8 +192,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                             }
                             var transaction = Transaction(
                               userId: _profilesCubit.state.activeProfile.id,
-                              collectGroupId:
-                                  '3fa85f64-5717-4562-b3fc-2c963f66afa6', // TODO use real value
+                              collectGroupId: _organisation.collectGroupId,
                               amount: state.amount,
                             );
 
