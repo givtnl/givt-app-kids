@@ -4,10 +4,10 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/widgets/qr_give_button.dart';
+import 'package:givt_app_kids/shared/widgets/qr_give_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
-import 'package:givt_app_kids/widgets/heading_3.dart';
+import 'package:givt_app_kids/shared/widgets/heading_3.dart';
 
 class WalletScreenCubit extends StatefulWidget {
   static const String routeName = "/wallet-cubit";

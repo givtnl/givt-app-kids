@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/widgets/heading_2.dart';
+import 'package:givt_app_kids/shared/widgets/heading_2.dart';
 
 class CameraQrHeader extends StatelessWidget {
   const CameraQrHeader({super.key});

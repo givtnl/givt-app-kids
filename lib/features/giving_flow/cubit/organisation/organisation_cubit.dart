@@ -16,11 +16,11 @@ class OrganisationCubit extends Cubit<OrganisationState> {
           await organisationRepository.fetchOrganosationDetails(qrCode);
       emit(OrganisationSet(organisation: response));
     } catch (error) {
-      emit(const OrganisationError(organisation: Organisation.error()));
+      emit(const OrganisationError());
     }
   }
 
   void clearOrganisation() {
-    emit(OrganisationInitial());
+    emit(const OrganisationInitial());
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_app_kids/features/qr_scanner/widgets/camera_qr_header.dart';
-import 'package:givt_app_kids/widgets/heading_3.dart';
+import 'package:givt_app_kids/shared/widgets/heading_3.dart';
 
 class CameraScreenFrame extends StatelessWidget {
   const CameraScreenFrame(
