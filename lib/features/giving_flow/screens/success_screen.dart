@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisation_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/models/organisation.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 import 'package:lottie/lottie.dart';
 
@@ -92,11 +93,11 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 Navigator.of(context).popUntil(
                   ModalRoute.withName("/"),
                 );
-                //CLEAR ORGANISATION STATE
+                //TODO CLEAR ORGANISATION STATE
                 context.read<OrganisationCubit>().clearOrganisation();
-                // await AnalyticsHelper.logEvent(
-                //     eventName: AmplitudeEvent.continuePressed,
-                //     eventProperties: {'screen_name': SuccessScreen.routeName});
+                await AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.continuePressed,
+                    eventProperties: {'screen_name': SuccessScreen.routeName});
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFF2DF7F),

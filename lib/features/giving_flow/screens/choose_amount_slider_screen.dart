@@ -10,6 +10,7 @@ import 'package:givt_app_kids/features/giving_flow/models/organisation.dart';
 import 'package:givt_app_kids/features/giving_flow/models/transaction.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
 import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
@@ -200,14 +201,15 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                                 .read<CreateTransactionCubit>()
                                 .createTransaction(transaction: transaction);
 
-                            // AnalyticsHelper.logEvent(
-                            //     eventName: AmplitudeEvent.giveToThisGoalPressed,
-                            //     eventProperties: {
-                            //       'amount': _selectedAmount,
-                            //       'formatted_date': transaction.createdAt,
-                            //       'timestamp': DateTime.now().toIso8601String(),
-                            //       'goal_name': organisation.name,
-                            //     });
+                            AnalyticsHelper.logEvent(
+                                eventName: AmplitudeEvent.giveToThisGoalPressed,
+                                eventProperties: {
+                                  'amount': state.amount,
+                                  'formatted_date': DateTime.parse(
+                                      DateTime.now().toIso8601String()),
+                                  'timestamp': DateTime.now().toIso8601String(),
+                                  'goal_name': _organisation.name,
+                                });
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF54A1EE),

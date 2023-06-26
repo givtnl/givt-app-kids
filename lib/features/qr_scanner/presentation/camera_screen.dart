@@ -46,11 +46,11 @@ class _CameraScreenState extends State<CameraScreen> {
             listener: (context, orgState) {
               if (orgState is OrganisationSet) {
                 log("Organisation is set: ${orgState.organisation.name}");
-                // AnalyticsHelper.logEvent(
-                //     eventName: AmplitudeEvent.qrCodeScanned,
-                //     eventProperties: {
-                //       'goal_name': orgState.organisation.name,
-                //     });
+                AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.qrCodeScanned,
+                    eventProperties: {
+                      'goal_name': orgState.organisation.name,
+                    });
                 Navigator.of(context)
                     .pushReplacementNamed(ChooseAmountSliderScreen.routeName);
               }
