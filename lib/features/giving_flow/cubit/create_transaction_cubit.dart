@@ -10,31 +10,31 @@ class CreateTransactionCubit extends Cubit<CreateTransactionState> {
   CreateTransactionCubit({required this.profilesCubit})
       : super(CreateTransactionChooseAmountState(
             amount: 0,
-            maxAmaount: profilesCubit.state.activeProfile.wallet.balance));
+            maxAmount: profilesCubit.state.activeProfile.wallet.balance));
 
   final ProfilesCubit profilesCubit;
 
   void changeAmount(double amount) {
     emit(CreateTransactionChooseAmountState(
         amount: amount.roundToDouble(),
-        maxAmaount:
+        maxAmount:
             profilesCubit.state.activeProfile.wallet.balance.roundToDouble()));
   }
 
   Future<void> createTransaction({required Transaction transaction}) async {
     emit(CreateTransactionUploadingState(
-        amount: state.amount, maxAmaount: state.maxAmaount));
+        amount: state.amount, maxAmount: state.maxAmount));
 
     final createTransactionRepository = CreateTransactionRepository();
     try {
       await createTransactionRepository.createTransaction(
           transaction: transaction);
       emit(CreateTransactionSuccessState(
-          amount: state.amount, maxAmaount: state.maxAmaount));
+          amount: state.amount, maxAmount: state.maxAmount));
     } catch (error) {
       emit(CreateTransactionErrorState(
           amount: state.amount,
-          maxAmaount: state.maxAmaount,
+          maxAmount: state.maxAmount,
           errorMessage: error.toString()));
     }
   }
