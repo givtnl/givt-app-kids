@@ -6,7 +6,7 @@ import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisati
 import 'package:givt_app_kids/features/qr_scanner/cubit/camera_cubit.dart';
 import 'package:givt_app_kids/features/qr_scanner/widgets/camera_screen_frame.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/widgets/qr_code_target.dart';
+import 'package:givt_app_kids/shared/widgets/qr_code_target.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../giving_flow/screens/choose_amount_slider_screen.dart';

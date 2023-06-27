@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Heading2 extends StatelessWidget {
-  Heading2({super.key, required this.text, this.alignment = TextAlign.start});
-  String text;
-  TextAlign alignment;
+  const Heading2({
+    super.key,
+    required this.text,
+    this.alignment = TextAlign.start,
+  });
+  final String text;
+  final TextAlign alignment;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -11,7 +15,7 @@ class Heading2 extends StatelessWidget {
       child: Text(
         text,
         textAlign: alignment,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 28,
         ),

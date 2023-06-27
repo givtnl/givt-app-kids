@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class QrGiveButton extends StatelessWidget {
   const QrGiveButton({super.key});
@@ -9,6 +11,10 @@ class QrGiveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
+        AnalyticsHelper.logEvent(
+            eventName: AmplitudeEvent.continuePressed,
+            eventProperties: {'screen_name': WalletScreenCubit.routeName});
+
         Navigator.of(context).pushNamed(CameraScreen.routeName);
       },
       style: ElevatedButton.styleFrom(

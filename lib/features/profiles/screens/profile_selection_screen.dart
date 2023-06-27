@@ -69,7 +69,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
     return SafeArea(
       child: BlocConsumer<ProfilesCubit, ProfilesState>(
         listener: (context, state) {
-          log('auth state changed on $state');
+          log('profiles state changed on $state');
           if (state is ProfilesExternalErrorState) {
             log(state.errorMessage);
             ScaffoldMessenger.of(context).showSnackBar(
