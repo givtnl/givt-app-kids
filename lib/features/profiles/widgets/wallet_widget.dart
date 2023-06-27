@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class WalletWidget extends StatelessWidget {
-  WalletWidget({super.key, required this.balance});
-  double balance;
+  const WalletWidget({super.key, required this.balance});
+  final double balance;
   @override
   Widget build(BuildContext context) {
     return Stack(

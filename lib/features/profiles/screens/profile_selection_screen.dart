@@ -69,7 +69,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
     return SafeArea(
       child: BlocConsumer<ProfilesCubit, ProfilesState>(
         listener: (context, state) {
-          log('auth state changed on $state');
+          log('profiles state changed on $state');
           if (state is ProfilesExternalErrorState) {
             log(state.errorMessage);
             ScaffoldMessenger.of(context).showSnackBar(
@@ -81,17 +81,18 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                 backgroundColor: Theme.of(context).errorColor,
               ),
             );
-          } else if (state is ProfilesUpdatedState) {
-            log('Active profile is ${state.activeProfile.firstName}');
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Active profile is ${state.activeProfile.firstName} ${state.activeProfile.lastName}',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            );
           }
+          // else if (state is ProfilesUpdatedState) {
+          //   log('Active profile is ${state.activeProfile.firstName}');
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //       content: Text(
+          //         'Active profile is ${state.activeProfile.firstName} ${state.activeProfile.lastName}',
+          //         textAlign: TextAlign.center,
+          //       ),
+          //     ),
+          //   );
+          // }
         },
         builder: (context, state) {
           final gridItems = _createGridItems(state.profiles);
@@ -176,6 +177,10 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                         EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     onPressed: () {
                       context.read<AuthCubit>().logout();
+                      context
+                          .read<ProfilesCubit>()
+                          .setActiveProfile(Profile.empty());
+
                       Navigator.of(context)
                           .pushReplacementNamed(LoginScreen.routeName);
                     },
