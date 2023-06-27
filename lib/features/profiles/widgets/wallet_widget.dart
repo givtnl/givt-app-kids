@@ -10,8 +10,8 @@ class WalletWidget extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.only(top: 25, bottom: 25, right: 0),
-          margin: const EdgeInsets.symmetric(vertical: 15),
+          padding: const EdgeInsets.only(top: 25, bottom: 10, right: 0),
+          margin: const EdgeInsets.only(bottom: 15, top: 15),
           decoration: const BoxDecoration(
             color: Color(0xFF54A1EE),
             borderRadius: BorderRadius.all(
@@ -28,10 +28,11 @@ class WalletWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     const Text(
-                      "My wallet",
+                      "Balance available",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(
@@ -40,7 +41,7 @@ class WalletWidget extends StatelessWidget {
                     RichText(
                       text: TextSpan(
                         style: const TextStyle(
-                          fontSize: 35,
+                          fontSize: 50,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -48,7 +49,8 @@ class WalletWidget extends StatelessWidget {
                           const TextSpan(
                             text: "\$",
                             style: TextStyle(
-                              fontSize: 17,
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           TextSpan(
