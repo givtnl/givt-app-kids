@@ -11,6 +11,10 @@ abstract class ProfilesState extends Equatable {
 
   @override
   List<Object> get props => [profiles, activeProfile];
+
+  bool get isProfileSelected {
+    return activeProfile != const Profile.empty();
+  }
 }
 
 class ProfilesInitialState extends ProfilesState {

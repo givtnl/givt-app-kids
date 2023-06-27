@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/features/profiles/repository/profiles_repository.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'profiles_state.dart';
@@ -11,6 +12,7 @@ part 'profiles_state.dart';
 class ProfilesCubit extends HydratedCubit<ProfilesState> {
   ProfilesCubit() : super(const ProfilesInitialState()) {
     hydrate();
+    AnalyticsHelper.setUserId(state.activeProfile.firstName);
   }
 
   Future<void> fetchProfiles(String parentGuid) async {

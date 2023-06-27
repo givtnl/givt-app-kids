@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Header3 extends StatelessWidget {
-  Header3({super.key, required this.name});
-  String name;
+  const Header3({
+    super.key,
+    required this.name,
+  });
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -10,7 +13,7 @@ class Header3 extends StatelessWidget {
       child: Text(
         name,
         textAlign: TextAlign.start,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),

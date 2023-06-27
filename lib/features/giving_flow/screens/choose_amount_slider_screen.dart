@@ -14,7 +14,8 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
-import 'package:givt_app_kids/widgets/back_button.dart' as custom_widgets;
+import 'package:givt_app_kids/shared/widgets/back_button.dart'
+    as custom_widgets;
 
 class ChooseAmountSliderScreen extends StatefulWidget {
   static const String routeName = "/choose-amount-slider-bloc";
@@ -45,7 +46,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
       child: SafeArea(
         child: BlocConsumer<CreateTransactionCubit, CreateTransactionState>(
           listener: (context, state) {
-            log('auth state changed on $state');
+            log('create transaction cubit state changed on $state');
 
             if (state is CreateTransactionErrorState) {
               log(state.errorMessage);
@@ -138,11 +139,14 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                               context
                                   .read<CreateTransactionCubit>()
                                   .changeAmount(value);
-
-                              // AnalyticsHelper.logEvent(
-                              //   eventName: AmplitudeEvent.amountPressed,
-                              //   eventProperties: {'amount': _selectedAmount},
-                              // );
+                            },
+                            onChangeEnd: (value) {
+                              AnalyticsHelper.logEvent(
+                                eventName: AmplitudeEvent.amountPressed,
+                                eventProperties: {
+                                  'amount': value.roundToDouble()
+                                },
+                              );
                             },
                           ),
                           Padding(
@@ -211,9 +215,10 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                                 eventName: AmplitudeEvent.giveToThisGoalPressed,
                                 eventProperties: {
                                   'amount': state.amount,
-                                  'formatted_date': DateTime.parse(
-                                      DateTime.now().toIso8601String()),
-                                  'timestamp': DateTime.now().toIso8601String(),
+                                  'formatted_date':
+                                      DateTime.now().toIso8601String(),
+                                  'timestamp':
+                                      DateTime.now().millisecondsSinceEpoch,
                                   'goal_name': _organisation.name,
                                 });
                           },

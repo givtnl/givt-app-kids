@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/features/giving_flow/models/organisation.dart';
 part 'camera_state.dart';
 
 class CameraCubit extends Cubit<CameraState> {
-  CameraCubit() : super(CameraInitial());
+  CameraCubit() : super(const CameraInitial());
   Future<void> scanQrCode(String? barcode) async {
     if (barcode == null) {
       emit(const CameraInitial());
