@@ -9,14 +9,16 @@ part 'create_transaction_state.dart';
 class CreateTransactionCubit extends Cubit<CreateTransactionState> {
   CreateTransactionCubit({required this.profilesCubit})
       : super(CreateTransactionChooseAmountState(
-            amount: 0, maxAmaount: profilesCubit.state.activeProfile.balance));
+            amount: 0,
+            maxAmaount: profilesCubit.state.activeProfile.wallet.balance));
 
   final ProfilesCubit profilesCubit;
 
   void changeAmount(double amount) {
     emit(CreateTransactionChooseAmountState(
         amount: amount.roundToDouble(),
-        maxAmaount: profilesCubit.state.activeProfile.balance.roundToDouble()));
+        maxAmaount:
+            profilesCubit.state.activeProfile.wallet.balance.roundToDouble()));
   }
 
   Future<void> createTransaction({required Transaction transaction}) async {

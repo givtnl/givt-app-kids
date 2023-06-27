@@ -28,7 +28,7 @@ class _WalletScreenCubitState extends State<WalletScreenCubit> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Header3(name: state.activeProfile.firstName),
-            WalletWidget(balance: state.activeProfile.balance),
+            WalletWidget(balance: state.activeProfile.wallet.balance),
             SizedBox(height: size.height * 0.01),
             const QrGiveButton(),
           ],

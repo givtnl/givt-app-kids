@@ -49,7 +49,7 @@ class Wallet extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: activeProfile.balance.toStringAsFixed(2),
+                          text: activeProfile.wallet.balance.toStringAsFixed(2),
                         ),
                       ],
                     ),
