@@ -129,10 +129,10 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                           Slider(
                             value: state.amount,
                             min: 0,
-                            max: state.maxAmaount,
+                            max: state.maxAmount,
                             activeColor: Color(0xFF54A1EE),
                             inactiveColor: Color(0xFFD9D9D9),
-                            divisions: state.maxAmaount.round(),
+                            divisions: state.maxAmount.round(),
                             onChanged: (value) {
                               HapticFeedback.lightImpact();
 
@@ -163,7 +163,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                                 ),
                                 Spacer(),
                                 Text(
-                                  "\$${state.maxAmaount.round()}",
+                                  "\$${state.maxAmount.round()}",
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Color(0xFF54A1EE),
