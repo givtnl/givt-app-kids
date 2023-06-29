@@ -16,26 +16,45 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
   }
 
   Future<void> fetchProfiles(String parentGuid) async {
-    emit(ProfilesLoadingState(activeProfile: state.activeProfile));
+    final activeProfileBalance = state.activeProfile.wallet.balance;
+    emit(ProfilesLoadingState(
+      profiles: state.profiles,
+      activeProfileIndex: state.activeProfileIndex,
+    ));
     final profilesRepository = ProfilesRepository();
     try {
       final response = await profilesRepository.fetchProfiles(parentGuid);
-      emit(ProfilesUpdatedState(
-        profiles: response,
-        activeProfile: state.activeProfile,
-      ));
+
+      var activeProfileNewBalance = state.activeProfileIndex >= 0 &&
+              state.activeProfileIndex < response.length
+          ? response[state.activeProfileIndex].wallet.balance
+          : activeProfileBalance;
+
+      if (activeProfileNewBalance < activeProfileBalance) {
+        emit(ProfilesCountdownState(
+            profiles: response,
+            activeProfileIndex: state.activeProfileIndex,
+            amount: activeProfileBalance - activeProfileNewBalance));
+      } else {
+        emit(ProfilesUpdatedState(
+          profiles: response,
+          activeProfileIndex: state.activeProfileIndex,
+        ));
+      }
     } catch (error) {
       emit(ProfilesExternalErrorState(
         errorMessage: error.toString(),
-        activeProfile: state.activeProfile,
+        activeProfileIndex: state.activeProfileIndex,
+        profiles: state.profiles,
       ));
     }
   }
 
   void setActiveProfile(Profile profile) {
+    final index = state.profiles.indexOf(profile);
     emit(ProfilesUpdatedState(
       profiles: state.profiles,
-      activeProfile: profile,
+      activeProfileIndex: index,
     ));
   }
 
@@ -43,15 +62,14 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
   ProfilesState? fromJson(Map<String, dynamic> json) {
     log('fromJSON: $json');
     final profilesMap = jsonDecode(json['profiles']);
-    final activeProfileMap = jsonDecode(json['activeProfile']);
-    Profile activeProfile = Profile.fromMap(activeProfileMap);
+    final activeProfileIndex = json['activeProfileIndex'];
     final List<Profile> profiles = [];
     for (final profileMap in profilesMap) {
       profiles.add(Profile.fromMap(profileMap));
     }
     return ProfilesUpdatedState(
       profiles: profiles,
-      activeProfile: activeProfile,
+      activeProfileIndex: activeProfileIndex,
     );
   }
 
@@ -59,7 +77,7 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
   Map<String, dynamic>? toJson(ProfilesState state) {
     final result = {
       'profiles': jsonEncode(state.profiles),
-      'activeProfile': jsonEncode(state.activeProfile.toJson()),
+      'activeProfileIndex': state.activeProfileIndex,
     };
     log('toJSON: $result');
     return result;
