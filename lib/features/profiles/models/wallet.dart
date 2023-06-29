@@ -24,7 +24,7 @@ class Wallet extends Equatable {
       balance: double.parse(map['balance'].toString()),
       total: double.parse(map['total'].toString()),
       pending: double.parse(map['pending'].toString()),
-      currency: map['currency'],
+      currency: map['currency'] ?? 'USD',
     );
   }
 
