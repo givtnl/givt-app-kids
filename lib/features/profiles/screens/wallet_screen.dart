@@ -25,14 +25,23 @@ class _WalletScreenCubitState extends State<WalletScreenCubit> {
     final size = MediaQuery.of(context).size;
     return BlocBuilder<ProfilesCubit, ProfilesState>(builder: (context, state) {
       final isPending = state.activeProfile.wallet.pending > 0.0;
+      final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
+
+      var countdownAmount = 0.0;
+      if (state is ProfilesCountdownState) {
+        countdownAmount = state.amount;
+      }
       return WalletFrame(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Heading2(text: state.activeProfile.firstName),
-            WalletWidget(balance: state.activeProfile.wallet.balance),
+            WalletWidget(
+              balance: state.activeProfile.wallet.balance,
+              countdownAmount: countdownAmount,
+            ),
             SizedBox(height: size.height * 0.01),
-            const QrGiveButton(),
+            QrGiveButton(isActive: isGiveButtonActive),
             if (isPending) SizedBox(height: size.height * 0.03),
             if (isPending)
               PendingApprovalWidget(

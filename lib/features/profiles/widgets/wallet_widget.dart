@@ -1,9 +1,15 @@
+import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class WalletWidget extends StatelessWidget {
-  const WalletWidget({super.key, required this.balance});
+  const WalletWidget({
+    super.key,
+    required this.balance,
+    this.countdownAmount = 0,
+  });
   final double balance;
+  final double countdownAmount;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -38,26 +44,31 @@ class WalletWidget extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    RichText(
-                      text: TextSpan(
-                        style: const TextStyle(
-                          fontSize: 50,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const Text(
+                          "\$",
+                          style: TextStyle(
+                            fontSize: 26,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        children: [
-                          const TextSpan(
-                            text: "\$",
-                            style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        Countup(
+                          begin: balance + countdownAmount,
+                          end: balance,
+                          precision: 1,
+                          duration: const Duration(seconds: 3),
+                          separator: '.',
+                          style: const TextStyle(
+                            fontSize: 50,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
-                          TextSpan(
-                            text: balance.toString(),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
