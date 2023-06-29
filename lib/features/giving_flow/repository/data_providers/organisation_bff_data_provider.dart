@@ -1,13 +1,14 @@
 import 'dart:developer';
 import 'dart:convert';
 
-import 'package:givt_app_kids/secrets.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/organisation.dart';
 
 class OrganisationBffDataProvider {
   Future<Organisation> fetchOrganisationDetails(String? mediumId) async {
+    // const String authorizationToken = String.fromEnvironment('HARDCODED_TOKEN');
+
     final url = Uri.https(
       'dev-backend.givtapp.net',
       'givt4kidsservice/v1/organisation/organisation-detail/$mediumId',
@@ -16,7 +17,7 @@ class OrganisationBffDataProvider {
       var response = await http.get(url, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $authorizationToken',
+        //     'Authorization': 'Bearer $authorizationToken',
       });
       log('bff fetch organisation status code: ${response.statusCode}');
       if (response.statusCode < 400) {
