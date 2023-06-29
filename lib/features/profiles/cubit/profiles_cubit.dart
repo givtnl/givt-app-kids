@@ -24,8 +24,12 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     final profilesRepository = ProfilesRepository();
     try {
       final response = await profilesRepository.fetchProfiles(parentGuid);
-      final activeProfileNewBalance =
-          response[state.activeProfileIndex].wallet.balance;
+
+      var activeProfileNewBalance = state.activeProfileIndex >= 0 &&
+              state.activeProfileIndex < response.length
+          ? response[state.activeProfileIndex].wallet.balance
+          : activeProfileBalance;
+
       if (activeProfileNewBalance < activeProfileBalance) {
         emit(ProfilesCountdownState(
             profiles: response,
