@@ -19,7 +19,7 @@ class ProfilesBffDataProvider {
 
       if (response.statusCode < 400) {
         var decodedBody = json.decode(response.body);
-        final itemMap = decodedBody['item'];
+        final itemMap = decodedBody['items'];
         return itemMap;
       } else {
         throw Exception(response.body);

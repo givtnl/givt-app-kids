@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/features/profiles/models/wallet.dart';
 
 class Profile extends Equatable {
   const Profile({
@@ -7,7 +8,7 @@ class Profile extends Equatable {
     required this.lastName,
     required this.nickname,
     required this.comment,
-    required this.balance,
+    required this.wallet,
     required this.pictureURL,
   });
 
@@ -18,7 +19,7 @@ class Profile extends Equatable {
             lastName: '',
             nickname: '',
             comment: '',
-            balance: 0.0,
+            wallet: const Wallet.empty(),
             pictureURL: '');
 
   final String id;
@@ -26,12 +27,12 @@ class Profile extends Equatable {
   final String lastName;
   final String nickname;
   final String comment;
-  final double balance;
+  final Wallet wallet;
   final String pictureURL;
 
   @override
   List<Object?> get props =>
-      [id, firstName, lastName, nickname, comment, balance, pictureURL];
+      [id, firstName, lastName, nickname, comment, wallet, pictureURL];
 
   factory Profile.fromMap(Map<String, dynamic> map) {
     final pictureMap = map['picture'];
@@ -41,7 +42,7 @@ class Profile extends Equatable {
       lastName: map['lastName'],
       nickname: map['nickname'] ?? '',
       comment: map['comment'] ?? '',
-      balance: map['balance'],
+      wallet: Wallet.fromMap(map['wallet']),
       pictureURL: pictureMap['pictureURL'],
     );
   }
@@ -53,7 +54,7 @@ class Profile extends Equatable {
       'lastName': lastName,
       'nickname': nickname,
       'comment': comment,
-      'balance': balance,
+      'wallet': wallet.toJson(),
       'picture': {
         'pictureURL': pictureURL,
       }
