@@ -1,12 +1,15 @@
+import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
 
 class PendingApprovalWidget extends StatelessWidget {
   const PendingApprovalWidget({
     required this.pending,
+    this.difference = 0,
     super.key,
   });
 
   final double pending;
+  final double difference;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +48,12 @@ class PendingApprovalWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                '-\$${pending.toStringAsFixed(2)}',
+              Countup(
+                prefix: '-\$',
+                begin: pending + difference,
+                precision: 1,
+                duration: const Duration(seconds: 6),
+                end: pending,
                 style: const TextStyle(
                   color: Color(0xFF3B3240),
                   fontSize: 17,

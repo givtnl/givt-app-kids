@@ -23,6 +23,8 @@ class ProfileSelectionScreen extends StatefulWidget {
 }
 
 class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
+  double pendingDifference = 0.0;
+  bool passPendingDifferenece = false;
   @override
   void initState() {
     super.initState();
@@ -31,11 +33,26 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
 
   Future<void> _fetchProfiles() async {
     final parentGuid = (context.read<AuthCubit>().state as LoggedInState).guid;
-    context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+    context.read<ProfilesCubit>().fetchProfiles(parentGuid, false);
   }
 
   Future<void> _selectProfile(Profile profile) async {
     context.read<ProfilesCubit>().setActiveProfile(profile);
+    pendingDifference = context.read<ProfilesCubit>().getPendingDifference();
+    if (pendingDifference > 0) {
+      // their donation was approved or declined
+      passPendingDifferenece = true;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '\$$pendingDifference has been approved or declined from ${profile.firstName}\'s wallet',
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+    // pendingDifference < 0 they have made a donation and added to their pending
     await AnalyticsHelper.logEvent(
       eventName: AmplitudeEvent.profilePressed,
       eventProperties: {
@@ -51,8 +68,14 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
         GestureDetector(
           onTap: () {
             _selectProfile(profiles[i]);
-            Navigator.of(context)
-                .pushReplacementNamed(WalletScreenCubit.routeName);
+            if (passPendingDifferenece) {
+              Navigator.of(context).pushReplacementNamed(
+                  WalletScreenCubit.routeName,
+                  arguments: pendingDifference);
+            } else {
+              Navigator.of(context)
+                  .pushReplacementNamed(WalletScreenCubit.routeName);
+            }
           },
           child: ProfileItem(
             name: '${profiles[i].firstName} ${profiles[i].lastName}',
@@ -82,17 +105,6 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
               ),
             );
           }
-          // else if (state is ProfilesUpdatedState) {
-          //   log('Active profile is ${state.activeProfile.firstName}');
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     SnackBar(
-          //       content: Text(
-          //         'Active profile is ${state.activeProfile.firstName} ${state.activeProfile.lastName}',
-          //         textAlign: TextAlign.center,
-          //       ),
-          //     ),
-          //   );
-          // }
         },
         builder: (context, state) {
           final gridItems = _createGridItems(state.profiles);

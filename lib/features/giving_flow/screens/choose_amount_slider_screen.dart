@@ -63,8 +63,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
               // REFETCH PROFILES
               final parentGuid =
                   (context.read<AuthCubit>().state as LoggedInState).guid;
-              context.read<ProfilesCubit>().fetchProfiles(parentGuid);
-
+              context.read<ProfilesCubit>().fetchProfiles(parentGuid, true);
               Navigator.of(context).pushNamed(SuccessScreen.routeName);
             }
           },
