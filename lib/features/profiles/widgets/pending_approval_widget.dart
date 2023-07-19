@@ -52,7 +52,7 @@ class PendingApprovalWidget extends StatelessWidget {
                 prefix: '-\$',
                 begin: pending + difference,
                 precision: 1,
-                duration: const Duration(seconds: 6),
+                duration: const Duration(seconds: 3),
                 end: pending,
                 style: const TextStyle(
                   color: Color(0xFF3B3240),
