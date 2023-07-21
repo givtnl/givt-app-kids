@@ -1,10 +1,6 @@
 import 'dart:developer';
 
 import 'package:amplitude_flutter/amplitude.dart';
-import 'package:amplitude_flutter/identify.dart';
-import 'package:intl/intl.dart';
-
-import 'package:givt_app_kids/models/transaction.dart';
 
 enum AmplitudeEvent {
   amountPressed('amount_pressed'),
@@ -40,14 +36,6 @@ class AnalyticsHelper {
   static const String timestampKey = "timestamp";
   static const String formattedDateKey = "formatted_date";
 
-  static Future<void> setDefaultParameters(
-      {required String userName, required int userAge}) async {
-    // final identify = Identify()
-    //   ..set('username', userName)
-    //   ..set('age', userAge);
-
-    // Amplitude.getInstance().identify(identify);
-  }
   static Amplitude? _amplitude;
 
   static Future<void> init(String key) async {
@@ -59,27 +47,10 @@ class AnalyticsHelper {
 
   static Future<void> setUserId(String profileName) async {
     final currentUserId = await _amplitude?.getUserId();
-    await _amplitude?.setUserId(profileName,
-        startNewSession: profileName != currentUserId);
-  }
+    final isNewUser = profileName != currentUserId;
 
-  static String _getFormattedTime(DateTime now) {
-    var dateString = DateFormat("MMM dd hh:mm aaa").format(now);
-    return dateString;
-  }
-
-  static Future<void> logNewTransactionEvent(Transaction transaction) async {
-    var now = DateTime.now();
-
-    _amplitude?.logEvent(
-      newTransactionKey,
-      eventProperties: {
-        amountKey: transaction.amount,
-        goalKey: transaction.destinationName,
-        timestampKey: now.millisecondsSinceEpoch,
-        formattedDateKey: _getFormattedTime(now),
-      },
-    );
+    log('The ${isNewUser ? 'new' : 'same'} amplitude user $profileName is set');
+    await _amplitude?.setUserId(profileName, startNewSession: isNewUser);
   }
 
   static Future<void> logEvent({
@@ -92,19 +63,5 @@ class AnalyticsHelper {
     );
 
     log('${eventName.value} pressed with properties: $eventProperties');
-  }
-
-  static Future<void> logButtonPressedEvent(
-      String buttonName, String screenName) async {
-    var now = DateTime.now();
-    _amplitude?.logEvent(
-      buttonPressedKey,
-      eventProperties: {
-        buttonNameKey: buttonName,
-        screenNameKey: screenName,
-        timestampKey: now.millisecondsSinceEpoch,
-        formattedDateKey: _getFormattedTime(now),
-      },
-    );
   }
 }
