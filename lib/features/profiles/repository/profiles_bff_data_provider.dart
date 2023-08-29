@@ -1,12 +1,13 @@
 import 'dart:developer';
 import 'dart:convert';
 
+import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:http/http.dart' as http;
 
 class ProfilesBffDataProvider {
   Future<List<dynamic>> fetchProfiles(String parentGuid) async {
-    final url = Uri.https(
-        'dev-backend.givtapp.net', '/givt4kidsservice/v1/User/get-children');
+    final url =
+        Uri.https(ApiHelper.apiURL, '/givt4kidsservice/v1/User/get-children');
 
     try {
       var response = await http.post(

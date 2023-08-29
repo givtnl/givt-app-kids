@@ -23,6 +23,8 @@ class GivtApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
+
     //Set current env API url
     ApiHelper.apiURL = config.apiBaseUrl;
 
