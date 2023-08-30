@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:convert';
 
+import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:givt_app_kids/features/auth/models/auth_request.dart';
@@ -8,7 +9,7 @@ import 'package:givt_app_kids/features/auth/models/auth_request.dart';
 class BffBackendDataProvider {
   Future<Map<String, dynamic>> login(AuthRequest authRequest) async {
     final url = Uri.https(
-        'dev-backend.givtapp.net', '/givt4kidsservice/v1/Authentication/login');
+        ApiHelper.apiURL, '/givt4kidsservice/v1/Authentication/login');
 
     try {
       var response = await http.post(
