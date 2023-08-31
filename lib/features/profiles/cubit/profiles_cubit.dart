@@ -10,10 +10,12 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 part 'profiles_state.dart';
 
 class ProfilesCubit extends HydratedCubit<ProfilesState> {
-  ProfilesCubit() : super(const ProfilesInitialState()) {
+  ProfilesCubit(this._profilesRepositoy) : super(const ProfilesInitialState()) {
     hydrate();
     AnalyticsHelper.setUserId(state.activeProfile.firstName);
   }
+
+  final ProfilesRepository _profilesRepositoy;
 
   Future<void> fetchProfiles(String parentGuid) async {
     final activeProfileBalance = state.activeProfile.wallet.balance;
@@ -21,9 +23,8 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
       profiles: state.profiles,
       activeProfileIndex: state.activeProfileIndex,
     ));
-    final profilesRepository = ProfilesRepository();
     try {
-      final response = await profilesRepository.fetchProfiles(parentGuid);
+      final response = await _profilesRepositoy.fetchProfiles(parentGuid);
 
       var activeProfileNewBalance = state.activeProfileIndex >= 0 &&
               state.activeProfileIndex < response.length

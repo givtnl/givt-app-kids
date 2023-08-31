@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/injection/injection.dart';
 
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
-import 'features/giving_flow/cubit/organisation/organisation_cubit.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'app_config.dart';
 
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
@@ -23,24 +23,21 @@ class GivtApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Set current env API url
-    ApiHelper.apiURL = config.apiBaseUrl;
-
     //Init Amplitude
     AnalyticsHelper.init(config.amplitudePublicKey);
 
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthCubit>(
-          create: (BuildContext context) => AuthCubit(),
+          create: (BuildContext context) => AuthCubit(getIt()),
           lazy: false,
         ),
         BlocProvider<ProfilesCubit>(
-          create: (BuildContext context) => ProfilesCubit(),
+          create: (BuildContext context) => ProfilesCubit(getIt()),
           lazy: true,
         ),
-        BlocProvider<OrganisationCubit>(
-          create: (BuildContext context) => OrganisationCubit(),
+        BlocProvider<OrganisationDetailsCubit>(
+          create: (BuildContext context) => OrganisationDetailsCubit(getIt()),
           lazy: true,
         ),
       ],

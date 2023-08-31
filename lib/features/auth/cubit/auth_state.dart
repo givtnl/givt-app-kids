@@ -77,29 +77,19 @@ class ExternalErrorState extends AuthState {
 
 class LoggedInState extends AuthState {
   const LoggedInState({
-    this.email = '',
-    this.guid = '',
-    this.accessToken = '',
+    this.session = const Session.empty(),
   });
 
-  final String email;
-  final String guid;
-  final String accessToken;
+  final Session session;
 
   factory LoggedInState.fromJson(Map<String, dynamic> json) {
     return LoggedInState(
-      email: json['email'],
-      guid: json['guid'],
-      accessToken: json['accessToken'],
+      session: Session.fromJson(json),
     );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'email': email,
-      'guid': guid,
-      'accessToken': accessToken,
-    };
+    return session.toJson();
   }
 }

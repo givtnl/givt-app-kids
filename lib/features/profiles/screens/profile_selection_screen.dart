@@ -30,7 +30,8 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
   }
 
   Future<void> _fetchProfiles() async {
-    final parentGuid = (context.read<AuthCubit>().state as LoggedInState).guid;
+    final parentGuid =
+        (context.read<AuthCubit>().state as LoggedInState).session.userGUID;
     context.read<ProfilesCubit>().fetchProfiles(parentGuid);
   }
 
