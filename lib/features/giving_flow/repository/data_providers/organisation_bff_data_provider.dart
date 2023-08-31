@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:convert';
 
+import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/organisation.dart';
@@ -10,7 +11,7 @@ class OrganisationBffDataProvider {
     // const String authorizationToken = String.fromEnvironment('HARDCODED_TOKEN');
 
     final url = Uri.https(
-      'dev-backend.givtapp.net',
+      ApiHelper.apiURL,
       'givt4kidsservice/v1/organisation/organisation-detail/$mediumId',
     );
     try {

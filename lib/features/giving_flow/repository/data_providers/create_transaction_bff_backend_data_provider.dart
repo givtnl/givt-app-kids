@@ -1,22 +1,21 @@
 import 'dart:developer';
 import 'dart:convert';
 
+import 'package:givt_app_kids/helpers/api_helper.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:givt_app_kids/features/giving_flow/models/transaction.dart';
 
 class CreateTransactionBffBackendDataProvider {
   Future<void> createTransaction({required Transaction transaction}) async {
-//    const String authorizationToken = String.fromEnvironment('HARDCODED_TOKEN');
     try {
       final url = Uri.https(
-        "dev-backend.givtapp.net",
+        ApiHelper.apiURL,
         "/givt4kidsservice/v1/transaction/create-transaction",
       );
       var response = await http.post(
         url,
         headers: {
-          //         "Authorization": "Bearer $authorizationToken",
           'Content-Type': 'application/json',
         },
         body: json.encode(transaction.toJson()),
