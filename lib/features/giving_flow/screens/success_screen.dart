@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisation_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
@@ -28,7 +28,8 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final organisation = context.read<OrganisationCubit>().state.organisation;
+    final organisation =
+        context.read<OrganisationDetailsCubit>().state.organisation;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFB9D7FF),
@@ -94,7 +95,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 Navigator.of(context)
                     .pushReplacementNamed(WalletScreenCubit.routeName);
                 //TODO CLEAR ORGANISATION STATE
-                context.read<OrganisationCubit>().clearOrganisation();
+                context.read<OrganisationDetailsCubit>().clearOrganisation();
                 await AnalyticsHelper.logEvent(
                     eventName: AmplitudeEvent.continuePressed,
                     eventProperties: {'screen_name': SuccessScreen.routeName});

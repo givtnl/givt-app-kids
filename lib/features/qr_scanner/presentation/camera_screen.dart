@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisation_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/qr_scanner/cubit/camera_cubit.dart';
 import 'package:givt_app_kids/features/qr_scanner/widgets/camera_screen_frame.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -37,14 +37,15 @@ class _CameraScreenState extends State<CameraScreen> {
           if (state is CameraScanned) {
             log("QR code scanned: ${state.qrValue} \n Getting organisation details");
             context
-                .read<OrganisationCubit>()
+                .read<OrganisationDetailsCubit>()
                 .getOrganisationDetails(state.qrValue);
           }
         },
         builder: (context, state) {
-          return BlocConsumer<OrganisationCubit, OrganisationState>(
+          return BlocConsumer<OrganisationDetailsCubit,
+              OrganisationDetailsState>(
             listener: (context, orgState) {
-              if (orgState is OrganisationSet) {
+              if (orgState is OrganisationDetailsSetState) {
                 log("Organisation is set: ${orgState.organisation.name}");
                 AnalyticsHelper.logEvent(
                     eventName: AmplitudeEvent.qrCodeScanned,
@@ -58,7 +59,7 @@ class _CameraScreenState extends State<CameraScreen> {
             },
             builder: (context, orgState) {
               return CameraScreenFrame(
-                feedback: orgState is OrganisationError
+                feedback: orgState is OrganisationDetailsErrorState
                     ? orgState.organisation.name
                     : state.feedback,
                 child: Stack(

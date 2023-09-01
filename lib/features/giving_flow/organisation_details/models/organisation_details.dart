@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-class Organisation extends Equatable {
-  const Organisation({
+class OrganisationDetails extends Equatable {
+  const OrganisationDetails({
     required this.collectGroupId,
     required this.name,
     required this.goal,
@@ -9,12 +9,12 @@ class Organisation extends Equatable {
     this.thankYou,
   });
 
-  const Organisation.empty()
+  const OrganisationDetails.empty()
       : this(
             collectGroupId: '',
             name: 'Mock Organisation Long Name',
             goal: 'mock goal');
-  const Organisation.error()
+  const OrganisationDetails.error()
       : this(
             collectGroupId: '',
             name: 'Something went wrong \n Please try again later',
@@ -29,8 +29,8 @@ class Organisation extends Equatable {
   @override
   List<Object?> get props => [collectGroupId, name, goal];
 
-  factory Organisation.fromMap(Map<String, dynamic> map) {
-    return Organisation(
+  factory OrganisationDetails.fromMap(Map<String, dynamic> map) {
+    return OrganisationDetails(
       collectGroupId: map['collectGroupId'] ?? 'no id fetched',
       name: map['title'] ?? 'no name fetched',
       goal: map['goal'] ?? 'no description of goal',

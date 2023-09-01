@@ -1,33 +1,35 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/features/giving_flow/models/transaction.dart';
-import 'package:givt_app_kids/features/giving_flow/repository/create_transaction_repository.dart';
+import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
+import 'package:givt_app_kids/features/giving_flow/create_transaction/repositories/create_transaction_repository.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'create_transaction_state.dart';
 
 class CreateTransactionCubit extends Cubit<CreateTransactionState> {
-  CreateTransactionCubit({required this.profilesCubit})
-      : super(CreateTransactionChooseAmountState(
+  CreateTransactionCubit(
+    this._profilesCubit,
+    this._createTransactionRepository,
+  ) : super(CreateTransactionChooseAmountState(
             amount: 0,
-            maxAmount: profilesCubit.state.activeProfile.wallet.balance));
+            maxAmount: _profilesCubit.state.activeProfile.wallet.balance));
 
-  final ProfilesCubit profilesCubit;
+  final ProfilesCubit _profilesCubit;
+  final CreateTransactionRepository _createTransactionRepository;
 
   void changeAmount(double amount) {
     emit(CreateTransactionChooseAmountState(
         amount: amount.roundToDouble(),
         maxAmount:
-            profilesCubit.state.activeProfile.wallet.balance.roundToDouble()));
+            _profilesCubit.state.activeProfile.wallet.balance.roundToDouble()));
   }
 
   Future<void> createTransaction({required Transaction transaction}) async {
     emit(CreateTransactionUploadingState(
         amount: state.amount, maxAmount: state.maxAmount));
 
-    final createTransactionRepository = CreateTransactionRepository();
     try {
-      await createTransactionRepository.createTransaction(
+      await _createTransactionRepository.createTransaction(
           transaction: transaction);
       emit(CreateTransactionSuccessState(
           amount: state.amount, maxAmount: state.maxAmount));

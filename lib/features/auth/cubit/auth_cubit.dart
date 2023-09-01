@@ -3,16 +3,19 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/auth/models/auth_request.dart';
-import 'package:givt_app_kids/features/auth/repositoriy/auth_repository.dart';
+import 'package:givt_app_kids/features/auth/models/session.dart';
+import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends HydratedCubit<AuthState> {
-  AuthCubit() : super(const LoggedOutState()) {
+  AuthCubit(this._authRepositoy) : super(const LoggedOutState()) {
     hydrate();
   }
+
+  final AuthRepository _authRepositoy;
 
   void logout() => emit(const LoggedOutState());
 
@@ -26,15 +29,11 @@ class AuthCubit extends HydratedCubit<AuthState> {
         eventProperties: {'email_address': email});
 
     emit(const LoadingState());
-    final authRepository = AuthRepository();
     try {
-      final response = await authRepository
-          .login(AuthRequest(email: email, password: password));
-      emit(LoggedInState(
-        email: response.email,
-        guid: response.guid,
-        accessToken: response.accessToken,
-      ));
+      final response = await _authRepositoy.login(
+        AuthRequest(email: email, password: password),
+      );
+      emit(LoggedInState(session: response));
     } catch (error) {
       emit(ExternalErrorState(errorMessage: error.toString()));
     }
