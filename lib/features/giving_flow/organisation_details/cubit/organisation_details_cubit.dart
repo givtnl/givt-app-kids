@@ -15,7 +15,7 @@ class OrganisationDetailsCubit extends Cubit<OrganisationDetailsState> {
   Future<void> getOrganisationDetails(String qrCode) async {
     try {
       final response =
-          await _organisationRepository.fetchOrganosationDetails(qrCode);
+          await _organisationRepository.fetchOrganisationDetails(qrCode);
       emit(OrganisationDetailsSetState(
           organisation: response, mediumId: qrCode));
     } catch (error) {
