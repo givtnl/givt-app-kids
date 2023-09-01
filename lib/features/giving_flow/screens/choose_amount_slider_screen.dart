@@ -41,6 +41,8 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
   Widget build(BuildContext context) {
     final OrganisationDetails organisation =
         context.read<OrganisationDetailsCubit>().state.organisation;
+    final String mediumId =
+        context.read<OrganisationDetailsCubit>().state.mediumId;
     return BlocProvider<CreateTransactionCubit>(
       create: (BuildContext context) =>
           CreateTransactionCubit(_profilesCubit, getIt()),
@@ -207,6 +209,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                             var transaction = Transaction(
                               userId: _profilesCubit.state.activeProfile.id,
                               collectGroupId: organisation.collectGroupId,
+                              mediumId: mediumId,
                               amount: state.amount,
                             );
 
