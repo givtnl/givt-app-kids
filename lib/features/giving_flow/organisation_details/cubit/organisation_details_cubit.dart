@@ -16,7 +16,8 @@ class OrganisationDetailsCubit extends Cubit<OrganisationDetailsState> {
     try {
       final response =
           await _organisationRepository.fetchOrganosationDetails(qrCode);
-      emit(OrganisationDetailsSetState(organisation: response));
+      emit(OrganisationDetailsSetState(
+          organisation: response, mediumId: qrCode));
     } catch (error) {
       emit(const OrganisationDetailsErrorState());
     }
