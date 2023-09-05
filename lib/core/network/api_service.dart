@@ -119,23 +119,24 @@ class APIService {
     }
   }
 
-  // Future<Map<String, dynamic>> refreshToken(Map<String, dynamic> body) async {
-  //   final url = Uri.https(_apiURL, '/oauth2/token');
-  //   final response = await client.post(
-  //     url,
-  //     body: body,
-  //     headers: {
-  //       'Content-Type': 'application/x-www-form-urlencoded',
-  //     },
-  //     encoding: Encoding.getByName('utf-8'),
-  //   );
-  //   if (response.statusCode >= 400) {
-  //     throw GivtServerException(
-  //       statusCode: response.statusCode,
-  //       body: jsonDecode(response.body) as Map<String, dynamic>,
-  //     );
-  //   } else {
-  //     return jsonDecode(response.body) as Map<String, dynamic>;
-  //   }
-  // }
+  Future<Map<String, dynamic>> refreshToken(Map<String, dynamic> body) async {
+    final url = Uri.https(
+        _apiURL, '/givt4kidsservice/v1/Authentication/refresh-accesstoken');
+
+    var response = await client.post(
+      url,
+      body: body,
+    );
+
+    log('refresh-accesstoken status code: ${response.statusCode}');
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } else {
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    }
+  }
 }

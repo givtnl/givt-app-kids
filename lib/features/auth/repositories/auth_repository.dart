@@ -45,8 +45,25 @@ class AuthRepositoryImpl with AuthRepository {
   Future<bool> logout() async => _prefs.clear();
 
   @override
-  Future<Session> refreshToken() {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
+  Future<Session> refreshToken() async {
+    final currentSession = _prefs.getString(Session.tag);
+    if (currentSession == null) {
+      return const Session.empty();
+    }
+    final session = Session.fromJson(
+      jsonDecode(currentSession) as Map<String, dynamic>,
+    );
+    final response = await _apiService.refreshToken(
+      {
+        'refreshtoken': session.refreshToken,
+      },
+    );
+    final sessionJson = response['item'];
+    final newSession = Session.fromJson(sessionJson);
+    await _prefs.setString(
+      Session.tag,
+      jsonEncode(newSession.toJson()),
+    );
+    return newSession;
   }
 }
