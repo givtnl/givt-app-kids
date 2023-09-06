@@ -4,7 +4,9 @@ import 'dart:developer';
 // import 'package:givt_app/app/injection/injection.dart';
 // import 'package:givt_app/core/logging/logging.dart';
 // import 'package:givt_app/features/auth/repositories/auth_repository.dart';
+import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/models/session.dart';
+import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -56,7 +58,7 @@ class ExpiredTokenRetryPolicy extends RetryPolicy {
   Future<bool> shouldAttemptRetryOnResponse(ResponseData response) async {
     ///This is where we need to update our token on 401 response
     if (response.statusCode == 401) {
-      // await getIt<AuthRepositoy>().refreshToken();
+      await getIt<AuthRepository>().refreshToken();
       return true;
     }
     return false;
