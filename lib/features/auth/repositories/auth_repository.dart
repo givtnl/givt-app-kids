@@ -55,7 +55,7 @@ class AuthRepositoryImpl with AuthRepository {
     );
     final response = await _apiService.refreshToken(
       {
-        'refreshtoken': session.refreshToken,
+        'refreshToken': session.refreshToken,
       },
     );
     final sessionJson = response['item'];
