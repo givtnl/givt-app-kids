@@ -177,6 +177,14 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                     extendedPadding:
                         EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     onPressed: () {
+                      AnalyticsHelper.logEvent(
+                          eventName: AmplitudeEvent.buttonPressed,
+                          eventProperties: {
+                            'button_name': 'Log out',
+                            'formatted_date': DateTime.now().toIso8601String(),
+                            'screen_name': ProfileSelectionScreen.routeName,
+                          });
+
                       context.read<AuthCubit>().logout();
                       context
                           .read<ProfilesCubit>()

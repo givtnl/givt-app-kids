@@ -94,11 +94,14 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 Navigator.of(context)
                     .pushReplacementNamed(WalletScreenCubit.routeName);
-                //TODO CLEAR ORGANISATION STATE
-                context.read<OrganisationDetailsCubit>().clearOrganisation();
-                await AnalyticsHelper.logEvent(
-                    eventName: AmplitudeEvent.continuePressed,
-                    eventProperties: {'screen_name': SuccessScreen.routeName});
+
+                AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.buttonPressed,
+                    eventProperties: {
+                      'button_name': 'Back to home',
+                      'formatted_date': DateTime.now().toIso8601String(),
+                      'screen_name': SuccessScreen.routeName,
+                    });
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFF2DF7F),
