@@ -39,7 +39,9 @@ class _WalletScreenCubitState extends State<WalletScreenCubit>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     log('state = $state');
-    refresh();
+    if (AppLifecycleState.resumed == state) {
+      refresh();
+    }
   }
 
   Future<void> refresh() async {
