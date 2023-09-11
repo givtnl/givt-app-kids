@@ -13,6 +13,7 @@ class OrganisationDetailsCubit extends Cubit<OrganisationDetailsState> {
   final OrganisationDetailsRepository _organisationRepository;
 
   Future<void> getOrganisationDetails(String qrCode) async {
+    emit(const OrganisationDetailsLoadingState());
     try {
       final response =
           await _organisationRepository.fetchOrganisationDetails(qrCode);
@@ -21,9 +22,5 @@ class OrganisationDetailsCubit extends Cubit<OrganisationDetailsState> {
     } catch (error) {
       emit(const OrganisationDetailsErrorState());
     }
-  }
-
-  void clearOrganisation() {
-    emit(const OrganisationDetailsInitialState());
   }
 }

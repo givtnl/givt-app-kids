@@ -34,6 +34,7 @@ class _CameraScreenState extends State<CameraScreen> {
       create: (context) => CameraCubit(),
       child: BlocConsumer<CameraCubit, CameraState>(
         listener: (context, state) {
+          log('camera state changed to $state');
           if (state is CameraScanned) {
             log("QR code scanned: ${state.qrValue} \n Getting organisation details");
             context
@@ -45,6 +46,7 @@ class _CameraScreenState extends State<CameraScreen> {
           return BlocConsumer<OrganisationDetailsCubit,
               OrganisationDetailsState>(
             listener: (context, orgState) {
+              log('organisation details state changed to $orgState');
               if (orgState is OrganisationDetailsSetState) {
                 log("Organisation is set: ${orgState.organisation.name}");
                 AnalyticsHelper.logEvent(

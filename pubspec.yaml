@@ -21,7 +21,7 @@ dependencies:
   lottie: ^2.1.0
   shared_preferences: ^2.0.15
   currency_text_input_formatter: ^2.1.8
-  amplitude_flutter: ^3.15.0
+  amplitude_flutter: ^3.16.0
   http: ^0.13.5
   vibration: ^1.7.6
   visibility_detector: ^0.3.3

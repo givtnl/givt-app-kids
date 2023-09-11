@@ -15,6 +15,11 @@ class OrganisationDetailsInitialState extends OrganisationDetailsState {
       {super.organisation = const OrganisationDetails.empty()});
 }
 
+class OrganisationDetailsLoadingState extends OrganisationDetailsState {
+  const OrganisationDetailsLoadingState(
+      {super.organisation = const OrganisationDetails.empty()});
+}
+
 class OrganisationDetailsErrorState extends OrganisationDetailsState {
   const OrganisationDetailsErrorState({
     super.organisation = const OrganisationDetails.error(),
