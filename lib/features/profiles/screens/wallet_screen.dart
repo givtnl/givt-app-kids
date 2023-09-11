@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/widgets/pending_approval_widget.dart';
@@ -31,23 +32,39 @@ class _WalletScreenCubitState extends State<WalletScreenCubit> {
       if (state is ProfilesCountdownState) {
         countdownAmount = state.amount;
       }
+
+      Future<void> refresh() async {
+        final parentGuid =
+            (context.read<AuthCubit>().state as LoggedInState).session.userGUID;
+        await context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+      }
+
       return WalletFrame(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Heading2(text: state.activeProfile.firstName),
-            WalletWidget(
-              balance: state.activeProfile.wallet.balance,
-              countdownAmount: countdownAmount,
-            ),
-            SizedBox(height: size.height * 0.01),
-            QrGiveButton(isActive: isGiveButtonActive),
-            if (isPending) SizedBox(height: size.height * 0.03),
-            if (isPending)
-              PendingApprovalWidget(
-                pending: state.activeProfile.wallet.pending,
+        body: RefreshIndicator(
+          onRefresh: refresh,
+          child: Stack(
+            children: [
+              ListView(),
+              Column(
+                key: UniqueKey(),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Heading2(text: state.activeProfile.firstName),
+                  WalletWidget(
+                    balance: state.activeProfile.wallet.balance,
+                    countdownAmount: countdownAmount,
+                  ),
+                  SizedBox(height: size.height * 0.01),
+                  QrGiveButton(isActive: isGiveButtonActive),
+                  if (isPending) SizedBox(height: size.height * 0.03),
+                  if (isPending)
+                    PendingApprovalWidget(
+                      pending: state.activeProfile.wallet.pending,
+                    ),
+                ],
               ),
-          ],
+            ],
+          ),
         ),
         fab: ProfileSwitchButton(
             name: state.activeProfile.firstName,
