@@ -1,17 +1,16 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
-import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:lottie/lottie.dart';
 
 import 'package:givt_app_kids/helpers/vibrator.dart';
 
 class SuccessScreen extends StatefulWidget {
-  static const String routeName = "/success-bloc";
-
   const SuccessScreen({Key? key}) : super(key: key);
 
   @override
@@ -91,16 +90,13 @@ class _SuccessScreenState extends State<SuccessScreen> {
             ),
             child: ElevatedButton(
               onPressed: () async {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.of(context)
-                    .pushReplacementNamed(WalletScreenCubit.routeName);
-
+                context.goNamed(Pages.wallet.name);
                 AnalyticsHelper.logEvent(
                     eventName: AmplitudeEvent.buttonPressed,
                     eventProperties: {
                       'button_name': 'Back to home',
                       'formatted_date': DateTime.now().toIso8601String(),
-                      'screen_name': SuccessScreen.routeName,
+                      'screen_name': Pages.success.name,
                     });
               },
               style: ElevatedButton.styleFrom(

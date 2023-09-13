@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/app_router.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
@@ -9,13 +10,6 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'app_config.dart';
-
-import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
-import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
-import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
-import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
-import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
-import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 
 class GivtApp extends StatelessWidget {
   final AppConfig config;
@@ -29,7 +23,9 @@ class GivtApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthCubit>(
-          create: (BuildContext context) => AuthCubit(getIt()),
+          create: (BuildContext context) => AuthCubit(
+            getIt(),
+          ),
           lazy: false,
         ),
         BlocProvider<ProfilesCubit>(
@@ -48,29 +44,24 @@ class GivtApp extends StatelessWidget {
             AnalyticsHelper.setUserId(profilesState.activeProfile.firstName);
           }
         }, builder: (context, profilesState) {
-          return MaterialApp(
-            title: 'Givt Kids',
-            theme: ThemeData(
-                primaryColor: const Color.fromARGB(255, 62, 73, 112),
-                fontFamily: "Raleway"),
-            home: authState is LoggedInState
-                ? profilesState.isProfileSelected
-                    ? const WalletScreenCubit()
-                    : const ProfileSelectionScreen()
-                : const LoginScreen(),
-            routes: {
-              CameraScreen.routeName: (_) => const CameraScreen(),
-              WalletScreenCubit.routeName: (_) => const WalletScreenCubit(),
-              LoginScreen.routeName: (_) => const LoginScreen(),
-              ProfileSelectionScreen.routeName: (_) =>
-                  const ProfileSelectionScreen(),
-              ChooseAmountSliderScreen.routeName: (_) =>
-                  const ChooseAmountSliderScreen(),
-              SuccessScreen.routeName: (_) => const SuccessScreen(),
-            },
-          );
+          return const _AppView();
         });
       }),
+    );
+  }
+}
+
+class _AppView extends StatelessWidget {
+  const _AppView();
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      theme: ThemeData(
+          primaryColor: const Color.fromARGB(255, 62, 73, 112),
+          fontFamily: "Raleway"),
+      routeInformationProvider: AppRouter.router.routeInformationProvider,
+      routeInformationParser: AppRouter.router.routeInformationParser,
+      routerDelegate: AppRouter.router.routerDelegate,
     );
   }
 }
