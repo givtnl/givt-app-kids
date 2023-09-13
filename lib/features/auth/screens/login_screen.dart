@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             );
           } else if (state is LoggedInState) {
-            context.pushReplacementNamed(Pages.profileSelection.path);
+            context.pushReplacementNamed(Pages.profileSelection.name);
           }
         },
         builder: (context, state) => Scaffold(

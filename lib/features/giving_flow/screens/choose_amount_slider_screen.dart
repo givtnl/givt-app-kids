@@ -68,7 +68,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                       .session
                       .userGUID;
               context.read<ProfilesCubit>().fetchProfiles(parentGuid);
-              context.pushReplacementNamed(Pages.success.path);
+              context.pushReplacementNamed(Pages.success.name);
             }
           },
           builder: (context, state) {
