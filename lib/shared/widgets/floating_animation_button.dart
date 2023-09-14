@@ -4,6 +4,8 @@ class FloatingAnimationButton extends StatelessWidget {
   const FloatingAnimationButton({
     required this.text,
     this.onPressed,
+    this.backgroundColor = const Color(0xFF54A1EE),
+    this.foregroundColor = Colors.white,
     this.isLoading = false,
     super.key,
   });
@@ -11,6 +13,8 @@ class FloatingAnimationButton extends StatelessWidget {
   final String text;
   final void Function()? onPressed;
   final bool isLoading;
+  final Color backgroundColor;
+  final Color foregroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class FloatingAnimationButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF54A1EE),
+            backgroundColor: backgroundColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
@@ -38,8 +42,8 @@ class FloatingAnimationButton extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 9, horizontal: 25),
                   width: double.infinity,
                   alignment: Alignment.center,
-                  child: const CircularProgressIndicator(
-                    color: Colors.white,
+                  child: CircularProgressIndicator(
+                    color: foregroundColor,
                   ),
                 )
               : Container(
@@ -49,9 +53,9 @@ class FloatingAnimationButton extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                   child: Text(
                     text,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 26,
-                      color: Colors.white,
+                      color: foregroundColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

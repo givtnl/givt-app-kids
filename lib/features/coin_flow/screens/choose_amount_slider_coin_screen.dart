@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
@@ -17,6 +18,7 @@ import 'package:givt_app_kids/shared/widgets/floating_animation_button.dart';
 
 import 'package:givt_app_kids/shared/widgets/back_button.dart'
     as custom_widgets;
+import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderCoinScreen extends StatefulWidget {
   const ChooseAmountSliderCoinScreen({Key? key}) : super(key: key);
@@ -61,6 +63,7 @@ class _ChooseAmountSliderCoinScreenState
                   backgroundColor: Theme.of(context).errorColor,
                 ),
               );
+              context.pushReplacementNamed(Pages.successCoin.name);
             } else if (state is CreateTransactionSuccessState) {
               // REFETCH PROFILES
               final parentGuid =
@@ -68,7 +71,7 @@ class _ChooseAmountSliderCoinScreenState
                       .session
                       .userGUID;
               context.read<ProfilesCubit>().fetchProfiles(parentGuid);
-              // context.pushReplacementNamed(Pages.success.name);
+              context.pushReplacementNamed(Pages.success.name);
             }
           },
           builder: (context, state) {
@@ -104,7 +107,7 @@ class _ChooseAmountSliderCoinScreenState
                         ),
                         Expanded(
                           child: Text(
-                            organisation.name,
+                            'Celebration Church',
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,

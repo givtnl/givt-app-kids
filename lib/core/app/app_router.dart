@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/choose_amount_slider_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/profile_selection_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
+import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -86,6 +87,11 @@ class AppRouter {
           path: Pages.chooseAmountSliderCoin.path,
           name: Pages.chooseAmountSliderCoin.name,
           builder: (context, state) => const ChooseAmountSliderCoinScreen(),
+        ),
+        GoRoute(
+          path: Pages.successCoin.path,
+          name: Pages.successCoin.name,
+          builder: (context, state) => const SuccessCoinScreen(),
         ),
       ]);
 }

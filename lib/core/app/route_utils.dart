@@ -13,6 +13,7 @@ enum Pages {
       path: '/profile-selection-coin', name: 'PROFILE_SELECTION_COIN'),
   chooseAmountSliderCoin(
       path: '/choose-amount-slider-coin', name: 'CHOOSE_AMOUNT_SLIDER_COIN'),
+  successCoin(path: '/success-coin', name: 'SUCCESS_COIN'),
   ;
 
   final String path;

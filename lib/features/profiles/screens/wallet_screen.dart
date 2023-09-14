@@ -76,9 +76,13 @@ class _WalletScreenState extends State<WalletScreen>
                   if (isLoading)
                     const Center(child: CircularProgressIndicator())
                   else
-                    WalletWidget(
-                      balance: state.activeProfile.wallet.balance,
-                      countdownAmount: countdownAmount,
+                    GestureDetector(
+                      onLongPress: () => context
+                          .pushReplacementNamed(Pages.searchForCoin.name),
+                      child: WalletWidget(
+                        balance: state.activeProfile.wallet.balance,
+                        countdownAmount: countdownAmount,
+                      ),
                     ),
                   SizedBox(height: size.height * 0.01),
                   QrGiveButton(isActive: isGiveButtonActive),
