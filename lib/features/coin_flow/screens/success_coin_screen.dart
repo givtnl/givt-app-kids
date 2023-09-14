@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_rays_animated_widget.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/floating_animation_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -80,13 +81,13 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
         foregroundColor: const Color(0xFF3B3240),
         onPressed: () async {
           context.pushReplacementNamed(Pages.wallet.name);
-          //   AnalyticsHelper.logEvent(
-          //       eventName: AmplitudeEvent.buttonPressed,
-          //       eventProperties: {
-          //         'button_name': 'Back to home',
-          //         'formatted_date': DateTime.now().toIso8601String(),
-          //         'screen_name': Pages.success.name,
-          //       });
+          AnalyticsHelper.logEvent(
+              eventName: AmplitudeEvent.buttonPressed,
+              eventProperties: {
+                'button_name': 'Back to home',
+                'formatted_date': DateTime.now().toIso8601String(),
+                'screen_name': Pages.successCoin.name,
+              });
         },
       ),
     );

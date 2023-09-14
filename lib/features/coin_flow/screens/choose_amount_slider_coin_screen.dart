@@ -63,6 +63,7 @@ class _ChooseAmountSliderCoinScreenState
                   backgroundColor: Theme.of(context).errorColor,
                 ),
               );
+              //TODO: remove it when create transaction fixed
               context.pushReplacementNamed(Pages.successCoin.name);
             } else if (state is CreateTransactionSuccessState) {
               // REFETCH PROFILES
@@ -211,16 +212,16 @@ class _ChooseAmountSliderCoinScreenState
                             .read<CreateTransactionCubit>()
                             .createTransaction(transaction: transaction);
 
-                        // AnalyticsHelper.logEvent(
-                        //     eventName: AmplitudeEvent.giveToThisGoalPressed,
-                        //     eventProperties: {
-                        //       'amount': state.amount,
-                        //       'formatted_date':
-                        //           DateTime.now().toIso8601String(),
-                        //       'timestamp':
-                        //           DateTime.now().millisecondsSinceEpoch,
-                        //       'goal_name': organisation.name,
-                        //     });
+                        AnalyticsHelper.logEvent(
+                            eventName: AmplitudeEvent.giveToThisGoalPressed,
+                            eventProperties: {
+                              'amount': state.amount,
+                              'formatted_date':
+                                  DateTime.now().toIso8601String(),
+                              'timestamp':
+                                  DateTime.now().millisecondsSinceEpoch,
+                              'goal_name': organisation.name,
+                            });
                       },
               ),
             );

@@ -10,6 +10,7 @@ import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_item.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 import 'package:givt_app_kids/shared/widgets/back_button.dart'
     as custom_widgets;
@@ -39,12 +40,12 @@ class _ProfileSelectionCoinScreenState
 
   Future<void> _selectProfile(Profile profile) async {
     context.read<ProfilesCubit>().setActiveProfile(profile);
-    // await AnalyticsHelper.logEvent(
-    //   eventName: AmplitudeEvent.profilePressed,
-    //   eventProperties: {
-    //     "profile_name": '${profile.firstName} ${profile.lastName}',
-    //   },
-    // );
+    await AnalyticsHelper.logEvent(
+      eventName: AmplitudeEvent.profilePressed,
+      eventProperties: {
+        "profile_name": '${profile.firstName} ${profile.lastName}',
+      },
+    );
   }
 
   List<Widget> _createGridItems(List<Profile> profiles) {
