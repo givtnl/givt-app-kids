@@ -4,14 +4,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
 import 'package:flutter_svg/svg.dart';
-import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const String routeName = "/login-bloc";
-
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -46,8 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             );
           } else if (state is LoggedInState) {
-            Navigator.of(context)
-                .pushReplacementNamed(ProfileSelectionScreen.routeName);
+            context.pushReplacementNamed(Pages.profileSelection.name);
           }
         },
         builder: (context, state) => Scaffold(

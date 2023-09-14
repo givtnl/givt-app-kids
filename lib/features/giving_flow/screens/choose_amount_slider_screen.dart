@@ -4,23 +4,22 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/models/organisation_details.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
-import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
 import 'package:givt_app_kids/shared/widgets/back_button.dart'
     as custom_widgets;
+import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderScreen extends StatefulWidget {
-  static const String routeName = "/choose-amount-slider-bloc";
-
   const ChooseAmountSliderScreen({Key? key}) : super(key: key);
 
   @override
@@ -69,8 +68,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                       .session
                       .userGUID;
               context.read<ProfilesCubit>().fetchProfiles(parentGuid);
-
-              Navigator.of(context).pushNamed(SuccessScreen.routeName);
+              context.pushReplacementNamed(Pages.success.name);
             }
           },
           builder: (context, state) {

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:go_router/go_router.dart';
 
 class BackButton extends StatelessWidget {
   const BackButton({Key? key}) : super(key: key);
@@ -19,7 +20,8 @@ class BackButton extends StatelessWidget {
           onPressed: () {
             AnalyticsHelper.logEvent(
                 eventName: AmplitudeEvent.backButtonPressed);
-            Navigator.of(context).pop();
+
+            context.pop();
           },
           icon: Icon(
             Icons.arrow_back_rounded,
