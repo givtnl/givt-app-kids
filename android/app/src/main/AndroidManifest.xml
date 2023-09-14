@@ -48,7 +48,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
 
         <data
-            android:scheme="http"
+            android:scheme="https"
             android:host="www.givt.app"
             android:pathPrefix="/test"/>
 
@@ -56,7 +56,7 @@
     <intent-filter android:label="testDeepLinkNFC">
         <action android:name="android.nfc.action.NDEF_DISCOVERED" />
         <category android:name="android.intent.category.DEFAULT" />
-        <data android:scheme="http"
+        <data android:scheme="https"
               android:host="www.givt.app"
               android:pathPrefix="/test" />
     </intent-filter>
