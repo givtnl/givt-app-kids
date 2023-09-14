@@ -36,7 +36,7 @@
             <category android:name="android.intent.category.BROWSABLE" />
             <data
                 android:host="www.givt.app"
-                android:path="/test"
+                android:path="/search-for-coin"
                 android:scheme="https"/>
    
             </intent-filter>
@@ -50,7 +50,7 @@
         <data
             android:scheme="https"
             android:host="www.givt.app"
-            android:pathPrefix="/test"/>
+            android:pathPrefix="/search-for-coin"/>
 
     </intent-filter>
     <intent-filter android:label="testDeepLinkNFC">
@@ -58,7 +58,7 @@
         <category android:name="android.intent.category.DEFAULT" />
         <data android:scheme="https"
               android:host="www.givt.app"
-              android:pathPrefix="/test" />
+              android:pathPrefix="/search-for-coin" />
     </intent-filter>
 
  
