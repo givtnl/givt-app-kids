@@ -1,49 +1,18 @@
 enum Pages {
-  splash,
-  login,
-  profileSelection,
-  wallet,
-  camera,
-  success,
-  chooseAmountSlider
-}
+  splash(path: '/', name: 'SPLASH'),
+  login(path: '/login', name: 'LOGIN'),
+  profileSelection(path: '/profile-selection', name: 'PROFILE_SELECTION'),
+  wallet(path: '/wallet', name: 'WALLET'),
+  camera(path: '/camera', name: 'CAMERA'),
+  success(path: '/success', name: 'SUCCESS'),
+  chooseAmountSlider(
+      path: '/choose-amount-slider', name: 'CHOOSE_AMOUNT_SLIDER');
 
-extension AppPageExtension on Pages {
-  String get path {
-    switch (this) {
-      case Pages.splash:
-        return '/';
-      case Pages.login:
-        return '/login';
-      case Pages.profileSelection:
-        return '/profile-selection';
-      case Pages.wallet:
-        return '/wallet';
-      case Pages.camera:
-        return '/camera';
-      case Pages.success:
-        return '/success';
-      case Pages.chooseAmountSlider:
-        return '/choose-amount-slider';
-    }
-  }
+  final String path;
+  final String name;
 
-  String get name {
-    switch (this) {
-      case Pages.splash:
-        return 'SPLASH';
-      case Pages.login:
-        return 'LOGIN';
-      case Pages.profileSelection:
-        return 'PROFILE_SELECTION';
-      case Pages.wallet:
-        return 'WALLET';
-      case Pages.camera:
-        return 'CAMERA';
-      case Pages.success:
-        return 'SUCCESS';
-      case Pages.chooseAmountSlider:
-        return 'CHOOSE_AMOUNT_SLIDER';
-    }
-  }
+  const Pages({
+    required this.path,
+    required this.name,
+  });
 }
