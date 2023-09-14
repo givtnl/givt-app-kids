@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_rays_animated_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/shared/widgets/floating_animation_button.dart';
+import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:givt_app_kids/helpers/vibrator.dart';
@@ -75,7 +75,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingAnimationButton(
+      floatingActionButton: FloatingActoinButton(
         text: "Back to home",
         backgroundColor: const Color(0xFFF2DF7F),
         foregroundColor: const Color(0xFF3B3240),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FloatingAnimationButton extends StatelessWidget {
-  const FloatingAnimationButton({
+class FloatingActoinButton extends StatelessWidget {
+  const FloatingActoinButton({
     required this.text,
     this.onPressed,
     this.backgroundColor = const Color(0xFF54A1EE),

@@ -14,7 +14,7 @@ import 'package:givt_app_kids/features/giving_flow/organisation_details/models/o
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/shared/widgets/floating_animation_button.dart';
+import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 
 import 'package:givt_app_kids/shared/widgets/back_button.dart'
     as custom_widgets;
@@ -192,7 +192,7 @@ class _ChooseAmountSliderCoinScreenState
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
-              floatingActionButton: FloatingAnimationButton(
+              floatingActionButton: FloatingActoinButton(
                 text: "Activate the coin",
                 isLoading: state is CreateTransactionUploadingState,
                 onPressed: state.amount == 0

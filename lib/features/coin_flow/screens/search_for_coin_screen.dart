@@ -5,7 +5,7 @@ import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_founded.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/search_coin_animated_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/shared/widgets/floating_animation_button.dart';
+import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchForCoinScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class SearchForCoinScreen extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: state is SearchCoinFoundedState
-              ? FloatingAnimationButton(
+              ? FloatingActoinButton(
                   text: "Assign the coin",
                   onPressed: () {
                     AnalyticsHelper.logEvent(
