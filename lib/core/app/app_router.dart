@@ -4,6 +4,7 @@ import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
+import 'package:givt_app_kids/features/coin_flow/screens/profile_selection_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
@@ -74,6 +75,11 @@ class AppRouter {
             create: (context) => SearchCoinCubit()..searchForCoin(),
             child: const SearchForCoinScreen(),
           ),
+        ),
+        GoRoute(
+          path: Pages.profileSelectionCoin.path,
+          name: Pages.profileSelectionCoin.name,
+          builder: (context, state) => const ProfileSelectionCoinScreen(),
         ),
       ]);
 }

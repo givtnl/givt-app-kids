@@ -25,7 +25,7 @@ class SearchForCoinScreen extends StatelessWidget {
               ? FloatingAnimationButton(
                   text: "Assign the coin",
                   onPressed: () {
-                    context.pushReplacementNamed(Pages.profileSelection.name);
+                    context.pushNamed(Pages.profileSelectionCoin.name);
                   },
                 )
               : null,
