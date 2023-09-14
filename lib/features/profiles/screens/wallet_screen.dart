@@ -1,14 +1,20 @@
+// import 'dart:convert';
+// import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/widgets/pending_approval_widget.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
+import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
+import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
 import 'package:givt_app_kids/shared/widgets/qr_give_button.dart';
-import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
-import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
+
+// import 'package:nfc_manager/nfc_manager.dart';
 
 class WalletScreenCubit extends StatefulWidget {
   static const String routeName = "/wallet-cubit";
@@ -52,6 +58,7 @@ class _WalletScreenCubitState extends State<WalletScreenCubit> {
         fab: ProfileSwitchButton(
             name: state.activeProfile.firstName,
             onClicked: () {
+              // _tagRead();
               Navigator.of(context)
                   .pushReplacementNamed(ProfileSelectionScreen.routeName);
               AnalyticsHelper.logEvent(
@@ -62,4 +69,31 @@ class _WalletScreenCubitState extends State<WalletScreenCubit> {
       );
     });
   }
+
+  // void _tagRead() {
+  //   NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
+  //     log('nfc tag discovered: ${tag.data}');
+  //     var ndef = Ndef.from(tag);
+  //     if (ndef != null && ndef.cachedMessage != null) {
+  //       if (ndef.cachedMessage!.records.isNotEmpty &&
+  //           ndef.cachedMessage!.records.first.typeNameFormat ==
+  //               NdefTypeNameFormat.nfcWellknown) {
+  //         final wellKnownRecord = ndef.cachedMessage!.records.first;
+  //         if (wellKnownRecord.payload.first == 0x02) {
+  //           final languageCodeAndContentBytes =
+  //               wellKnownRecord.payload.skip(1).toList();
+  //           final languageCodeAndContentText =
+  //               utf8.decode(languageCodeAndContentBytes);
+  //           final payload = languageCodeAndContentText.substring(2);
+  //           log('nfc payload: $payload');
+  //         } else {
+  //           final decoded = utf8.decode(wellKnownRecord.payload);
+
+  //           log('nfc payload: $decoded');
+  //         }
+  //       }
+  //     }
+  //     NfcManager.instance.stopSession();
+  //   });
+  // }
 }
