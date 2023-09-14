@@ -3,6 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
+import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
+import 'package:givt_app_kids/features/coin_flow/screens/choose_amount_slider_coin_screen.dart';
+import 'package:givt_app_kids/features/coin_flow/screens/profile_selection_coin_screen.dart';
+import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
+import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/nfc_test/test_link_screen.dart';
@@ -69,6 +74,30 @@ class AppRouter {
           path: Pages.test.path,
           name: Pages.test.name,
           builder: (context, state) => const TestLinkSCreen(),
+        ),
+        GoRoute(
+          path: Pages.searchForCoin.path,
+          name: Pages.searchForCoin.name,
+          builder: (context, state) => BlocProvider<SearchCoinCubit>(
+            lazy: false,
+            create: (context) => SearchCoinCubit()..searchForCoin(),
+            child: const SearchForCoinScreen(),
+          ),
+        ),
+        GoRoute(
+          path: Pages.profileSelectionCoin.path,
+          name: Pages.profileSelectionCoin.name,
+          builder: (context, state) => const ProfileSelectionCoinScreen(),
+        ),
+        GoRoute(
+          path: Pages.chooseAmountSliderCoin.path,
+          name: Pages.chooseAmountSliderCoin.name,
+          builder: (context, state) => const ChooseAmountSliderCoinScreen(),
+        ),
+        GoRoute(
+          path: Pages.successCoin.path,
+          name: Pages.successCoin.name,
+          builder: (context, state) => const SuccessCoinScreen(),
         ),
       ]);
 }

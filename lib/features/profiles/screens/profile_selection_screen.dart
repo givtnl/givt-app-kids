@@ -14,8 +14,6 @@ import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileSelectionScreen extends StatefulWidget {
-  static const String routeName = "/profile-selection-bloc";
-
   const ProfileSelectionScreen({Key? key}) : super(key: key);
 
   @override
@@ -185,7 +183,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                           eventProperties: {
                             'button_name': 'Log out',
                             'formatted_date': DateTime.now().toIso8601String(),
-                            'screen_name': ProfileSelectionScreen.routeName,
+                            'screen_name': Pages.profileSelection.name,
                           });
 
                       context.read<AuthCubit>().logout();

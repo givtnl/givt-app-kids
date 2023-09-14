@@ -7,7 +7,15 @@ enum Pages {
   success(path: '/success', name: 'SUCCESS'),
   chooseAmountSlider(
       path: '/choose-amount-slider', name: 'CHOOSE_AMOUNT_SLIDER'),
-  test(path: '/test', name: 'TEST');
+  test(path: '/test', name: 'TEST'),
+  //coin flow
+  searchForCoin(path: '/search-for-coin', name: 'SEARCH_FOR_COIN'),
+  profileSelectionCoin(
+      path: '/profile-selection-coin', name: 'PROFILE_SELECTION_COIN'),
+  chooseAmountSliderCoin(
+      path: '/choose-amount-slider-coin', name: 'CHOOSE_AMOUNT_SLIDER_COIN'),
+  successCoin(path: '/success-coin', name: 'SUCCESS_COIN'),
+  ;
 
   final String path;
   final String name;
