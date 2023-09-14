@@ -150,6 +150,10 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                ElevatedButton(
+                                    onPressed: () =>
+                                        context.goNamed(Pages.test.name),
+                                    child: Text('test')),
                                 SizedBox(
                                   height: 30,
                                 ),

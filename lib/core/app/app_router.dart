@@ -10,6 +10,7 @@ import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
+import 'package:givt_app_kids/features/nfc_test/test_link_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
@@ -68,6 +69,11 @@ class AppRouter {
           path: Pages.success.path,
           name: Pages.success.name,
           builder: (context, state) => const SuccessScreen(),
+        ),
+        GoRoute(
+          path: Pages.test.path,
+          name: Pages.test.name,
+          builder: (context, state) => const TestLinkSCreen(),
         ),
         GoRoute(
           path: Pages.searchForCoin.path,

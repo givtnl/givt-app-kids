@@ -7,6 +7,7 @@ enum Pages {
   success(path: '/success', name: 'SUCCESS'),
   chooseAmountSlider(
       path: '/choose-amount-slider', name: 'CHOOSE_AMOUNT_SLIDER'),
+  test(path: '/test', name: 'TEST'),
   //coin flow
   searchForCoin(path: '/search-for-coin', name: 'SEARCH_FOR_COIN'),
   profileSelectionCoin(
