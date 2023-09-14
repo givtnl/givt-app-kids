@@ -28,7 +28,7 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+<meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
  <intent-filter android:autoVerify="true">
      <action android:name="android.intent.action.VIEW" />
      <category android:name="android.intent.category.DEFAULT" />
@@ -39,6 +39,27 @@
             android:scheme="https"/>
    
  </intent-filter>
+ <activity>
+    <intent-filter android:label="testDeepLink">
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:scheme="http"
+            android:host="www.givt.app"
+            android:pathPrefix="/test"/>
+
+    </intent-filter>
+    <intent-filter android:label="testDeepLinkNFC">
+        <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="http"
+              android:host="www.givt.app"
+              android:pathPrefix="/test" />
+    </intent-filter>
+
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
