@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
+import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
+import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -63,6 +65,15 @@ class AppRouter {
           path: Pages.success.path,
           name: Pages.success.name,
           builder: (context, state) => const SuccessScreen(),
+        ),
+        GoRoute(
+          path: Pages.searchForCoin.path,
+          name: Pages.searchForCoin.name,
+          builder: (context, state) => BlocProvider<SearchCoinCubit>(
+            lazy: false,
+            create: (context) => SearchCoinCubit()..searchForCoin(),
+            child: const SearchForCoinScreen(),
+          ),
         ),
       ]);
 }

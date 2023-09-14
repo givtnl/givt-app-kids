@@ -6,7 +6,10 @@ enum Pages {
   camera(path: '/camera', name: 'CAMERA'),
   success(path: '/success', name: 'SUCCESS'),
   chooseAmountSlider(
-      path: '/choose-amount-slider', name: 'CHOOSE_AMOUNT_SLIDER');
+      path: '/choose-amount-slider', name: 'CHOOSE_AMOUNT_SLIDER'),
+  //coin flow
+  searchForCoin(path: '/search-for-coin', name: 'SEARCH_FOR_COIN'),
+  ;
 
   final String path;
   final String name;
