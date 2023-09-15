@@ -41,7 +41,8 @@
    
             </intent-filter>
 
-    <intent-filter android:label="testDeepLink">
+    <intent-filter android:label="testDeepLink" 
+                   android:autoVerify="true">
         <action android:name="android.intent.action.VIEW"/>
 
         <category android:name="android.intent.category.DEFAULT" />
@@ -53,7 +54,8 @@
             android:pathPrefix="/search-for-coin"/>
 
     </intent-filter>
-    <intent-filter android:label="testDeepLinkNFC">
+    <intent-filter android:label="testDeepLinkNFC"
+                   android:autoVerify="true">
         <action android:name="android.nfc.action.NDEF_DISCOVERED" />
         <category android:name="android.intent.category.DEFAULT" />
         <data android:scheme="https"
