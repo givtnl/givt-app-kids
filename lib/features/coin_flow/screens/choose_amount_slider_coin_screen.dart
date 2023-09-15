@@ -9,7 +9,6 @@ import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
-import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/models/organisation_details.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -38,12 +37,15 @@ class _ChooseAmountSliderCoinScreenState
     super.initState();
   }
 
+  OrganisationDetails celebrationChurchJacksonville = OrganisationDetails(
+    goal: '',
+    name: 'Celebration Church',
+    collectGroupId: 'EF3A60EC-D778-422D-2E1C-08DBB50EE29A',
+  );
+
   @override
   Widget build(BuildContext context) {
-    final OrganisationDetails organisation =
-        context.read<OrganisationDetailsCubit>().state.organisation;
-    final String mediumId =
-        context.read<OrganisationDetailsCubit>().state.mediumId;
+    const String mediumId = 'NjFmN2VkMDE1NTUzMDkyM2MwMDAuZmMwMDAwMDAwMDAx';
     return BlocProvider<CreateTransactionCubit>(
       create: (BuildContext context) =>
           CreateTransactionCubit(_profilesCubit, getIt()),
@@ -64,7 +66,6 @@ class _ChooseAmountSliderCoinScreenState
                 ),
               );
               //TODO: remove it when create transaction fixed
-              context.pushReplacementNamed(Pages.successCoin.name);
             } else if (state is CreateTransactionSuccessState) {
               // REFETCH PROFILES
               final parentGuid =
@@ -72,7 +73,8 @@ class _ChooseAmountSliderCoinScreenState
                       .session
                       .userGUID;
               context.read<ProfilesCubit>().fetchProfiles(parentGuid);
-              context.pushReplacementNamed(Pages.success.name);
+
+              context.pushReplacementNamed(Pages.successCoin.name);
             }
           },
           builder: (context, state) {
@@ -108,7 +110,7 @@ class _ChooseAmountSliderCoinScreenState
                         ),
                         Expanded(
                           child: Text(
-                            'Celebration Church',
+                            celebrationChurchJacksonville.name,
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -203,7 +205,8 @@ class _ChooseAmountSliderCoinScreenState
                         }
                         var transaction = Transaction(
                           userId: _profilesCubit.state.activeProfile.id,
-                          collectGroupId: organisation.collectGroupId,
+                          collectGroupId:
+                              celebrationChurchJacksonville.collectGroupId,
                           mediumId: mediumId,
                           amount: state.amount,
                         );
@@ -220,7 +223,7 @@ class _ChooseAmountSliderCoinScreenState
                                   DateTime.now().toIso8601String(),
                               'timestamp':
                                   DateTime.now().millisecondsSinceEpoch,
-                              'goal_name': organisation.name,
+                              'goal_name': celebrationChurchJacksonville.name,
                             });
                       },
               ),
