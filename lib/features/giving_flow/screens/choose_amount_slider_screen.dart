@@ -4,22 +4,22 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/giving_flow/cubit/create_transaction_cubit.dart';
-import 'package:givt_app_kids/features/giving_flow/cubit/organisation/organisation_cubit.dart';
-import 'package:givt_app_kids/features/giving_flow/models/organisation.dart';
-import 'package:givt_app_kids/features/giving_flow/models/transaction.dart';
-import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
+import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/models/organisation_details.dart';
+import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
 import 'package:givt_app_kids/shared/widgets/back_button.dart'
     as custom_widgets;
+import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderScreen extends StatefulWidget {
-  static const String routeName = "/choose-amount-slider-bloc";
-
   const ChooseAmountSliderScreen({Key? key}) : super(key: key);
 
   @override
@@ -38,11 +38,13 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Organisation _organisation =
-        context.read<OrganisationCubit>().state.organisation;
+    final OrganisationDetails organisation =
+        context.read<OrganisationDetailsCubit>().state.organisation;
+    final String mediumId =
+        context.read<OrganisationDetailsCubit>().state.mediumId;
     return BlocProvider<CreateTransactionCubit>(
       create: (BuildContext context) =>
-          CreateTransactionCubit(profilesCubit: _profilesCubit),
+          CreateTransactionCubit(_profilesCubit, getIt()),
       child: SafeArea(
         child: BlocConsumer<CreateTransactionCubit, CreateTransactionState>(
           listener: (context, state) {
@@ -62,10 +64,11 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
             } else if (state is CreateTransactionSuccessState) {
               // REFETCH PROFILES
               final parentGuid =
-                  (context.read<AuthCubit>().state as LoggedInState).guid;
+                  (context.read<AuthCubit>().state as LoggedInState)
+                      .session
+                      .userGUID;
               context.read<ProfilesCubit>().fetchProfiles(parentGuid);
-
-              Navigator.of(context).pushNamed(SuccessScreen.routeName);
+              context.pushReplacementNamed(Pages.success.name);
             }
           },
           builder: (context, state) {
@@ -90,7 +93,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                       child: Column(
                         children: [
                           Text(
-                            _organisation.name,
+                            organisation.name,
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -203,7 +206,8 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                             }
                             var transaction = Transaction(
                               userId: _profilesCubit.state.activeProfile.id,
-                              collectGroupId: _organisation.collectGroupId,
+                              collectGroupId: organisation.collectGroupId,
+                              mediumId: mediumId,
                               amount: state.amount,
                             );
 
@@ -219,7 +223,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                                       DateTime.now().toIso8601String(),
                                   'timestamp':
                                       DateTime.now().millisecondsSinceEpoch,
-                                  'goal_name': _organisation.name,
+                                  'goal_name': organisation.name,
                                 });
                           },
                     style: ElevatedButton.styleFrom(

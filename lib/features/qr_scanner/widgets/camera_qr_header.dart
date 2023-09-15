@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
 
+import 'package:givt_app_kids/shared/widgets/back_button.dart'
+    as custom_widgets;
+
 class CameraQrHeader extends StatelessWidget {
   const CameraQrHeader({super.key});
 
@@ -8,20 +11,21 @@ class CameraQrHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-          color: Color(0xFFEEEDE4),
-          width: double.infinity,
-          child: Row(
-            children: [
-              const BackButton(),
-              Expanded(
-                child: Heading2(
-                  text: "Scan the Givt\nQR code",
-                  alignment: TextAlign.center,
-                ),
+        color: const Color(0xFFEEEDE4),
+        width: double.infinity,
+        child: const Row(
+          children: [
+            custom_widgets.BackButton(),
+            Expanded(
+              child: Heading2(
+                text: "Scan the Givt\nQR code",
+                alignment: TextAlign.center,
               ),
-              const SizedBox(width: 50),
-            ],
-          )),
+            ),
+            SizedBox(width: 50),
+          ],
+        ),
+      ),
     );
   }
 }

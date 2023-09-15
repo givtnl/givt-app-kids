@@ -1,11 +1,11 @@
-import 'package:givt_app_kids/app_config.dart';
-import 'package:givt_app_kids/bootstrap.dart';
-import 'package:givt_app_kids/givt_app.dart';
+import 'package:givt_app_kids/core/app/app_config.dart';
+import 'package:givt_app_kids/core/app/bootstrap.dart';
+import 'package:givt_app_kids/core/app/givt_app.dart';
 
 void main() {
   var configuredApp = AppConfig(
     flavorName: 'production',
-    apiBaseUrl: 'api.givt.app',
+    apiBaseUrl: 'backend.givt.app',
     amplitudePublicKey: '05353d3a94c0d52d75cc1e7d13faa8e1',
   );
 

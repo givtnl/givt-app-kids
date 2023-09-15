@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileItem extends StatelessWidget {
   const ProfileItem({
@@ -14,6 +15,7 @@ class ProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       alignment: Alignment.center,
       child: Stack(
@@ -23,9 +25,11 @@ class ProfileItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.network(
+                borderRadius: BorderRadius.circular(20),
+                child: SvgPicture.network(
                   imageUrl,
+                  width: size.width * 0.3,
+                  height: size.width * 0.3,
                   // headers: {},
                 ),
               ),

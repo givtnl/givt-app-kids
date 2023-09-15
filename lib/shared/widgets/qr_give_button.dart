@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
-import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
+import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:go_router/go_router.dart';
 
 class QrGiveButton extends StatelessWidget {
   const QrGiveButton({
@@ -18,12 +20,16 @@ class QrGiveButton extends StatelessWidget {
       onPressed: isActive
           ? () {
               AnalyticsHelper.logEvent(
-                  eventName: AmplitudeEvent.continuePressed,
+                  eventName: AmplitudeEvent.iWantToGiveToPressed,
                   eventProperties: {
-                    'screen_name': WalletScreenCubit.routeName
+                    'current_amount_in_wallet': context
+                        .read<ProfilesCubit>()
+                        .state
+                        .activeProfile
+                        .wallet
+                        .balance,
                   });
-
-              Navigator.of(context).pushNamed(CameraScreen.routeName);
+              context.pushNamed(Pages.camera.name);
             }
           : null,
       style: ElevatedButton.styleFrom(

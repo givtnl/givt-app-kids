@@ -4,18 +4,16 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_item.dart';
-import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileSelectionScreen extends StatefulWidget {
-  static const String routeName = "/profile-selection-bloc";
-
   const ProfileSelectionScreen({Key? key}) : super(key: key);
 
   @override
@@ -30,7 +28,8 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
   }
 
   Future<void> _fetchProfiles() async {
-    final parentGuid = (context.read<AuthCubit>().state as LoggedInState).guid;
+    final parentGuid =
+        (context.read<AuthCubit>().state as LoggedInState).session.userGUID;
     context.read<ProfilesCubit>().fetchProfiles(parentGuid);
   }
 
@@ -51,8 +50,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
         GestureDetector(
           onTap: () {
             _selectProfile(profiles[i]);
-            Navigator.of(context)
-                .pushReplacementNamed(WalletScreenCubit.routeName);
+            context.pushReplacementNamed(Pages.wallet.name);
           },
           child: ProfileItem(
             name: '${profiles[i].firstName} ${profiles[i].lastName}',
@@ -176,13 +174,19 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                     extendedPadding:
                         EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     onPressed: () {
+                      AnalyticsHelper.logEvent(
+                          eventName: AmplitudeEvent.buttonPressed,
+                          eventProperties: {
+                            'button_name': 'Log out',
+                            'formatted_date': DateTime.now().toIso8601String(),
+                            'screen_name': Pages.profileSelection.name,
+                          });
+
                       context.read<AuthCubit>().logout();
                       context
                           .read<ProfilesCubit>()
                           .setActiveProfile(Profile.empty());
-
-                      Navigator.of(context)
-                          .pushReplacementNamed(LoginScreen.routeName);
+                      context.pushReplacementNamed(Pages.login.name);
                     },
                     label: const Text(
                       'Log out',

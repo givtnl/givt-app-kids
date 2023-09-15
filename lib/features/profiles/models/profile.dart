@@ -39,7 +39,7 @@ class Profile extends Equatable {
     return Profile(
       id: map['id'],
       firstName: map['firstName'],
-      lastName: map['lastName'],
+      lastName: map['lastName'] ?? '',
       nickname: map['nickname'] ?? '',
       comment: map['comment'] ?? '',
       wallet: Wallet.fromMap(map['wallet']),
