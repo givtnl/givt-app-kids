@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/repositories/create_transaction_repository.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/repositories/organisation_details_repository.dart';
 import 'package:givt_app_kids/features/profiles/repository/profiles_repository.dart';
+import 'package:givt_app_kids/features/recommendation/repository/recomendation_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
@@ -48,6 +49,11 @@ void _initRepositories() {
     )
     ..registerLazySingleton<OrganisationDetailsRepository>(
       () => OrganisationDetailsRepositoryImpl(
+        getIt(),
+      ),
+    )
+    ..registerLazySingleton<RecommendRepository>(
+      () => RecomendRepoImpl(
         getIt(),
       ),
     )

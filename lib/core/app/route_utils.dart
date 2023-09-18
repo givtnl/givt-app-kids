@@ -5,6 +5,7 @@ enum Pages {
   wallet(path: '/wallet', name: 'WALLET'),
   camera(path: '/camera', name: 'CAMERA'),
   success(path: '/success', name: 'SUCCESS'),
+  recommend(path: '/recommend', name: 'RECOMMEND'),
   chooseAmountSlider(
       path: '/choose-amount-slider', name: 'CHOOSE_AMOUNT_SLIDER'),
   test(path: '/test', name: 'TEST'),

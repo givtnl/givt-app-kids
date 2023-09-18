@@ -139,4 +139,23 @@ class APIService {
       return jsonDecode(response.body) as Map<String, dynamic>;
     }
   }
+
+  Future<bool> sendRecEmail({required String id}) async {
+    return true;
+    // final url =
+    //     Uri.https(_apiURL, '/givt4kidsservice/v1/reccomedation-email/$id');
+
+    // var response = await client.put(
+    //   url,
+    // );
+
+    // if (response.statusCode >= 400) {
+    //   throw GivtServerException(
+    //     statusCode: response.statusCode,
+    //     body: jsonDecode(response.body) as Map<String, dynamic>,
+    //   );
+    // } else {
+    //   return true;
+    // }
+  }
 }
