@@ -56,6 +56,7 @@ class _AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: const Color.fromARGB(255, 62, 73, 112),
           fontFamily: "Raleway"),
