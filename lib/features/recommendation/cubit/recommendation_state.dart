@@ -9,6 +9,8 @@ class RecommendationState extends Equatable {
 
 class RecommendationInitial extends RecommendationState {}
 
+class RecommendationSending extends RecommendationState {}
+
 class RecommendationSent extends RecommendationState {}
 
 class RecommendationSendFailed extends RecommendationState {}
