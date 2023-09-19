@@ -55,7 +55,7 @@ class SearchingForCoinPage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.only(left: 50, right: 50, top: 150),
             child: Text(
-              "Searching for the coin...",
+              "Scanning the coin...",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xFF3B3240),
