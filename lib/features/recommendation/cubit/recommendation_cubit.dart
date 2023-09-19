@@ -8,9 +8,9 @@ class RecommendationCubit extends Cubit<RecommendationState> {
   RecommendationCubit(this._recRepositoy) : super(RecommendationInitial());
   final RecommendRepository _recRepositoy;
 
-  void askMyParents() async {
+  void askMyParents(String kidId) async {
     try {
-      final response = await _recRepositoy.sendRecEmail(id: '');
+      final response = await _recRepositoy.sendRecEmail(id: kidId);
       if (response) {
         emit(RecommendationSent());
       } else {

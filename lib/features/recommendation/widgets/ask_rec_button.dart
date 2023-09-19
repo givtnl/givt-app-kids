@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
 
 class AskMyParentsButton extends StatelessWidget {
@@ -7,10 +8,11 @@ class AskMyParentsButton extends StatelessWidget {
   final bool completed;
   @override
   Widget build(BuildContext context) {
+    final String kidId = context.read<ProfilesCubit>().state.activeProfile.id;
     return ElevatedButton(
       onPressed: completed
           ? () {}
-          : () => context.read<RecommendationCubit>().askMyParents(),
+          : () => context.read<RecommendationCubit>().askMyParents(kidId),
       style: ElevatedButton.styleFrom(
         backgroundColor:
             completed ? const Color(0xFF54A1EE) : const Color(0xFFF2DF7F),

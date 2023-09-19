@@ -141,21 +141,20 @@ class APIService {
   }
 
   Future<bool> sendRecEmail({required String id}) async {
-    return true;
-    // final url =
-    //     Uri.https(_apiURL, '/givt4kidsservice/v1/reccomedation-email/$id');
+    final url = Uri.https(_apiURL,
+        'givt4kidsservice/v1/Email/send-email/$id/Givt4KidsRecommendationEmail');
 
-    // var response = await client.put(
-    //   url,
-    // );
+    var response = await client.post(
+      url,
+    );
 
-    // if (response.statusCode >= 400) {
-    //   throw GivtServerException(
-    //     statusCode: response.statusCode,
-    //     body: jsonDecode(response.body) as Map<String, dynamic>,
-    //   );
-    // } else {
-    //   return true;
-    // }
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } else {
+      return true;
+    }
   }
 }
