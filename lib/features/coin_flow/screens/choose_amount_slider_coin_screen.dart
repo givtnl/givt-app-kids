@@ -37,15 +37,15 @@ class _ChooseAmountSliderCoinScreenState
     super.initState();
   }
 
-  OrganisationDetails celebrationChurchJacksonville = OrganisationDetails(
+  OrganisationDetails hardcodedOrg = OrganisationDetails(
     goal: '',
-    name: 'Celebration Church',
-    collectGroupId: 'EF3A60EC-D778-422D-2E1C-08DBB50EE29A',
+    name: 'Christ Presbyterian Tulsa',
+    collectGroupId: 'ef3a60ec-d778-422d-2e1c-08dbb50ee29a',
   );
 
   @override
   Widget build(BuildContext context) {
-    const String mediumId = 'NjFmN2VkMDE1NTUzMDkyM2MwMDAuZmMwMDAwMDAwMDAx';
+    const String mediumId = 'NjFmN2VkMDE1NTUzMDEyMmMwMDAuZmMwMDAwMDAwMDAx';
     return BlocProvider<CreateTransactionCubit>(
       create: (BuildContext context) =>
           CreateTransactionCubit(_profilesCubit, getIt()),
@@ -110,7 +110,7 @@ class _ChooseAmountSliderCoinScreenState
                         ),
                         Expanded(
                           child: Text(
-                            celebrationChurchJacksonville.name,
+                            hardcodedOrg.name,
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -205,8 +205,7 @@ class _ChooseAmountSliderCoinScreenState
                         }
                         var transaction = Transaction(
                           userId: _profilesCubit.state.activeProfile.id,
-                          collectGroupId:
-                              celebrationChurchJacksonville.collectGroupId,
+                          collectGroupId: hardcodedOrg.collectGroupId,
                           mediumId: mediumId,
                           amount: state.amount,
                         );
@@ -223,7 +222,7 @@ class _ChooseAmountSliderCoinScreenState
                                   DateTime.now().toIso8601String(),
                               'timestamp':
                                   DateTime.now().millisecondsSinceEpoch,
-                              'goal_name': celebrationChurchJacksonville.name,
+                              'goal_name': hardcodedOrg.name,
                             });
                       },
               ),
