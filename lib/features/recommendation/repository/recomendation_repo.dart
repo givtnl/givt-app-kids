@@ -1,18 +1,18 @@
 import 'package:givt_app_kids/core/network/api_service.dart';
 
-mixin RecommendRepository {
-  Future<bool> sendRecEmail({required String id});
+mixin RecommendationRepository {
+  Future<bool> sendRecommendationEmail({required String id});
 }
 
-class RecomendRepoImpl with RecommendRepository {
-  RecomendRepoImpl(
+class RecommendationRepositoryImpl with RecommendationRepository {
+  RecommendationRepositoryImpl(
     this._apiService,
   );
 
   final APIService _apiService;
 
   @override
-  Future<bool> sendRecEmail({required String id}) async {
-    return await _apiService.sendRecEmail(id: id);
+  Future<bool> sendRecommendationEmail({required String id}) async {
+    return await _apiService.sendRecommendationEmail(id: id);
   }
 }

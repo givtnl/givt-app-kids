@@ -7,21 +7,20 @@ part 'recommendation_state.dart';
 
 class RecommendationCubit extends Cubit<RecommendationState> {
   RecommendationCubit(this._recRepositoy) : super(RecommendationInitial());
-  final RecommendRepository _recRepositoy;
+  final RecommendationRepository _recRepositoy;
 
-  void askMyParents(String kidId) async {
+  void askMyParents(String childId) async {
     emit(RecommendationSending());
     AnalyticsHelper.logEvent(
       eventName: AmplitudeEvent.askToFindCharityPressed,
     );
     try {
-      final response = await _recRepositoy.sendRecEmail(id: kidId);
+      final response = await _recRepositoy.sendRecommendationEmail(id: childId);
       if (response) {
         emit(RecommendationSent());
       } else {
         emit(RecommendationSendFailed());
       }
-      emit(RecommendationSent());
     } catch (e) {
       emit(RecommendationSendFailed());
     }

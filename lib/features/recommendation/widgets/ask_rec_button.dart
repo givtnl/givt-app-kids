@@ -8,11 +8,11 @@ class AskMyParentsButton extends StatelessWidget {
   final bool completed;
   @override
   Widget build(BuildContext context) {
-    final String kidId = context.read<ProfilesCubit>().state.activeProfile.id;
+    final String childId = context.read<ProfilesCubit>().state.activeProfile.id;
     return ElevatedButton(
       onPressed: completed
           ? () {}
-          : () => context.read<RecommendationCubit>().askMyParents(kidId),
+          : () => context.read<RecommendationCubit>().askMyParents(childId),
       style: ElevatedButton.styleFrom(
         backgroundColor:
             completed ? const Color(0xFF54A1EE) : const Color(0xFFF2DF7F),

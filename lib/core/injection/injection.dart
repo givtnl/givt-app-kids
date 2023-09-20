@@ -52,8 +52,8 @@ void _initRepositories() {
         getIt(),
       ),
     )
-    ..registerLazySingleton<RecommendRepository>(
-      () => RecomendRepoImpl(
+    ..registerLazySingleton<RecommendationRepository>(
+      () => RecommendationRepositoryImpl(
         getIt(),
       ),
     )

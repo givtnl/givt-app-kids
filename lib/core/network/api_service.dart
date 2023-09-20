@@ -140,7 +140,7 @@ class APIService {
     }
   }
 
-  Future<bool> sendRecEmail({required String id}) async {
+  Future<bool> sendRecommendationEmail({required String id}) async {
     final url = Uri.https(_apiURL,
         'givt4kidsservice/v1/Email/send-email/$id/Givt4KidsRecommendationEmail');
 
