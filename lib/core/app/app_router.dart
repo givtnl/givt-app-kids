@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
@@ -14,6 +15,8 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
+import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
+import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
@@ -68,6 +71,14 @@ class AppRouter {
           path: Pages.success.path,
           name: Pages.success.name,
           builder: (context, state) => const SuccessScreen(),
+        ),
+        GoRoute(
+          path: Pages.recommend.path,
+          name: Pages.recommend.name,
+          builder: (context, state) => BlocProvider<RecommendationCubit>(
+            create: (context) => RecommendationCubit(getIt()),
+            child: const RecommendationScreen(),
+          ),
         ),
         GoRoute(
           path: Pages.searchForCoin.path,
