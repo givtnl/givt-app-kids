@@ -8,6 +8,7 @@ enum AmplitudeEvent {
   // continuePressed('continue_pressed'),
   giveToThisGoalPressed('give_to_this_goal_pressed'),
   iWantToGiveToPressed('i_want_to_give_pressed'),
+  askToFindCharityPressed('ask_to_find_charity_pressed'),
   loginPressed('login_pressed'),
   profilePressed('profile_pressed'),
   profileSwitchPressed('profile_switch_pressed'),

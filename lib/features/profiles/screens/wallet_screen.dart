@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/features/profiles/widgets/find_charity_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/pending_approval_widget.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -111,6 +112,7 @@ class _WalletScreenState extends State<WalletScreen>
                     ),
                   SizedBox(height: size.height * 0.01),
                   QrGiveButton(isActive: isGiveButtonActive),
+                  const FindCharityButton(),
                   if (isPending) SizedBox(height: size.height * 0.03),
                   if (isPending)
                     PendingApprovalWidget(
