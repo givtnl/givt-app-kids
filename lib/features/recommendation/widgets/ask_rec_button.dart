@@ -4,11 +4,14 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
 
 class AskMyParentsButton extends StatelessWidget {
-  const AskMyParentsButton({required this.completed, super.key});
+  const AskMyParentsButton(
+      {required this.completed, required this.sending, super.key});
   final bool completed;
+  final bool sending;
   @override
   Widget build(BuildContext context) {
     final String childId = context.read<ProfilesCubit>().state.activeProfile.id;
+    final Size size = MediaQuery.of(context).size;
     return ElevatedButton(
       onPressed: completed
           ? () {}
@@ -20,15 +23,20 @@ class AskMyParentsButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-        child: Text(
-          completed ? 'Parents Notified! ✓' : 'Ask my parents',
-          style: TextStyle(
-            color: completed ? Colors.white : const Color(0xFF3B3240),
-            fontWeight: FontWeight.bold,
-            fontSize: 26,
-          ),
+        width: size.width * 0.8,
+        child: Center(
+          child: sending
+              ? const CircularProgressIndicator()
+              : Text(
+                  completed ? 'Parents Notified! ✓' : 'Ask my parents',
+                  style: TextStyle(
+                    color: completed ? Colors.white : const Color(0xFF3B3240),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
+                  ),
+                ),
         ),
       ),
     );
