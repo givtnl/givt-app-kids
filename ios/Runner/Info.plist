@@ -61,10 +61,11 @@
     <key>CFBundleTypeRole</key>
     <string>Editor</string>
     <key>CFBundleURLName</key>
-    <string>givt.app</string>
+    <string>www.givt.app</string>
     <key>CFBundleURLSchemes</key>
     <array>
 	<string>https</string>
+	<string>http</string>
     <string>appscheme</string>
     </array>
     </dict>

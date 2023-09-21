@@ -15,6 +15,8 @@ import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:package_info_plus/package_info_plus.dart';
+
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
 
@@ -48,6 +50,16 @@ class _WalletScreenState extends State<WalletScreen>
     final parentGuid =
         (context.read<AuthCubit>().state as LoggedInState).session.userGUID;
     await context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+  }
+
+  Future<String> _getAppID() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    String appName = packageInfo.appName;
+    String packageName = packageInfo.packageName;
+    String version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+    log("App Name : $appName, App Package Name: $packageName, App Version: $version, App build Number: $buildNumber");
+    return packageName;
   }
 
   @override
@@ -84,6 +96,19 @@ class _WalletScreenState extends State<WalletScreen>
                         balance: state.activeProfile.wallet.balance,
                         countdownAmount: countdownAmount,
                       ),
+                      onDoubleTap: () async {
+                        final appId = await _getAppID();
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "App ID: $appId",
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   SizedBox(height: size.height * 0.01),
                   QrGiveButton(isActive: isGiveButtonActive),
