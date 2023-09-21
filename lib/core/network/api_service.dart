@@ -139,4 +139,22 @@ class APIService {
       return jsonDecode(response.body) as Map<String, dynamic>;
     }
   }
+
+  Future<bool> sendRecommendationEmail({required String id}) async {
+    final url = Uri.https(_apiURL,
+        'givt4kidsservice/v1/Email/send-email/$id/Givt4KidsRecommendationEmail');
+
+    var response = await client.post(
+      url,
+    );
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } else {
+      return true;
+    }
+  }
 }
