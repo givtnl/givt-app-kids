@@ -64,6 +64,8 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: BlocConsumer<ProfilesCubit, ProfilesState>(
         listener: (context, state) {
@@ -132,7 +134,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                       )
                     : SingleChildScrollView(
                         child: Container(
-                          padding: EdgeInsets.all(50),
+                          padding: EdgeInsets.all(size.width * 0.09),
                           child: Center(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
