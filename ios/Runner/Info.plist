@@ -48,7 +48,7 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string>We need your camera to scan a QR code</string>
+	<string>The app uses the camera to scan givt QR-codes. This identifies the organisation you chose to give to.</string>
 	<key>DART_DEFINES</key>
 	<string>$(DART_DEFINES)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
