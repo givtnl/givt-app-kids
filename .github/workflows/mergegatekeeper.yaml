@@ -8,6 +8,11 @@ on:
         - main
 
 jobs:
+    spit_values:
+        runs-on: ubuntu-latest
+        steps:
+          - name: spit out some values
+            run: echo "${{ github.event.pull_request.head.ref }}, ${{ github.event.pull_request.title }}"
     merge_gatekeeper:
         runs-on: ubuntu-latest
         if: ${{ github.event.pull_request.head.ref }} != 'develop' && contains(hotfix, ${{ github.event.pull_request.title }}) == false
