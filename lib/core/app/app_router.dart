@@ -11,6 +11,7 @@ import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
+import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
 import 'package:givt_app_kids/features/history/history_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
@@ -78,7 +79,12 @@ class AppRouter {
           name: Pages.history.name,
           pageBuilder: (context, state) => CustomTransitionPage<void>(
             key: state.pageKey,
-            child: const HistoryScreen(),
+            child: BlocProvider(
+              create: (context) => HistoryCubit(getIt(), getIt())
+                ..fetchHistory(
+                    context.read<ProfilesCubit>().state.activeProfile.id),
+              child: const HistoryScreen(),
+            ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>
                     SlideTransition(

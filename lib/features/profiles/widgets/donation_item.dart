@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/profiles/models/donation.dart';
-import 'package:givt_app_kids/helpers/util.dart';
+import 'package:givt_app_kids/helpers/datetime_extension.dart';
+import 'package:givt_app_kids/helpers/donation_helpers.dart';
 
 class DonationItemWidget extends StatelessWidget {
   const DonationItemWidget({required this.donation, super.key});
@@ -9,7 +10,7 @@ class DonationItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
       child: Row(
         children: [
           SvgPicture.asset(getPicture(donation.state)),
@@ -34,7 +35,7 @@ class DonationItemWidget extends StatelessWidget {
               Text(
                 donation.state == DonationState.pending
                     ? 'Waiting for approval...'
-                    : Util.formatDate(donation.date),
+                    : donation.date.formatDate(),
                 style: const TextStyle(
                   color: Color(0xFF404943),
                   fontWeight: FontWeight.w600,
@@ -43,12 +44,15 @@ class DonationItemWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Opacity(
-                opacity: donation.state == DonationState.pending ? 0.6 : 1,
-                child: SvgPicture.asset('assets/images/coin.svg')),
-          ),
+          donation.medium == DonationMedium.nfc
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Opacity(
+                      opacity:
+                          donation.state == DonationState.pending ? 0.6 : 1,
+                      child: SvgPicture.asset('assets/images/coin.svg')),
+                )
+              : const SizedBox(),
         ],
       ),
     );

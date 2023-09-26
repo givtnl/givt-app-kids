@@ -1,26 +1,24 @@
 import 'package:intl/intl.dart';
 
-class Util {
-  static String formatDate(DateTime date) {
+extension DateTimeExtension on DateTime {
+  String formatDate() {
     DateTime now = DateTime.now();
 
     // Check if the date is today
-    if (date.year == now.year &&
-        date.month == now.month &&
-        date.day == now.day) {
+    if (year == now.year && month == now.month && day == now.day) {
       return 'Today';
     }
 
     // Check if the date is yesterday
     DateTime yesterday = now.subtract(const Duration(days: 1));
-    if (date.year == yesterday.year &&
-        date.month == yesterday.month &&
-        date.day == yesterday.day) {
+    if (year == yesterday.year &&
+        month == yesterday.month &&
+        day == yesterday.day) {
       return 'Yesterday';
     }
 
     final formatter = DateFormat('MM/dd');
 
-    return formatter.format(date);
+    return formatter.format(this);
   }
 }

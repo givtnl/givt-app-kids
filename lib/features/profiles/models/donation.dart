@@ -1,21 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-enum DonationState {
-  pending(status: 'Pending'),
-  approved(status: 'Approved'),
-  declined(status: 'Declined');
-
-  final String status;
-  const DonationState({required this.status});
-}
-
-enum DonationMedium {
-  qr(medium: 'QR'),
-  manual(medium: 'NFC');
-
-  final String medium;
-  const DonationMedium({required this.medium});
-}
+import 'package:givt_app_kids/helpers/donation_helpers.dart';
 
 class Donation extends Equatable {
   const Donation({
@@ -52,15 +36,13 @@ class Donation extends Equatable {
 
   factory Donation.fromMap(Map<String, dynamic> map) {
     return Donation(
-      amount: double.parse(map['amount'].toString()),
-      date: DateTime.parse(map['dateCreated']),
-      organizationName: map['organizationName'],
-      state: DonationState.values.firstWhere(
-        (element) => element.status == map['state'],
-      ),
-      medium: DonationMedium.values.firstWhere(
-        (element) => element.medium == map['medium'],
-      ),
-    );
+        amount: double.tryParse(map['amount'].toString()) ?? 0,
+        date: DateTime.tryParse(map['donationDate']) ?? DateTime.now(),
+        organizationName: map['collectGroupName'] ?? '',
+        state: getState(map['status']),
+        medium: DonationMedium.values.firstWhere(
+          (element) => element.medium == map['mediumType'],
+          orElse: () => DonationMedium.unknown,
+        ));
   }
 }

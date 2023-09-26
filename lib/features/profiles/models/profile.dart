@@ -40,14 +40,20 @@ class Profile extends Equatable {
 
   factory Profile.fromMap(Map<String, dynamic> map) {
     final pictureMap = map['picture'];
+    final donationMap = map['latestDonation'] == null
+        ? Donation.empty()
+        : Donation.fromMap(map['latestDonation']);
+    final walletMap = map['wallet'] == null
+        ? const Wallet.empty()
+        : Wallet.fromMap(map['wallet']);
     return Profile(
       id: map['id'],
       firstName: map['firstName'],
       lastName: map['lastName'] ?? '',
       nickname: map['nickname'] ?? '',
       comment: map['comment'] ?? '',
-      wallet: Wallet.fromMap(map['wallet']),
-      donationItem: Donation.fromMap(map['latestDonation']),
+      wallet: walletMap,
+      donationItem: donationMap,
       pictureURL: pictureMap['pictureURL'],
     );
   }
