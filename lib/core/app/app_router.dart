@@ -80,7 +80,7 @@ class AppRouter {
           pageBuilder: (context, state) => CustomTransitionPage<void>(
             key: state.pageKey,
             child: BlocProvider(
-              create: (context) => HistoryCubit(getIt(), getIt())
+              create: (context) => HistoryCubit(getIt())
                 ..fetchHistory(
                     context.read<ProfilesCubit>().state.activeProfile.id),
               child: const HistoryScreen(),

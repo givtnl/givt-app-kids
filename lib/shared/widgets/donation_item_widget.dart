@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:givt_app_kids/features/profiles/models/donation.dart';
+import 'package:givt_app_kids/features/history/models/donation.dart';
 import 'package:givt_app_kids/helpers/datetime_extension.dart';
-import 'package:givt_app_kids/helpers/donation_helpers.dart';
+import 'package:givt_app_kids/helpers/donation_state.dart';
 
 class DonationItemWidget extends StatelessWidget {
   const DonationItemWidget({required this.donation, super.key});
@@ -28,7 +28,7 @@ class DonationItemWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: donation.medium == DonationMedium.nfc
+                width: donation.medium == DonationMediumType.nfc
                     ? size.width * 0.5
                     : size.width * 0.65,
                 child: Text(
@@ -56,7 +56,7 @@ class DonationItemWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          donation.medium == DonationMedium.nfc
+          donation.medium == DonationMediumType.nfc
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 15),
                   child: Opacity(

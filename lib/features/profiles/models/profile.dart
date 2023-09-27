@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/features/profiles/models/donation.dart';
+import 'package:givt_app_kids/features/history/models/donation.dart';
 import 'package:givt_app_kids/features/profiles/models/wallet.dart';
 
 class Profile extends Equatable {
@@ -10,7 +10,7 @@ class Profile extends Equatable {
     required this.nickname,
     required this.comment,
     required this.wallet,
-    required this.donationItem,
+    required this.lastDonationItem,
     required this.pictureURL,
   });
 
@@ -22,7 +22,7 @@ class Profile extends Equatable {
             nickname: '',
             comment: '',
             wallet: const Wallet.empty(),
-            donationItem: Donation.empty(),
+            lastDonationItem: Donation.empty(),
             pictureURL: '');
 
   final String id;
@@ -31,7 +31,7 @@ class Profile extends Equatable {
   final String nickname;
   final String comment;
   final Wallet wallet;
-  final Donation donationItem;
+  final Donation lastDonationItem;
   final String pictureURL;
 
   @override
@@ -56,7 +56,7 @@ class Profile extends Equatable {
       nickname: map['nickname'] ?? '',
       comment: map['comment'] ?? '',
       wallet: walletMap,
-      donationItem: donationMap,
+      lastDonationItem: donationMap,
       pictureURL: pictureMap['pictureURL'],
     );
   }
@@ -69,7 +69,7 @@ class Profile extends Equatable {
       'nickname': nickname,
       'comment': comment,
       'wallet': wallet.toJson(),
-      'latestDonation': donationItem.toJson(),
+      'latestDonation': lastDonationItem.toJson(),
       'picture': {
         'pictureURL': pictureURL,
       }

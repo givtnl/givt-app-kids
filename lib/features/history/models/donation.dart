@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/helpers/donation_helpers.dart';
+import 'package:givt_app_kids/helpers/donation_state.dart';
 
 class Donation extends Equatable {
   const Donation({
@@ -14,7 +14,7 @@ class Donation extends Equatable {
   final DateTime date;
   final String organizationName;
   final DonationState state;
-  final DonationMedium medium;
+  final DonationMediumType medium;
 
   @override
   List<Object?> get props => [
@@ -31,7 +31,7 @@ class Donation extends Equatable {
           date: DateTime.now(),
           organizationName: '',
           state: DonationState.pending,
-          medium: DonationMedium.qr,
+          medium: DonationMediumType.qr,
         );
 
   factory Donation.fromMap(Map<String, dynamic> map) {
@@ -39,10 +39,10 @@ class Donation extends Equatable {
         amount: double.tryParse(map['amount'].toString()) ?? 0,
         date: DateTime.tryParse(map['donationDate']) ?? DateTime.now(),
         organizationName: map['collectGroupName'] ?? '',
-        state: getState(map['status']),
-        medium: DonationMedium.values.firstWhere(
-          (element) => element.medium == map['mediumType'],
-          orElse: () => DonationMedium.unknown,
+        state: DonationState.getState(map['status']),
+        medium: DonationMediumType.values.firstWhere(
+          (element) => element.type == map['mediumType'],
+          orElse: () => DonationMediumType.unknown,
         ));
   }
 
@@ -51,8 +51,8 @@ class Donation extends Equatable {
       'amount': amount,
       'donationDate': date.toString(),
       'collectGroupName': organizationName,
-      'status': getDonationStateString(state),
-      'mediumType': medium.medium,
+      'status': DonationState.getDonationStateString(state),
+      'mediumType': medium.type,
     };
   }
 }

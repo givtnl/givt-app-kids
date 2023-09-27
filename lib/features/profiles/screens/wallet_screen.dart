@@ -6,10 +6,10 @@ import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/find_charity_button.dart';
-import 'package:givt_app_kids/features/profiles/widgets/my_givts_row.dart';
+import 'package:givt_app_kids/features/profiles/widgets/history_header.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/shared/widgets/donation_item.dart';
+import 'package:givt_app_kids/shared/widgets/donation_item_widget.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
 import 'package:givt_app_kids/shared/widgets/qr_give_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
@@ -56,7 +56,7 @@ class _WalletScreenState extends State<WalletScreen>
     final size = MediaQuery.of(context).size;
     return BlocBuilder<ProfilesCubit, ProfilesState>(builder: (context, state) {
       final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
-      final hasDonations = state.activeProfile.donationItem.amount > 0;
+      final hasDonations = state.activeProfile.lastDonationItem.amount > 0;
 
       var countdownAmount = 0.0;
       if (state is ProfilesCountdownState) {
@@ -87,12 +87,12 @@ class _WalletScreenState extends State<WalletScreen>
                   QrGiveButton(isActive: isGiveButtonActive),
                   const FindCharityButton(),
                   SizedBox(height: size.height * 0.02),
-                  hasDonations ? const MyGivtsRow() : const SizedBox(),
+                  hasDonations ? const HistoryHeader() : const SizedBox(),
                   hasDonations
                       ? GestureDetector(
                           onTap: () => context.pushNamed(Pages.history.name),
                           child: DonationItemWidget(
-                            donation: state.activeProfile.donationItem,
+                            donation: state.activeProfile.lastDonationItem,
                           ),
                         )
                       : const SizedBox(),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:go_router/go_router.dart';
 
-class MyGivtsRow extends StatelessWidget {
-  const MyGivtsRow({super.key});
+class HistoryHeader extends StatelessWidget {
+  const HistoryHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

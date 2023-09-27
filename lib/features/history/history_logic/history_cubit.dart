@@ -2,16 +2,13 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/features/history/history_logic/repositories/allowance_repository.dart';
-import 'package:givt_app_kids/features/history/history_logic/repositories/donation_repository.dart';
+import 'package:givt_app_kids/features/history/history_logic/history_repository.dart';
 
 part 'history_state.dart';
 
 class HistoryCubit extends Cubit<HistoryState> {
-  HistoryCubit(this.donationsRepo, this.allowancesRepo)
-      : super(const HistoryState());
-  final DonationHistoryRepository donationsRepo;
-  final AllowanceHistoryRepository allowancesRepo;
+  HistoryCubit(this.historyRepo) : super(const HistoryState());
+  final DonationHistoryRepository historyRepo;
 
   FutureOr<void> fetchHistory(String childId) async {
     emit(state.copyWith(status: HistroryStatus.loading));
@@ -20,12 +17,12 @@ class HistoryCubit extends Cubit<HistoryState> {
       List<dynamic> history = [];
       history.addAll(state.history);
       // fetch donations
-      final donationHistory = await donationsRepo.fetchDonationHistory(
-          childId: childId, pageNr: state.pageNr);
+      final donationHistory = await historyRepo.fetchHistory(
+          childId: childId, pageNr: state.pageNr, type: HistoryTypes.donation);
       history.addAll(donationHistory);
       // fetch allowances
-      final allowanceHistory = await allowancesRepo.fetchAllowanceHistory(
-          childId: childId, pageNr: state.pageNr);
+      final allowanceHistory = await historyRepo.fetchHistory(
+          childId: childId, pageNr: state.pageNr, type: HistoryTypes.allowance);
       history.addAll(allowanceHistory);
       // sort from newest to oldest
       history.sort((a, b) => b.date.compareTo(a.date));
