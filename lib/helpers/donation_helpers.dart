@@ -31,3 +31,14 @@ DonationState getState(String? state) {
       return DonationState.pending;
   }
 }
+
+String getDonationStateString(DonationState state) {
+  switch (state) {
+    case DonationState.pending:
+      return 'ParentApprovalPending';
+    case DonationState.approved:
+      return 'Processed';
+    case DonationState.declined:
+      return 'Cancelled';
+  }
+}

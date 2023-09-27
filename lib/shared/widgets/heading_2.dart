@@ -11,7 +11,7 @@ class Heading2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0),
       child: Text(
         text,
         textAlign: alignment,

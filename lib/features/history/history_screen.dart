@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
 import 'package:givt_app_kids/features/history/models/allowance.dart';
-import 'package:givt_app_kids/features/profiles/widgets/allowance_item.dart';
-import 'package:givt_app_kids/features/profiles/widgets/donation_item.dart';
+import 'package:givt_app_kids/shared/widgets/allowance_item.dart';
+import 'package:givt_app_kids/shared/widgets/donation_item.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,7 +19,12 @@ class HistoryScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFFEEEDE4),
         elevation: 0,
-        title: const Heading2(text: 'My Givts'),
+        title: const Row(
+          children: [
+            Heading2(text: 'My Givts'),
+            Spacer(),
+          ],
+        ),
         leading: IconButton(
           icon: SvgPicture.asset('assets/images/back_btn.svg'),
           color: const Color(0xFF3B3240),
@@ -43,7 +48,10 @@ class HistoryScreen extends StatelessWidget {
               if (state.history[index] is Allowance) {
                 return AllowanceItemWidget(allowance: state.history[index]);
               }
-              return DonationItemWidget(donation: state.history[index]);
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: DonationItemWidget(donation: state.history[index]),
+              );
             },
             separatorBuilder: (BuildContext context, int index) =>
                 const Divider(

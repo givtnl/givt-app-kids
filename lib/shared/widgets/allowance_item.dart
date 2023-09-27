@@ -8,36 +8,45 @@ class AllowanceItemWidget extends StatelessWidget {
   final Allowance allowance;
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
       color: Colors.white,
       child: Row(
         children: [
           SvgPicture.asset('assets/images/donation_states_added.svg'),
-          const SizedBox(width: 10),
+          const SizedBox(width: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 '+ \$${allowance.amount.toStringAsFixed(2)}',
                 style: const TextStyle(
-                  color: Color(0xFF06509B),
-                  fontFamily: 'Roboto',
-                ),
+                    color: Color(0xFF06509B),
+                    fontFamily: 'Roboto',
+                    fontSize: 16),
               ),
-              const Text(
-                'Awesome! Your parents added more allowance',
-                style: TextStyle(
-                  color: Color(0xFF191C1D),
-                  fontWeight: FontWeight.bold,
+              SizedBox(
+                width: size.width * 0.65,
+                child: const Text(
+                  'Awesome! Your parents added more allowance',
+                  maxLines: 3,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Color(0xFF191C1D),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
               ),
               Text(
                 allowance.date.formatDate(),
                 style: const TextStyle(
-                  color: Color(0xFF404943),
-                  fontWeight: FontWeight.w600,
-                ),
+                    color: Color(0xFF404943),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
               ),
             ],
           ),

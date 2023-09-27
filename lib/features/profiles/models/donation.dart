@@ -45,4 +45,14 @@ class Donation extends Equatable {
           orElse: () => DonationMedium.unknown,
         ));
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'amount': amount,
+      'donationDate': date.toString(),
+      'collectGroupName': organizationName,
+      'status': getDonationStateString(state),
+      'mediumType': medium.medium,
+    };
+  }
 }
