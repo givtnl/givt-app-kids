@@ -6,6 +6,7 @@ import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/find_charity_button.dart';
+import 'package:givt_app_kids/features/profiles/widgets/my_givts_row.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/donation_item.dart';
@@ -56,6 +57,7 @@ class _WalletScreenState extends State<WalletScreen>
     return BlocBuilder<ProfilesCubit, ProfilesState>(builder: (context, state) {
       final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
       final isLoading = state is ProfilesLoadingState;
+      final hasDonations = state.activeProfile.donationItem.amount > 0;
 
       var countdownAmount = 0.0;
       if (state is ProfilesCountdownState) {
@@ -88,43 +90,15 @@ class _WalletScreenState extends State<WalletScreen>
                   QrGiveButton(isActive: isGiveButtonActive),
                   const FindCharityButton(),
                   SizedBox(height: size.height * 0.02),
-                  state.activeProfile.donationItem.amount == 0
-                      ? const SizedBox()
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text('My givts',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            TextButton(
-                                onPressed: () =>
-                                    context.pushNamed(Pages.history.name),
-                                style: ButtonStyle(
-                                  padding: MaterialStateProperty.all(
-                                      const EdgeInsets.symmetric(vertical: 0)),
-                                ),
-                                child: const Text(
-                                  'See all',
-                                  style: TextStyle(
-                                    color: Color(0xFF3B3240),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ))
-                          ],
-                        ),
-                  state.activeProfile.donationItem.amount == 0
-                      ? const SizedBox()
-                      : GestureDetector(
+                  hasDonations ? const MyGivtsRow() : const SizedBox(),
+                  hasDonations
+                      ? GestureDetector(
                           onTap: () => context.pushNamed(Pages.history.name),
                           child: DonationItemWidget(
                             donation: state.activeProfile.donationItem,
                           ),
-                        ),
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ],

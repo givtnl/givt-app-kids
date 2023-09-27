@@ -18,13 +18,17 @@ class HistoryCubit extends Cubit<HistoryState> {
 
     try {
       List<dynamic> history = [];
+      // fetch donations
       final donationHistory =
           await donationsRepo.fetchDonationHistory(childId: childId);
       history.addAll(donationHistory);
+      // fetch allowances
       final allowanceHistory =
           await allowancesRepo.fetchAllowanceHistory(childId: childId);
       history.addAll(allowanceHistory);
+      // sort from newest to oldest
       history.sort((a, b) => b.date.compareTo(a.date));
+      // update state
       emit(state.copyWith(status: HistroryStatus.loaded, history: history));
     } catch (e) {
       emit(state.copyWith(status: HistroryStatus.error, error: e.toString()));

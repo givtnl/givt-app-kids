@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
 import 'package:givt_app_kids/features/history/models/allowance.dart';
+import 'package:givt_app_kids/features/history/widgets/history_appbar.dart';
 import 'package:givt_app_kids/shared/widgets/allowance_item.dart';
 import 'package:givt_app_kids/shared/widgets/donation_item.dart';
-import 'package:givt_app_kids/shared/widgets/heading_2.dart';
-import 'package:go_router/go_router.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -16,21 +14,7 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEEEDE4),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFEEEDE4),
-        elevation: 0,
-        title: const Row(
-          children: [
-            Heading2(text: 'My Givts'),
-            Spacer(),
-          ],
-        ),
-        leading: IconButton(
-          icon: SvgPicture.asset('assets/images/back_btn.svg'),
-          color: const Color(0xFF3B3240),
-          onPressed: () => context.goNamed(Pages.wallet.name),
-        ),
-      ),
+      appBar: const HistoryAppBar(),
       body: BlocBuilder<HistoryCubit, HistoryState>(
         builder: (context, state) {
           if (state.status == HistroryStatus.loading) {
@@ -41,6 +25,7 @@ class HistoryScreen extends StatelessWidget {
               child: Text(state.error),
             );
           }
+          // Display List of donations and allowances in descending date order
           return ListView.separated(
             padding: const EdgeInsets.all(0),
             itemCount: state.history.length,
