@@ -158,7 +158,8 @@ class APIService {
     }
   }
 
-  Future<List<dynamic>> fetchHistory(String childId, String type) async {
+  Future<List<dynamic>> fetchHistory(
+      String childId, String type, int pageNr) async {
     final url = Uri.https(_apiURL,
         '/givt4kidsservice/v1/transaction/transaction-history/$childId');
 
@@ -168,10 +169,10 @@ class APIService {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: jsonEncode({'pageNumber': 1, 'pageSize': 10, 'type': type}),
+      body: jsonEncode({'pageNumber': pageNr, 'pageSize': 20, 'type': type}),
     );
 
-    log('fetch donation status code: ${response.statusCode}');
+    log('fetch donation history pageNr: $pageNr, status code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(

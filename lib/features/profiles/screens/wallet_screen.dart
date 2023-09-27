@@ -56,7 +56,6 @@ class _WalletScreenState extends State<WalletScreen>
     final size = MediaQuery.of(context).size;
     return BlocBuilder<ProfilesCubit, ProfilesState>(builder: (context, state) {
       final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
-      final isLoading = state is ProfilesLoadingState;
       final hasDonations = state.activeProfile.donationItem.amount > 0;
 
       var countdownAmount = 0.0;
@@ -66,6 +65,7 @@ class _WalletScreenState extends State<WalletScreen>
 
       return WalletFrame(
         body: RefreshIndicator(
+          color: const Color(0xFF54A1EE),
           onRefresh: refresh,
           child: Stack(
             children: [
@@ -75,17 +75,14 @@ class _WalletScreenState extends State<WalletScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Heading2(text: state.activeProfile.firstName),
-                  if (isLoading)
-                    const Center(child: CircularProgressIndicator())
-                  else
-                    GestureDetector(
-                      onLongPress: () => context
-                          .pushReplacementNamed(Pages.searchForCoin.name),
-                      child: WalletWidget(
-                        balance: state.activeProfile.wallet.balance,
-                        countdownAmount: countdownAmount,
-                      ),
+                  GestureDetector(
+                    onLongPress: () =>
+                        context.pushReplacementNamed(Pages.searchForCoin.name),
+                    child: WalletWidget(
+                      balance: state.activeProfile.wallet.balance,
+                      countdownAmount: countdownAmount,
                     ),
+                  ),
                   SizedBox(height: size.height * 0.01),
                   QrGiveButton(isActive: isGiveButtonActive),
                   const FindCharityButton(),
