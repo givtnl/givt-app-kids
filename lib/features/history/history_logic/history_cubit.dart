@@ -3,18 +3,19 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_repository.dart';
+import 'package:givt_app_kids/features/history/models/donation.dart';
 
 part 'history_state.dart';
 
 class HistoryCubit extends Cubit<HistoryState> {
   HistoryCubit(this.historyRepo) : super(const HistoryState());
-  final DonationHistoryRepository historyRepo;
+  final HistoryRepository historyRepo;
 
   FutureOr<void> fetchHistory(String childId) async {
     emit(state.copyWith(status: HistroryStatus.loading));
 
     try {
-      List<dynamic> history = [];
+      List<HistoryItem> history = [];
       history.addAll(state.history);
       // fetch donations
       final donationHistory = await historyRepo.fetchHistory(

@@ -58,8 +58,8 @@ void _initRepositories() {
         getIt(),
       ),
     )
-    ..registerLazySingleton<DonationHistoryRepository>(
-      () => DonationHistoryRepositoryImpl(
+    ..registerLazySingleton<HistoryRepository>(
+      () => HistoryRepositoryImpl(
         getIt(),
       ),
     )

@@ -22,7 +22,7 @@ class Profile extends Equatable {
             nickname: '',
             comment: '',
             wallet: const Wallet.empty(),
-            lastDonationItem: Donation.empty(),
+            lastDonationItem: HistoryItem.empty(),
             pictureURL: '');
 
   final String id;
@@ -31,7 +31,7 @@ class Profile extends Equatable {
   final String nickname;
   final String comment;
   final Wallet wallet;
-  final Donation lastDonationItem;
+  final HistoryItem lastDonationItem;
   final String pictureURL;
 
   @override
@@ -42,8 +42,8 @@ class Profile extends Equatable {
     final pictureMap = map['picture'];
 
     final donationMap = map['latestDonation'] == null
-        ? Donation.empty()
-        : Donation.fromMap(map['latestDonation']);
+        ? HistoryItem.empty()
+        : HistoryItem.fromMap(map['latestDonation']);
 
     final walletMap = map['wallet'] == null
         ? const Wallet.empty()

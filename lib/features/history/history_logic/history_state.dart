@@ -10,7 +10,7 @@ class HistoryState extends Equatable {
       this.error = ''});
 
   final HistroryStatus status;
-  final List<dynamic> history;
+  final List<HistoryItem> history;
   final int pageNr;
   final String error;
 
@@ -19,7 +19,7 @@ class HistoryState extends Equatable {
 
   HistoryState copyWith({
     HistroryStatus? status,
-    List<dynamic>? history,
+    List<HistoryItem>? history,
     int? pageNr,
     String? error,
   }) {

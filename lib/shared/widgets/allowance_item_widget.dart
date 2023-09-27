@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_app_kids/features/history/models/allowance.dart';
+import 'package:givt_app_kids/features/history/models/donation.dart';
 import 'package:givt_app_kids/helpers/datetime_extension.dart';
 
 class AllowanceItemWidget extends StatelessWidget {
   const AllowanceItemWidget({required this.allowance, super.key});
-  final Allowance allowance;
+  final HistoryItem allowance;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
