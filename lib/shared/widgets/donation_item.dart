@@ -28,7 +28,9 @@ class DonationItemWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: size.width * 0.65,
+                width: donation.medium == DonationMedium.nfc
+                    ? size.width * 0.5
+                    : size.width * 0.65,
                 child: Text(
                   donation.organizationName,
                   maxLines: 2,
