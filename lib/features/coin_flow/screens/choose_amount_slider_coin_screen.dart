@@ -78,11 +78,13 @@ class _ChooseAmountSliderCoinScreenState
             }
           },
           builder: (context, state) {
+            final Size size = MediaQuery.of(context).size;
+
             return Scaffold(
               backgroundColor: const Color(0xFFEEEDE4),
               body: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 15),
                   Row(
@@ -121,8 +123,19 @@ class _ChooseAmountSliderCoinScreenState
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(top: size.height * 0.03),
+                    child: Text(
+                      'How much would you like to give?',
+                      style: TextStyle(
+                        color: Color(0xFF54A1EE),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
                   Container(
-                    margin: EdgeInsets.only(top: 75),
+                    margin: EdgeInsets.only(top: size.height * 0.05),
                     alignment: Alignment.center,
                     child: Text(
                       "\$${state.amount.round()}",

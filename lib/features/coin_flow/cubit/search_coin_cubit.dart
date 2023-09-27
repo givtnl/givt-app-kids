@@ -6,7 +6,7 @@ part 'search_coin_state.dart';
 class SearchCoinCubit extends Cubit<SearchCoinState> {
   SearchCoinCubit() : super(const SearchCoinInitialState());
 
-  static const searchDuration = Duration(milliseconds: 4000);
+  static const searchDuration = Duration(milliseconds: 2000);
 
   Future<void> searchForCoin() async {
     emit(const SearchCoinAnimationState());
