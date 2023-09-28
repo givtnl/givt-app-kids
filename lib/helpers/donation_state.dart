@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 enum DonationState {
   pending,
   approved,
@@ -30,6 +32,28 @@ enum DonationState {
         return 'Processed';
       case DonationState.declined:
         return 'Cancelled';
+    }
+  }
+
+  static String getPicture(DonationState status) {
+    switch (status) {
+      case DonationState.approved:
+        return 'assets/images/donation_states_approved.svg';
+      case DonationState.pending:
+        return 'assets/images/donation_states_pending.svg';
+      case DonationState.declined:
+        return 'assets/images/donation_states_declined.svg';
+    }
+  }
+
+  static Color getAmountColor(DonationState status) {
+    switch (status) {
+      case DonationState.approved:
+        return const Color(0xFF006C47);
+      case DonationState.pending:
+        return const Color(0xFF48260C);
+      case DonationState.declined:
+        return const Color(0xFF780F0F);
     }
   }
 }

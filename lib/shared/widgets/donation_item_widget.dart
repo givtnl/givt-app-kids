@@ -14,7 +14,7 @@ class DonationItemWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),
       child: Row(
         children: [
-          SvgPicture.asset(getPicture(donation.state)),
+          SvgPicture.asset(DonationState.getPicture(donation.state)),
           const SizedBox(width: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +22,7 @@ class DonationItemWidget extends StatelessWidget {
               Text(
                 '\$${donation.amount.toStringAsFixed(2)}',
                 style: TextStyle(
-                  color: getAmountColor(donation.state),
+                  color: DonationState.getAmountColor(donation.state),
                   fontFamily: 'Roboto',
                   fontSize: 16,
                 ),
@@ -68,27 +68,5 @@ class DonationItemWidget extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String getPicture(DonationState status) {
-    switch (status) {
-      case DonationState.approved:
-        return 'assets/images/donation_states_approved.svg';
-      case DonationState.pending:
-        return 'assets/images/donation_states_pending.svg';
-      case DonationState.declined:
-        return 'assets/images/donation_states_declined.svg';
-    }
-  }
-
-  Color getAmountColor(DonationState status) {
-    switch (status) {
-      case DonationState.approved:
-        return const Color(0xFF006C47);
-      case DonationState.pending:
-        return const Color(0xFF48260C);
-      case DonationState.declined:
-        return const Color(0xFF780F0F);
-    }
   }
 }

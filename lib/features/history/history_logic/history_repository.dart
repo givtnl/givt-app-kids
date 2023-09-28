@@ -6,7 +6,7 @@ import 'package:givt_app_kids/features/history/models/history.dart';
 mixin HistoryRepository {
   Future<List<HistoryItem>> fetchHistory(
       {required String childId,
-      required int pageNr,
+      required int pageNumber,
       required HistoryTypes type});
 }
 
@@ -20,10 +20,14 @@ class HistoryRepositoryImpl with HistoryRepository {
   @override
   Future<List<HistoryItem>> fetchHistory(
       {required String childId,
-      required int pageNr,
+      required int pageNumber,
       required HistoryTypes type}) async {
-    final response =
-        await _apiService.fetchHistory(childId, type.value, pageNr);
+    final Map<String, dynamic> body = {
+      'pageNumber': pageNumber,
+      'pageSize': 10,
+      'type': type.value
+    };
+    final response = await _apiService.fetchHistory(childId, body);
 
     List<HistoryItem> result = [];
 

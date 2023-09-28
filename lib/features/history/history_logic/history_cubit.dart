@@ -19,11 +19,15 @@ class HistoryCubit extends Cubit<HistoryState> {
       history.addAll(state.history);
       // fetch donations
       final donationHistory = await historyRepo.fetchHistory(
-          childId: childId, pageNr: state.pageNr, type: HistoryTypes.donation);
+          childId: childId,
+          pageNumber: state.pageNr,
+          type: HistoryTypes.donation);
       history.addAll(donationHistory);
       // fetch allowances
       final allowanceHistory = await historyRepo.fetchHistory(
-          childId: childId, pageNr: state.pageNr, type: HistoryTypes.allowance);
+          childId: childId,
+          pageNumber: state.pageNr,
+          type: HistoryTypes.allowance);
       history.addAll(allowanceHistory);
       // sort from newest to oldest
       history.sort((a, b) => b.date.compareTo(a.date));

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class HistoryItem extends Equatable {
+abstract class HistoryItem extends Equatable {
   const HistoryItem({
     required this.amount,
     required this.date,

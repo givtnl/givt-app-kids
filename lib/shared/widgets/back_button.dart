@@ -6,8 +6,7 @@ import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:go_router/go_router.dart';
 
 class BackButton extends StatelessWidget {
-  const BackButton({this.icon, super.key});
-  final Widget? icon;
+  const BackButton({super.key});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,11 +22,10 @@ class BackButton extends StatelessWidget {
 
             context.pop();
           },
-          icon: icon ??
-              Icon(
-                Icons.arrow_back_rounded,
-                color: Color(0xFF54A1EE),
-              ),
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Color(0xFF54A1EE),
+          ),
         ),
       ),
     );

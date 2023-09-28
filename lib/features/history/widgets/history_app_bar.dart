@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
 import 'package:givt_app_kids/shared/widgets/back_button.dart'
     as custom_widgets;
@@ -18,9 +17,7 @@ class HistoryAppBar extends StatelessWidget implements PreferredSizeWidget {
           Spacer(),
         ],
       ),
-      leading: custom_widgets.BackButton(
-        icon: SvgPicture.asset('assets/images/back_btn.svg'),
-      ),
+      leading: const custom_widgets.BackButton(),
     );
   }
 
