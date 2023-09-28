@@ -90,7 +90,13 @@ class _WalletScreenState extends State<WalletScreen>
                   hasDonations ? const HistoryHeader() : const SizedBox(),
                   hasDonations
                       ? GestureDetector(
-                          onTap: () => context.pushNamed(Pages.history.name),
+                          onTap: () {
+                            context.pushNamed(Pages.history.name);
+                            AnalyticsHelper.logEvent(
+                              eventName:
+                                  AmplitudeEvent.seeDonationHistoryPressed,
+                            );
+                          },
                           child: DonationItemWidget(
                             donation: state.activeProfile.lastDonationItem,
                           ),
