@@ -35,7 +35,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
           // ),
           const Positioned.fill(
             child: Padding(
-              padding: EdgeInsets.only(left: 50, right: 50, top: 70),
+              padding: EdgeInsets.only(left: 0, right: 0, top: 70),
               child: Column(
                 children: [
                   Text(
@@ -51,7 +51,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
                     height: 10,
                   ),
                   Text(
-                    "Drop your coin wherever you\nchurch collects money.",
+                    "Drop your coin wherever your\nchurch collects money.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF3B3240),
