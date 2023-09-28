@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
-import 'package:givt_app_kids/features/coin_flow/widgets/coin_rays_animated_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:go_router/go_router.dart';
@@ -29,11 +28,11 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
       backgroundColor: const Color(0xFFB9D7FF),
       body: Stack(
         children: [
-          const Positioned.fill(
-            child: Center(
-              child: CoinRaysAnimatedWidget(),
-            ),
-          ),
+          // const Positioned.fill(
+          //   child: Center(
+          //     child: CoinRaysAnimatedWidget(),
+          //   ),
+          // ),
           const Positioned.fill(
             child: Padding(
               padding: EdgeInsets.only(left: 50, right: 50, top: 70),
@@ -73,9 +72,8 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
           // ),
 
           Positioned.fill(
-            bottom: 0,
             child: Lottie.asset(
-              "assets/lotties/coin_success_1.json",
+              "assets/lotties/coin_success_2.json",
               fit: BoxFit.fitWidth,
               alignment: Alignment.bottomCenter,
               width: double.infinity,
