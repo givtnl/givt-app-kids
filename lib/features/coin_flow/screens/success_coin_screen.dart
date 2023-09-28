@@ -28,11 +28,14 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
       backgroundColor: const Color(0xFFB9D7FF),
       body: Stack(
         children: [
-          // const Positioned.fill(
-          //   child: Center(
-          //     child: CoinRaysAnimatedWidget(),
-          //   ),
-          // ),
+          Positioned.fill(
+            child: Lottie.asset(
+              "assets/lotties/coin_success_2.json",
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.bottomCenter,
+              width: double.infinity,
+            ),
+          ),
           const Positioned.fill(
             child: Padding(
               padding: EdgeInsets.only(left: 0, right: 0, top: 70),
@@ -60,23 +63,6 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
                   ),
                 ],
               ),
-            ),
-          ),
-          // Positioned.fill(
-          //   child: Center(
-          //     child: SvgPicture.asset(
-          //       'assets/images/coin_activated_success.svg',
-          //       width: 150,
-          //     ),
-          //   ),
-          // ),
-
-          Positioned.fill(
-            child: Lottie.asset(
-              "assets/lotties/coin_success_2.json",
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.bottomCenter,
-              width: double.infinity,
             ),
           ),
         ],
