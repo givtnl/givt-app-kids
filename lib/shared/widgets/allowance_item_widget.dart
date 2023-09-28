@@ -28,7 +28,7 @@ class AllowanceItemWidget extends StatelessWidget {
                     fontSize: 16),
               ),
               SizedBox(
-                width: size.width * 0.65,
+                width: size.width * 0.70,
                 child: const Text(
                   'Awesome! Your parents added more allowance',
                   maxLines: 3,

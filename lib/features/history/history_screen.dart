@@ -18,7 +18,7 @@ class HistoryScreen extends StatelessWidget {
     ScrollController scrollController = ScrollController();
     final childId = context.read<ProfilesCubit>().state.activeProfile.id;
     final historyCubit = context.read<HistoryCubit>();
-
+    final Size size = MediaQuery.of(context).size;
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.position.pixels) {
@@ -53,7 +53,7 @@ class HistoryScreen extends StatelessWidget {
                     allowance: state.history[index] as Allowance);
               }
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                 child: DonationItemWidget(
                     donation: state.history[index] as Donation),
               );
