@@ -6,7 +6,7 @@ import 'package:givt_app_kids/helpers/donation_state.dart';
 
 class DonationItemWidget extends StatelessWidget {
   const DonationItemWidget({required this.donation, super.key});
-  final HistoryItem donation;
+  final Donation donation;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;

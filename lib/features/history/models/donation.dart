@@ -1,22 +1,18 @@
-import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/features/history/models/history.dart';
 import 'package:givt_app_kids/helpers/donation_state.dart';
 
-class HistoryItem extends Equatable {
-  const HistoryItem({
-    required this.amount,
-    required this.date,
+class Donation extends HistoryItem {
+  const Donation({
+    required super.amount,
+    required super.date,
     required this.organizationName,
     required this.state,
     required this.medium,
-    required this.type,
+    required super.type,
   });
-
-  final double amount;
-  final DateTime date;
   final String organizationName;
   final DonationState state;
   final DonationMediumType medium;
-  final HistoryTypes type;
 
   @override
   List<Object?> get props => [
@@ -27,7 +23,7 @@ class HistoryItem extends Equatable {
         medium,
       ];
 
-  HistoryItem.empty()
+  Donation.empty()
       : this(
           amount: 0,
           date: DateTime.now(),
@@ -37,9 +33,8 @@ class HistoryItem extends Equatable {
           type: HistoryTypes.donation,
         );
 
-  factory HistoryItem.fromMap(Map<String, dynamic> map) {
-    final type = HistoryTypes.getType(map);
-    return HistoryItem(
+  factory Donation.fromMap(Map<String, dynamic> map) {
+    return Donation(
       amount: double.tryParse(map['amount'].toString()) ?? 0,
       date: DateTime.tryParse(map['donationDate']) ?? DateTime.now(),
       organizationName: map['collectGroupName'] ?? '',
@@ -47,10 +42,12 @@ class HistoryItem extends Equatable {
       medium: DonationMediumType.values.firstWhere(
           (element) => element.type == map['mediumType'],
           orElse: () => DonationMediumType.unknown),
-      type: type,
+      type: HistoryTypes.values.firstWhere(
+        (element) => element.value == map['donationType'],
+        orElse: () => HistoryTypes.donation,
+      ),
     );
   }
-
   Map<String, dynamic> toJson() {
     return {
       'amount': amount,
@@ -58,21 +55,7 @@ class HistoryItem extends Equatable {
       'collectGroupName': organizationName,
       'status': DonationState.getDonationStateString(state),
       'mediumType': medium.type,
+      'donationType': type.value,
     };
   }
-}
-
-enum HistoryTypes {
-  donation('WalletDonation'),
-  allowance('RecurringAllowance');
-
-  static HistoryTypes getType(Map<String, dynamic> map) {
-    if (map['mediumType'] == HistoryTypes.allowance.value) {
-      return HistoryTypes.allowance;
-    }
-    return HistoryTypes.donation;
-  }
-
-  final String value;
-  const HistoryTypes(this.value);
 }

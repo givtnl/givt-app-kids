@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
+import 'package:givt_app_kids/features/history/models/allowance.dart';
 import 'package:givt_app_kids/features/history/models/donation.dart';
+import 'package:givt_app_kids/features/history/models/history.dart';
 import 'package:givt_app_kids/features/history/widgets/history_app_bar.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/shared/widgets/allowance_item_widget.dart';
@@ -47,11 +49,13 @@ class HistoryScreen extends StatelessWidget {
             itemCount: state.history.length,
             itemBuilder: (BuildContext context, int index) {
               if (state.history[index].type == HistoryTypes.allowance) {
-                return AllowanceItemWidget(allowance: state.history[index]);
+                return AllowanceItemWidget(
+                    allowance: state.history[index] as Allowance);
               }
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: DonationItemWidget(donation: state.history[index]),
+                child: DonationItemWidget(
+                    donation: state.history[index] as Donation),
               );
             },
             separatorBuilder: (BuildContext context, int index) =>

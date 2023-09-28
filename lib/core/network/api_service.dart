@@ -169,7 +169,7 @@ class APIService {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: jsonEncode({'pageNumber': pageNr, 'pageSize': 20, 'type': type}),
+      body: jsonEncode({'pageNumber': pageNr, 'pageSize': 10, 'type': type}),
     );
 
     log('fetch donation history pageNr: $pageNr, status code: ${response.statusCode}');
