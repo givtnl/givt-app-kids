@@ -1,7 +1,7 @@
 import 'package:givt_app_kids/core/network/api_service.dart';
 import 'package:givt_app_kids/features/history/models/allowance.dart';
 import 'package:givt_app_kids/features/history/models/donation.dart';
-import 'package:givt_app_kids/features/history/models/history.dart';
+import 'package:givt_app_kids/features/history/models/history_item.dart';
 
 mixin HistoryRepository {
   Future<List<HistoryItem>> fetchHistory(

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
 import 'package:givt_app_kids/features/history/models/allowance.dart';
 import 'package:givt_app_kids/features/history/models/donation.dart';
-import 'package:givt_app_kids/features/history/models/history.dart';
+import 'package:givt_app_kids/features/history/models/history_item.dart';
 import 'package:givt_app_kids/features/history/widgets/history_app_bar.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/shared/widgets/allowance_item_widget.dart';

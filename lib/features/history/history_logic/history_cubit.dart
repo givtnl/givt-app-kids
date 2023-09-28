@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_repository.dart';
-import 'package:givt_app_kids/features/history/models/history.dart';
+import 'package:givt_app_kids/features/history/models/history_item.dart';
 
 part 'history_state.dart';
 

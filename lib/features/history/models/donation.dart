@@ -1,4 +1,4 @@
-import 'package:givt_app_kids/features/history/models/history.dart';
+import 'package:givt_app_kids/features/history/models/history_item.dart';
 import 'package:givt_app_kids/helpers/donation_state.dart';
 
 class Donation extends HistoryItem {
