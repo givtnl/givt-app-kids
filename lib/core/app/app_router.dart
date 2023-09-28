@@ -11,6 +11,8 @@ import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
+import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
+import 'package:givt_app_kids/features/history/history_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
@@ -71,6 +73,29 @@ class AppRouter {
           path: Pages.success.path,
           name: Pages.success.name,
           builder: (context, state) => const SuccessScreen(),
+        ),
+        GoRoute(
+          path: Pages.history.path,
+          name: Pages.history.name,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => HistoryCubit(getIt())
+                ..fetchHistory(
+                    context.read<ProfilesCubit>().state.activeProfile.id),
+              child: const HistoryScreen(),
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    SlideTransition(
+                        position: animation.drive(
+                          Tween<Offset>(
+                            begin: const Offset(2.0, 0.0),
+                            end: Offset.zero,
+                          ).chain(CurveTween(curve: Curves.ease)),
+                        ),
+                        child: child),
+          ),
         ),
         GoRoute(
           path: Pages.recommend.path,

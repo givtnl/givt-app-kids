@@ -20,7 +20,7 @@ abstract class ProfilesState extends Equatable {
 
   Profile get activeProfile {
     if (activeProfileIndex == _noProfileSelected || profiles.isEmpty) {
-      return const Profile.empty();
+      return Profile.empty();
     } else {
       return profiles[activeProfileIndex];
     }

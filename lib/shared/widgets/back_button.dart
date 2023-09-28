@@ -6,8 +6,7 @@ import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:go_router/go_router.dart';
 
 class BackButton extends StatelessWidget {
-  const BackButton({Key? key}) : super(key: key);
-
+  const BackButton({super.key});
   @override
   Widget build(BuildContext context) {
     return Padding(
