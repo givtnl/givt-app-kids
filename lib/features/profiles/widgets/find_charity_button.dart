@@ -9,6 +9,9 @@ class FindCharityButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () => context.pushNamed(Pages.recommend.name),
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(EdgeInsets.zero),
+      ),
       child: const Text(
         'Help me find a charity',
         style: TextStyle(

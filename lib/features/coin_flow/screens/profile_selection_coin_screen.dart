@@ -82,6 +82,7 @@ class _ProfileSelectionCoinScreenState
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return BlocConsumer<ProfilesCubit, ProfilesState>(
       listener: (context, state) {
         log('profiles state changed on $state');
@@ -159,7 +160,10 @@ class _ProfileSelectionCoinScreenState
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                  left: 50, right: 50, top: 70, bottom: 40),
+                                  left: 50,
+                                  right: 50,
+                                  top: size.height * 0.05,
+                                  bottom: size.height * 0.01),
                               child: Text(
                                 "Who would like to\ngive the coin?",
                                 textAlign: TextAlign.center,
@@ -172,7 +176,8 @@ class _ProfileSelectionCoinScreenState
                             ),
                             SingleChildScrollView(
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 50),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.height * 0.06),
                                 child: Center(
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -180,7 +185,7 @@ class _ProfileSelectionCoinScreenState
                                         CrossAxisAlignment.center,
                                     children: [
                                       SizedBox(
-                                        height: 30,
+                                        height: size.height * 0.02,
                                       ),
                                       GridView.count(
                                         shrinkWrap: true,

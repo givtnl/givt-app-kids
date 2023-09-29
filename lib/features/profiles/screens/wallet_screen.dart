@@ -6,9 +6,10 @@ import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/find_charity_button.dart';
-import 'package:givt_app_kids/features/profiles/widgets/pending_approval_widget.dart';
+import 'package:givt_app_kids/features/profiles/widgets/history_header.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/shared/widgets/donation_item_widget.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
 import 'package:givt_app_kids/shared/widgets/qr_give_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
@@ -54,9 +55,8 @@ class _WalletScreenState extends State<WalletScreen>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return BlocBuilder<ProfilesCubit, ProfilesState>(builder: (context, state) {
-      final isPending = state.activeProfile.wallet.pending > 0.0;
       final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
-      final isLoading = state is ProfilesLoadingState;
+      final hasDonations = state.activeProfile.lastDonationItem.amount > 0;
 
       var countdownAmount = 0.0;
       if (state is ProfilesCountdownState) {
@@ -65,6 +65,7 @@ class _WalletScreenState extends State<WalletScreen>
 
       return WalletFrame(
         body: RefreshIndicator(
+          color: const Color(0xFF54A1EE),
           onRefresh: refresh,
           child: Stack(
             children: [
@@ -74,25 +75,33 @@ class _WalletScreenState extends State<WalletScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Heading2(text: state.activeProfile.firstName),
-                  if (isLoading)
-                    const Center(child: CircularProgressIndicator())
-                  else
-                    GestureDetector(
-                      onLongPress: () => context
-                          .pushReplacementNamed(Pages.searchForCoin.name),
-                      child: WalletWidget(
-                        balance: state.activeProfile.wallet.balance,
-                        countdownAmount: countdownAmount,
-                      ),
+                  GestureDetector(
+                    onLongPress: () =>
+                        context.pushReplacementNamed(Pages.searchForCoin.name),
+                    child: WalletWidget(
+                      balance: state.activeProfile.wallet.balance,
+                      countdownAmount: countdownAmount,
                     ),
+                  ),
                   SizedBox(height: size.height * 0.01),
                   QrGiveButton(isActive: isGiveButtonActive),
                   const FindCharityButton(),
-                  if (isPending) SizedBox(height: size.height * 0.03),
-                  if (isPending)
-                    PendingApprovalWidget(
-                      pending: state.activeProfile.wallet.pending,
-                    ),
+                  SizedBox(height: size.height * 0.02),
+                  hasDonations ? const HistoryHeader() : const SizedBox(),
+                  hasDonations
+                      ? GestureDetector(
+                          onTap: () {
+                            context.pushNamed(Pages.history.name);
+                            AnalyticsHelper.logEvent(
+                              eventName:
+                                  AmplitudeEvent.seeDonationHistoryPressed,
+                            );
+                          },
+                          child: DonationItemWidget(
+                            donation: state.activeProfile.lastDonationItem,
+                          ),
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ],

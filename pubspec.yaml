@@ -60,6 +60,10 @@ flutter:
           weight: 600
         - asset: assets/fonts/Raleway-Bold.ttf
           weight: 700
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
 
 dependency_overrides:
   intl: ^0.18.0

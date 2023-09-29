@@ -11,13 +11,14 @@ class Heading2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0),
       child: Text(
         text,
         textAlign: alignment,
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 28,
+          color: Color(0xFF3B3240),
         ),
       ),
     );

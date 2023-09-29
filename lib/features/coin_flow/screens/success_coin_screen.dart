@@ -1,13 +1,11 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
-import 'package:givt_app_kids/features/coin_flow/widgets/coin_rays_animated_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:givt_app_kids/helpers/vibrator.dart';
+import 'package:lottie/lottie.dart';
 
 class SuccessCoinScreen extends StatefulWidget {
   const SuccessCoinScreen({Key? key}) : super(key: key);
@@ -27,17 +25,20 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFB9D7FF),
+      backgroundColor: const Color(0xFFB9D7FF),
       body: Stack(
         children: [
           Positioned.fill(
-            child: Center(
-              child: CoinRaysAnimatedWidget(),
+            child: Lottie.asset(
+              "assets/lotties/coin_success_2.json",
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.bottomCenter,
+              width: double.infinity,
             ),
           ),
-          Positioned.fill(
+          const Positioned.fill(
             child: Padding(
-              padding: EdgeInsets.only(left: 50, right: 50, top: 150),
+              padding: EdgeInsets.only(left: 0, right: 0, top: 70),
               child: Column(
                 children: [
                   Text(
@@ -53,7 +54,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
                     height: 10,
                   ),
                   Text(
-                    "It’s ready for the\ncollection now.",
+                    "Drop your coin wherever your\nchurch collects money.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF3B3240),
@@ -61,14 +62,6 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
-          Positioned.fill(
-            child: Center(
-              child: SvgPicture.asset(
-                'assets/images/coin_activated_success.svg',
-                width: 150,
               ),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/features/history/models/donation.dart';
 import 'package:givt_app_kids/features/profiles/models/wallet.dart';
 
 class Profile extends Equatable {
@@ -9,10 +10,11 @@ class Profile extends Equatable {
     required this.nickname,
     required this.comment,
     required this.wallet,
+    required this.lastDonationItem,
     required this.pictureURL,
   });
 
-  const Profile.empty()
+  Profile.empty()
       : this(
             id: '',
             firstName: '',
@@ -20,6 +22,7 @@ class Profile extends Equatable {
             nickname: '',
             comment: '',
             wallet: const Wallet.empty(),
+            lastDonationItem: Donation.empty(),
             pictureURL: '');
 
   final String id;
@@ -28,6 +31,7 @@ class Profile extends Equatable {
   final String nickname;
   final String comment;
   final Wallet wallet;
+  final Donation lastDonationItem;
   final String pictureURL;
 
   @override
@@ -36,13 +40,23 @@ class Profile extends Equatable {
 
   factory Profile.fromMap(Map<String, dynamic> map) {
     final pictureMap = map['picture'];
+
+    final donationMap = map['latestDonation'] == null
+        ? Donation.empty()
+        : Donation.fromMap(map['latestDonation']);
+
+    final walletMap = map['wallet'] == null
+        ? const Wallet.empty()
+        : Wallet.fromMap(map['wallet']);
+
     return Profile(
       id: map['id'],
       firstName: map['firstName'],
       lastName: map['lastName'] ?? '',
       nickname: map['nickname'] ?? '',
       comment: map['comment'] ?? '',
-      wallet: Wallet.fromMap(map['wallet']),
+      wallet: walletMap,
+      lastDonationItem: donationMap,
       pictureURL: pictureMap['pictureURL'],
     );
   }
@@ -55,6 +69,7 @@ class Profile extends Equatable {
       'nickname': nickname,
       'comment': comment,
       'wallet': wallet.toJson(),
+      'latestDonation': lastDonationItem.toJson(),
       'picture': {
         'pictureURL': pictureURL,
       }

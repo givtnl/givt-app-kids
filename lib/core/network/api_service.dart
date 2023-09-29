@@ -157,4 +157,32 @@ class APIService {
       return true;
     }
   }
+
+  Future<List<dynamic>> fetchHistory(
+      String childId, Map<String, dynamic> body) async {
+    final url = Uri.https(_apiURL,
+        '/givt4kidsservice/v1/transaction/transaction-history/$childId');
+
+    var response = await client.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: jsonEncode(body),
+    );
+
+    log('fetch donation history pageNr: ${body['pageNumber']}, status code: ${response.statusCode}');
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } else {
+      var decodedBody = jsonDecode(response.body);
+      final itemMap = decodedBody['items'];
+      return itemMap;
+    }
+  }
 }

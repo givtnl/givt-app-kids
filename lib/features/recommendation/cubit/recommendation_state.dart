@@ -1,6 +1,6 @@
 part of 'recommendation_cubit.dart';
 
-class RecommendationState extends Equatable {
+abstract class RecommendationState extends Equatable {
   const RecommendationState();
 
   @override
