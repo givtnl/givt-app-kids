@@ -15,6 +15,7 @@ import 'package:givt_app_kids/shared/widgets/qr_give_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -51,6 +52,14 @@ class _WalletScreenState extends State<WalletScreen>
     await context.read<ProfilesCubit>().fetchProfiles(parentGuid);
   }
 
+  Future<String> _getAppIDAndVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    final result =
+        '${packageInfo.packageName} v${packageInfo.version}(${packageInfo.buildNumber})';
+    log(result);
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -78,6 +87,19 @@ class _WalletScreenState extends State<WalletScreen>
                   GestureDetector(
                     onLongPress: () =>
                         context.pushReplacementNamed(Pages.searchForCoin.name),
+                    onDoubleTap: () async {
+                      final appInfoString = await _getAppIDAndVersion();
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              appInfoString,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      }
+                    },
                     child: WalletWidget(
                       balance: state.activeProfile.wallet.balance,
                       countdownAmount: countdownAmount,
