@@ -113,7 +113,7 @@ class AppRouter {
                   'NjFmN2VkMDE1NTUzMDEyMmMwMDAuZmMwMDAwMDAwMDAx';
               return BlocProvider<SearchCoinCubit>(
                 lazy: false,
-                create: (context) => SearchCoinCubit(),
+                create: (context) => SearchCoinCubit()..startAnimation(),
                 child: SearchForCoinScreen(mediumId: mediumID),
               );
             }),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
@@ -15,8 +17,7 @@ class SearchForCoinScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final coinCubit = context.watch<SearchCoinCubit>();
-    coinCubit.startAnimation();
+    final coinCubit = context.read<SearchCoinCubit>();
     return BlocConsumer<SearchCoinCubit, SearchCoinState>(
       listener: (context, coinState) {
         if (coinState.status == CoinAnimationStatus.animating) {
@@ -30,11 +31,12 @@ class SearchForCoinScreen extends StatelessWidget {
           listener: (context, orgState) async {
             if (orgState is OrganisationDetailsSetState) {
               // checking if the request took less than the animation duration
-              if (coinState.stopwatch.elapsed.inMilliseconds <
-                  SearchCoinCubit.searchDuration.inMilliseconds) {
-                await Future.delayed(SearchCoinCubit.searchDuration -
-                    coinState.stopwatch.elapsed);
-              }
+              log("Organisation is set: ${orgState.organisation.name}");
+              coinCubit.stopAnimation(coinState);
+            }
+            if (orgState is OrganisationDetailsErrorState) {
+              // checking if the request took less than the animation duration
+              log("ERROR");
               coinCubit.stopAnimation(coinState);
             }
           },
