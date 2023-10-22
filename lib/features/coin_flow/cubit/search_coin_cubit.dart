@@ -28,21 +28,3 @@ class SearchCoinCubit extends Cubit<SearchCoinState> {
     ));
   }
 }
-
-// Future<void> searchForCoin(String mediumID) async {
-//     emit(const SearchCoinAnimationState());
-//     try {
-//       var watch = Stopwatch()..start();
-//       final response =
-//           await _organisationRepository.fetchOrganisationDetails(mediumID);
-//       watch.stop();
-//       log('${watch.elapsedMilliseconds}ms \n${response.toString()}');
-//       if (watch.elapsedMilliseconds < searchDuration.inMilliseconds) {
-//         await Future.delayed(searchDuration - watch.elapsed);
-//       }
-//       emit(SearchCoinFoundState(organisation: response, mediumId: mediumID));
-//     } catch (e) {
-//       emit(const SearchCoinErrorState());
-//     }
-//   }
-// }
