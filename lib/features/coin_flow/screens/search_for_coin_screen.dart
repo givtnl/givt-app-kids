@@ -30,14 +30,35 @@ class SearchForCoinScreen extends StatelessWidget {
         return BlocConsumer<OrganisationDetailsCubit, OrganisationDetailsState>(
           listener: (context, orgState) async {
             if (orgState is OrganisationDetailsSetState) {
-              // checking if the request took less than the animation duration
               log("Organisation is set: ${orgState.organisation.name}");
+              AnalyticsHelper.logEvent(
+                  eventName: AmplitudeEvent.nfcScanned,
+                  eventProperties: {
+                    'goal_name': orgState.organisation.name,
+                  });
+              // checking if the request took less than the animation duration
+              if (coinState.stopwatch.elapsedMilliseconds <
+                  SearchCoinCubit.searchDuration.inMilliseconds) {
+                await Future.delayed(
+                  SearchCoinCubit.searchDuration -
+                      Duration(
+                        milliseconds: coinState.stopwatch.elapsedMilliseconds,
+                      ),
+                );
+              }
               coinCubit.stopAnimation(coinState);
             }
             if (orgState is OrganisationDetailsErrorState) {
               // checking if the request took less than the animation duration
-              log("ERROR");
-              coinCubit.stopAnimation(coinState);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text(
+                    "Error setting organisation. Please try again later.",
+                    textAlign: TextAlign.center,
+                  ),
+                  backgroundColor: Theme.of(context).errorColor,
+                ),
+              );
             }
           },
           builder: (BuildContext context, orgState) {
