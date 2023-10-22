@@ -1,12 +1,5 @@
 part of 'search_coin_cubit.dart';
 
-enum CoinAnimationStatus {
-  initial,
-  started,
-  animating,
-  stoped,
-}
-
 class SearchCoinState extends Equatable {
   const SearchCoinState({
     required this.status,
@@ -26,4 +19,11 @@ class SearchCoinState extends Equatable {
       stopwatch: stopwatch ?? this.stopwatch,
     );
   }
+}
+
+enum CoinAnimationStatus {
+  initial,
+  started,
+  animating,
+  stoped,
 }
