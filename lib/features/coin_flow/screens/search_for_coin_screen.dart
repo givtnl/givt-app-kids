@@ -83,7 +83,8 @@ class SearchForCoinScreen extends StatelessWidget {
                                   'screen_name': Pages.searchForCoin.name,
                                 });
 
-                            context.pushNamed(Pages.profileSelectionCoin.name);
+                            context.pushReplacementNamed(
+                                Pages.profileSelectionCoin.name);
                           },
                         )
                       : null,
