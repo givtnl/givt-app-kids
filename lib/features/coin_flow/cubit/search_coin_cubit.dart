@@ -4,13 +4,45 @@ import 'package:equatable/equatable.dart';
 part 'search_coin_state.dart';
 
 class SearchCoinCubit extends Cubit<SearchCoinState> {
-  SearchCoinCubit() : super(const SearchCoinInitialState());
+  SearchCoinCubit()
+      : super(SearchCoinState(
+            status: CoinAnimationStatus.initial, stopwatch: Stopwatch()));
 
   static const searchDuration = Duration(milliseconds: 2000);
 
-  Future<void> searchForCoin() async {
-    emit(const SearchCoinAnimationState());
-    await Future.delayed(searchDuration);
-    emit(const SearchCoinFoundedState());
+  void startAnimation() async {
+    emit(state.copyWith(
+      status: CoinAnimationStatus.initial,
+    ));
+    await Future.delayed(const Duration(milliseconds: 50));
+    emit(state.copyWith(
+      status: CoinAnimationStatus.animating,
+      stopwatch: state.stopwatch..start(),
+    ));
+  }
+
+  void stopAnimation(SearchCoinState state) {
+    emit(state.copyWith(
+      status: CoinAnimationStatus.stoped,
+      stopwatch: state.stopwatch..stop(),
+    ));
   }
 }
+
+// Future<void> searchForCoin(String mediumID) async {
+//     emit(const SearchCoinAnimationState());
+//     try {
+//       var watch = Stopwatch()..start();
+//       final response =
+//           await _organisationRepository.fetchOrganisationDetails(mediumID);
+//       watch.stop();
+//       log('${watch.elapsedMilliseconds}ms \n${response.toString()}');
+//       if (watch.elapsedMilliseconds < searchDuration.inMilliseconds) {
+//         await Future.delayed(searchDuration - watch.elapsed);
+//       }
+//       emit(SearchCoinFoundState(organisation: response, mediumId: mediumID));
+//     } catch (e) {
+//       emit(const SearchCoinErrorState());
+//     }
+//   }
+// }

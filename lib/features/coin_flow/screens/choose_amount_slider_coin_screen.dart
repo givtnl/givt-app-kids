@@ -9,6 +9,7 @@ import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/models/organisation_details.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -37,15 +38,12 @@ class _ChooseAmountSliderCoinScreenState
     super.initState();
   }
 
-  OrganisationDetails hardcodedOrg = OrganisationDetails(
-    goal: '',
-    name: 'Christ Presbyterian Tulsa',
-    collectGroupId: 'ef3a60ec-d778-422d-2e1c-08dbb50ee29a',
-  );
-
   @override
   Widget build(BuildContext context) {
-    const String mediumId = 'NjFmN2VkMDE1NTUzMDEyMmMwMDAuZmMwMDAwMDAwMDAx';
+    final OrganisationDetails organisation =
+        context.read<OrganisationDetailsCubit>().state.organisation;
+    final String mediumId =
+        context.read<OrganisationDetailsCubit>().state.mediumId;
     return BlocProvider<CreateTransactionCubit>(
       create: (BuildContext context) =>
           CreateTransactionCubit(_profilesCubit, getIt()),
@@ -111,7 +109,7 @@ class _ChooseAmountSliderCoinScreenState
                       ),
                       Expanded(
                         child: Text(
-                          hardcodedOrg.name,
+                          organisation.name,
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
@@ -215,7 +213,6 @@ class _ChooseAmountSliderCoinScreenState
                       }
                       var transaction = Transaction(
                         userId: _profilesCubit.state.activeProfile.id,
-                        collectGroupId: hardcodedOrg.collectGroupId,
                         mediumId: mediumId,
                         amount: state.amount,
                       );
@@ -230,7 +227,7 @@ class _ChooseAmountSliderCoinScreenState
                             'amount': state.amount,
                             'formatted_date': DateTime.now().toIso8601String(),
                             'timestamp': DateTime.now().millisecondsSinceEpoch,
-                            'goal_name': hardcodedOrg.name,
+                            'goal_name': organisation.name,
                           });
                     },
             ),

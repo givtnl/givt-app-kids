@@ -206,7 +206,6 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                             }
                             var transaction = Transaction(
                               userId: _profilesCubit.state.activeProfile.id,
-                              collectGroupId: organisation.collectGroupId,
                               mediumId: mediumId,
                               amount: state.amount,
                             );

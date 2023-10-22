@@ -4,40 +4,68 @@ import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_founded.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/search_coin_animated_widget.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchForCoinScreen extends StatelessWidget {
-  const SearchForCoinScreen({super.key});
+  const SearchForCoinScreen({super.key, required this.mediumId});
+  final String mediumId;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchCoinCubit, SearchCoinState>(
-      builder: (BuildContext context, state) {
-        return Scaffold(
-          backgroundColor: const Color(0xFFEEEDE4),
-          body: state is SearchCoinAnimationState
-              ? const SearchingForCoinPage()
-              : const CoinFoundedPage(),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: state is SearchCoinFoundedState
-              ? FloatingActoinButton(
-                  text: "Assign the coin",
-                  onPressed: () {
-                    AnalyticsHelper.logEvent(
-                        eventName: AmplitudeEvent.buttonPressed,
-                        eventProperties: {
-                          'button_name': 'Assign the coin',
-                          'formatted_date': DateTime.now().toIso8601String(),
-                          'screen_name': Pages.searchForCoin.name,
-                        });
+    final coinCubit = context.watch<SearchCoinCubit>();
+    coinCubit.startAnimation();
+    return BlocConsumer<SearchCoinCubit, SearchCoinState>(
+      listener: (context, coinState) {
+        if (coinState.status == CoinAnimationStatus.animating) {
+          context
+              .read<OrganisationDetailsCubit>()
+              .getOrganisationDetails(mediumId);
+        }
+      },
+      builder: (context, coinState) {
+        return BlocConsumer<OrganisationDetailsCubit, OrganisationDetailsState>(
+          listener: (context, orgState) async {
+            if (orgState is OrganisationDetailsSetState) {
+              // checking if the request took less than the animation duration
+              if (coinState.stopwatch.elapsed.inMilliseconds <
+                  SearchCoinCubit.searchDuration.inMilliseconds) {
+                await Future.delayed(SearchCoinCubit.searchDuration -
+                    coinState.stopwatch.elapsed);
+              }
+              coinCubit.stopAnimation(coinState);
+            }
+          },
+          builder: (BuildContext context, orgState) {
+            return Scaffold(
+              backgroundColor: const Color(0xFFEEEDE4),
+              body: coinState.status == CoinAnimationStatus.animating
+                  ? const SearchingForCoinPage()
+                  : const CoinFoundPage(),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
+              floatingActionButton:
+                  coinState.status == CoinAnimationStatus.stoped
+                      ? FloatingActoinButton(
+                          text: "Assign the coin",
+                          onPressed: () {
+                            AnalyticsHelper.logEvent(
+                                eventName: AmplitudeEvent.buttonPressed,
+                                eventProperties: {
+                                  'button_name': 'Assign the coin',
+                                  'formatted_date':
+                                      DateTime.now().toIso8601String(),
+                                  'screen_name': Pages.searchForCoin.name,
+                                });
 
-                    context.pushNamed(Pages.profileSelectionCoin.name);
-                  },
-                )
-              : null,
+                            context.pushNamed(Pages.profileSelectionCoin.name);
+                          },
+                        )
+                      : null,
+            );
+          },
         );
       },
     );
@@ -75,8 +103,8 @@ class SearchingForCoinPage extends StatelessWidget {
   }
 }
 
-class CoinFoundedPage extends StatelessWidget {
-  const CoinFoundedPage({super.key});
+class CoinFoundPage extends StatelessWidget {
+  const CoinFoundPage({super.key});
 
   @override
   Widget build(BuildContext context) {
