@@ -88,7 +88,6 @@ class _WalletScreenState extends State<WalletScreen>
                     onLongPress: () =>
                         context.pushReplacementNamed(Pages.searchForCoin.name),
                     onDoubleTap: () async {
-                      context.goNamed(Pages.searchForCoin.name);
                       final appInfoString = await _getAppIDAndVersion();
                       if (mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
