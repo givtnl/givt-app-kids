@@ -23,7 +23,6 @@ class SearchCoinState extends Equatable {
 
 enum CoinAnimationStatus {
   initial,
-  started,
   animating,
   stoped,
 }

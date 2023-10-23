@@ -12,23 +12,27 @@ import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchForCoinScreen extends StatelessWidget {
-  const SearchForCoinScreen({super.key, required this.mediumId});
-  final String mediumId;
+  const SearchForCoinScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final coinCubit = context.read<SearchCoinCubit>();
-    return BlocConsumer<SearchCoinCubit, SearchCoinState>(
-      listener: (context, coinState) {
-        if (coinState.status == CoinAnimationStatus.animating) {
-          context
-              .read<OrganisationDetailsCubit>()
-              .getOrganisationDetails(mediumId);
-        }
-      },
+    return BlocBuilder<SearchCoinCubit, SearchCoinState>(
+      // listener: (context, coinState) {
+      //   log('coinState" $coinState');
+      //   if (coinState.status == CoinAnimationStatus.animating) {
+      //     context
+      //         .read<OrganisationDetailsCubit>()
+      //         .getOrganisationDetails(mediumId);
+      //   }
+      // },
       builder: (context, coinState) {
         return BlocConsumer<OrganisationDetailsCubit, OrganisationDetailsState>(
           listener: (context, orgState) async {
+            log('orgState" $orgState');
+
             if (orgState is OrganisationDetailsSetState) {
               log("Organisation is set: ${orgState.organisation.name}");
               AnalyticsHelper.logEvent(
@@ -62,6 +66,7 @@ class SearchForCoinScreen extends StatelessWidget {
             }
           },
           builder: (BuildContext context, orgState) {
+            log('builder: orgState: $orgState');
             return Scaffold(
               backgroundColor: const Color(0xFFEEEDE4),
               body: coinState.status == CoinAnimationStatus.animating
