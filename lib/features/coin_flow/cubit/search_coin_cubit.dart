@@ -20,11 +20,28 @@ class SearchCoinCubit extends Cubit<SearchCoinState> {
     ));
   }
 
-  void stopAnimation(SearchCoinState state) {
+  void stopAnimation() async {
+    // checking if the request took less than the animation duration
+    if (state.stopwatch.elapsedMilliseconds <
+        SearchCoinCubit.searchDuration.inMilliseconds) {
+      await Future.delayed(
+        SearchCoinCubit.searchDuration -
+            Duration(
+              milliseconds: state.stopwatch.elapsedMilliseconds,
+            ),
+      );
+    }
     log('stopAnimation');
     emit(state.copyWith(
       status: CoinAnimationStatus.stoped,
       stopwatch: state.stopwatch..stop(),
+    ));
+  }
+
+  void error() {
+    emit(state.copyWith(
+      status: CoinAnimationStatus.error,
+      stopwatch: state.stopwatch..reset(),
     ));
   }
 }

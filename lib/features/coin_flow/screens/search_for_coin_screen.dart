@@ -20,14 +20,6 @@ class SearchForCoinScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final coinCubit = context.read<SearchCoinCubit>();
     return BlocBuilder<SearchCoinCubit, SearchCoinState>(
-      // listener: (context, coinState) {
-      //   log('coinState" $coinState');
-      //   if (coinState.status == CoinAnimationStatus.animating) {
-      //     context
-      //         .read<OrganisationDetailsCubit>()
-      //         .getOrganisationDetails(mediumId);
-      //   }
-      // },
       builder: (context, coinState) {
         return BlocConsumer<OrganisationDetailsCubit, OrganisationDetailsState>(
           listener: (context, orgState) async {
@@ -40,20 +32,10 @@ class SearchForCoinScreen extends StatelessWidget {
                   eventProperties: {
                     'goal_name': orgState.organisation.name,
                   });
-              // checking if the request took less than the animation duration
-              if (coinState.stopwatch.elapsedMilliseconds <
-                  SearchCoinCubit.searchDuration.inMilliseconds) {
-                await Future.delayed(
-                  SearchCoinCubit.searchDuration -
-                      Duration(
-                        milliseconds: coinState.stopwatch.elapsedMilliseconds,
-                      ),
-                );
-              }
-              coinCubit.stopAnimation(coinState);
+              coinCubit.stopAnimation();
             }
             if (orgState is OrganisationDetailsErrorState) {
-              // checking if the request took less than the animation duration
+              coinCubit.error();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text(
@@ -71,7 +53,9 @@ class SearchForCoinScreen extends StatelessWidget {
               backgroundColor: const Color(0xFFEEEDE4),
               body: coinState.status == CoinAnimationStatus.animating
                   ? const SearchingForCoinPage()
-                  : const CoinFoundPage(),
+                  : coinState.status == CoinAnimationStatus.error
+                      ? const CoinErrorPage()
+                      : const CoinFoundPage(),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
               floatingActionButton:
@@ -97,6 +81,45 @@ class SearchForCoinScreen extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+class CoinErrorPage extends StatelessWidget {
+  const CoinErrorPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(50),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Something went wrong :( \nPlease try again.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF54A1EE),
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                context.read<OrganisationDetailsCubit>().getOrganisationDetails(
+                    context.read<OrganisationDetailsCubit>().state.mediumId);
+                context.read<SearchCoinCubit>().startAnimation();
+              },
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text("Retry"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

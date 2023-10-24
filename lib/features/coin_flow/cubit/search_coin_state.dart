@@ -25,4 +25,5 @@ enum CoinAnimationStatus {
   initial,
   animating,
   stoped,
+  error,
 }

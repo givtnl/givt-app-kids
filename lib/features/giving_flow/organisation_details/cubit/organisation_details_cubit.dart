@@ -20,7 +20,7 @@ class OrganisationDetailsCubit extends Cubit<OrganisationDetailsState> {
       emit(OrganisationDetailsSetState(
           organisation: response, mediumId: qrCode));
     } catch (error) {
-      emit(const OrganisationDetailsErrorState());
+      emit(OrganisationDetailsErrorState(mediumId: qrCode));
     }
   }
 }
