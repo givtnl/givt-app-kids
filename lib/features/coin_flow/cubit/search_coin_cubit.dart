@@ -11,9 +11,6 @@ class SearchCoinCubit extends Cubit<SearchCoinState> {
   static const searchDuration = Duration(milliseconds: 2000);
 
   void startAnimation() async {
-    emit(state.copyWith(
-      status: CoinAnimationStatus.initial,
-    ));
     await Future.delayed(const Duration(milliseconds: 50));
     emit(state.copyWith(
       status: CoinAnimationStatus.animating,
