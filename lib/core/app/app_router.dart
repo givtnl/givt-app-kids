@@ -109,8 +109,10 @@ class AppRouter {
             path: Pages.searchForCoin.path,
             name: Pages.searchForCoin.name,
             builder: (context, state) {
-              final String mediumID = state.uri.queryParameters['code'] ??
+              const String ChristPresTulsaMediumID =
                   'NjFmN2VkMDE1NTUzMDEyMmMwMDAuZmMwMDAwMDAwMDAx';
+              final String mediumID =
+                  state.uri.queryParameters['code'] ?? ChristPresTulsaMediumID;
               return BlocProvider<SearchCoinCubit>(
                 lazy: false,
                 create: (context) => SearchCoinCubit()..startAnimation(),
