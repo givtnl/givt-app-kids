@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -13,7 +11,6 @@ class SearchCoinCubit extends Cubit<SearchCoinState> {
   static const searchDuration = Duration(milliseconds: 2000);
 
   void startAnimation() async {
-    log('startAnimation');
     emit(state.copyWith(
       status: CoinAnimationStatus.animating,
       stopwatch: state.stopwatch..start(),
@@ -31,7 +28,6 @@ class SearchCoinCubit extends Cubit<SearchCoinState> {
             ),
       );
     }
-    log('stopAnimation');
     emit(state.copyWith(
       status: CoinAnimationStatus.stoped,
       stopwatch: state.stopwatch..stop(),

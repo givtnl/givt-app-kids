@@ -110,10 +110,8 @@ class AppRouter {
             path: Pages.searchForCoin.path,
             name: Pages.searchForCoin.name,
             builder: (context, state) {
-              const String ChristPresTulsaMediumID =
-                  'NjFmN2VkMDE1NTUzMDEyMmMwMDAuZmMwMDAwMDAwMDAx';
-              final String mediumID =
-                  state.uri.queryParameters['code'] ?? ChristPresTulsaMediumID;
+              final String mediumID = state.uri.queryParameters['code'] ??
+                  OrganisationDetailsCubit.defaultMediumId;
               context
                   .read<OrganisationDetailsCubit>()
                   .getOrganisationDetails(mediumID);
