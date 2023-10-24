@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/core/app/route_utils.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:go_router/go_router.dart';
@@ -20,7 +21,9 @@ class BackButton extends StatelessWidget {
             AnalyticsHelper.logEvent(
                 eventName: AmplitudeEvent.backButtonPressed);
 
-            context.pop();
+            context.canPop()
+                ? context.pop()
+                : context.goNamed(Pages.splash.name);
           },
           icon: Icon(
             Icons.arrow_back_rounded,

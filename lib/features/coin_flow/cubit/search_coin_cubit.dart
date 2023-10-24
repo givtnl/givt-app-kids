@@ -4,13 +4,40 @@ import 'package:equatable/equatable.dart';
 part 'search_coin_state.dart';
 
 class SearchCoinCubit extends Cubit<SearchCoinState> {
-  SearchCoinCubit() : super(const SearchCoinInitialState());
+  SearchCoinCubit()
+      : super(SearchCoinState(
+            status: CoinAnimationStatus.initial, stopwatch: Stopwatch()));
 
   static const searchDuration = Duration(milliseconds: 2000);
 
-  Future<void> searchForCoin() async {
-    emit(const SearchCoinAnimationState());
-    await Future.delayed(searchDuration);
-    emit(const SearchCoinFoundedState());
+  void startAnimation() async {
+    emit(state.copyWith(
+      status: CoinAnimationStatus.animating,
+      stopwatch: state.stopwatch..start(),
+    ));
+  }
+
+  void stopAnimation() async {
+    // checking if the request took less than the animation duration
+    if (state.stopwatch.elapsedMilliseconds <
+        SearchCoinCubit.searchDuration.inMilliseconds) {
+      await Future.delayed(
+        SearchCoinCubit.searchDuration -
+            Duration(
+              milliseconds: state.stopwatch.elapsedMilliseconds,
+            ),
+      );
+    }
+    emit(state.copyWith(
+      status: CoinAnimationStatus.stoped,
+      stopwatch: state.stopwatch..stop(),
+    ));
+  }
+
+  void error() {
+    emit(state.copyWith(
+      status: CoinAnimationStatus.error,
+      stopwatch: state.stopwatch..reset(),
+    ));
   }
 }

@@ -23,6 +23,7 @@ class OrganisationDetailsLoadingState extends OrganisationDetailsState {
 class OrganisationDetailsErrorState extends OrganisationDetailsState {
   const OrganisationDetailsErrorState({
     super.organisation = const OrganisationDetails.error(),
+    super.mediumId,
   });
 }
 
