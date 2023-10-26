@@ -1,20 +1,29 @@
 part of 'search_coin_cubit.dart';
 
 class SearchCoinState extends Equatable {
-  const SearchCoinState();
-
+  const SearchCoinState({
+    required this.status,
+    required this.stopwatch,
+  });
+  final CoinAnimationStatus status;
+  final Stopwatch stopwatch;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [status, stopwatch];
+
+  SearchCoinState copyWith({
+    CoinAnimationStatus? status,
+    Stopwatch? stopwatch,
+  }) {
+    return SearchCoinState(
+      status: status ?? this.status,
+      stopwatch: stopwatch ?? this.stopwatch,
+    );
+  }
 }
 
-class SearchCoinInitialState extends SearchCoinState {
-  const SearchCoinInitialState();
-}
-
-class SearchCoinAnimationState extends SearchCoinState {
-  const SearchCoinAnimationState();
-}
-
-class SearchCoinFoundedState extends SearchCoinState {
-  const SearchCoinFoundedState();
+enum CoinAnimationStatus {
+  initial,
+  animating,
+  stoped,
+  error,
 }

@@ -9,6 +9,9 @@ on:
 jobs:
     droid:
         uses: ./.github/workflows/android.yml
+        with:
+          flutter-version: '3.13.7'
+          ruby-version: '2.6.0'
         secrets:
           CODESIGNING_DEPLOY_KEY: ${{ secrets.CODESIGNING_DEPLOY_KEY }}
           GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
@@ -16,6 +19,9 @@ jobs:
     
     ios:
          uses: ./.github/workflows/ios.yml
+         with:
+          flutter-version: '3.13.7'
+          ruby-version: '2.6.0'
          secrets:
           CODESIGNING_DEPLOY_KEY: ${{ secrets.CODESIGNING_DEPLOY_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}

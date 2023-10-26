@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CoinFounded extends StatefulWidget {
-  const CoinFounded({
+class CoinFound extends StatefulWidget {
+  const CoinFound({
     super.key,
     this.initialWidth = 120,
     this.finalWidth = 200,
@@ -16,10 +16,10 @@ class CoinFounded extends StatefulWidget {
   final Duration animationDuration;
 
   @override
-  State<CoinFounded> createState() => _CoinFoundedState();
+  State<CoinFound> createState() => _CoinFoundedState();
 }
 
-class _CoinFoundedState extends State<CoinFounded> {
+class _CoinFoundedState extends State<CoinFound> {
   late double width;
 
   @override

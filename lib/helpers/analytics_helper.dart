@@ -16,6 +16,7 @@ enum AmplitudeEvent {
   buttonPressed('button_pressed'),
   qrCodeScanned('qr_code_scanned'),
   seeDonationHistoryPressed('see_donation_history_pressed'),
+  nfcScanned('nfc_scanned'),
   // drawerLongPressed('drawer_long_pressed'),
   // logoutPressed('logout_pressed'),
   ;
