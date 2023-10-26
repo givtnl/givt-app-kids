@@ -9,6 +9,7 @@ import 'package:givt_app_kids/features/coin_flow/screens/choose_amount_slider_co
 import 'package:givt_app_kids/features/coin_flow/screens/profile_selection_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
@@ -106,14 +107,20 @@ class AppRouter {
           ),
         ),
         GoRoute(
-          path: Pages.searchForCoin.path,
-          name: Pages.searchForCoin.name,
-          builder: (context, state) => BlocProvider<SearchCoinCubit>(
-            lazy: false,
-            create: (context) => SearchCoinCubit()..searchForCoin(),
-            child: const SearchForCoinScreen(),
-          ),
-        ),
+            path: Pages.searchForCoin.path,
+            name: Pages.searchForCoin.name,
+            builder: (context, state) {
+              final String mediumID = state.uri.queryParameters['code'] ??
+                  OrganisationDetailsCubit.defaultMediumId;
+              context
+                  .read<OrganisationDetailsCubit>()
+                  .getOrganisationDetails(mediumID);
+              return BlocProvider<SearchCoinCubit>(
+                lazy: false,
+                create: (context) => SearchCoinCubit()..startAnimation(),
+                child: const SearchForCoinScreen(),
+              );
+            }),
         GoRoute(
           path: Pages.profileSelectionCoin.path,
           name: Pages.profileSelectionCoin.name,
