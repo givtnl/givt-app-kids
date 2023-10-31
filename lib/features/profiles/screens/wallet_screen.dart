@@ -108,8 +108,6 @@ class _WalletScreenState extends State<WalletScreen>
                   ),
                   SizedBox(height: size.height * 0.01),
                   QrGiveButton(isActive: isGiveButtonActive),
-                  SizedBox(height: size.height * 0.01),
-                  const TestNFCButton(),
                   const FindCharityButton(),
                   SizedBox(height: size.height * 0.02),
                   hasDonations ? const HistoryHeader() : const SizedBox(),
@@ -127,6 +125,9 @@ class _WalletScreenState extends State<WalletScreen>
                           ),
                         )
                       : const SizedBox(),
+                  Spacer(),
+                  const TestNFCButton(),
+                  SizedBox(height: size.height * 0.01),
                 ],
               ),
             ],
