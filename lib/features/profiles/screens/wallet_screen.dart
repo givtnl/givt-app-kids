@@ -8,6 +8,7 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/find_charity_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/history_header.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
+import 'package:givt_app_kids/features/profiles/widgets/test_nfc_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/donation_item_widget.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
@@ -107,6 +108,8 @@ class _WalletScreenState extends State<WalletScreen>
                   ),
                   SizedBox(height: size.height * 0.01),
                   QrGiveButton(isActive: isGiveButtonActive),
+                  SizedBox(height: size.height * 0.01),
+                  const TestNFCButton(),
                   const FindCharityButton(),
                   SizedBox(height: size.height * 0.02),
                   hasDonations ? const HistoryHeader() : const SizedBox(),

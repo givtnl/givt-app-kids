@@ -33,6 +33,7 @@ dependencies:
   shared_preferences: ^2.0.15
   vibration: ^1.7.6
   visibility_detector: ^0.3.3
+  nfc_manager: ^3.3.0
 
 dev_dependencies:
   flutter_test:

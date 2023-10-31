@@ -20,6 +20,8 @@ import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
 import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
+import 'package:givt_app_kids/features/test_nfc/cubit/test_nfc_cubit.dart';
+import 'package:givt_app_kids/features/test_nfc/test_nfc_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
@@ -135,6 +137,14 @@ class AppRouter {
           path: Pages.successCoin.path,
           name: Pages.successCoin.name,
           builder: (context, state) => const SuccessCoinScreen(),
+        ),
+        GoRoute(
+          path: Pages.test.path,
+          name: Pages.test.name,
+          builder: (context, state) => BlocProvider(
+            create: (context) => TestNfcCubit()..testNfc(),
+            child: const TestNFCScanPage(),
+          ),
         ),
       ]);
 }
