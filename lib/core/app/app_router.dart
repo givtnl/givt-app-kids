@@ -25,6 +25,8 @@ import 'package:go_router/go_router.dart';
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
+  static bool homeShown = false;
+
   static GoRouter get router => _router;
   static final GoRouter _router = GoRouter(
       debugLogDiagnostics: true,
@@ -58,7 +60,10 @@ class AppRouter {
         GoRoute(
           path: Pages.wallet.path,
           name: Pages.wallet.name,
-          builder: (context, state) => const WalletScreen(),
+          builder: (context, state) {
+            AppRouter.homeShown = true;
+            return const WalletScreen();
+          },
         ),
         GoRoute(
           path: Pages.camera.path,

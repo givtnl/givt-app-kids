@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/app_router.dart';
 import 'package:givt_app_kids/core/app/route_utils.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_error_page.dart';
@@ -34,6 +35,16 @@ class SearchForCoinScreen extends StatelessWidget {
                     'goal_name': orgState.organisation.name,
                   });
               coinCubit.stopAnimation();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "HOME SHOWN: ${AppRouter.homeShown}",
+                    textAlign: TextAlign.center,
+                  ),
+                  backgroundColor: Theme.of(context).errorColor,
+                ),
+              );
             }
             if (orgState is OrganisationDetailsErrorState) {
               coinCubit.error();
@@ -75,6 +86,8 @@ class SearchForCoinScreen extends StatelessWidget {
 
                             context.pushReplacementNamed(
                                 Pages.profileSelectionCoin.name);
+
+                            AppRouter.homeShown = false;
                           },
                         )
                       : null,
