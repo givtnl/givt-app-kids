@@ -8,17 +8,29 @@ class TestNfcCubit extends Cubit<TestNfcState> {
   TestNfcCubit() : super(TestNfcInitial());
   void testNfc() async {
     emit(TestNfcScanning());
-    dynamic result;
+    String result = '';
 
     bool isAvailable = await NfcManager.instance.isAvailable();
 
     if (isAvailable) {
       await NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-        result = tag.data;
-        NfcManager.instance.stopSession();
-      });
+        Ndef? ndef = Ndef.from(tag);
 
-      emit(TestNfcScanned(result: result.toString()));
+        if (ndef == null) {
+          result = 'Tag is not compatible with NDEF';
+          return;
+        }
+        final cachedMessage = ndef.cachedMessage;
+        if (cachedMessage == null) {
+          result = 'No records found on this tag';
+          return;
+        }
+        result =
+            'There are ${cachedMessage.records.length.toString()} cached records on this tag';
+      });
+      NfcManager.instance.stopSession();
+
+      emit(TestNfcScanned(result: result));
     }
 
     if (!isAvailable) {
