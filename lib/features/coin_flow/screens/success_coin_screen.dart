@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:go_router/go_router.dart';

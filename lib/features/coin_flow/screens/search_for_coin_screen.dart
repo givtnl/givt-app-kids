@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/flows.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_error_page.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_found_page.dart';
@@ -73,8 +74,10 @@ class SearchForCoinScreen extends StatelessWidget {
                                   'screen_name': Pages.searchForCoin.name,
                                 });
 
-                            context.pushReplacementNamed(
-                                Pages.profileSelectionCoin.name);
+                            context.pushNamed(
+                              Pages.profileSelection.name,
+                              extra: Flows.coin,
+                            );
                           },
                         )
                       : null,

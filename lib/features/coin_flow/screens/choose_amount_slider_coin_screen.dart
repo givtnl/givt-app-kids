@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
@@ -15,9 +15,8 @@ import 'package:givt_app_kids/features/giving_flow/create_transaction/models/tra
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 
-import 'package:givt_app_kids/shared/widgets/back_button.dart'
-    as custom_widgets;
 import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderCoinScreen extends StatefulWidget {
@@ -86,7 +85,7 @@ class _ChooseAmountSliderCoinScreenState
                 SizedBox(height: 35),
                 Row(
                   children: [
-                    custom_widgets.BackButton(),
+                    GivtBackButton(),
                     Spacer(),
                     Padding(
                       padding: EdgeInsets.only(right: 15),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
-
-import 'package:givt_app_kids/shared/widgets/back_button.dart'
-    as custom_widgets;
 
 class CameraQrHeader extends StatelessWidget {
   const CameraQrHeader({super.key});
@@ -15,7 +13,7 @@ class CameraQrHeader extends StatelessWidget {
         width: double.infinity,
         child: const Row(
           children: [
-            custom_widgets.BackButton(),
+            GivtBackButton(),
             Expanded(
               child: Heading2(
                 text: "Scan the Givt\nQR code",

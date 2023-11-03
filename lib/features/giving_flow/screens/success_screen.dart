@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:go_router/go_router.dart';
