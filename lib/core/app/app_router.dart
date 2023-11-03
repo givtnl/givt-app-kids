@@ -114,18 +114,20 @@ class AppRouter {
         GoRoute(
             path: Pages.searchForCoin.path,
             name: Pages.searchForCoin.name,
-            builder: (context, state) {
-              final String mediumID = state.uri.queryParameters['code'] ??
-                  OrganisationDetailsCubit.defaultMediumId;
-              context
-                  .read<OrganisationDetailsCubit>()
-                  .getOrganisationDetails(mediumID);
-              return BlocProvider<SearchCoinCubit>(
-                lazy: false,
-                create: (context) => SearchCoinCubit()..startAnimation(),
-                child: const SearchForCoinScreen(),
-              );
-            }),
+            builder: AppRouter.homeShown
+                ? null
+                : (context, state) {
+                    final String mediumID = state.uri.queryParameters['code'] ??
+                        OrganisationDetailsCubit.defaultMediumId;
+                    context
+                        .read<OrganisationDetailsCubit>()
+                        .getOrganisationDetails(mediumID);
+                    return BlocProvider<SearchCoinCubit>(
+                      lazy: false,
+                      create: (context) => SearchCoinCubit()..startAnimation(),
+                      child: const SearchForCoinScreen(),
+                    );
+                  }),
         GoRoute(
           path: Pages.profileSelectionCoin.path,
           name: Pages.profileSelectionCoin.name,
