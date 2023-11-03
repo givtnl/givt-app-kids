@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
@@ -13,10 +13,9 @@ import 'package:givt_app_kids/features/giving_flow/organisation_details/models/o
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
-import 'package:givt_app_kids/shared/widgets/back_button.dart'
-    as custom_widgets;
 import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderScreen extends StatefulWidget {
@@ -82,7 +81,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                     SizedBox(height: 15),
                     Row(
                       children: [
-                        custom_widgets.BackButton(),
+                        GivtBackButton(),
                         Spacer(),
                         Wallet(),
                       ],

@@ -9,6 +9,7 @@ import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/or
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'app_config.dart';
 
 class GivtApp extends StatelessWidget {
@@ -57,9 +58,7 @@ class _AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColor: const Color.fromARGB(255, 62, 73, 112),
-          fontFamily: "Raleway"),
+      theme: AppTheme.lightTheme,
       routeInformationProvider: AppRouter.router.routeInformationProvider,
       routeInformationParser: AppRouter.router.routeInformationParser,
       routerDelegate: AppRouter.router.routerDelegate,

@@ -59,6 +59,10 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     ));
   }
 
+  void clearProfiles() {
+    emit(const ProfilesInitialState());
+  }
+
   @override
   ProfilesState? fromJson(Map<String, dynamic> json) {
     log('fromJSON: $json');

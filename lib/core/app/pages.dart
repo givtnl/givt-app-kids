@@ -13,8 +13,6 @@ enum Pages {
   history(path: '/history', name: 'HISTORY'),
   //coin flow
   searchForCoin(path: '/search-for-coin', name: 'SEARCH_FOR_COIN'),
-  profileSelectionCoin(
-      path: '/profile-selection-coin', name: 'PROFILE_SELECTION_COIN'),
   chooseAmountSliderCoin(
       path: '/choose-amount-slider-coin', name: 'CHOOSE_AMOUNT_SLIDER_COIN'),
   successCoin(path: '/success-coin', name: 'SUCCESS_COIN'),

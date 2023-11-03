@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/find_charity_button.dart';
@@ -136,7 +136,7 @@ class _WalletScreenState extends State<WalletScreen>
         fab: ProfileSwitchButton(
             name: state.activeProfile.firstName,
             onClicked: () {
-              context.pushReplacementNamed(Pages.profileSelection.name);
+              context.pushNamed(Pages.profileSelection.name);
 
               AnalyticsHelper.logEvent(
                 eventName: AmplitudeEvent.profileSwitchPressed,
