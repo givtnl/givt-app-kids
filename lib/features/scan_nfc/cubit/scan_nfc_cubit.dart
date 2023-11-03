@@ -54,12 +54,12 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
             }
           }
         }
-        NfcManager.instance.stopSession();
       });
     } catch (e) {
       emit(state.copyWith(
           scanNFCStatus: ScanNFCStatus.error,
           coinAnimationStatus: CoinAnimationStatus.stoped));
     }
+    NfcManager.instance.stopSession();
   }
 }
