@@ -9,7 +9,6 @@ import 'package:givt_app_kids/features/profiles/widgets/find_charity_button.dart
 import 'package:givt_app_kids/features/profiles/widgets/history_header.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/test_nfc_button.dart';
-import 'package:givt_app_kids/features/profiles/widgets/test_nfc_ios_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/donation_item_widget.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
@@ -127,21 +126,7 @@ class _WalletScreenState extends State<WalletScreen>
                         )
                       : const SizedBox(),
                   const Spacer(),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: TestNFCButton(),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: TestNFCiOSButton(),
-                      ),
-                    ],
-                  ),
+                  const TestNFCButton(),
                   SizedBox(height: size.height * 0.01),
                 ],
               ),
