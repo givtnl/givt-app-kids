@@ -9,6 +9,9 @@ class AppTheme {
 
   static const defaultTextColor = Color(0xFF3B3240);
 
+  static final historyAllowanceColor =
+      const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
+
   static final ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
     primaryColor: const Color.fromARGB(255, 62, 73, 112),
