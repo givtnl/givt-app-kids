@@ -28,8 +28,6 @@ class ChooseAmountSliderScreen extends StatefulWidget {
     this.flow = Flows.main,
   }) : super(key: key);
 
-  static const int maxVivibleProfiles = 4;
-
   final Flows flow;
 
   @override
