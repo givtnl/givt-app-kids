@@ -8,7 +8,7 @@ class TestNFCButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () => context.goNamed(Pages.scanNFC.name),
+        onPressed: () => context.pushNamed(Pages.scanNFC.name),
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.maxFinite, 60),
           shape: RoundedRectangleBorder(

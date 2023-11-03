@@ -5,7 +5,7 @@ import 'package:givt_app_kids/features/coin_flow/widgets/coin_found.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/search_coin_animated_widget.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/start_scan_nfc_button.dart';
-import 'package:givt_app_kids/shared/widgets/back_button.dart' as shared;
+import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 
 class NFCScanPage extends StatelessWidget {
   const NFCScanPage({super.key});
@@ -16,7 +16,7 @@ class NFCScanPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: const shared.BackButton(),
+        leading: const GivtBackButton(),
       ),
       body: BlocBuilder<ScanNfcCubit, ScanNfcState>(
         builder: (context, state) {
