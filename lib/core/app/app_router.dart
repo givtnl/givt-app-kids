@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/flows.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/choose_amount_slider_coin_screen.dart';
-import 'package:givt_app_kids/features/coin_flow/screens/profile_selection_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -55,7 +55,13 @@ class AppRouter {
         GoRoute(
           path: Pages.profileSelection.path,
           name: Pages.profileSelection.name,
-          builder: (context, state) => const ProfileSelectionScreen(),
+          builder: (context, state) {
+            final flow =
+                state.extra != null ? state.extra as Flows : Flows.main;
+            return ProfileSelectionScreen(
+              flow: flow,
+            );
+          },
         ),
         GoRoute(
           path: Pages.wallet.path,
@@ -123,11 +129,6 @@ class AppRouter {
                 child: const SearchForCoinScreen(),
               );
             }),
-        GoRoute(
-          path: Pages.profileSelectionCoin.path,
-          name: Pages.profileSelectionCoin.name,
-          builder: (context, state) => const ProfileSelectionCoinScreen(),
-        ),
         GoRoute(
           path: Pages.chooseAmountSliderCoin.path,
           name: Pages.chooseAmountSliderCoin.name,
