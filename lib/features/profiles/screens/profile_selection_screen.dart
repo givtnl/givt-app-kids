@@ -76,7 +76,10 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                 return;
               }
 
-              context.pushNamed(Pages.chooseAmountSliderCoin.name);
+              context.pushNamed(
+                Pages.chooseAmountSlider.name,
+                extra: widget.flow,
+              );
             } else {
               context.pushReplacementNamed(Pages.wallet.name);
             }

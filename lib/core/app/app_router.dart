@@ -6,7 +6,6 @@ import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
-import 'package:givt_app_kids/features/coin_flow/screens/choose_amount_slider_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -76,7 +75,11 @@ class AppRouter {
         GoRoute(
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
-          builder: (context, state) => const ChooseAmountSliderScreen(),
+          builder: (context, state) {
+            final flow =
+                state.extra != null ? state.extra as Flows : Flows.main;
+            return ChooseAmountSliderScreen(flow: flow);
+          },
         ),
         GoRoute(
           path: Pages.success.path,
@@ -129,11 +132,6 @@ class AppRouter {
                 child: const SearchForCoinScreen(),
               );
             }),
-        GoRoute(
-          path: Pages.chooseAmountSliderCoin.path,
-          name: Pages.chooseAmountSliderCoin.name,
-          builder: (context, state) => const ChooseAmountSliderCoinScreen(),
-        ),
         GoRoute(
           path: Pages.successCoin.path,
           name: Pages.successCoin.name,
