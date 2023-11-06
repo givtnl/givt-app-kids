@@ -8,6 +8,7 @@ class AppTheme {
   static const backButtonColor = Color(0xFFBFDBFC);
 
   static const defaultTextColor = Color(0xFF3B3240);
+  static const greyButtonColor = Color(0xFFAAAAAA);
 
   static const actionButtonStyle = TextStyle(
     fontSize: 26,

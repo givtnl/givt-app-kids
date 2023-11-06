@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
 part 'scan_nfc_state.dart';
@@ -32,8 +33,10 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     ));
     try {
       NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-        log('ios coin discovered: ${tag.data}');
+        log('coin discovered: ${tag.data}');
         var ndef = Ndef.from(tag);
+        String mediumId = OrganisationDetailsCubit.defaultMediumId;
+
         if (ndef != null && ndef.cachedMessage != null) {
           if (ndef.cachedMessage!.records.isNotEmpty &&
               ndef.cachedMessage!.records.first.typeNameFormat ==
@@ -45,19 +48,19 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
               final languageCodeAndContentText =
                   utf8.decode(languageCodeAndContentBytes);
               final payload = languageCodeAndContentText.substring(2);
-              log('ios coin payload: $payload');
-              emit(state.copyWith(
-                  result: payload,
-                  scanNFCStatus: ScanNFCStatus.scanned,
-                  coinAnimationStatus: CoinAnimationStatus.stoped));
+              log('coin payload: $payload');
+              Uri uri = Uri.parse(payload);
+              mediumId = uri.queryParameters['code'] ?? mediumId;
             } else {
               final decoded = utf8.decode(wellKnownRecord.payload);
-              log('ios coin decoded: $decoded');
-              emit(state.copyWith(
-                  result: decoded,
-                  scanNFCStatus: ScanNFCStatus.scanned,
-                  coinAnimationStatus: CoinAnimationStatus.stoped));
+              log('coin decoded: $decoded');
+              Uri uri = Uri.parse(decoded);
+              mediumId = uri.queryParameters['code'] ?? mediumId;
             }
+            emit(state.copyWith(
+                result: mediumId,
+                scanNFCStatus: ScanNFCStatus.scanned,
+                coinAnimationStatus: CoinAnimationStatus.stoped));
           }
         }
       });
