@@ -4,14 +4,21 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/flows.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({
+    Key? key,
+    this.flow = Flows.main,
+  }) : super(key: key);
+
+  final Flows flow;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -33,18 +40,16 @@ class _LoginScreenState extends State<LoginScreen> {
       listener: (context, state) {
         log('auth state changed on $state');
         if (state is ExternalErrorState) {
-          log(state.errorMessage);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                "Cannot login. Please try again later.",
-                textAlign: TextAlign.center,
-              ),
-              backgroundColor: Theme.of(context).errorColor,
-            ),
+          SnackBarHelper.showMessage(
+            context,
+            text: 'Cannot login. Please try again later.',
+            isError: true,
           );
         } else if (state is LoggedInState) {
-          context.pushReplacementNamed(Pages.profileSelection.name);
+          context.pushReplacementNamed(
+            Pages.profileSelection.name,
+            extra: widget.flow,
+          );
         }
       },
       builder: (context, state) => Scaffold(

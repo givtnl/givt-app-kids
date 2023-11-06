@@ -80,7 +80,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
           final size = MediaQuery.sizeOf(context);
           return Scaffold(
             appBar: AppBar(
-              toolbarHeight: 85,
+              toolbarHeight: widget.flow == Flows.main ? 85 : null,
               automaticallyImplyLeading: false,
               leading: const GivtBackButton(),
               actions: [
