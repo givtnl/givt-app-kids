@@ -14,6 +14,7 @@ enum Pages {
   //coin flow
   searchForCoin(path: '/search-for-coin', name: 'SEARCH_FOR_COIN'),
   successCoin(path: '/success-coin', name: 'SUCCESS_COIN'),
+  redirectPopPage(path: '/redirect-pop-page', name: 'REDIRECT_POP_PAGE'),
   ;
 
   final String path;

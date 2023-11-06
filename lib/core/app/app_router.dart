@@ -21,15 +21,20 @@ import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit
 import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
+import 'package:givt_app_kids/features/scan_nfc/widgets/redirect_widget.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
+  static bool ignoreCoinFlow = false;
 
   static GoRouter get router => _router;
   static final GoRouter _router = GoRouter(
       debugLogDiagnostics: true,
       navigatorKey: _rootNavigatorKey,
+      observers: [
+        GoRouterObserver(),
+      ],
       routes: [
         GoRoute(
           path: Pages.splash.path,
@@ -126,6 +131,8 @@ class AppRouter {
         GoRoute(
             path: Pages.searchForCoin.path,
             name: Pages.searchForCoin.name,
+            redirect: (context, state) =>
+                AppRouter.ignoreCoinFlow ? Pages.redirectPopPage.path : null,
             builder: (context, state) {
               final String mediumID = state.uri.queryParameters['code'] ??
                   OrganisationDetailsCubit.defaultMediumId;
@@ -144,12 +151,30 @@ class AppRouter {
           builder: (context, state) => const SuccessCoinScreen(),
         ),
         GoRoute(
-          path: Pages.scanNFC.path,
-          name: Pages.scanNFC.name,
-          builder: (context, state) => BlocProvider(
-            create: (context) => ScanNfcCubit()..startAnimation(),
-            child: const NFCScanPage(),
-          ),
+            path: Pages.scanNFC.path,
+            name: Pages.scanNFC.name,
+            builder: (context, state) {
+              AppRouter.ignoreCoinFlow = true;
+              return BlocProvider(
+                create: (context) => ScanNfcCubit()..startAnimation(),
+                child: const NFCScanPage(),
+              );
+            }),
+        GoRoute(
+          path: Pages.redirectPopPage.path,
+          name: Pages.redirectPopPage.name,
+          builder: (context, state) => const RedirectPopWidget(),
         ),
       ]);
+}
+
+class GoRouterObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    if (previousRoute?.settings.name == Pages.scanNFC.name) {
+      /// Clear static flag when
+      /// user navigates away from scanning page
+      AppRouter.ignoreCoinFlow = false;
+    }
+  }
 }

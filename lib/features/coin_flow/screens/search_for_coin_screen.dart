@@ -55,7 +55,7 @@ class SearchForCoinScreen extends StatelessWidget {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
               floatingActionButton: coinState.status ==
-                      CoinAnimationStatus.stoped
+                      CoinAnimationStatus.stopped
                   ? FloatingActoinButton(
                       text: "Assign the coin",
                       onPressed: () {

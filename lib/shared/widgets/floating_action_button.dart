@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class FloatingActoinButton extends StatelessWidget {
   const FloatingActoinButton({
@@ -25,8 +26,8 @@ class FloatingActoinButton extends StatelessWidget {
         width: double.infinity,
         alignment: Alignment.center,
         padding: const EdgeInsets.only(
-          left: 40,
-          right: 40,
+          left: 20,
+          right: 20,
         ),
         child: ElevatedButton(
           onPressed: onPressed,
@@ -53,11 +54,7 @@ class FloatingActoinButton extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                   child: Text(
                     text,
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: foregroundColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: AppTheme.actionButtonStyle,
                   ),
                 ),
         ),
