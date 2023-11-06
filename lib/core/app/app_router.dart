@@ -54,7 +54,13 @@ class AppRouter {
         GoRoute(
           path: Pages.login.path,
           name: Pages.login.name,
-          builder: (context, state) => const LoginScreen(),
+          builder: (context, state) {
+            final flow =
+                state.extra != null ? state.extra as Flows : Flows.main;
+            return LoginScreen(
+              flow: flow,
+            );
+          },
         ),
         GoRoute(
           path: Pages.profileSelection.path,
