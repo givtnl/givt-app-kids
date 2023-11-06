@@ -33,7 +33,7 @@ class ScanningNfcAnimation extends StatelessWidget {
           ),
           onPressed: () {
             context.pop();
-            scanNfcCubit.stopSimulation();
+            scanNfcCubit.stopScanning();
           },
           child: const Text(
             'Cancel',

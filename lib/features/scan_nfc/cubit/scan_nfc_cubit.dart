@@ -21,7 +21,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     ));
   }
 
-  void stopSimulation() {
+  void stopScanning() {
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.initial,
     ));
@@ -62,14 +62,14 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
                 emit(state.copyWith(
                     result: mediumId,
                     scanNFCStatus: ScanNFCStatus.scanned,
-                    coinAnimationStatus: CoinAnimationStatus.stoped));
+                    coinAnimationStatus: CoinAnimationStatus.stopped));
               }
             }
           });
     } catch (e) {
       emit(state.copyWith(
           scanNFCStatus: ScanNFCStatus.error,
-          coinAnimationStatus: CoinAnimationStatus.stoped));
+          coinAnimationStatus: CoinAnimationStatus.stopped));
     }
     NfcManager.instance.stopSession();
   }

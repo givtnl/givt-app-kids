@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:go_router/go_router.dart';
 
 class RedirectPopWidget extends StatefulWidget {
@@ -17,8 +18,10 @@ class _RedirectPopWidgetState extends State<RedirectPopWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('USER SHOULD NOT SEE THIS SCRREN'),
+    return Center(
+      child: ElevatedButton(
+          onPressed: () => context.goNamed(Pages.splash.name),
+          child: Text('Go Home')),
     );
   }
 }
