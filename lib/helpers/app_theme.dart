@@ -9,6 +9,12 @@ class AppTheme {
 
   static const defaultTextColor = Color(0xFF3B3240);
 
+  static const actionButtonStyle = TextStyle(
+    fontSize: 26,
+    fontWeight: FontWeight.bold,
+    color: Color(0xFFF1EAE2),
+  );
+
   static final ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
     primaryColor: const Color.fromARGB(255, 62, 73, 112),

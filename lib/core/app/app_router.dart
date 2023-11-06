@@ -26,6 +26,7 @@ import 'package:go_router/go_router.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
+  static bool ignoreCoinFlow = false;
 
   static GoRouter get router => _router;
   static final GoRouter _router = GoRouter(
@@ -117,18 +118,20 @@ class AppRouter {
         GoRoute(
             path: Pages.searchForCoin.path,
             name: Pages.searchForCoin.name,
-            builder: (context, state) {
-              final String mediumID = state.uri.queryParameters['code'] ??
-                  OrganisationDetailsCubit.defaultMediumId;
-              context
-                  .read<OrganisationDetailsCubit>()
-                  .getOrganisationDetails(mediumID);
-              return BlocProvider<SearchCoinCubit>(
-                lazy: false,
-                create: (context) => SearchCoinCubit()..startAnimation(),
-                child: const SearchForCoinScreen(),
-              );
-            }),
+            builder: AppRouter.ignoreCoinFlow
+                ? null
+                : (context, state) {
+                    final String mediumID = state.uri.queryParameters['code'] ??
+                        OrganisationDetailsCubit.defaultMediumId;
+                    context
+                        .read<OrganisationDetailsCubit>()
+                        .getOrganisationDetails(mediumID);
+                    return BlocProvider<SearchCoinCubit>(
+                      lazy: false,
+                      create: (context) => SearchCoinCubit()..startAnimation(),
+                      child: const SearchForCoinScreen(),
+                    );
+                  }),
         GoRoute(
           path: Pages.chooseAmountSliderCoin.path,
           name: Pages.chooseAmountSliderCoin.name,
@@ -140,12 +143,14 @@ class AppRouter {
           builder: (context, state) => const SuccessCoinScreen(),
         ),
         GoRoute(
-          path: Pages.scanNFC.path,
-          name: Pages.scanNFC.name,
-          builder: (context, state) => BlocProvider(
-            create: (context) => ScanNfcCubit()..startAnimation(),
-            child: const NFCScanPage(),
-          ),
-        ),
+            path: Pages.scanNFC.path,
+            name: Pages.scanNFC.name,
+            builder: (context, state) {
+              AppRouter.ignoreCoinFlow = true;
+              return BlocProvider(
+                create: (context) => ScanNfcCubit()..startAnimation(),
+                child: const NFCScanPage(),
+              );
+            }),
       ]);
 }

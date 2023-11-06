@@ -20,7 +20,13 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     ));
   }
 
-  void tagRead() {
+  void stopSimulation() {
+    emit(state.copyWith(
+      scanNFCStatus: ScanNFCStatus.initial,
+    ));
+  }
+
+  void tagRead() async {
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
