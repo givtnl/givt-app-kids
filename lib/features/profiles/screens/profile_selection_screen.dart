@@ -132,9 +132,9 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                               left: 50,
                               right: 50,
                               top: size.height * 0.10,
-                              bottom: size.height * 0.01),
+                              bottom: size.height * 0.03),
                           child: const Text(
-                            'Who would like to\ngive the coin?',
+                            'Who would like to give?',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: AppTheme.defaultTextColor,
