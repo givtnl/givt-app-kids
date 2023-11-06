@@ -21,6 +21,7 @@ import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit
 import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
+import 'package:givt_app_kids/features/scan_nfc/widgets/redirect_widget.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
@@ -31,6 +32,9 @@ class AppRouter {
   static final GoRouter _router = GoRouter(
       debugLogDiagnostics: true,
       navigatorKey: _rootNavigatorKey,
+      observers: [
+        GoRouterObserver(),
+      ],
       routes: [
         GoRoute(
           path: Pages.splash.path,
@@ -122,21 +126,19 @@ class AppRouter {
             path: Pages.searchForCoin.path,
             name: Pages.searchForCoin.name,
             redirect: (context, state) =>
-                AppRouter.ignoreCoinFlow ? Pages.scanNFC.path : null,
-            builder: AppRouter.ignoreCoinFlow
-                ? null
-                : (context, state) {
-                    final String mediumID = state.uri.queryParameters['code'] ??
-                        OrganisationDetailsCubit.defaultMediumId;
-                    context
-                        .read<OrganisationDetailsCubit>()
-                        .getOrganisationDetails(mediumID);
-                    return BlocProvider<SearchCoinCubit>(
-                      lazy: false,
-                      create: (context) => SearchCoinCubit()..startAnimation(),
-                      child: const SearchForCoinScreen(),
-                    );
-                  }),
+                AppRouter.ignoreCoinFlow ? Pages.redirectPopPage.path : null,
+            builder: (context, state) {
+              final String mediumID = state.uri.queryParameters['code'] ??
+                  OrganisationDetailsCubit.defaultMediumId;
+              context
+                  .read<OrganisationDetailsCubit>()
+                  .getOrganisationDetails(mediumID);
+              return BlocProvider<SearchCoinCubit>(
+                lazy: false,
+                create: (context) => SearchCoinCubit()..startAnimation(),
+                child: const SearchForCoinScreen(),
+              );
+            }),
         GoRoute(
           path: Pages.successCoin.path,
           name: Pages.successCoin.name,
@@ -152,5 +154,21 @@ class AppRouter {
                 child: const NFCScanPage(),
               );
             }),
+        GoRoute(
+          path: Pages.redirectPopPage.path,
+          name: Pages.redirectPopPage.name,
+          builder: (context, state) => const RedirectPopWidget(),
+        ),
       ]);
+}
+
+class GoRouterObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    if (previousRoute?.settings.name == Pages.scanNFC.name) {
+      /// Clear static flag when
+      /// user navigates away from scanning page
+      AppRouter.ignoreCoinFlow = false;
+    }
+  }
 }
