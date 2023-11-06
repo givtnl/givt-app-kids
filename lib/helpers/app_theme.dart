@@ -14,6 +14,8 @@ class AppTheme {
     fontWeight: FontWeight.bold,
     color: Color(0xFFF1EAE2),
   );
+  static final historyAllowanceColor =
+      const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
 
   static final ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,

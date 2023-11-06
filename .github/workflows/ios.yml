@@ -11,9 +11,6 @@ on:
       CODESIGNING_DEPLOY_KEY:
         required: true
     inputs:
-      ruby-version:
-        required: true
-        type: string
       flutter-version:
         required: true
         type: string
@@ -38,12 +35,11 @@ jobs:
           fi
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.118.0
+        uses: ruby/setup-ruby@v1
         with: 
-          ruby-version: ${{ inputs.ruby-version }}
           bundler-cache: true
 
       - name: Auth codesigning

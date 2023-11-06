@@ -11,7 +11,6 @@ class CameraScreenFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFFEEEDE4),
         body: Column(
           children: [
             const CameraQrHeader(),

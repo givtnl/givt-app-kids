@@ -29,7 +29,7 @@ class QrGiveButton extends StatelessWidget {
                         .wallet
                         .balance,
                   });
-              context.pushNamed(Pages.scanNFC.name);
+              context.pushNamed(Pages.camera.name);
             }
           : null,
       style: ElevatedButton.styleFrom(

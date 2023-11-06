@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/features/history/models/allowance.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/datetime_extension.dart';
 
 class AllowanceItemWidget extends StatelessWidget {
@@ -12,7 +13,7 @@ class AllowanceItemWidget extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-      color: Colors.white,
+      color: AppTheme.historyAllowanceColor,
       child: Row(
         children: [
           SvgPicture.asset('assets/images/donation_states_added.svg'),

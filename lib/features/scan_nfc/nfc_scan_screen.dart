@@ -105,7 +105,7 @@ class NFCScanPage extends StatelessWidget {
                             .read<OrganisationDetailsCubit>()
                             .getOrganisationDetails(state.result);
                         context.pushReplacementNamed(
-                            Pages.chooseAmountSliderCoin.name);
+                            Pages.chooseAmountSlider.name);
                       },
                       child: const Text(
                         'Choose an amount',
@@ -194,7 +194,7 @@ class FoundNfcAnimation extends StatelessWidget {
             context
                 .read<OrganisationDetailsCubit>()
                 .getOrganisationDetails(scanNfcCubit.state.result);
-            context.pushReplacementNamed(Pages.chooseAmountSliderCoin.name);
+            context.pushReplacementNamed(Pages.chooseAmountSlider.name);
           },
           child: const Text(
             'Choose an amount',
