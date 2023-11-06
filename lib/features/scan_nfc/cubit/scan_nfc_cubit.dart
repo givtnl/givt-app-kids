@@ -32,38 +32,40 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
     try {
-      NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-        log('coin discovered: ${tag.data}');
-        var ndef = Ndef.from(tag);
-        String mediumId = OrganisationDetailsCubit.defaultMediumId;
+      NfcManager.instance.startSession(
+          alertMessage: 'Tap your coin to the top\nof the iPhone',
+          onDiscovered: (NfcTag tag) async {
+            log('coin discovered: ${tag.data}');
+            var ndef = Ndef.from(tag);
+            String mediumId = OrganisationDetailsCubit.defaultMediumId;
 
-        if (ndef != null && ndef.cachedMessage != null) {
-          if (ndef.cachedMessage!.records.isNotEmpty &&
-              ndef.cachedMessage!.records.first.typeNameFormat ==
-                  NdefTypeNameFormat.nfcWellknown) {
-            final wellKnownRecord = ndef.cachedMessage!.records.first;
-            if (wellKnownRecord.payload.first == 0x02) {
-              final languageCodeAndContentBytes =
-                  wellKnownRecord.payload.skip(1).toList();
-              final languageCodeAndContentText =
-                  utf8.decode(languageCodeAndContentBytes);
-              final payload = languageCodeAndContentText.substring(2);
-              log('coin payload: $payload');
-              Uri uri = Uri.parse(payload);
-              mediumId = uri.queryParameters['code'] ?? mediumId;
-            } else {
-              final decoded = utf8.decode(wellKnownRecord.payload);
-              log('coin decoded: $decoded');
-              Uri uri = Uri.parse(decoded);
-              mediumId = uri.queryParameters['code'] ?? mediumId;
+            if (ndef != null && ndef.cachedMessage != null) {
+              if (ndef.cachedMessage!.records.isNotEmpty &&
+                  ndef.cachedMessage!.records.first.typeNameFormat ==
+                      NdefTypeNameFormat.nfcWellknown) {
+                final wellKnownRecord = ndef.cachedMessage!.records.first;
+                if (wellKnownRecord.payload.first == 0x02) {
+                  final languageCodeAndContentBytes =
+                      wellKnownRecord.payload.skip(1).toList();
+                  final languageCodeAndContentText =
+                      utf8.decode(languageCodeAndContentBytes);
+                  final payload = languageCodeAndContentText.substring(2);
+                  log('coin payload: $payload');
+                  Uri uri = Uri.parse(payload);
+                  mediumId = uri.queryParameters['code'] ?? mediumId;
+                } else {
+                  final decoded = utf8.decode(wellKnownRecord.payload);
+                  log('coin decoded: $decoded');
+                  Uri uri = Uri.parse(decoded);
+                  mediumId = uri.queryParameters['code'] ?? mediumId;
+                }
+                emit(state.copyWith(
+                    result: mediumId,
+                    scanNFCStatus: ScanNFCStatus.scanned,
+                    coinAnimationStatus: CoinAnimationStatus.stoped));
+              }
             }
-            emit(state.copyWith(
-                result: mediumId,
-                scanNFCStatus: ScanNFCStatus.scanned,
-                coinAnimationStatus: CoinAnimationStatus.stoped));
-          }
-        }
-      });
+          });
     } catch (e) {
       emit(state.copyWith(
           scanNFCStatus: ScanNFCStatus.error,
