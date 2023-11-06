@@ -3,11 +3,20 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static const givt4KidsBlue = Color(0xFF54A1EE);
   static const givt4KidsRed = Color(0xFFD53D4C);
+  static const givt4KidsYellow = Color(0xFFF2DF7F);
 
   static const logoutButtonColor = Color(0xFFD53D4C);
   static const backButtonColor = Color(0xFFBFDBFC);
+  static const walletBackgroundColor = Color(0xFFF1F7FF);
+
+  static const lightPurple = Color(0xFFF9F6FD);
+  static const darkPurpleText = Color(0xFF7957A2);
+
+  static const lightYellow = Color(0xFFFFF7CC);
+  static const darkYellowText = Color(0xFF89610F);
 
   static const defaultTextColor = Color(0xFF3B3240);
+  static const darkBlueTextColor = Color(0xFF06509B);
   static const greyButtonColor = Color(0xFFAAAAAA);
 
   static const actionButtonStyle = TextStyle(

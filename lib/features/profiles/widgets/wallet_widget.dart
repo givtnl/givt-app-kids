@@ -1,6 +1,7 @@
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class WalletWidget extends StatelessWidget {
   const WalletWidget({
@@ -16,10 +17,10 @@ class WalletWidget extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.only(top: 25, bottom: 10, right: 0),
+          padding: const EdgeInsets.only(top: 25, bottom: 25, right: 0),
           margin: const EdgeInsets.only(bottom: 15, top: 15),
           decoration: const BoxDecoration(
-            color: Color(0xFF54A1EE),
+            color: AppTheme.walletBackgroundColor,
             borderRadius: BorderRadius.all(
               Radius.circular(
                 10,
@@ -37,8 +38,8 @@ class WalletWidget extends StatelessWidget {
                       "Balance available",
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        color: AppTheme.darkBlueTextColor,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(
@@ -49,11 +50,11 @@ class WalletWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         const Text(
-                          "\$",
+                          "\$ ",
                           style: TextStyle(
-                            fontSize: 26,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: AppTheme.darkBlueTextColor,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                         Countup(
@@ -63,8 +64,8 @@ class WalletWidget extends StatelessWidget {
                           duration: const Duration(seconds: 3),
                           separator: '.',
                           style: const TextStyle(
-                            fontSize: 50,
-                            color: Colors.white,
+                            fontSize: 32,
+                            color: AppTheme.darkBlueTextColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

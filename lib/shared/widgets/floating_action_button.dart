@@ -8,12 +8,14 @@ class FloatingActoinButton extends StatelessWidget {
     this.backgroundColor = const Color(0xFF54A1EE),
     this.foregroundColor = Colors.white,
     this.isLoading = false,
+    this.padded = true,
     super.key,
   });
 
   final String text;
   final void Function()? onPressed;
   final bool isLoading;
+  final bool padded;
   final Color backgroundColor;
   final Color foregroundColor;
 
@@ -21,14 +23,16 @@ class FloatingActoinButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 55,
-      margin: const EdgeInsets.only(bottom: 25),
+      margin: EdgeInsets.only(bottom: padded ? 25 : 5),
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-        ),
+        padding: padded
+            ? const EdgeInsets.only(
+                left: 20,
+                right: 20,
+              )
+            : const EdgeInsets.all(0),
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
@@ -52,10 +56,10 @@ class FloatingActoinButton extends StatelessWidget {
                   alignment: Alignment.center,
                   padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                  child: Text(
-                    text,
-                    style: AppTheme.actionButtonStyle,
-                  ),
+                  child: Text(text,
+                      style: AppTheme.actionButtonStyle.copyWith(
+                        color: foregroundColor,
+                      )),
                 ),
         ),
       ),
