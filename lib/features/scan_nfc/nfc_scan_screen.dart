@@ -49,6 +49,7 @@ class NFCScanPage extends StatelessWidget {
                                   .state is OrganisationDetailsLoadingState,
                               onPressed: () => context.pushReplacementNamed(
                                   Pages.chooseAmountSlider.name),
+                              // CLEAR STATIC FLAG
                             );
                           },
                         );
@@ -103,6 +104,10 @@ class NFCScanPage extends StatelessWidget {
                 state.scanNFCStatus == ScanNFCStatus.error
                     ? const Text('Error scanning the coin')
                     : const Text(''),
+                ElevatedButton(
+                    onPressed: () =>
+                        context.pushNamed(Pages.searchForCoin.name),
+                    child: const Text('Search for coin')),
                 const Spacer(flex: 3),
               ],
             ),
@@ -116,6 +121,7 @@ class NFCScanPage extends StatelessWidget {
                           is OrganisationDetailsLoadingState,
                       onPressed: () => context
                           .pushReplacementNamed(Pages.chooseAmountSlider.name),
+                      // CLEAR STATIC FLAG
                     );
                   },
                 )

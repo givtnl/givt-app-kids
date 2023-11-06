@@ -121,6 +121,8 @@ class AppRouter {
         GoRoute(
             path: Pages.searchForCoin.path,
             name: Pages.searchForCoin.name,
+            redirect: (context, state) =>
+                AppRouter.ignoreCoinFlow ? Pages.scanNFC.path : null,
             builder: AppRouter.ignoreCoinFlow
                 ? null
                 : (context, state) {
