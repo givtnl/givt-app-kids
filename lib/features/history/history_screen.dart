@@ -29,7 +29,6 @@ class HistoryScreen extends StatelessWidget {
       }
     });
     return Scaffold(
-      backgroundColor: const Color(0xFFEEEDE4),
       appBar: const HistoryAppBar(),
       body: BlocBuilder<HistoryCubit, HistoryState>(
         builder: (context, state) {

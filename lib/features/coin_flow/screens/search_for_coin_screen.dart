@@ -52,7 +52,6 @@ class SearchForCoinScreen extends StatelessWidget {
           builder: (BuildContext context, orgState) {
             log('builder: orgState: $orgState');
             return Scaffold(
-              backgroundColor: const Color(0xFFEEEDE4),
               body: coinState.status == CoinAnimationStatus.animating
                   ? const SearchingForCoinPage()
                   : coinState.status == CoinAnimationStatus.error
