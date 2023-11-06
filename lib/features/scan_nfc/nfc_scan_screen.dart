@@ -116,8 +116,9 @@ class NFCScanPage extends StatelessWidget {
                       text: "Choose an amount",
                       isLoading: context.read<OrganisationDetailsCubit>().state
                           is OrganisationDetailsLoadingState,
-                      onPressed: () => context
-                          .pushReplacementNamed(Pages.chooseAmountSlider.name),
+                      onPressed: () => context.pushReplacementNamed(
+                          Pages.chooseAmountSlider.name,
+                          extra: Flows.coin),
                     );
                   },
                 )
