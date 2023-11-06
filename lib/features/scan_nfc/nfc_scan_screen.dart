@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/flows.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_found.dart';
@@ -48,7 +49,8 @@ class NFCScanPage extends StatelessWidget {
                                   .read<OrganisationDetailsCubit>()
                                   .state is OrganisationDetailsLoadingState,
                               onPressed: () => context.pushReplacementNamed(
-                                  Pages.chooseAmountSlider.name),
+                                  Pages.chooseAmountSlider.name,
+                                  extra: Flows.coin),
                             );
                           },
                         );
