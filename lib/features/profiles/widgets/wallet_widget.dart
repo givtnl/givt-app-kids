@@ -60,7 +60,6 @@ class WalletWidget extends StatelessWidget {
                         Countup(
                           begin: balance + countdownAmount,
                           end: balance,
-                          precision: 1,
                           duration: const Duration(seconds: 3),
                           separator: '.',
                           style: const TextStyle(
