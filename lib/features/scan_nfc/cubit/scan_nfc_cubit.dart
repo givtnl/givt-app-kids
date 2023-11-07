@@ -29,7 +29,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     ));
   }
 
-  void tagRead() async {
+  void tagRead() {
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
