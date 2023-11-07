@@ -34,6 +34,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
+        backgroundColor: AppTheme.successBackgroundLightBlue,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: AppTheme.successBackgroundLightBlue,
         ),

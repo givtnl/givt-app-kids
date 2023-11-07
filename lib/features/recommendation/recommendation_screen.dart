@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/ask_rec_button.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:go_router/go_router.dart';
 
 class RecommendationScreen extends StatelessWidget {
@@ -13,10 +14,8 @@ class RecommendationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: AppTheme.offWhite,
           toolbarHeight: 0,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Color(0xFFF5F5F5),
-          ),
         ),
         body: Stack(children: [
           Image.asset(
@@ -48,13 +47,10 @@ class RecommendationScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Text(
+                    Text(
                       'Don’t know which \ncharity to give to?',
-                      style: TextStyle(
-                        color: Color(0xFF3B3240),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 26,
-                      ),
+                      style: AppTheme.actionButtonStyle
+                          .copyWith(color: AppTheme.defaultTextColor),
                     ),
                     RichText(
                       textAlign: TextAlign.center,
