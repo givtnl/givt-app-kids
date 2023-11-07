@@ -47,6 +47,9 @@ class SearchForCoinScreen extends StatelessWidget {
           },
           builder: (BuildContext context, orgState) {
             return Scaffold(
+              appBar: AppBar(
+                toolbarHeight: 0,
+              ),
               body: coinState.status == CoinAnimationStatus.animating
                   ? const SearchingForCoinPage()
                   : coinState.status == CoinAnimationStatus.error

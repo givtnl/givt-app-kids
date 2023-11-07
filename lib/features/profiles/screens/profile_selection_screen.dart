@@ -115,9 +115,6 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.white,
-            ),
             leading: const GivtBackButton(),
             actions: [
               if (widget.flow == Flows.coin) const CoinWidget(),

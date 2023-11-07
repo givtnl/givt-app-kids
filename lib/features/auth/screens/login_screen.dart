@@ -56,9 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (context, state) => Scaffold(
         appBar: AppBar(
           toolbarHeight: 0,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.white,
-          ),
         ),
         body: SingleChildScrollView(
           child: Padding(

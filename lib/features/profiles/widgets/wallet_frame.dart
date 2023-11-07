@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class WalletFrame extends StatelessWidget {
   const WalletFrame({
@@ -14,9 +13,6 @@ class WalletFrame extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
-        ),
       ),
       body: SafeArea(
         child: Padding(
