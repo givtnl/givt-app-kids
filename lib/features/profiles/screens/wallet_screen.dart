@@ -135,7 +135,7 @@ class _WalletScreenState extends State<WalletScreen>
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            builder: (context) => const GiveBottomsheet(),
+                            builder: (context) => const GiveBottomSheet(),
                           ),
                         )
                       : const SizedBox(),

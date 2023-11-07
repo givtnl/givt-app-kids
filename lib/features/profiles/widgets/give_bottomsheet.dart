@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/features/profiles/widgets/giving_option_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:go_router/go_router.dart';
 
-class GiveBottomsheet extends StatelessWidget {
-  const GiveBottomsheet({super.key});
+class GiveBottomSheet extends StatelessWidget {
+  const GiveBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,23 +22,27 @@ class GiveBottomsheet extends StatelessWidget {
             direction: Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              givingOptionButton(
-                context,
-                size,
-                'Give with\na coin',
-                'assets/images/coin_action_button.svg',
-                AppTheme.lightYellow,
-                AppTheme.darkYellowText,
-                () => context.pushNamed(Pages.scanNFC.name),
+              GiveOptionButton(
+                context: context,
+                size: size,
+                text: 'Give with\na coin',
+                imageLocation: 'assets/images/coin_action_button.svg',
+                backgroundColor: AppTheme.darkYellowText,
+                secondColor: AppTheme.lightYellow,
+                onPressed: () {
+                  context.pop();
+                  context.pushNamed(Pages.scanNFC.name);
+                },
               ),
-              givingOptionButton(
-                context,
-                size,
-                'Give with\na QR code',
-                'assets/images/qrcode_action_button.svg',
-                AppTheme.lightPurple,
-                AppTheme.darkPurpleText,
-                () {
+              GiveOptionButton(
+                context: context,
+                size: size,
+                text: 'Give with\na QR code',
+                imageLocation: 'assets/images/qrcode_action_button.svg',
+                backgroundColor: AppTheme.darkPurpleText,
+                secondColor: AppTheme.lightPurple,
+                onPressed: () {
+                  context.pop();
                   AnalyticsHelper.logEvent(
                       eventName: AmplitudeEvent.iWantToGiveToPressed,
                       eventProperties: {
@@ -75,47 +79,4 @@ class GiveBottomsheet extends StatelessWidget {
       ),
     );
   }
-
-  Widget givingOptionButton(
-          BuildContext context,
-          Size size,
-          String text,
-          String imageLocation,
-          Color backgroundColor,
-          Color secondColor,
-          VoidCallback onPressed) =>
-      ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          backgroundColor: backgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(
-              color: secondColor.withOpacity(0.25),
-              width: 2,
-            ),
-          ),
-        ),
-        child: SizedBox(
-          width: size.width * 0.5 - size.width * 0.15,
-          height: size.width * 0.5 - size.width * 0.15,
-          child: Flex(
-            direction: Axis.vertical,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(imageLocation),
-              const SizedBox(height: 5),
-              Text(
-                text,
-                textAlign: TextAlign.center,
-                style: AppTheme.actionButtonStyle.copyWith(
-                  fontSize: 20,
-                  color: secondColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
 }
