@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
 
@@ -9,7 +10,7 @@ class CameraQrHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        color: const Color(0xFFEEEDE4),
+        color: AppTheme.offWhite,
         width: double.infinity,
         child: const Row(
           children: [
