@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppTheme {
   static const givt4KidsBlue = Color(0xFF54A1EE);
@@ -32,6 +33,11 @@ class AppTheme {
     primaryColor: const Color.fromARGB(255, 62, 73, 112),
     fontFamily: "Raleway",
     appBarTheme: const AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+        statusBarBrightness: Brightness.light, // For iOS (dark icons)
+      ),
       actionsIconTheme: IconThemeData(
         color: defaultTextColor,
       ),

@@ -11,6 +11,9 @@ class WalletFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(

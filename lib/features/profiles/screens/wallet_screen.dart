@@ -139,6 +139,7 @@ class _WalletScreenState extends State<WalletScreen>
                           ),
                         )
                       : const SizedBox(),
+                  SizedBox(height: size.height * 0.01),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
