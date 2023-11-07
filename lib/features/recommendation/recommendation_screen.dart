@@ -39,42 +39,44 @@ class RecommendationScreen extends StatelessWidget {
             alignment: Alignment.center,
           ),
           SafeArea(
-            child: SizedBox(
-              width: double.infinity,
-              child: BlocBuilder<RecommendationCubit, RecommendationState>(
-                builder: (context, state) {
-                  return Column(
-                    children: [
-                      Text(
-                        'Don’t know which \ncharity to give to?',
-                        style: AppTheme.actionButtonStyle
-                            .copyWith(color: AppTheme.defaultTextColor),
-                      ),
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: const TextSpan(
-                          style: TextStyle(
-                            color: Color(0xFF3B3240),
-                            fontSize: 20,
+            child: BlocBuilder<RecommendationCubit, RecommendationState>(
+              builder: (context, state) {
+                return Container(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Text(
+                            'Don’t know which \ncharity to give to?',
+                            style: AppTheme.actionButtonStyle
+                                .copyWith(color: AppTheme.defaultTextColor),
                           ),
-                          children: [
-                            TextSpan(text: 'Try the '),
-                            TextSpan(
-                                text: 'Givt4Kids Charity Finder',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(text: ' on \nyour tablet or computer!'),
-                          ],
                         ),
-                      ),
-                      const Spacer(),
-                      AskMyParentsButton(
-                        completed: state is RecommendationSent,
-                        sending: state is RecommendationSending,
-                      ),
-                    ],
-                  );
-                },
-              ),
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: const TextSpan(
+                            style: TextStyle(
+                              color: Color(0xFF3B3240),
+                              fontSize: 20,
+                            ),
+                            children: [
+                              TextSpan(text: 'Try the '),
+                              TextSpan(
+                                  text: 'Givt4Kids Charity Finder',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              TextSpan(text: ' on \nyour tablet or computer!'),
+                            ],
+                          ),
+                        ),
+                        const Spacer(),
+                        AskMyParentsButton(
+                          completed: state is RecommendationSent,
+                          sending: state is RecommendationSending,
+                        ),
+                      ]),
+                );
+              },
             ),
           ),
         ]));
