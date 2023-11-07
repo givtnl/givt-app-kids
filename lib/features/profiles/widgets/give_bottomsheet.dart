@@ -27,8 +27,8 @@ class GiveBottomSheet extends StatelessWidget {
                 size: size,
                 text: 'Give with\na coin',
                 imageLocation: 'assets/images/coin_action_button.svg',
-                backgroundColor: AppTheme.darkYellowText,
-                secondColor: AppTheme.lightYellow,
+                backgroundColor: AppTheme.lightYellow,
+                secondColor: AppTheme.darkYellowText,
                 onPressed: () {
                   context.pop();
                   context.pushNamed(Pages.scanNFC.name);
@@ -39,8 +39,8 @@ class GiveBottomSheet extends StatelessWidget {
                 size: size,
                 text: 'Give with\na QR code',
                 imageLocation: 'assets/images/qrcode_action_button.svg',
-                backgroundColor: AppTheme.darkPurpleText,
-                secondColor: AppTheme.lightPurple,
+                backgroundColor: AppTheme.lightPurple,
+                secondColor: AppTheme.darkPurpleText,
                 onPressed: () {
                   context.pop();
                   AnalyticsHelper.logEvent(
