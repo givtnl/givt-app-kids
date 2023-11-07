@@ -15,6 +15,9 @@ class RecommendationScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: AppTheme.offWhite,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: AppTheme.offWhite,
+          ),
           toolbarHeight: 0,
         ),
         body: Stack(children: [
