@@ -88,14 +88,14 @@ class NFCScanPage extends StatelessWidget {
                         ? 'Ready to make a difference?'
                         : 'Found it!',
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     )),
                 Text(
                     state.coinAnimationStatus == CoinAnimationStatus.animating
                         ? 'Grab your coin and \nlet\'s begin!'
                         : 'Let\'s continue...',
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 20),
                     textAlign: TextAlign.center),
                 const Spacer(flex: 2),
                 state.coinAnimationStatus == CoinAnimationStatus.animating

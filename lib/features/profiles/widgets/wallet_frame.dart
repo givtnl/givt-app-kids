@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 class WalletFrame extends StatelessWidget {
-  const WalletFrame(
-      {super.key,
-      required this.body,
-      required this.fab,
-      required this.fabLocation});
+  const WalletFrame({
+    super.key,
+    required this.body,
+  });
   final Widget body;
-  final Widget fab;
-  final FloatingActionButtonLocation fabLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +13,11 @@ class WalletFrame extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(size.width * 0.1),
+          padding: EdgeInsets.symmetric(
+              vertical: size.width * 0.08, horizontal: size.width * 0.05),
           child: body,
         ),
       ),
-      floatingActionButtonLocation: fabLocation,
-      floatingActionButton: fab,
     );
   }
 }
