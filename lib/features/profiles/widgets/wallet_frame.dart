@@ -14,12 +14,10 @@ class WalletFrame extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 0,
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: size.width * 0.08, horizontal: size.width * 0.05),
-          child: body,
-        ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: size.width * 0.08, horizontal: size.width * 0.05),
+        child: body,
       ),
     );
   }

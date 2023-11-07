@@ -28,7 +28,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
     final profiles = context.read<ProfilesCubit>().state.profiles;
 
     return Scaffold(
-      backgroundColor: AppTheme.successScreenBackgroundColor,
+      backgroundColor: AppTheme.successBackgroundLightBlue,
       body: Stack(
         children: [
           Positioned.fill(

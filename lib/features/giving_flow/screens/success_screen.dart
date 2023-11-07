@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -31,59 +32,64 @@ class _SuccessScreenState extends State<SuccessScreen> {
         context.read<OrganisationDetailsCubit>().state.organisation;
     final profiles = context.read<ProfilesCubit>().state.profiles;
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppTheme.successScreenBackgroundColor,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
-                child: Text(
-                  organisation.thankYou ?? "Thank you!",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    color: AppTheme.defaultTextColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
-                child: Text(
-                  "Your parents can now approve \n your donation suggestion to \n ${organisation.name}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: AppTheme.defaultTextColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Lottie.asset(
-                "assets/lotties/donation.json",
-                fit: BoxFit.fitWidth,
-                width: double.infinity,
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: AppTheme.successBackgroundLightBlue,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: AppTheme.successBackgroundLightBlue,
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: profiles.length == 1
-            ? const BackHomeButton()
-            : const Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  BackHomeButton(
-                    marging: EdgeInsets.only(left: 35, right: 35, bottom: 13),
-                  ),
-                  SwitchProfileSuccessButton(),
-                ],
-              ),
       ),
+      backgroundColor: AppTheme.successBackgroundLightBlue,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
+              child: Text(
+                organisation.thankYou ?? "Thank you!",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 30,
+                  color: AppTheme.defaultTextColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
+              child: Text(
+                "Your parents can now approve \n your donation suggestion to \n ${organisation.name}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: AppTheme.defaultTextColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Lottie.asset(
+              "assets/lotties/donation.json",
+              fit: BoxFit.fitWidth,
+              width: double.infinity,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: profiles.length == 1
+          ? const BackHomeButton()
+          : const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BackHomeButton(
+                  marging: EdgeInsets.only(left: 35, right: 35, bottom: 13),
+                ),
+                SwitchProfileSuccessButton(),
+              ],
+            ),
     );
   }
 }
