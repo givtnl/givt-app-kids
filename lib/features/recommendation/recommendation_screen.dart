@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
@@ -20,13 +19,9 @@ class RecommendationScreen extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () => context.pop(),
-              padding: const EdgeInsets.all(0),
               icon: SvgPicture.asset(
                 'assets/images/close_icon.svg',
-                height: 30,
-                width: 30,
               ),
-              color: Colors.white,
             )
           ],
         ),
@@ -62,8 +57,7 @@ class RecommendationScreen extends StatelessWidget {
                             TextSpan(text: 'Try the '),
                             TextSpan(
                                 text: 'Givt4Kids Charity Finder',
-                                style:
-                                    TextStyle(fontWeight: FontWeight.bold)),
+                                style: TextStyle(fontWeight: FontWeight.bold)),
                             TextSpan(text: ' on \nyour tablet or computer!'),
                           ],
                         ),
