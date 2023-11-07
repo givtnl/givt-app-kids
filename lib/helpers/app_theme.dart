@@ -20,6 +20,12 @@ class AppTheme {
   static const darkBlueTextColor = Color(0xFF06509B);
   static const greyButtonColor = Color(0xFFAAAAAA);
 
+  static const successScreenBackgroundColor = Color(0xFFB9D7FF);
+
+  static const woodColor = Color(0xFFD48256);
+
+  static final white85 = Colors.white.withAlpha((255 * 0.85).toInt());
+
   static const actionButtonStyle = TextStyle(
     fontSize: 26,
     fontWeight: FontWeight.bold,

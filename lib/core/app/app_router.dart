@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/flows.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
@@ -54,24 +53,12 @@ class AppRouter {
         GoRoute(
           path: Pages.login.path,
           name: Pages.login.name,
-          builder: (context, state) {
-            final flow =
-                state.extra != null ? state.extra as Flows : Flows.main;
-            return LoginScreen(
-              flow: flow,
-            );
-          },
+          builder: (context, state) => const LoginScreen(),
         ),
         GoRoute(
           path: Pages.profileSelection.path,
           name: Pages.profileSelection.name,
-          builder: (context, state) {
-            final flow =
-                state.extra != null ? state.extra as Flows : Flows.main;
-            return ProfileSelectionScreen(
-              flow: flow,
-            );
-          },
+          builder: (context, state) => const ProfileSelectionScreen(),
         ),
         GoRoute(
           path: Pages.wallet.path,
@@ -86,11 +73,7 @@ class AppRouter {
         GoRoute(
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
-          builder: (context, state) {
-            final flow =
-                state.extra != null ? state.extra as Flows : Flows.main;
-            return ChooseAmountSliderScreen(flow: flow);
-          },
+          builder: (context, state) => const ChooseAmountSliderScreen(),
         ),
         GoRoute(
           path: Pages.success.path,

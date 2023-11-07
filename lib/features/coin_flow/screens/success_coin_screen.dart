@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/shared/widgets/back_home_button.dart';
 
 import 'package:givt_app_kids/helpers/vibrator.dart';
+import 'package:givt_app_kids/shared/widgets/switch_profile_success_button.dart';
 import 'package:lottie/lottie.dart';
 
 class SuccessCoinScreen extends StatefulWidget {
@@ -24,8 +25,10 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final profiles = context.read<ProfilesCubit>().state.profiles;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFB9D7FF),
+      backgroundColor: AppTheme.successScreenBackgroundColor,
       body: Stack(
         children: [
           Positioned.fill(
@@ -45,7 +48,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
                     "Activated!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFF3B3240),
+                      color: AppTheme.defaultTextColor,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
@@ -57,7 +60,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
                     "Drop your coin wherever your\nchurch collects money.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFF3B3240),
+                      color: AppTheme.defaultTextColor,
                       fontSize: 22,
                     ),
                   ),
@@ -68,21 +71,17 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActoinButton(
-        text: "Back to home",
-        backgroundColor: const Color(0xFFF2DF7F),
-        foregroundColor: const Color(0xFF3B3240),
-        onPressed: () async {
-          context.pushReplacementNamed(Pages.wallet.name);
-          AnalyticsHelper.logEvent(
-              eventName: AmplitudeEvent.buttonPressed,
-              eventProperties: {
-                'button_name': 'Back to home',
-                'formatted_date': DateTime.now().toIso8601String(),
-                'screen_name': Pages.successCoin.name,
-              });
-        },
-      ),
+      floatingActionButton: profiles.length == 1
+          ? const BackHomeButton()
+          : const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BackHomeButton(
+                  marging: EdgeInsets.only(left: 35, right: 35, bottom: 13),
+                ),
+                SwitchProfileSuccessButton(),
+              ],
+            ),
     );
   }
 }
