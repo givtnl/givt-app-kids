@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/flows.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_found.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/abdroid_nfc_found_bottomsheet.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_scanning_bottomsheet.dart';
@@ -49,8 +49,8 @@ class NFCScanPage extends StatelessWidget {
                                   .read<OrganisationDetailsCubit>()
                                   .state is OrganisationDetailsLoadingState,
                               onPressed: () => context.pushReplacementNamed(
-                                  Pages.chooseAmountSlider.name,
-                                  extra: Flows.coin),
+                                Pages.chooseAmountSlider.name,
+                              ),
                             );
                           },
                         );
@@ -75,7 +75,11 @@ class NFCScanPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            leading: const GivtBackButton(),
+            leading: GivtBackButton(
+              onPressedExt: () {
+                context.read<FlowsCubit>().resetFlow();
+              },
+            ),
           ),
           body: Center(
             child: Flex(
@@ -117,8 +121,8 @@ class NFCScanPage extends StatelessWidget {
                       isLoading: context.read<OrganisationDetailsCubit>().state
                           is OrganisationDetailsLoadingState,
                       onPressed: () => context.pushReplacementNamed(
-                          Pages.chooseAmountSlider.name,
-                          extra: Flows.coin),
+                        Pages.chooseAmountSlider.name,
+                      ),
                     );
                   },
                 )

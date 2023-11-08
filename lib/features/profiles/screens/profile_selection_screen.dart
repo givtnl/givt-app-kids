@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/flows.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
@@ -21,14 +21,9 @@ import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileSelectionScreen extends StatefulWidget {
-  const ProfileSelectionScreen({
-    Key? key,
-    this.flow = Flows.main,
-  }) : super(key: key);
+  const ProfileSelectionScreen({Key? key}) : super(key: key);
 
   static const int maxVivibleProfiles = 4;
-
-  final Flows flow;
 
   @override
   State<ProfileSelectionScreen> createState() => _ProfileSelectionScreenState();
@@ -59,6 +54,8 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
 
   List<Widget> _createGridItems(List<Profile> profiles) {
     List<Widget> gridItems = [];
+    final flow = context.read<FlowsCubit>().state;
+
     for (var i = 0, j = 0;
         i < profiles.length && i < ProfileSelectionScreen.maxVivibleProfiles;
         i++, j++) {
@@ -67,7 +64,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
           onTap: () {
             _selectProfile(profiles[i]);
 
-            if (widget.flow == Flows.coin) {
+            if (flow.isCoin) {
               if (profiles[i].wallet.balance < 1) {
                 SnackBarHelper.showMessage(
                   context,
@@ -77,10 +74,13 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                 return;
               }
 
-              context.pushNamed(
-                Pages.chooseAmountSlider.name,
-                extra: widget.flow,
-              );
+              if (flow.flowType == FlowType.deepLinkCoin) {
+                context.pushNamed(Pages.chooseAmountSlider.name);
+              } else {
+                context.pushNamed(Pages.scanNFC.name);
+              }
+            } else if (flow.isQRCode) {
+              context.pushNamed(Pages.camera.name);
             } else {
               context.pushReplacementNamed(Pages.wallet.name);
             }
@@ -98,6 +98,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final flow = context.read<FlowsCubit>().state;
 
     return BlocConsumer<ProfilesCubit, ProfilesState>(
       listener: (context, state) {
@@ -117,7 +118,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
             automaticallyImplyLeading: false,
             leading: const GivtBackButton(),
             actions: [
-              if (widget.flow == Flows.coin) const CoinWidget(),
+              if (flow.isCoin) const CoinWidget(),
             ],
           ),
           body: state is ProfilesLoadingState
@@ -173,9 +174,9 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                     ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           floatingActionButton:
-              (state is ProfilesLoadingState || widget.flow == Flows.coin)
-                  ? null
-                  : const LogoutButton(),
+              (flow.flowType == FlowType.none && state is! ProfilesLoadingState)
+                  ? const LogoutButton()
+                  : null,
         );
       },
     );

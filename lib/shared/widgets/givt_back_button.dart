@@ -5,7 +5,13 @@ import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:go_router/go_router.dart';
 
 class GivtBackButton extends StatelessWidget {
-  const GivtBackButton({super.key});
+  const GivtBackButton({
+    super.key,
+    this.onPressedExt,
+  });
+
+  final void Function()? onPressedExt;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,6 +27,8 @@ class GivtBackButton extends StatelessWidget {
             child: IconButton(
               iconSize: 25,
               onPressed: () {
+                onPressedExt?.call();
+
                 AnalyticsHelper.logEvent(
                     eventName: AmplitudeEvent.backButtonPressed);
 
