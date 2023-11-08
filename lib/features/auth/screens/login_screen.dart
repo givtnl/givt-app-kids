@@ -9,6 +9,7 @@ import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:go_router/go_router.dart';
 
@@ -126,11 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Color(0xFFBFDBFC),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
+                        // color: Color(0xFFBFDBFC),
                       ),
                       child: Row(
                         children: [
@@ -138,33 +135,38 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: TextField(
                               key: ValueKey("password"),
                               decoration: InputDecoration(
-                                border: InputBorder.none,
+                                suffixIcon: SvgPicture.asset(
+                                  _isPasswordVisible
+                                      ? "assets/images/password_hide.svg"
+                                      : "assets/images/password_show.svg",
+                                  width: 2,
+                                ),
+                                fillColor: AppTheme.backButtonColor,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide.none,
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide.none,
+                                ),
                                 errorText: state is InputFieldErrorState
                                     ? state.passwordErrorMessage
                                     : null,
                               ),
-                              obscureText: !_isPasswordVisible,
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.visiblePassword,
-                              onChanged: (value) => _password = value,
-                              onSubmitted: (value) => _login(),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 5),
-                            child: GestureDetector(
                               onTap: () {
                                 setState(() {
                                   _isPasswordVisible = !_isPasswordVisible;
                                 });
                               },
-                              child: SvgPicture.asset(
-                                _isPasswordVisible
-                                    ? "assets/images/password_hide.svg"
-                                    : "assets/images/password_show.svg",
-                                width: 25,
-                                height: 25,
-                              ),
+                              obscureText: !_isPasswordVisible,
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.visiblePassword,
+                              onChanged: (value) => _password = value,
+                              onSubmitted: (value) => _login(),
                             ),
                           ),
                         ],
