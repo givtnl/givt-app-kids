@@ -117,8 +117,7 @@ class AppRouter {
                       .state
                       .flowType ==
                   FlowType.inAppCoin
-              ? Pages.redirectPopPage.path
-              //Pages.chooseAmountSlider.path
+              ? Pages.chooseAmountSlider.path
               : "${Pages.outAppCoinFlow.path}?code=${state.uri.queryParameters['code']}",
         ),
         GoRoute(
