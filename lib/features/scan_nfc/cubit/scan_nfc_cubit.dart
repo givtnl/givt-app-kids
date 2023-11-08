@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/core/app/app_router.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:nfc_manager/nfc_manager.dart';
@@ -17,7 +16,6 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
             scanNFCStatus: ScanNFCStatus.initial));
 
   void startAnimation() async {
-    AppRouter.inAppCoinFlow = true;
     emit(state.copyWith(
       coinAnimationStatus: CoinAnimationStatus.animating,
     ));

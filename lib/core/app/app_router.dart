@@ -115,7 +115,7 @@ class AppRouter {
           name: Pages.searchForCoin.name,
           redirect: (context, state) => AppRouter.inAppCoinFlow
               ? Pages.redirectPopPage.path
-              //'${Pages.chooseAmountSlider.path}?isCoinFlow=true'
+              //Pages.chooseAmountSlider.path
               : "${Pages.outAppCoinFlow.path}?code=${state.uri.queryParameters['code']}",
         ),
         GoRoute(

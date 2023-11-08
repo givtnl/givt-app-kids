@@ -11,9 +11,12 @@ class StartScanNfcButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ElevatedButton(
         onPressed: () {
-          // in case the user dimisses the bottom sheet without clicking the button
-          context.read<ScanNfcCubit>().stopScanning();
-          context.read<ScanNfcCubit>().tagRead();
+          final scanNfcCubit = context.read<ScanNfcCubit>();
+          // use case: the user dimisses the bottom sheet without clicking the button
+          if (scanNfcCubit.state.scanNFCStatus == ScanNFCStatus.scanning) {
+            scanNfcCubit.stopScanning();
+          }
+          scanNfcCubit.tagRead();
         },
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.maxFinite, 60),
