@@ -71,9 +71,10 @@ class AppRouter {
           builder: (context, state) => const CameraScreen(),
         ),
         GoRoute(
-            path: Pages.chooseAmountSlider.path,
-            name: Pages.chooseAmountSlider.name,
-            builder: (context, state) => const ChooseAmountSliderScreen()),
+          path: Pages.chooseAmountSlider.path,
+          name: Pages.chooseAmountSlider.name,
+          builder: (context, state) => const ChooseAmountSliderScreen(),
+        ),
         GoRoute(
           path: Pages.success.path,
           name: Pages.success.name,
