@@ -7,6 +7,8 @@ import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
+import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
@@ -25,15 +27,11 @@ import 'package:go_router/go_router.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
-  static bool inAppCoinFlow = false;
 
   static GoRouter get router => _router;
   static final GoRouter _router = GoRouter(
       debugLogDiagnostics: true,
       navigatorKey: _rootNavigatorKey,
-      observers: [
-        GoRouterObserver(),
-      ],
       routes: [
         GoRoute(
           path: Pages.splash.path,
@@ -114,7 +112,11 @@ class AppRouter {
         GoRoute(
           path: Pages.searchForCoin.path,
           name: Pages.searchForCoin.name,
-          redirect: (context, state) => AppRouter.inAppCoinFlow
+          redirect: (context, state) => context
+                      .read<FlowsCubit>()
+                      .state
+                      .flowType ==
+                  FlowType.inAppCoin
               ? Pages.redirectPopPage.path
               //Pages.chooseAmountSlider.path
               : "${Pages.outAppCoinFlow.path}?code=${state.uri.queryParameters['code']}",
@@ -158,15 +160,4 @@ class AppRouter {
           builder: (context, state) => const RedirectPopWidget(),
         ),
       ]);
-}
-
-class GoRouterObserver extends NavigatorObserver {
-  @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (previousRoute?.settings.name == Pages.scanNFC.name) {
-      /// Clear static flag when
-      /// user navigates away from scanning page
-      AppRouter.inAppCoinFlow = false;
-    }
-  }
 }
