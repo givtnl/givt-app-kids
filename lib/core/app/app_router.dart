@@ -7,8 +7,6 @@ import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
-import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
-import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
@@ -24,6 +22,7 @@ import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/redirect_widget.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -112,11 +111,9 @@ class AppRouter {
         GoRoute(
           path: Pages.searchForCoin.path,
           name: Pages.searchForCoin.name,
-          redirect: (context, state) => context
-                      .read<FlowsCubit>()
-                      .state
-                      .flowType ==
-                  FlowType.inAppCoin
+          redirect: (context, state) => getIt<SharedPreferences>()
+                      .getBool('isInAppCoinFlow') ==
+                  true
               ? Pages.chooseAmountSlider.path
               : "${Pages.outAppCoinFlow.path}?code=${state.uri.queryParameters['code']}",
         ),
