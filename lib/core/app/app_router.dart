@@ -7,6 +7,8 @@ import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
+import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
@@ -25,15 +27,11 @@ import 'package:go_router/go_router.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
-  static bool ignoreCoinFlow = false;
 
   static GoRouter get router => _router;
   static final GoRouter _router = GoRouter(
       debugLogDiagnostics: true,
       navigatorKey: _rootNavigatorKey,
-      observers: [
-        GoRouterObserver(),
-      ],
       routes: [
         GoRoute(
           path: Pages.splash.path,
@@ -112,22 +110,17 @@ class AppRouter {
           ),
         ),
         GoRoute(
-            path: Pages.searchForCoin.path,
-            name: Pages.searchForCoin.name,
-            redirect: (context, state) =>
-                AppRouter.ignoreCoinFlow ? Pages.redirectPopPage.path : null,
-            builder: (context, state) {
-              final String mediumID = state.uri.queryParameters['code'] ??
-                  OrganisationDetailsCubit.defaultMediumId;
-              context
-                  .read<OrganisationDetailsCubit>()
-                  .getOrganisationDetails(mediumID);
-              return BlocProvider<SearchCoinCubit>(
-                lazy: false,
-                create: (context) => SearchCoinCubit()..startAnimation(),
-                child: const SearchForCoinScreen(),
-              );
-            }),
+          path: Pages.searchForCoin.path,
+          name: Pages.searchForCoin.name,
+          redirect: (context, state) => context
+                      .read<FlowsCubit>()
+                      .state
+                      .flowType ==
+                  FlowType.inAppCoin
+              ? Pages.redirectPopPage.path
+              //Pages.chooseAmountSlider.path
+              : "${Pages.outAppCoinFlow.path}?code=${state.uri.queryParameters['code']}",
+        ),
         GoRoute(
           path: Pages.successCoin.path,
           name: Pages.successCoin.name,
@@ -137,27 +130,34 @@ class AppRouter {
             path: Pages.scanNFC.path,
             name: Pages.scanNFC.name,
             builder: (context, state) {
-              AppRouter.ignoreCoinFlow = true;
               return BlocProvider(
                 create: (context) => ScanNfcCubit()..startAnimation(),
                 child: const NFCScanPage(),
               );
             }),
         GoRoute(
+          path: Pages.outAppCoinFlow.path,
+          name: Pages.outAppCoinFlow.name,
+          builder: (context, state) {
+            final String mediumID =
+                state.uri.queryParameters['code']!.contains('null')
+                    ? OrganisationDetailsCubit.defaultMediumId
+                    : state.uri.queryParameters['code']!;
+
+            context
+                .read<OrganisationDetailsCubit>()
+                .getOrganisationDetails(mediumID);
+            return BlocProvider<SearchCoinCubit>(
+              lazy: false,
+              create: (context) => SearchCoinCubit()..startAnimation(),
+              child: const SearchForCoinScreen(),
+            );
+          },
+        ),
+        GoRoute(
           path: Pages.redirectPopPage.path,
           name: Pages.redirectPopPage.name,
           builder: (context, state) => const RedirectPopWidget(),
         ),
       ]);
-}
-
-class GoRouterObserver extends NavigatorObserver {
-  @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (previousRoute?.settings.name == Pages.scanNFC.name) {
-      /// Clear static flag when
-      /// user navigates away from scanning page
-      AppRouter.ignoreCoinFlow = false;
-    }
-  }
 }
