@@ -13,6 +13,7 @@ enum Pages {
   history(path: '/history', name: 'HISTORY'),
   //coin flow
   searchForCoin(path: '/search-for-coin', name: 'SEARCH_FOR_COIN'),
+  outAppCoinFlow(path: '/out-app-coin-flow', name: 'OUT_APP_COIN_FLOW'),
   successCoin(path: '/success-coin', name: 'SUCCESS_COIN'),
   redirectPopPage(path: '/redirect-pop-page', name: 'REDIRECT_POP_PAGE'),
   ;

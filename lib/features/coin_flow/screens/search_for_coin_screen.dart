@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/flows.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_error_page.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_found_page.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_search_page.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
@@ -77,10 +77,9 @@ class SearchForCoinScreen extends StatelessWidget {
                             ? Pages.profileSelection.name
                             : Pages.login.name;
 
-                        context.pushNamed(
-                          pageName,
-                          extra: Flows.coin,
-                        );
+                        context.read<FlowsCubit>().startDeepLinkCoinFlow();
+
+                        context.pushNamed(pageName);
                       },
                     )
                   : null,

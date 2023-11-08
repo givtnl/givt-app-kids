@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_app_kids/core/app/flows.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
@@ -23,12 +23,7 @@ import 'package:givt_app_kids/shared/widgets/wallet.dart';
 import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderScreen extends StatefulWidget {
-  const ChooseAmountSliderScreen({
-    Key? key,
-    this.flow = Flows.main,
-  }) : super(key: key);
-
-  final Flows flow;
+  const ChooseAmountSliderScreen({Key? key}) : super(key: key);
 
   @override
   State<ChooseAmountSliderScreen> createState() =>
@@ -52,6 +47,8 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
     final organisation = organisationDetailsState.organisation;
     final mediumId = organisationDetailsState.mediumId;
 
+    final flow = context.read<FlowsCubit>().state;
+
     return BlocProvider<CreateTransactionCubit>(
       create: (BuildContext context) =>
           CreateTransactionCubit(_profilesCubit, getIt()),
@@ -70,9 +67,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
             context.read<ProfilesCubit>().fetchProfiles(parentGuid);
 
             context.pushReplacementNamed(
-              widget.flow == Flows.main
-                  ? Pages.success.name
-                  : Pages.successCoin.name,
+              flow.isCoin ? Pages.successCoin.name : Pages.success.name,
             );
           }
         },
@@ -80,11 +75,11 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
           final size = MediaQuery.sizeOf(context);
           return Scaffold(
             appBar: AppBar(
-              toolbarHeight: widget.flow == Flows.main ? 85 : null,
+              toolbarHeight: flow.isQRCode ? 85 : null,
               automaticallyImplyLeading: false,
               leading: const GivtBackButton(),
               actions: [
-                widget.flow == Flows.main ? const Wallet() : const CoinWidget(),
+                flow.isQRCode ? const Wallet() : const CoinWidget(),
               ],
             ),
             body: SingleChildScrollView(
@@ -97,10 +92,9 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                         const EdgeInsets.only(left: 30, right: 30, top: 75),
                     child: Row(
                       children: [
-                        if (widget.flow == Flows.coin)
+                        if (flow.isCoin)
                           SvgPicture.asset('assets/images/church.svg'),
-                        if (widget.flow == Flows.coin)
-                          const SizedBox(width: 25),
+                        if (flow.isCoin) const SizedBox(width: 25),
                         Expanded(
                           child: Text(
                             organisation.name,
@@ -200,7 +194,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: FloatingActoinButton(
-              text: widget.flow == Flows.main ? 'Next' : 'Activate the coin',
+              text: flow.isCoin ? 'Activate the coin' : 'Next',
               isLoading: state is CreateTransactionUploadingState,
               onPressed: state.amount == 0
                   ? null
