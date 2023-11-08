@@ -5,7 +5,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/flows.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
@@ -14,12 +13,7 @@ import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({
-    Key? key,
-    this.flow = Flows.main,
-  }) : super(key: key);
-
-  final Flows flow;
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -47,10 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
             isError: true,
           );
         } else if (state is LoggedInState) {
-          context.pushReplacementNamed(
-            Pages.profileSelection.name,
-            extra: widget.flow,
-          );
+          context.pushReplacementNamed(Pages.profileSelection.name);
         }
       },
       builder: (context, state) => Scaffold(

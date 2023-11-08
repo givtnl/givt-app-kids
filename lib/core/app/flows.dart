@@ -1,4 +1,0 @@
-enum Flows {
-  main,
-  coin;
-}

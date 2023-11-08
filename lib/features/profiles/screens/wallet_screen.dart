@@ -127,7 +127,7 @@ class _WalletScreenState extends State<WalletScreen>
                   isGiveButtonActive
                       ? FloatingActoinButton(
                           text: "I want to give",
-                          padded: false,
+                          margin: EdgeInsets.zero,
                           backgroundColor: AppTheme.givt4KidsYellow,
                           foregroundColor: AppTheme.defaultTextColor,
                           onPressed: () => showModalBottomSheet<void>(
@@ -139,7 +139,7 @@ class _WalletScreenState extends State<WalletScreen>
                           ),
                         )
                       : const SizedBox(),
-                  SizedBox(height: size.height * 0.01),
+                  SizedBox(height: size.height * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

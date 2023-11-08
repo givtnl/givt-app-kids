@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/giving_option_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -32,6 +33,7 @@ class GiveBottomSheet extends StatelessWidget {
                 onPressed: () {
                   context.pop();
                   context.pushNamed(Pages.scanNFC.name);
+                  context.read<FlowsCubit>().startInAppCoinFlow();
                 },
               ),
               GiveOptionButton(
@@ -54,6 +56,7 @@ class GiveBottomSheet extends StatelessWidget {
                             .balance,
                       });
                   context.pushNamed(Pages.camera.name);
+                  context.read<FlowsCubit>().startInAppQRCodeFlow();
                 },
               ),
             ],
