@@ -7,13 +7,11 @@ import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_found.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
-import 'package:givt_app_kids/features/scan_nfc/widgets/abdroid_nfc_found_bottomsheet.dart';
+import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_found_bottomsheet.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_scanning_bottomsheet.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/search_coin_animated_widget.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/start_scan_nfc_button.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart'
-    as custom;
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,6 +27,8 @@ class NFCScanPage extends StatelessWidget {
             Platform.isAndroid) {
           showModalBottomSheet<void>(
             context: context,
+            isDismissible: false,
+            enableDrag: false,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
@@ -36,7 +36,7 @@ class NFCScanPage extends StatelessWidget {
               return BlocProvider.value(
                 value: scanNfcCubit,
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.only(top: 20),
                   child: BlocBuilder<ScanNfcCubit, ScanNfcState>(
                     builder: (context, state) {
                       if (state.scanNFCStatus == ScanNFCStatus.scanned) {
@@ -68,6 +68,9 @@ class NFCScanPage extends StatelessWidget {
           context
               .read<OrganisationDetailsCubit>()
               .getOrganisationDetails(state.result);
+          Future.delayed(ScanNfcCubit.foundDelay, () {
+            context.pushReplacementNamed(Pages.chooseAmountSlider.name);
+          });
         }
       },
       builder: (context, state) {
@@ -87,14 +90,17 @@ class NFCScanPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 20),
-                Text(
-                    state.coinAnimationStatus == CoinAnimationStatus.animating
-                        ? 'Ready to make a difference?'
-                        : 'Found it!',
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    )),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                      state.coinAnimationStatus == CoinAnimationStatus.animating
+                          ? 'Ready to make a difference?'
+                          : 'Found it!',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
                 Text(
                     state.coinAnimationStatus == CoinAnimationStatus.animating
                         ? 'Grab your coin and \nlet\'s begin!'
@@ -113,20 +119,13 @@ class NFCScanPage extends StatelessWidget {
               ],
             ),
           ),
-          floatingActionButton: state.scanNFCStatus == ScanNFCStatus.scanned
-              ? BlocBuilder<OrganisationDetailsCubit, OrganisationDetailsState>(
-                  builder: (context, state) {
-                    return custom.FloatingActoinButton(
-                      text: "Choose an amount",
-                      isLoading: context.read<OrganisationDetailsCubit>().state
-                          is OrganisationDetailsLoadingState,
-                      onPressed: () => context.pushReplacementNamed(
-                        Pages.chooseAmountSlider.name,
-                      ),
-                    );
-                  },
-                )
-              : const StartScanNfcButton(),
+          floatingActionButton: state.scanNFCStatus == ScanNFCStatus.cancelled
+              ? const StartScanNfcButton()
+              // on iOS user dismissing the bottomsheet cannot be detected
+              // so we need to show the button always after the start of scanning
+              : Platform.isIOS && state.scanNFCStatus != ScanNFCStatus.initial
+                  ? const StartScanNfcButton()
+                  : null,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
         );

@@ -77,7 +77,9 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
             appBar: AppBar(
               toolbarHeight: flow.isQRCode ? 85 : null,
               automaticallyImplyLeading: false,
-              leading: const GivtBackButton(),
+              leading: GivtBackButton(onPressedExt: () {
+                context.read<FlowsCubit>().resetFlow();
+              }),
               actions: [
                 flow.isQRCode ? const Wallet() : const CoinWidget(),
               ],
