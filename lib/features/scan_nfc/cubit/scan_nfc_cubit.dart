@@ -55,11 +55,13 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
                   log('coin payload: $payload');
                   Uri uri = Uri.parse(payload);
                   mediumId = uri.queryParameters['code'] ?? mediumId;
+                  readData = payload;
                 } else {
                   final decoded = utf8.decode(wellKnownRecord.payload);
                   log('coin decoded: $decoded');
                   Uri uri = Uri.parse(decoded);
                   mediumId = uri.queryParameters['code'] ?? mediumId;
+                  readData = decoded;
                 }
                 emit(state.copyWith(
                     mediumId: mediumId,
