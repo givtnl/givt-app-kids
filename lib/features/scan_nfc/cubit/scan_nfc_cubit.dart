@@ -15,8 +15,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
             coinAnimationStatus: CoinAnimationStatus.initial,
             scanNFCStatus: ScanNFCStatus.initial));
 
-  static const startDelay = Duration(milliseconds: 3000);
-  static const foundDelay = Duration(milliseconds: 3000);
+  static const startDelay = Duration(milliseconds: 1800);
+  static const foundDelay = Duration(milliseconds: 1800);
 
   void cancelScanning() {
     emit(state.copyWith(
