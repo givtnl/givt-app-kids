@@ -20,7 +20,6 @@ import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit
 import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
-import 'package:givt_app_kids/features/scan_nfc/widgets/redirect_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,7 +69,19 @@ class AppRouter {
         GoRoute(
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
-          builder: (context, state) => const ChooseAmountSliderScreen(),
+          builder: (context, state) {
+            final String mediumID =
+                state.uri.queryParameters['code']!.contains('null')
+                    ? OrganisationDetailsCubit.defaultMediumId
+                    : state.uri.queryParameters['code']!;
+
+            if (getIt<SharedPreferences>().getBool('isInAppCoinFlow') == true) {
+              context
+                  .read<OrganisationDetailsCubit>()
+                  .getOrganisationDetails(mediumID);
+            }
+            return const ChooseAmountSliderScreen();
+          },
         ),
         GoRoute(
           path: Pages.success.path,
@@ -114,24 +125,9 @@ class AppRouter {
           redirect: (context, state) => getIt<SharedPreferences>()
                       .getBool('isInAppCoinFlow') ==
                   true
-              ? Pages.chooseAmountSlider.path
+              ? "${Pages.chooseAmountSlider.path}?code=${state.uri.queryParameters['code']}"
               : "${Pages.outAppCoinFlow.path}?code=${state.uri.queryParameters['code']}",
         ),
-        GoRoute(
-          path: Pages.successCoin.path,
-          name: Pages.successCoin.name,
-          builder: (context, state) => const SuccessCoinScreen(),
-        ),
-        GoRoute(
-            path: Pages.scanNFC.path,
-            name: Pages.scanNFC.name,
-            builder: (context, state) {
-              return BlocProvider(
-                create: (context) => ScanNfcCubit()
-                  ..startTagRead(delay: ScanNfcCubit.startDelay),
-                child: const NFCScanPage(),
-              );
-            }),
         GoRoute(
           path: Pages.outAppCoinFlow.path,
           name: Pages.outAppCoinFlow.name,
@@ -152,9 +148,19 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: Pages.redirectPopPage.path,
-          name: Pages.redirectPopPage.name,
-          builder: (context, state) => const RedirectPopWidget(),
+            path: Pages.scanNFC.path,
+            name: Pages.scanNFC.name,
+            builder: (context, state) {
+              return BlocProvider(
+                create: (context) => ScanNfcCubit()
+                  ..startTagRead(delay: ScanNfcCubit.startDelay),
+                child: const NFCScanPage(),
+              );
+            }),
+        GoRoute(
+          path: Pages.successCoin.path,
+          name: Pages.successCoin.name,
+          builder: (context, state) => const SuccessCoinScreen(),
         ),
       ]);
 }

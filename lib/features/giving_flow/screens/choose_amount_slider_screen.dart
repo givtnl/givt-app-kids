@@ -42,7 +42,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
   @override
   Widget build(BuildContext context) {
     final organisationDetailsState =
-        context.read<OrganisationDetailsCubit>().state;
+        context.watch<OrganisationDetailsCubit>().state;
 
     final organisation = organisationDetailsState.organisation;
     final mediumId = organisationDetailsState.mediumId;
@@ -97,15 +97,28 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                         if (flow.isCoin)
                           SvgPicture.asset('assets/images/church.svg'),
                         if (flow.isCoin) const SizedBox(width: 25),
-                        Expanded(
-                          child: Text(
-                            organisation.name,
-                            style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: AppTheme.defaultTextColor,
-                            ),
-                          ),
+                        BlocBuilder<OrganisationDetailsCubit,
+                            OrganisationDetailsState>(
+                          builder: (context, state) {
+                            if (state is OrganisationDetailsLoadingState) {
+                              return const SizedBox(
+                                height: 30,
+                                width: 30,
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              return Expanded(
+                                child: Text(
+                                  organisation.name,
+                                  style: const TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppTheme.defaultTextColor,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),
