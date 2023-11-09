@@ -4,6 +4,7 @@ enum ScanNFCStatus {
   initial,
   scanning,
   scanned,
+  cancelled,
   error,
 }
 
