@@ -67,7 +67,7 @@ class NFCScanPage extends StatelessWidget {
         if (state.scanNFCStatus == ScanNFCStatus.scanned) {
           context
               .read<OrganisationDetailsCubit>()
-              .getOrganisationDetails(state.result);
+              .getOrganisationDetails(state.mediumId);
           Future.delayed(ScanNfcCubit.foundDelay, () {
             context.pushReplacementNamed(Pages.chooseAmountSlider.name);
           });
@@ -125,7 +125,7 @@ class NFCScanPage extends StatelessWidget {
               // so we need to show the button always after the start of scanning
               : Platform.isIOS && state.scanNFCStatus == ScanNFCStatus.scanning
                   ? FutureBuilder(
-                      future: Future.delayed(const Duration(seconds: 1)),
+                      future: Future.delayed(ScanNfcCubit.startDelay),
                       builder: (c, s) => const StartScanNfcButton())
                   : null,
           floatingActionButtonLocation:

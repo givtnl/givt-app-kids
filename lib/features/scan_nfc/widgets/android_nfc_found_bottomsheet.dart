@@ -31,15 +31,30 @@ class FoundNfcAnimation extends StatelessWidget {
           const Text('Now let\'s select the amount',
               style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
           const SizedBox(height: 20),
-          const Visibility(
-            visible: false,
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            child: FloatingActoinButton(
-              text: "",
+          Text(
+            'Coin data: ${scanNfcCubit.state.readData}',
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
           ),
+          const SizedBox(height: 20),
+          Text(
+            'MediumId: ${scanNfcCubit.state.mediumId}',
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          // const Visibility(
+          //   visible: false,
+          //   maintainSize: true,
+          //   maintainAnimation: true,
+          //   maintainState: true,
+          //   child: FloatingActoinButton(
+          //     text: "",
+          //   ),
+          // ),
         ],
       ),
     );

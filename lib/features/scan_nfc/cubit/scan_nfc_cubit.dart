@@ -15,8 +15,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
             coinAnimationStatus: CoinAnimationStatus.initial,
             scanNFCStatus: ScanNFCStatus.initial));
 
-  static const startDelay = Duration(milliseconds: 1800);
-  static const foundDelay = Duration(milliseconds: 1800);
+  static const startDelay = Duration(milliseconds: 1600);
+  static const foundDelay = Duration(milliseconds: 4000);
 
   void cancelScanning() {
     emit(state.copyWith(
@@ -33,14 +33,20 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
+    await Future.delayed(delay);
+    emit(state.copyWith(
+      scanNFCStatus: ScanNFCStatus.scanned,
+      mediumId: 'mediumID',
+      readData: 'TJFHTGF<TC<SJGCJ>hvdevds',
+    ));
+    String mediumId = OrganisationDetailsCubit.defaultMediumId;
+    String readData = '';
     try {
       NfcManager.instance.startSession(
           alertMessage: 'Tap your coin to the top\nof the iPhone',
           onDiscovered: (NfcTag tag) async {
             log('coin discovered: ${tag.data}');
             var ndef = Ndef.from(tag);
-            String mediumId = OrganisationDetailsCubit.defaultMediumId;
-
             if (ndef != null && ndef.cachedMessage != null) {
               if (ndef.cachedMessage!.records.isNotEmpty &&
                   ndef.cachedMessage!.records.first.typeNameFormat ==
@@ -62,7 +68,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
                   mediumId = uri.queryParameters['code'] ?? mediumId;
                 }
                 emit(state.copyWith(
-                    result: mediumId,
+                    mediumId: mediumId,
+                    readData: readData,
                     scanNFCStatus: ScanNFCStatus.scanned,
                     coinAnimationStatus: CoinAnimationStatus.stopped));
                 NfcManager.instance.stopSession();
