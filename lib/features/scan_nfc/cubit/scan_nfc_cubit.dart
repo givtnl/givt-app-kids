@@ -33,12 +33,6 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
-    await Future.delayed(delay);
-    emit(state.copyWith(
-      scanNFCStatus: ScanNFCStatus.scanned,
-      mediumId: 'mediumID',
-      readData: 'TJFHTGF<TC<SJGCJ>hvdevds',
-    ));
     String mediumId = OrganisationDetailsCubit.defaultMediumId;
     String readData = '';
     try {
