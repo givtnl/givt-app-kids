@@ -124,7 +124,9 @@ class NFCScanPage extends StatelessWidget {
               // on iOS user dismissing the bottomsheet cannot be detected
               // so we need to show the button always after the start of scanning
               : Platform.isIOS && state.scanNFCStatus == ScanNFCStatus.scanning
-                  ? const StartScanNfcButton()
+                  ? FutureBuilder(
+                      future: Future.delayed(const Duration(seconds: 1)),
+                      builder: (c, s) => const StartScanNfcButton())
                   : null,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,

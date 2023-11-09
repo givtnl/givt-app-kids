@@ -70,12 +70,12 @@ class AppRouter {
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
           builder: (context, state) {
-            final String mediumID =
-                state.uri.queryParameters['code']!.contains('null')
-                    ? OrganisationDetailsCubit.defaultMediumId
-                    : state.uri.queryParameters['code']!;
-
             if (getIt<SharedPreferences>().getBool('isInAppCoinFlow') == true) {
+              final String mediumID =
+                  state.uri.queryParameters['code'] == null ||
+                          state.uri.queryParameters['code']!.contains('null')
+                      ? OrganisationDetailsCubit.defaultMediumId
+                      : state.uri.queryParameters['code']!;
               context
                   .read<OrganisationDetailsCubit>()
                   .getOrganisationDetails(mediumID);
