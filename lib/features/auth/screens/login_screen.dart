@@ -6,6 +6,7 @@ import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:givt_app_kids/features/auth/dialogs/account_locked_dialog.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
@@ -33,6 +34,29 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    if (context.read<AuthCubit>().state is AccountLockedState) {
+      Future.delayed(Duration.zero, _showLockedDialog);
+    }
+  }
+
+  Future<void>? _showingDialogFuture;
+
+  Future<void> _showLockedDialog() async {
+    if (_showingDialogFuture == null) {
+      _showingDialogFuture = showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const AccountLockedDialog(),
+      );
+      await _showingDialogFuture;
+      _showingDialogFuture = null;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
@@ -47,6 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         } else if (state is LoggedInState) {
           context.pushReplacementNamed(Pages.profileSelection.name);
+        } else if (state is AccountLockedState) {
+          _showLockedDialog();
         }
       },
       builder: (context, state) => Scaffold(
@@ -96,113 +122,113 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: (state is InputFieldErrorState &&
                                     state.emailErrorMessage.isNotEmpty)
-                                ? AppTheme.givt4KidsRed
+                                ? AppTheme.givt4KidsRedAlt
                                 : AppTheme.defaultTextColor,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
                     const SizedBox(height: 5),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        key: const ValueKey("email"),
-                        decoration: InputDecoration(
-                          fillColor: AppTheme.backButtonColor,
-                          filled: true,
-                          border: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide.none,
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide.none,
-                          ),
-                          errorText: (state is InputFieldErrorState &&
-                                  state.emailErrorMessage.isNotEmpty)
-                              ? state.emailErrorMessage
-                              : null,
+                    TextField(
+                      key: const ValueKey("email"),
+                      decoration: InputDecoration(
+                        fillColor: AppTheme.backButtonColor,
+                        filled: true,
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide: BorderSide.none,
                         ),
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: (value) => setState(() {
-                          _email = value;
-                        }),
+                        errorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide: BorderSide.none,
+                        ),
+                        errorText: (state is InputFieldErrorState &&
+                                state.emailErrorMessage.isNotEmpty)
+                            ? state.emailErrorMessage
+                            : null,
                       ),
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (value) => setState(() {
+                        _email = value;
+                      }),
                     ),
                     const SizedBox(height: 15),
                     Text(
                       "Password",
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: (state is InputFieldErrorState &&
-                                    state.passwordErrorMessage.isNotEmpty)
+                                        state.passwordErrorMessage.isNotEmpty ||
+                                    (state is ExternalErrorState &&
+                                        state.innerErrorType.isWrongPassword))
                                 ? AppTheme.givt4KidsRed
                                 : AppTheme.defaultTextColor,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
                     const SizedBox(height: 5),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              key: const ValueKey("password"),
-                              decoration: InputDecoration(
-                                suffixIconConstraints: const BoxConstraints(
-                                    maxWidth: 50, maxHeight: 50),
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _isPasswordVisible = !_isPasswordVisible;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: SvgPicture.asset(
-                                      _isPasswordVisible
-                                          ? "assets/images/password_hide.svg"
-                                          : "assets/images/password_show.svg",
-                                      width: 25,
-                                      height: 25,
-                                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            key: const ValueKey("password"),
+                            decoration: InputDecoration(
+                              suffixIconConstraints: const BoxConstraints(
+                                  maxWidth: 50, maxHeight: 50),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _isPasswordVisible = !_isPasswordVisible;
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: SvgPicture.asset(
+                                    _isPasswordVisible
+                                        ? "assets/images/password_hide.svg"
+                                        : "assets/images/password_show.svg",
+                                    width: 25,
+                                    height: 25,
                                   ),
                                 ),
-                                fillColor: AppTheme.backButtonColor,
-                                filled: true,
-                                border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
-                                  borderSide: BorderSide.none,
-                                ),
-                                errorBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
-                                  borderSide: BorderSide.none,
-                                ),
-                                errorText: (state is InputFieldErrorState &&
-                                        state.passwordErrorMessage.isNotEmpty)
-                                    ? state.passwordErrorMessage
-                                    : null,
                               ),
-                              obscureText: !_isPasswordVisible,
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.visiblePassword,
-                              onChanged: (value) => setState(() {
-                                _password = value;
-                              }),
-                              onSubmitted: (value) => _login(),
+                              fillColor: AppTheme.backButtonColor,
+                              filled: true,
+                              border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                borderSide: BorderSide.none,
+                              ),
+                              errorBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                borderSide: BorderSide.none,
+                              ),
+                              errorText: (state is InputFieldErrorState &&
+                                      state.passwordErrorMessage.isNotEmpty)
+                                  ? state.passwordErrorMessage
+                                  : null,
                             ),
+                            obscureText: !_isPasswordVisible,
+                            textInputAction: TextInputAction.done,
+                            keyboardType: TextInputType.visiblePassword,
+                            onChanged: (value) => setState(() {
+                              _password = value;
+                            }),
+                            onSubmitted: (value) => _login(),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 20),
+                    if (state is ExternalErrorState &&
+                        state.innerErrorType.isWrongPassword)
+                      Text(
+                        state.innerErrorType.errorMessage,
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: AppTheme.givt4KidsRedAlt,
+                                ),
+                      ),
                   ],
                 ),
                 const SizedBox(height: 130),
