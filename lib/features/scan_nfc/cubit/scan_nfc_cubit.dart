@@ -33,8 +33,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
-    String mediumId = OrganisationDetailsCubit.defaultMediumId;
-    String readData = '';
+    String mediumId = 'default';
+    String readData = 'empty';
     try {
       NfcManager.instance.startSession(
           alertMessage: 'Tap your coin to the top\nof the iPhone',
