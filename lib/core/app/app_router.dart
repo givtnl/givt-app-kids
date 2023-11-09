@@ -74,9 +74,8 @@ class AppRouter {
                 state.uri.queryParameters['code']!.contains('null')
                     ? OrganisationDetailsCubit.defaultMediumId
                     : state.uri.queryParameters['code']!;
-            final bool isInAppCoinFlow =
-                state.uri.queryParameters['isInAppCoinFlow'] == 'true';
-            if (isInAppCoinFlow) {
+
+            if (getIt<SharedPreferences>().getBool('isInAppCoinFlow') == true) {
               context
                   .read<OrganisationDetailsCubit>()
                   .getOrganisationDetails(mediumID);
@@ -126,7 +125,7 @@ class AppRouter {
           redirect: (context, state) => getIt<SharedPreferences>()
                       .getBool('isInAppCoinFlow') ==
                   true
-              ? "${Pages.chooseAmountSlider.path}?code=${state.uri.queryParameters['code']}&isInAppCoinFlow=true"
+              ? "${Pages.chooseAmountSlider.path}?code=${state.uri.queryParameters['code']}"
               : "${Pages.outAppCoinFlow.path}?code=${state.uri.queryParameters['code']}",
         ),
         GoRoute(
