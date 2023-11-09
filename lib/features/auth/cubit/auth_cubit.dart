@@ -64,7 +64,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
       emit(lockedState.copyWith(minutesLeft: minutesLeft));
 
       if (minutesLeft > 0) {
-        await Future.delayed(const Duration(minutes: 1), _handleLockedAccount);
+        await Future.delayed(
+            AccountLockedState.lockedCheckInterval, _handleLockedAccount);
       }
     }
   }
