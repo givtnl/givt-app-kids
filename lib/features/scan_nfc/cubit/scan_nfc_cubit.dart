@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
-import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
 part 'scan_nfc_state.dart';
@@ -16,7 +15,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
             scanNFCStatus: ScanNFCStatus.initial));
 
   static const startDelay = Duration(milliseconds: 1600);
-  static const foundDelay = Duration(milliseconds: 4000);
+  static const foundDelay = Duration(milliseconds: 1600);
 
   void cancelScanning() {
     emit(state.copyWith(
@@ -33,8 +32,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
-    String mediumId = 'default';
-    String readData = 'empty';
+    String mediumId = '';
+    String readData = '';
     try {
       NfcManager.instance.startSession(
           alertMessage: 'Tap your coin to the top\nof the iPhone',

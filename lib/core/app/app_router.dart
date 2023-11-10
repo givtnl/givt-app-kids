@@ -20,6 +20,7 @@ import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit
 import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
+import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,7 +71,10 @@ class AppRouter {
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
           builder: (context, state) {
-            if (getIt<SharedPreferences>().getBool('isInAppCoinFlow') == true) {
+            SnackBarHelper.showMessage(context, text: state.uri.host);
+            // this only needs to execute when the user is
+            // coming via deeplink in the inAppCoinFlow
+            if (state.uri.host == 'http://www.givt.app/') {
               final String mediumID =
                   state.uri.queryParameters['code'] == null ||
                           state.uri.queryParameters['code']!.contains('null')
