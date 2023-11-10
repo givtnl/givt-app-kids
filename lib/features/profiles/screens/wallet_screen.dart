@@ -2,16 +2,18 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/find_charity_button.dart';
+import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/history_header.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/donation_item_widget.dart';
+import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
-import 'package:givt_app_kids/shared/widgets/qr_give_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:go_router/go_router.dart';
@@ -106,9 +108,6 @@ class _WalletScreenState extends State<WalletScreen>
                     ),
                   ),
                   SizedBox(height: size.height * 0.01),
-                  QrGiveButton(isActive: isGiveButtonActive),
-                  const FindCharityButton(),
-                  SizedBox(height: size.height * 0.02),
                   hasDonations ? const HistoryHeader() : const SizedBox(),
                   hasDonations
                       ? GestureDetector(
@@ -124,21 +123,43 @@ class _WalletScreenState extends State<WalletScreen>
                           ),
                         )
                       : const SizedBox(),
+                  const Spacer(),
+                  isGiveButtonActive
+                      ? FloatingActoinButton(
+                          text: "I want to give",
+                          margin: EdgeInsets.zero,
+                          backgroundColor: AppTheme.givt4KidsYellow,
+                          foregroundColor: AppTheme.defaultTextColor,
+                          onPressed: () => showModalBottomSheet<void>(
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            builder: (context) => const GiveBottomSheet(),
+                          ),
+                        )
+                      : const SizedBox(),
+                  SizedBox(height: size.height * 0.02),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ProfileSwitchButton(
+                          name: state.activeProfile.firstName,
+                          onClicked: () {
+                            context.pushNamed(Pages.profileSelection.name);
+
+                            AnalyticsHelper.logEvent(
+                              eventName: AmplitudeEvent.profileSwitchPressed,
+                            );
+                          }),
+                      const FindCharityButton(),
+                    ],
+                  ),
                 ],
               ),
             ],
           ),
         ),
-        fab: ProfileSwitchButton(
-            name: state.activeProfile.firstName,
-            onClicked: () {
-              context.pushReplacementNamed(Pages.profileSelection.name);
-
-              AnalyticsHelper.logEvent(
-                eventName: AmplitudeEvent.profileSwitchPressed,
-              );
-            }),
-        fabLocation: FloatingActionButtonLocation.startFloat,
       );
     });
   }

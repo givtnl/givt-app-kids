@@ -2,13 +2,16 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_error_page.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_found_page.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_search_page.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,8 +27,6 @@ class SearchForCoinScreen extends StatelessWidget {
       builder: (context, coinState) {
         return BlocConsumer<OrganisationDetailsCubit, OrganisationDetailsState>(
           listener: (context, orgState) async {
-            log('orgState" $orgState');
-
             if (orgState is OrganisationDetailsSetState) {
               log("Organisation is set: ${orgState.organisation.name}");
               AnalyticsHelper.logEvent(
@@ -37,21 +38,18 @@ class SearchForCoinScreen extends StatelessWidget {
             }
             if (orgState is OrganisationDetailsErrorState) {
               coinCubit.error();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text(
-                    "Error setting organisation. Please try again later.",
-                    textAlign: TextAlign.center,
-                  ),
-                  backgroundColor: Theme.of(context).errorColor,
-                ),
+              SnackBarHelper.showMessage(
+                context,
+                text: 'Error setting organisation. Please try again later.',
+                isError: true,
               );
             }
           },
           builder: (BuildContext context, orgState) {
-            log('builder: orgState: $orgState');
             return Scaffold(
-              backgroundColor: const Color(0xFFEEEDE4),
+              appBar: AppBar(
+                toolbarHeight: 0,
+              ),
               body: coinState.status == CoinAnimationStatus.animating
                   ? const SearchingForCoinPage()
                   : coinState.status == CoinAnimationStatus.error
@@ -59,25 +57,32 @@ class SearchForCoinScreen extends StatelessWidget {
                       : const CoinFoundPage(),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
-              floatingActionButton:
-                  coinState.status == CoinAnimationStatus.stoped
-                      ? FloatingActoinButton(
-                          text: "Assign the coin",
-                          onPressed: () {
-                            AnalyticsHelper.logEvent(
-                                eventName: AmplitudeEvent.buttonPressed,
-                                eventProperties: {
-                                  'button_name': 'Assign the coin',
-                                  'formatted_date':
-                                      DateTime.now().toIso8601String(),
-                                  'screen_name': Pages.searchForCoin.name,
-                                });
+              floatingActionButton: coinState.status ==
+                      CoinAnimationStatus.stopped
+                  ? FloatingActoinButton(
+                      text: "Assign the coin",
+                      onPressed: () {
+                        AnalyticsHelper.logEvent(
+                            eventName: AmplitudeEvent.buttonPressed,
+                            eventProperties: {
+                              'button_name': 'Assign the coin',
+                              'formatted_date':
+                                  DateTime.now().toIso8601String(),
+                              'screen_name': Pages.searchForCoin.name,
+                            });
 
-                            context.pushReplacementNamed(
-                                Pages.profileSelectionCoin.name);
-                          },
-                        )
-                      : null,
+                        final isLoggedIn =
+                            context.read<AuthCubit>().state is LoggedInState;
+                        final pageName = isLoggedIn
+                            ? Pages.profileSelection.name
+                            : Pages.login.name;
+
+                        context.read<FlowsCubit>().startDeepLinkCoinFlow();
+
+                        context.pushNamed(pageName);
+                      },
+                    )
+                  : null,
             );
           },
         );

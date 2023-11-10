@@ -9,9 +9,6 @@ on:
       MATCH_PASSWORD:
         required: true
     inputs:
-      ruby-version:
-        required: true
-        type: string
       flutter-version:
         required: true
         type: string
@@ -37,16 +34,15 @@ jobs:
           fi
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.118.0
+        uses: ruby/setup-ruby@v1
         with: 
-          ruby-version: ${{ inputs.ruby-version }}
           bundler-cache: true
 
       - name: Auth codesigning
-        uses: webfactory/ssh-agent@v0.5.4
+        uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.CODESIGNING_DEPLOY_KEY }}
 

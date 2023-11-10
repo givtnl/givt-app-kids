@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.3.2
+version: 1.4.0
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -19,7 +19,7 @@ dependencies:
   equatable: ^2.0.5
   flutter_bloc: ^8.1.3
   flutter_svg: ^1.1.6
-  get_it: ^7.6.0
+  get_it: ^7.6.4
   go_router: ^10.1.2
   http: ^0.13.5
   http_interceptor: ^1.0.2
@@ -33,6 +33,7 @@ dependencies:
   shared_preferences: ^2.0.15
   vibration: ^1.7.6
   visibility_detector: ^0.3.3
+  nfc_manager: ^3.3.0
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,8 @@ flutter:
           weight: 600
         - asset: assets/fonts/Raleway-Bold.ttf
           weight: 700
+        - asset: assets/fonts/Raleway-ExtraBold.ttf
+          weight: 800
     - family: Roboto
       fonts:
         - asset: assets/fonts/Roboto-Medium.ttf

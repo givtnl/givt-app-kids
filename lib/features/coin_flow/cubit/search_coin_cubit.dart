@@ -29,7 +29,7 @@ class SearchCoinCubit extends Cubit<SearchCoinState> {
       );
     }
     emit(state.copyWith(
-      status: CoinAnimationStatus.stoped,
+      status: CoinAnimationStatus.stopped,
       stopwatch: state.stopwatch..stop(),
     ));
   }

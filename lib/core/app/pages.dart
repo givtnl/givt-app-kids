@@ -9,14 +9,13 @@ enum Pages {
   chooseAmountSlider(
       path: '/choose-amount-slider', name: 'CHOOSE_AMOUNT_SLIDER'),
   test(path: '/test', name: 'TEST'),
+  scanNFC(path: '/scan-nfc', name: 'SCAN_NFC'),
   history(path: '/history', name: 'HISTORY'),
   //coin flow
   searchForCoin(path: '/search-for-coin', name: 'SEARCH_FOR_COIN'),
-  profileSelectionCoin(
-      path: '/profile-selection-coin', name: 'PROFILE_SELECTION_COIN'),
-  chooseAmountSliderCoin(
-      path: '/choose-amount-slider-coin', name: 'CHOOSE_AMOUNT_SLIDER_COIN'),
+  outAppCoinFlow(path: '/out-app-coin-flow', name: 'OUT_APP_COIN_FLOW'),
   successCoin(path: '/success-coin', name: 'SUCCESS_COIN'),
+  redirectPopPage(path: '/redirect-pop-page', name: 'REDIRECT_POP_PAGE'),
   ;
 
   final String path;

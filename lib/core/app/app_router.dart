@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/route_utils.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
-import 'package:givt_app_kids/features/coin_flow/screens/choose_amount_slider_coin_screen.dart';
-import 'package:givt_app_kids/features/coin_flow/screens/profile_selection_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
@@ -20,7 +19,10 @@ import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
 import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
+import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
+import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -107,30 +109,60 @@ class AppRouter {
           ),
         ),
         GoRoute(
-            path: Pages.searchForCoin.path,
-            name: Pages.searchForCoin.name,
+          path: Pages.searchForCoin.path,
+          name: Pages.searchForCoin.name,
+          redirect: (context, state) => getIt<SharedPreferences>()
+                      .getBool('isInAppCoinFlow') ==
+                  true
+              ? null
+              : "${Pages.outAppCoinFlow.path}?code=${state.uri.queryParameters['code']}",
+          builder: (context, state) {
+            final String mediumID = state.uri.queryParameters['code'] == null ||
+                    state.uri.queryParameters['code']!.contains('null')
+                ? OrganisationDetailsCubit.defaultMediumId
+                : state.uri.queryParameters['code']!;
+            // Because the deeplink opens a whole new app context we need to
+            // re-fetch the organisation details
+            // & emit the in-app coin flow
+
+            context
+                .read<OrganisationDetailsCubit>()
+                .getOrganisationDetails(mediumID);
+
+            context.read<FlowsCubit>().startInAppCoinFlow();
+
+            return const ChooseAmountSliderScreen();
+          },
+        ),
+        GoRoute(
+          path: Pages.outAppCoinFlow.path,
+          name: Pages.outAppCoinFlow.name,
+          builder: (context, state) {
+            final String mediumID =
+                state.uri.queryParameters['code']!.contains('null')
+                    ? OrganisationDetailsCubit.defaultMediumId
+                    : state.uri.queryParameters['code']!;
+
+            context
+                .read<OrganisationDetailsCubit>()
+                .getOrganisationDetails(mediumID);
+            return BlocProvider<SearchCoinCubit>(
+              lazy: false,
+              create: (context) => SearchCoinCubit()..startAnimation(),
+              child: const SearchForCoinScreen(),
+            );
+          },
+        ),
+        GoRoute(
+            path: Pages.scanNFC.path,
+            name: Pages.scanNFC.name,
             builder: (context, state) {
-              final String mediumID = state.uri.queryParameters['code'] ??
-                  OrganisationDetailsCubit.defaultMediumId;
-              context
-                  .read<OrganisationDetailsCubit>()
-                  .getOrganisationDetails(mediumID);
-              return BlocProvider<SearchCoinCubit>(
-                lazy: false,
-                create: (context) => SearchCoinCubit()..startAnimation(),
-                child: const SearchForCoinScreen(),
+              return BlocProvider(
+                create: (context) => ScanNfcCubit()
+                  ..startTagRead(delay: ScanNfcCubit.startDelay),
+                child: const NFCScanPage(),
               );
             }),
-        GoRoute(
-          path: Pages.profileSelectionCoin.path,
-          name: Pages.profileSelectionCoin.name,
-          builder: (context, state) => const ProfileSelectionCoinScreen(),
-        ),
-        GoRoute(
-          path: Pages.chooseAmountSliderCoin.path,
-          name: Pages.chooseAmountSliderCoin.name,
-          builder: (context, state) => const ChooseAmountSliderCoinScreen(),
-        ),
         GoRoute(
           path: Pages.successCoin.path,
           name: Pages.successCoin.name,

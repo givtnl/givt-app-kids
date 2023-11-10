@@ -5,10 +5,12 @@ import 'package:givt_app_kids/core/app/app_router.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'app_config.dart';
 
 class GivtApp extends StatelessWidget {
@@ -36,6 +38,9 @@ class GivtApp extends StatelessWidget {
           create: (BuildContext context) => OrganisationDetailsCubit(getIt()),
           lazy: true,
         ),
+        BlocProvider<FlowsCubit>(
+          create: (BuildContext context) => FlowsCubit(),
+        ),
       ],
       child: BlocBuilder<AuthCubit, AuthState>(builder: (context, authState) {
         return BlocConsumer<ProfilesCubit, ProfilesState>(
@@ -57,9 +62,7 @@ class _AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColor: const Color.fromARGB(255, 62, 73, 112),
-          fontFamily: "Raleway"),
+      theme: AppTheme.lightTheme,
       routeInformationProvider: AppRouter.router.routeInformationProvider,
       routeInformationParser: AppRouter.router.routeInformationParser,
       routerDelegate: AppRouter.router.routerDelegate,
