@@ -64,7 +64,7 @@ class AccountLockedDialog extends StatelessWidget {
                       const SizedBox(height: 30),
                       Text(
                         state.minutesLeft > 0
-                            ? 'Please try again in ${state.minutesLeft} minutes.'
+                            ? 'Please try again in ${state.minutesLeft} minute${state.minutesLeft > 1 ? 's' : ''}.'
                             : 'You can try again.',
                         textAlign: TextAlign.center,
                         style:
