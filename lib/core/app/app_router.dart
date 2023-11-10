@@ -137,13 +137,20 @@ class AppRouter {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               SnackBarHelper.showMessage(
                 context,
-                text:
-                    "${state.fullPath}\n${state.uri.host}\n${state.uri.scheme}",
+                text: "${state.uri.host}\n${state.uri.scheme}",
               );
-
-              context.pop();
+              // context.pop();
             });
-            return const SizedBox();
+            final String mediumID = state.uri.queryParameters['code'] == null ||
+                    state.uri.queryParameters['code']!.contains('null')
+                ? OrganisationDetailsCubit.defaultMediumId
+                : state.uri.queryParameters['code']!;
+
+            context
+                .read<OrganisationDetailsCubit>()
+                .getOrganisationDetails(mediumID);
+
+            return const ChooseAmountSliderScreen();
           },
         ),
         GoRoute(
