@@ -74,7 +74,7 @@ class AppRouter {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               SnackBarHelper.showMessage(context,
                   text:
-                      "${state.uri.path}\n${state.uri.host}\n${state.uri.scheme}");
+                      "${state.fullPath}\n${state.uri.host}\n${state.uri.scheme}");
             });
             // this only needs to execute when the user is
             // coming via deeplink in the inAppCoinFlow
