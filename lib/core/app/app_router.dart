@@ -71,7 +71,11 @@ class AppRouter {
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
           builder: (context, state) {
-            SnackBarHelper.showMessage(context, text: state.uri.host);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              SnackBarHelper.showMessage(context,
+                  text:
+                      "${state.uri.path}\n${state.uri.host}\n${state.uri.scheme}");
+            });
             // this only needs to execute when the user is
             // coming via deeplink in the inAppCoinFlow
             if (state.uri.host == 'http://www.givt.app/') {
