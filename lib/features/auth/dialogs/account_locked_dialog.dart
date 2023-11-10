@@ -66,6 +66,7 @@ class AccountLockedDialog extends StatelessWidget {
                         state.minutesLeft > 0
                             ? 'Please try again in ${state.minutesLeft} minutes.'
                             : 'You can try again.',
+                        textAlign: TextAlign.center,
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   color: AppTheme.givt4KidsDarkBlue,
