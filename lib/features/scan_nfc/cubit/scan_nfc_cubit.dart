@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
-import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
 part 'scan_nfc_state.dart';
@@ -33,13 +32,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
-    await Future.delayed(delay);
-    emit(state.copyWith(
-      scanNFCStatus: ScanNFCStatus.scanned,
-      mediumId: 'mediumID',
-      readData: 'TJFHTGF<TC<SJGCJ>hvdevds',
-    ));
-    String mediumId = OrganisationDetailsCubit.defaultMediumId;
+    String mediumId = '';
     String readData = '';
     try {
       NfcManager.instance.startSession(
@@ -61,11 +54,13 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
                   log('coin payload: $payload');
                   Uri uri = Uri.parse(payload);
                   mediumId = uri.queryParameters['code'] ?? mediumId;
+                  readData = payload;
                 } else {
                   final decoded = utf8.decode(wellKnownRecord.payload);
                   log('coin decoded: $decoded');
                   Uri uri = Uri.parse(decoded);
                   mediumId = uri.queryParameters['code'] ?? mediumId;
+                  readData = decoded;
                 }
                 emit(state.copyWith(
                     mediumId: mediumId,
