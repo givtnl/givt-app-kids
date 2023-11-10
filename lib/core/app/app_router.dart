@@ -71,21 +71,21 @@ class AppRouter {
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
           builder: (context, state) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.pop();
-            });
-            // this only needs to execute when the user is
-            // coming via deeplink in the inAppCoinFlow
-            if (state.uri.host == 'http://www.givt.app/') {
-              final String mediumID =
-                  state.uri.queryParameters['code'] == null ||
-                          state.uri.queryParameters['code']!.contains('null')
-                      ? OrganisationDetailsCubit.defaultMediumId
-                      : state.uri.queryParameters['code']!;
-              context
-                  .read<OrganisationDetailsCubit>()
-                  .getOrganisationDetails(mediumID);
-            }
+            // WidgetsBinding.instance.addPostFrameCallback((_) {
+            //   context.pop();
+            // });
+            // // this only needs to execute when the user is
+            // // coming via deeplink in the inAppCoinFlow
+            // if (state.uri.host == 'http://www.givt.app/') {
+            //   final String mediumID =
+            //       state.uri.queryParameters['code'] == null ||
+            //               state.uri.queryParameters['code']!.contains('null')
+            //           ? OrganisationDetailsCubit.defaultMediumId
+            //           : state.uri.queryParameters['code']!;
+            //   context
+            //       .read<OrganisationDetailsCubit>()
+            //       .getOrganisationDetails(mediumID);
+            // }
             return const ChooseAmountSliderScreen();
           },
         ),
