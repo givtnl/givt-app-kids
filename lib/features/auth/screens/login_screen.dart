@@ -130,6 +130,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 5),
                     TextField(
                       key: const ValueKey("email"),
+                      //scrool down hotfix
+                      scrollPadding: const EdgeInsets.only(bottom: 400),
                       decoration: InputDecoration(
                         fillColor: AppTheme.backButtonColor,
                         filled: true,
@@ -171,6 +173,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Expanded(
                           child: TextField(
                             key: const ValueKey("password"),
+                            //scrool down hotfix
+                            scrollPadding: const EdgeInsets.only(bottom: 400),
                             decoration: InputDecoration(
                               suffixIconConstraints: const BoxConstraints(
                                   maxWidth: 50, maxHeight: 50),
