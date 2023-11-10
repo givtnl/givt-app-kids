@@ -108,7 +108,7 @@ class LoggedInState extends AuthState {
 }
 
 class AccountLockedState extends AuthState {
-  static const Duration lockDurationMinutes = Duration(minutes: 15);
+  static const Duration lockDurationMinutes = Duration(minutes: 16);
 
   static const Duration lockedCheckInterval = Duration(minutes: 1);
 
