@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/core/exceptions/givt_server_exception.dart';
+import 'package:givt_app_kids/features/auth/cubit/givt_inner_error_type.dart';
 import 'package:givt_app_kids/features/auth/models/auth_request.dart';
 import 'package:givt_app_kids/features/auth/models/session.dart';
 import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
@@ -13,6 +15,7 @@ part 'auth_state.dart';
 class AuthCubit extends HydratedCubit<AuthState> {
   AuthCubit(this._authRepositoy) : super(const LoggedOutState()) {
     hydrate();
+    _handleLockedAccount();
   }
 
   final AuthRepository _authRepositoy;
@@ -34,8 +37,36 @@ class AuthCubit extends HydratedCubit<AuthState> {
         AuthRequest(email: email, password: password),
       );
       emit(LoggedInState(session: response));
+    } on GivtServerException catch (error) {
+      final errorState = ExternalErrorState.fromJson(error.body!);
+      if (errorState.innerErrorType == GivtInnerErrorType.wrongPasswordLocked) {
+        emit(AccountLockedState.initial());
+        _handleLockedAccount();
+      } else {
+        emit(errorState);
+      }
     } catch (error) {
       emit(ExternalErrorState(errorMessage: error.toString()));
+    }
+  }
+
+  Future<void> _handleLockedAccount() async {
+    if (state is AccountLockedState) {
+      final lockedState = (state as AccountLockedState);
+
+      final lockedDate = DateTime.parse(lockedState.lockDate);
+      final unlockDate = lockedDate.add(AccountLockedState.lockDurationMinutes);
+      final now = DateTime.now();
+
+      Duration difference = unlockDate.difference(now);
+      final minutesLeft = difference.inMinutes;
+
+      emit(lockedState.copyWith(minutesLeft: minutesLeft));
+
+      if (minutesLeft > 0) {
+        await Future.delayed(
+            AccountLockedState.lockedCheckInterval, _handleLockedAccount);
+      }
     }
   }
 
@@ -87,21 +118,16 @@ class AuthCubit extends HydratedCubit<AuthState> {
     final instanceType = json['instanceType'];
     final instance = jsonDecode(json['instance']);
 
-    log("fromJSON: $json");
+    log("auth:fromJSON: $json");
 
-    // if (instanceType == const LoggedOutState().runtimeType.toString()) {
-    //   return const LoggedOutState();
-    // } else if (instanceType == const LoadingState().runtimeType.toString()) {
-    //   return const LoadingState();
-    // } else if (instanceType ==
-    //     const InputFieldErrorState().runtimeType.toString()) {
-    //   return InputFieldErrorState.fromJson(instance);
-    // } else if (instanceType ==
-    //     const ExternalErrorState().runtimeType.toString()) {
-    //   return ExternalErrorState.fromJson(instance);
-    // } else
     if (instanceType == const LoggedInState().runtimeType.toString()) {
       return LoggedInState.fromJson(instance);
+    } else if (instanceType ==
+        const ExternalErrorState().runtimeType.toString()) {
+      return ExternalErrorState.fromJson(instance);
+    } else if (instanceType ==
+        AccountLockedState.initial().runtimeType.toString()) {
+      return AccountLockedState.fromJson(instance);
     } else {
       return null;
     }
@@ -113,7 +139,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
       'instanceType': state.runtimeType.toString(),
       'instance': jsonEncode(state.toJson()),
     };
-    log("toJSON: $result");
+    log("auth:toJSON: $result");
     return result;
   }
 }

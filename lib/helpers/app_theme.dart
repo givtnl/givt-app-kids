@@ -7,7 +7,6 @@ class AppTheme {
   static const givt4KidsYellow = Color(0xFFF2DF7F);
 
   static const offWhite = Color(0xFFEEEDE4);
-  static const logoutButtonColor = Color(0xFFD53D4C);
   static const backButtonColor = Color(0xFFBFDBFC);
   static const walletBackgroundColor = Color(0xFFF1F7FF);
   static const successBackgroundLightBlue = Color(0xFFB9D7FF);
@@ -25,6 +24,13 @@ class AppTheme {
   static const woodColor = Color(0xFFD48256);
 
   static final white85 = Colors.white.withAlpha((255 * 0.85).toInt());
+
+  static const givt4KidsDarkBlue = Color(0xFF2E2957);
+  static const givt4KidsDarkGreyBlue = Color(0xFF617793);
+
+  static const givt4KidsLightGreen = Color(0xFF60DD9B);
+  static const givt4KidsDarkGreen = Color(0xFF006C47);
+  static const givt4KidsRedAlt = Color(0xFFDA2D37);
 
   static const actionButtonStyle = TextStyle(
     fontSize: 26,
