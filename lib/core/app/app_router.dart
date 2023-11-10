@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
@@ -20,7 +21,6 @@ import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit
 import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
-import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,24 +70,7 @@ class AppRouter {
         GoRoute(
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
-          builder: (context, state) {
-            // WidgetsBinding.instance.addPostFrameCallback((_) {
-            //   context.pop();
-            // });
-            // // this only needs to execute when the user is
-            // // coming via deeplink in the inAppCoinFlow
-            // if (state.uri.host == 'http://www.givt.app/') {
-            //   final String mediumID =
-            //       state.uri.queryParameters['code'] == null ||
-            //               state.uri.queryParameters['code']!.contains('null')
-            //           ? OrganisationDetailsCubit.defaultMediumId
-            //           : state.uri.queryParameters['code']!;
-            //   context
-            //       .read<OrganisationDetailsCubit>()
-            //       .getOrganisationDetails(mediumID);
-            // }
-            return const ChooseAmountSliderScreen();
-          },
+          builder: (context, state) => const ChooseAmountSliderScreen(),
         ),
         GoRoute(
           path: Pages.success.path,
@@ -134,21 +117,19 @@ class AppRouter {
               ? null
               : "${Pages.outAppCoinFlow.path}?code=${state.uri.queryParameters['code']}",
           builder: (context, state) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              SnackBarHelper.showMessage(
-                context,
-                text: "${state.uri.host}\n${state.uri.scheme}",
-              );
-              // context.pop();
-            });
             final String mediumID = state.uri.queryParameters['code'] == null ||
                     state.uri.queryParameters['code']!.contains('null')
                 ? OrganisationDetailsCubit.defaultMediumId
                 : state.uri.queryParameters['code']!;
+            // Because the deeplink opens a whole new app context we need to
+            // re-fetch the organisation details
+            // & emit the in-app coin flow
 
             context
                 .read<OrganisationDetailsCubit>()
                 .getOrganisationDetails(mediumID);
+
+            context.read<FlowsCubit>().startInAppCoinFlow();
 
             return const ChooseAmountSliderScreen();
           },

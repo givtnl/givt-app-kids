@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
@@ -14,13 +18,17 @@ class GivtBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final flow = context.read<FlowsCubit>().state;
+    final isDeeplinkInApp =
+        (!context.canPop() && flow.flowType == FlowType.inAppCoin);
+    final isVisible = context.canPop() || isDeeplinkInApp;
     return Container(
       alignment: Alignment.topLeft,
       padding: const EdgeInsets.only(left: 15, top: 15),
       child: Opacity(
-        opacity: context.canPop() ? 1 : 0,
+        opacity: isVisible ? 1 : 0,
         child: AbsorbPointer(
-          absorbing: !context.canPop(),
+          absorbing: !isVisible,
           child: CircleAvatar(
             radius: 20,
             backgroundColor: AppTheme.backButtonColor,
@@ -31,7 +39,10 @@ class GivtBackButton extends StatelessWidget {
 
                 AnalyticsHelper.logEvent(
                     eventName: AmplitudeEvent.backButtonPressed);
-
+                if (isDeeplinkInApp) {
+                  context.goNamed(Pages.wallet.name);
+                  return;
+                }
                 context.pop();
               },
               icon: const Icon(
