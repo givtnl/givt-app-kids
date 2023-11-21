@@ -8,7 +8,8 @@ import 'package:givt_app_kids/features/giving_flow/create_transaction/repositori
 import 'package:givt_app_kids/features/giving_flow/organisation_details/repositories/organisation_details_repository.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_repository.dart';
 import 'package:givt_app_kids/features/profiles/repository/profiles_repository.dart';
-import 'package:givt_app_kids/features/recommendation/repository/recomendation_repo.dart';
+import 'package:givt_app_kids/features/recommendation/organisations/repositories/organisations_repository.dart';
+import 'package:givt_app_kids/features/recommendation/tags/repositories/tags_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
@@ -53,11 +54,6 @@ void _initRepositories() {
         getIt(),
       ),
     )
-    ..registerLazySingleton<RecommendationRepository>(
-      () => RecommendationRepositoryImpl(
-        getIt(),
-      ),
-    )
     ..registerLazySingleton<HistoryRepository>(
       () => HistoryRepositoryImpl(
         getIt(),
@@ -65,6 +61,16 @@ void _initRepositories() {
     )
     ..registerLazySingleton<CreateTransactionRepository>(
       () => CreateTransactionRepositoryImpl(
+        getIt(),
+      ),
+    )
+    ..registerLazySingleton<TagsRepository>(
+      () => TagsRepositoryImpl(
+        getIt(),
+      ),
+    )
+    ..registerLazySingleton<OrganisationsRepository>(
+      () => OrganisationsRepositoryImpl(
         getIt(),
       ),
     );

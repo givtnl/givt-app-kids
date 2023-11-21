@@ -17,8 +17,12 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
 import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
-import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
-import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
+import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_cubit.dart';
+import 'package:givt_app_kids/features/recommendation/interests/screens/interests_selection_screen.dart';
+import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
+import 'package:givt_app_kids/features/recommendation/organisations/screens/organisations_screen.dart';
+import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart';
+import 'package:givt_app_kids/features/recommendation/tags/screens/location_selection_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -101,12 +105,45 @@ class AppRouter {
           ),
         ),
         GoRoute(
-          path: Pages.recommend.path,
-          name: Pages.recommend.name,
-          builder: (context, state) => BlocProvider<RecommendationCubit>(
-            create: (context) => RecommendationCubit(getIt()),
-            child: const RecommendationScreen(),
+          path: Pages.locationSelection.path,
+          name: Pages.locationSelection.name,
+          builder: (context, state) => BlocProvider(
+            create: (context) => TagsCubit(
+              getIt(),
+            )..fetchTags(),
+            child: const LocationSelectionScreen(),
           ),
+        ),
+        GoRoute(
+          path: Pages.interestsSelection.path,
+          name: Pages.interestsSelection.name,
+          builder: (context, state) {
+            final tagsState = (state.extra! as TagsStateFetched);
+            return BlocProvider(
+              create: (context) => InterestsCubit(
+                location: tagsState.selectedLocation,
+                interests: tagsState.interests,
+              ),
+              child: const InterestsSelectionScreen(),
+            );
+          },
+        ),
+        GoRoute(
+          path: Pages.organisations.path,
+          name: Pages.organisations.name,
+          builder: (context, state) {
+            final interestsState = (state.extra! as InterestsState);
+            return BlocProvider(
+              create: (context) => OrganisationsCubit(
+                getIt(),
+              )..getRecommendedOrganisations(
+                  location: interestsState.location,
+                  interests: interestsState.selectedInterests,
+                  fakeComputingExtraDelay: const Duration(seconds: 1),
+                ),
+              child: const OrganisationsScreen(),
+            );
+          },
         ),
         GoRoute(
           path: Pages.searchForCoin.path,

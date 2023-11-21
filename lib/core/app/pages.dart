@@ -5,12 +5,17 @@ enum Pages {
   wallet(path: '/wallet', name: 'WALLET'),
   camera(path: '/camera', name: 'CAMERA'),
   success(path: '/success', name: 'SUCCESS'),
-  recommend(path: '/recommend', name: 'RECOMMEND'),
   chooseAmountSlider(
       path: '/choose-amount-slider', name: 'CHOOSE_AMOUNT_SLIDER'),
   test(path: '/test', name: 'TEST'),
   scanNFC(path: '/scan-nfc', name: 'SCAN_NFC'),
   history(path: '/history', name: 'HISTORY'),
+
+  //recommendation flow
+  locationSelection(path: '/location-selection', name: 'LOCATION_SELECTION'),
+  interestsSelection(path: '/interests-selection', name: 'INTERESTS_SELECTION'),
+  organisations(path: '/organisations', name: 'ORGANISATIONS'),
+
   //coin flow
   searchForCoin(path: '/search-for-coin', name: 'SEARCH_FOR_COIN'),
   outAppCoinFlow(path: '/out-app-coin-flow', name: 'OUT_APP_COIN_FLOW'),
