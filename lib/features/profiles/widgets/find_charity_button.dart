@@ -12,10 +12,7 @@ class FindCharityButton extends StatelessWidget {
       onPressed: () {
         context.pushNamed(Pages.recommend.name);
         AnalyticsHelper.logEvent(
-            eventName: AmplitudeEvent.helpMeFindCharityPressed,
-            eventProperties: {
-              AnalyticsHelper.screenNameKey: Pages.wallet.name,
-            });
+            eventName: AmplitudeEvent.helpMeFindCharityPressed);
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all(EdgeInsets.zero),
