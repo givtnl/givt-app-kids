@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:go_router/go_router.dart';
 
 class FindCharityButton extends StatelessWidget {
@@ -8,7 +9,11 @@ class FindCharityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => context.pushNamed(Pages.recommend.name),
+      onPressed: () {
+        context.pushNamed(Pages.recommend.name);
+        AnalyticsHelper.logEvent(
+            eventName: AmplitudeEvent.helpMeFindCharityPressed);
+      },
       style: ButtonStyle(
         padding: MaterialStateProperty.all(EdgeInsets.zero),
       ),
