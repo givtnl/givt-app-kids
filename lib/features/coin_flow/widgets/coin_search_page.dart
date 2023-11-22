@@ -6,28 +6,30 @@ class SearchingForCoinPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
-      children: [
-        Positioned.fill(
-          child: Padding(
-            padding: EdgeInsets.only(left: 50, right: 50, top: 150),
-            child: Text(
-              "Scanning the coin...",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xFF3B3240),
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
+    return const SafeArea(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Padding(
+              padding: EdgeInsets.only(left: 50, right: 50, top: 150),
+              child: Text(
+                "Scanning the coin...",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFF3B3240),
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
-        ),
-        Positioned.fill(
-          child: Center(
-            child: SearchCoinAnimatedWidget(),
+          Positioned.fill(
+            child: Center(
+              child: SearchCoinAnimatedWidget(),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

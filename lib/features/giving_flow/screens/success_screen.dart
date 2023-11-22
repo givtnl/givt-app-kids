@@ -41,41 +41,43 @@ class _SuccessScreenState extends State<SuccessScreen> {
         ),
       ),
       backgroundColor: AppTheme.successBackgroundLightBlue,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
-              child: Text(
-                organisation.thankYou ?? "Thank you!",
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 30,
-                  color: AppTheme.defaultTextColor,
-                  fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
+                child: Text(
+                  organisation.thankYou ?? "Thank you!",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 30,
+                    color: AppTheme.defaultTextColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
-              child: Text(
-                "Your parents can now approve \n your donation suggestion to \n ${organisation.name}",
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: AppTheme.defaultTextColor,
-                  fontWeight: FontWeight.bold,
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
+                child: Text(
+                  "Your parents can now approve \n your donation suggestion to \n ${organisation.name}",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: AppTheme.defaultTextColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Lottie.asset(
-              "assets/lotties/donation.json",
-              fit: BoxFit.fitWidth,
-              width: double.infinity,
-            ),
-          ],
+              Lottie.asset(
+                "assets/lotties/donation.json",
+                fit: BoxFit.fitWidth,
+                width: double.infinity,
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

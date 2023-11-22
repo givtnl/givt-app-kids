@@ -29,46 +29,48 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
 
     return Scaffold(
       backgroundColor: AppTheme.successBackgroundLightBlue,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Lottie.asset(
-              "assets/lotties/coin_success_2.json",
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.bottomCenter,
-              width: double.infinity,
-            ),
-          ),
-          const Positioned.fill(
-            child: Padding(
-              padding: EdgeInsets.only(left: 0, right: 0, top: 70),
-              child: Column(
-                children: [
-                  Text(
-                    "Activated!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppTheme.defaultTextColor,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Drop your coin wherever your\nchurch collects money.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppTheme.defaultTextColor,
-                      fontSize: 22,
-                    ),
-                  ),
-                ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Lottie.asset(
+                "assets/lotties/coin_success_2.json",
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.bottomCenter,
+                width: double.infinity,
               ),
             ),
-          ),
-        ],
+            const Positioned.fill(
+              child: Padding(
+                padding: EdgeInsets.only(left: 0, right: 0, top: 70),
+                child: Column(
+                  children: [
+                    Text(
+                      "Activated!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppTheme.defaultTextColor,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Drop your coin wherever your\nchurch collects money.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppTheme.defaultTextColor,
+                        fontSize: 22,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: profiles.length == 1
