@@ -170,7 +170,7 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                             AnalyticsHelper.logEvent(
                               eventName: AmplitudeEvent.amountPressed,
                               eventProperties: {
-                                'amount': value.roundToDouble()
+                                AnalyticsHelper.amountKey: value.roundToDouble()
                               },
                             );
                           },
@@ -232,9 +232,8 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                       AnalyticsHelper.logEvent(
                           eventName: AmplitudeEvent.giveToThisGoalPressed,
                           eventProperties: {
-                            'amount': state.amount,
-                            'formatted_date': DateTime.now().toIso8601String(),
-                            'goal_name': organisation.name,
+                            AnalyticsHelper.amountKey: state.amount,
+                            AnalyticsHelper.goalKey: organisation.name,
                           });
                     },
             ),
