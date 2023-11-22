@@ -20,6 +20,13 @@ enum AmplitudeEvent {
   nfcScanned('nfc_scanned'),
   // drawerLongPressed('drawer_long_pressed'),
   // logoutPressed('logout_pressed'),
+
+  locationSelected('location_selected'),
+  nextToInterestsPressed('next_to_interests_pressed'),
+  interestSelected('interest_selected'),
+  nextToCharitiesPressed('next_to_charities_pressed'),
+  charitiesShown('charities_shown'),
+  charityCardPressed('charity_card_pressed'),
   ;
 
   final String value;

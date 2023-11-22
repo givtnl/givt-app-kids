@@ -14,16 +14,16 @@ class OrganisationDetailsCubit extends Cubit<OrganisationDetailsState> {
   static const String defaultMediumId =
       'NjFmN2VkMDE1NTUzMDEyMmMwMDAuZmMwMDAwMDAwMDAx';
 
-  Future<void> getOrganisationDetails(String qrCode) async {
+  Future<void> getOrganisationDetails(String mediumId) async {
     emit(const OrganisationDetailsLoadingState());
-    qrCode = qrCode.isEmpty ? defaultMediumId : qrCode;
+    mediumId = mediumId.isEmpty ? defaultMediumId : mediumId;
     try {
       final response =
-          await _organisationRepository.fetchOrganisationDetails(qrCode);
+          await _organisationRepository.fetchOrganisationDetails(mediumId);
       emit(OrganisationDetailsSetState(
-          organisation: response, mediumId: qrCode));
+          organisation: response, mediumId: mediumId));
     } catch (error) {
-      emit(OrganisationDetailsErrorState(mediumId: qrCode));
+      emit(OrganisationDetailsErrorState(mediumId: mediumId));
     }
   }
 }
