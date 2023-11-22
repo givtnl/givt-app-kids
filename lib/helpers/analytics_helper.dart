@@ -33,12 +33,12 @@ class AnalyticsHelper {
   // static const String newTransactionKey = "new_transaction";
   // static const String amountKey = "amount";
   // static const String goalKey = "goal_name";
-  // static const String walletAmountKey = "wallet_amount";
   // static const String buttonPressedKey = "button_pressed";
   // static const String buttonNameKey = "button_name";
   // static const String screenNameKey = "screen_name";
   // static const String timestampKey = "timestamp";
   // static const String formattedDateKey = "formatted_date";
+  static const String walletAmountKey = "wallet_amount";
 
   static Amplitude? _amplitude;
 
@@ -53,7 +53,7 @@ class AnalyticsHelper {
     final currentUserId = await _amplitude?.getUserId();
     final isNewUser = profileName != currentUserId;
 
-    log('The ${isNewUser ? 'new' : 'same'} amplitude user $profileName is set');
+    log('The ${isNewUser ? 'new' : 'same'} amplitude user $profileName is set.');
     await _amplitude?.setUserId(profileName, startNewSession: isNewUser);
   }
 
