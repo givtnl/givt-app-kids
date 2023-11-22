@@ -15,6 +15,10 @@ class FlowsState extends Equatable {
     return flowType == FlowType.inAppQRCode;
   }
 
+  bool get isRecommendation {
+    return flowType == FlowType.recommendation;
+  }
+
   @override
   List<Object> get props => [flowType];
 }

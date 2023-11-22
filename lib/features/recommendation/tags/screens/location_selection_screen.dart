@@ -68,7 +68,7 @@ class LocationSelectionScreen extends StatelessWidget {
                             children: state.locations.reversed
                                 .map((item) => LocationCard(
                                       location: item,
-                                      width: size.width * 0.31,
+                                      width: size.width * 0.32,
                                       isSelected:
                                           item == state.selectedLocation,
                                       onPressed: () {

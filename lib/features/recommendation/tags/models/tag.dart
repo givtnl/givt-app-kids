@@ -46,6 +46,16 @@ class Tag extends Equatable {
       ),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'key': key,
+      'area': area.name.toUpperCase(),
+      'displayText': displayText,
+      'pictureUrl': pictureUrl,
+      'type': type.name,
+    };
+  }
 }
 
 // ignore: constant_identifier_names

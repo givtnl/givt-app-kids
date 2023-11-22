@@ -81,6 +81,8 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
               }
             } else if (flow.isQRCode) {
               context.pushNamed(Pages.camera.name);
+            } else if (flow.isRecommendation) {
+              context.pushNamed(Pages.locationSelection.name);
             } else {
               context.pushReplacementNamed(Pages.wallet.name);
             }

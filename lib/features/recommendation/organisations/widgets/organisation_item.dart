@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
+import 'package:go_router/go_router.dart';
 
 class OrganisationItem extends StatelessWidget {
   const OrganisationItem({
@@ -35,10 +42,15 @@ class OrganisationItem extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              //TODO: Navigate to slider screen
-              // context
-              //     .read<OrganisationsCubit>()
-              //     .flipOrganisation(organisation);
+              String generatedMediumId =
+                  base64.encode(organisation.namespace.codeUnits);
+              context
+                  .read<OrganisationDetailsCubit>()
+                  .getOrganisationDetails(generatedMediumId);
+
+              context.read<FlowsCubit>().startRecommendationFlow();
+
+              context.pushNamed(Pages.chooseAmountSlider.name);
             },
             borderRadius: BorderRadius.circular(25),
             child: Card(
