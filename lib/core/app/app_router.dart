@@ -8,6 +8,7 @@ import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
@@ -16,6 +17,7 @@ import 'package:givt_app_kids/features/history/history_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
+import 'package:givt_app_kids/features/qr_scanner/cubit/camera_cubit.dart';
 import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
 import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
@@ -55,7 +57,14 @@ class AppRouter {
         GoRoute(
           path: Pages.profileSelection.path,
           name: Pages.profileSelection.name,
-          builder: (context, state) => const ProfileSelectionScreen(),
+          builder: (context, state) {
+            final parentGuid =
+                (context.read<AuthCubit>().state as LoggedInState)
+                    .session
+                    .userGUID;
+            context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+            return const ProfileSelectionScreen();
+          },
         ),
         GoRoute(
           path: Pages.wallet.path,
@@ -65,12 +74,19 @@ class AppRouter {
         GoRoute(
           path: Pages.camera.path,
           name: Pages.camera.name,
-          builder: (context, state) => const CameraScreen(),
+          builder: (context, state) => BlocProvider(
+            create: (context) => CameraCubit(),
+            child: const CameraScreen(),
+          ),
         ),
         GoRoute(
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
-          builder: (context, state) => const ChooseAmountSliderScreen(),
+          builder: (context, state) => BlocProvider(
+            create: (BuildContext context) =>
+                CreateTransactionCubit(context.read<ProfilesCubit>(), getIt()),
+            child: const ChooseAmountSliderScreen(),
+          ),
         ),
         GoRoute(
           path: Pages.success.path,

@@ -7,45 +7,47 @@ class CoinFoundPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
-      children: [
-        Positioned.fill(
-          child: Padding(
-            padding: EdgeInsets.only(left: 50, right: 50, top: 150),
-            child: Column(
-              children: [
-                Text(
-                  "Found it!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF3B3240),
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+    return const SafeArea(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Padding(
+              padding: EdgeInsets.only(left: 50, right: 50, top: 150),
+              child: Column(
+                children: [
+                  Text(
+                    "Found it!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF3B3240),
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  "Let's assign the coin",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF3B3240),
-                    fontSize: 22,
+                  Text(
+                    "Let's assign the coin",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF3B3240),
+                      fontSize: 22,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        Positioned.fill(
-          child: Center(
-            child: SearchCoinAnimatedWidget(),
+          Positioned.fill(
+            child: Center(
+              child: SearchCoinAnimatedWidget(),
+            ),
           ),
-        ),
-        Positioned.fill(
-          child: Center(
-            child: CoinFound(),
+          Positioned.fill(
+            child: Center(
+              child: CoinFound(),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

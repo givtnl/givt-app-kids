@@ -19,16 +19,16 @@ class CameraScreenFrame extends StatelessWidget {
         automaticallyImplyLeading: false,
         leading: const GivtBackButton(),
       ),
-      body: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-          Expanded(flex: 6, child: child),
-          Expanded(
-            child: Header3(
-              name: feedback,
-            ),
-          )
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+            Expanded(flex: 6, child: child),
+            Expanded(
+              child: Header3(name: feedback),
+            )
+          ],
+        ),
       ),
     );
   }

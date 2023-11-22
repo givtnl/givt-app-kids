@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
@@ -22,69 +21,52 @@ import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
 import 'package:go_router/go_router.dart';
 
-class ChooseAmountSliderScreen extends StatefulWidget {
+class ChooseAmountSliderScreen extends StatelessWidget {
   const ChooseAmountSliderScreen({Key? key}) : super(key: key);
-
-  @override
-  State<ChooseAmountSliderScreen> createState() =>
-      _ChooseAmountSliderScreenState();
-}
-
-class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
-  late final ProfilesCubit _profilesCubit;
-
-  @override
-  void initState() {
-    _profilesCubit = context.read<ProfilesCubit>();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     final organisationDetailsState =
         context.watch<OrganisationDetailsCubit>().state;
-
+    final profilesCubit = context.read<ProfilesCubit>();
     final organisation = organisationDetailsState.organisation;
     final mediumId = organisationDetailsState.mediumId;
 
     final flow = context.read<FlowsCubit>().state;
 
-    return BlocProvider<CreateTransactionCubit>(
-      create: (BuildContext context) =>
-          CreateTransactionCubit(_profilesCubit, getIt()),
-      child: BlocConsumer<CreateTransactionCubit, CreateTransactionState>(
-        listener: (context, state) {
-          if (state is CreateTransactionErrorState) {
-            log(state.errorMessage);
-            SnackBarHelper.showMessage(context,
-                text: 'Cannot create transaction. Please try again later.',
-                isError: true);
-          } else if (state is CreateTransactionSuccessState) {
-            final parentGuid =
-                (context.read<AuthCubit>().state as LoggedInState)
-                    .session
-                    .userGUID;
-            context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+    return BlocConsumer<CreateTransactionCubit, CreateTransactionState>(
+      listener: (context, state) {
+        if (state is CreateTransactionErrorState) {
+          log(state.errorMessage);
+          SnackBarHelper.showMessage(context,
+              text: 'Cannot create transaction. Please try again later.',
+              isError: true);
+        } else if (state is CreateTransactionSuccessState) {
+          final parentGuid = (context.read<AuthCubit>().state as LoggedInState)
+              .session
+              .userGUID;
+          context.read<ProfilesCubit>().fetchProfiles(parentGuid);
 
-            context.pushReplacementNamed(
-              flow.isCoin ? Pages.successCoin.name : Pages.success.name,
-            );
-          }
-        },
-        builder: (context, state) {
-          final size = MediaQuery.sizeOf(context);
-          return Scaffold(
-            appBar: AppBar(
-              toolbarHeight: flow.isQRCode ? 85 : null,
-              automaticallyImplyLeading: false,
-              leading: GivtBackButton(onPressedExt: () {
-                context.read<FlowsCubit>().resetFlow();
-              }),
-              actions: [
-                flow.isQRCode ? const Wallet() : const CoinWidget(),
-              ],
-            ),
-            body: SingleChildScrollView(
+          context.pushReplacementNamed(
+            flow.isCoin ? Pages.successCoin.name : Pages.success.name,
+          );
+        }
+      },
+      builder: (context, state) {
+        final size = MediaQuery.sizeOf(context);
+        return Scaffold(
+          appBar: AppBar(
+            toolbarHeight: flow.isQRCode ? 85 : null,
+            automaticallyImplyLeading: false,
+            leading: GivtBackButton(onPressedExt: () {
+              context.read<FlowsCubit>().resetFlow();
+            }),
+            actions: [
+              flow.isQRCode ? const Wallet() : const CoinWidget(),
+            ],
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -206,39 +188,39 @@ class _ChooseAmountSliderScreenState extends State<ChooseAmountSliderScreen> {
                 ],
               ),
             ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: FloatingActoinButton(
-              text: flow.isCoin ? 'Activate the coin' : 'Next',
-              isLoading: state is CreateTransactionUploadingState,
-              onPressed: state.amount == 0
-                  ? null
-                  : () async {
-                      if (state is CreateTransactionUploadingState) {
-                        return;
-                      }
-                      var transaction = Transaction(
-                        userId: _profilesCubit.state.activeProfile.id,
-                        mediumId: mediumId,
-                        amount: state.amount,
-                      );
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: FloatingActoinButton(
+            text: flow.isCoin ? 'Activate the coin' : 'Next',
+            isLoading: state is CreateTransactionUploadingState,
+            onPressed: state.amount == 0
+                ? null
+                : () async {
+                    if (state is CreateTransactionUploadingState) {
+                      return;
+                    }
+                    var transaction = Transaction(
+                      userId: profilesCubit.state.activeProfile.id,
+                      mediumId: mediumId,
+                      amount: state.amount,
+                    );
 
-                      context
-                          .read<CreateTransactionCubit>()
-                          .createTransaction(transaction: transaction);
+                    context
+                        .read<CreateTransactionCubit>()
+                        .createTransaction(transaction: transaction);
 
-                      AnalyticsHelper.logEvent(
-                          eventName: AmplitudeEvent.giveToThisGoalPressed,
-                          eventProperties: {
-                            'amount': state.amount,
-                            'formatted_date': DateTime.now().toIso8601String(),
-                            'goal_name': organisation.name,
-                          });
-                    },
-            ),
-          );
-        },
-      ),
+                    AnalyticsHelper.logEvent(
+                        eventName: AmplitudeEvent.giveToThisGoalPressed,
+                        eventProperties: {
+                          'amount': state.amount,
+                          'formatted_date': DateTime.now().toIso8601String(),
+                          'goal_name': organisation.name,
+                        });
+                  },
+          ),
+        );
+      },
     );
   }
 }

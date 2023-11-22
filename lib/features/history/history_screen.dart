@@ -42,27 +42,29 @@ class HistoryScreen extends StatelessWidget {
             );
           }
           // Display List of donations and allowances in descending date order
-          return ListView.separated(
-            padding: const EdgeInsets.all(0),
-            controller: scrollController,
-            itemCount: state.history.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (state.history[index].type == HistoryTypes.allowance) {
-                return AllowanceItemWidget(
-                    allowance: state.history[index] as Allowance);
-              }
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                child: DonationItemWidget(
-                    donation: state.history[index] as Donation),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(
-              thickness: 1,
-              height: 1,
-              endIndent: 20,
-              indent: 20,
+          return SafeArea(
+            child: ListView.separated(
+              padding: const EdgeInsets.all(0),
+              controller: scrollController,
+              itemCount: state.history.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (state.history[index].type == HistoryTypes.allowance) {
+                  return AllowanceItemWidget(
+                      allowance: state.history[index] as Allowance);
+                }
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                  child: DonationItemWidget(
+                      donation: state.history[index] as Donation),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(
+                thickness: 1,
+                height: 1,
+                endIndent: 20,
+                indent: 20,
+              ),
             ),
           );
         },
