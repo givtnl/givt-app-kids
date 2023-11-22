@@ -36,7 +36,7 @@ class OrganisationsScreen extends StatelessWidget {
             eventProperties: {
               'charities_names':
                   state.organisations.map((e) => e.name).toList().toString(),
-              'page_name': Pages.organisations.name,
+              'page_name': Pages.recommendedOrganisations.name,
             },
           );
         }

@@ -88,7 +88,7 @@ class InterestsSelectionScreen extends StatelessWidget {
                         InterestsState.maxInterests
                     ? () {
                         context.pushNamed(
-                          Pages.organisations.name,
+                          Pages.recommendedOrganisations.name,
                           extra: state,
                         );
                         context.read<InterestsCubit>().clearSelectedInterests();

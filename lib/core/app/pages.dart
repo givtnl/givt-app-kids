@@ -14,7 +14,7 @@ enum Pages {
   //recommendation flow
   locationSelection(path: '/location-selection', name: 'LOCATION_SELECTION'),
   interestsSelection(path: '/interests-selection', name: 'INTERESTS_SELECTION'),
-  organisations(path: '/organisations', name: 'ORGANISATIONS'),
+  recommendedOrganisations(path: '/organisations', name: 'ORGANISATIONS'),
 
   //coin flow
   searchForCoin(path: '/search-for-coin', name: 'SEARCH_FOR_COIN'),
