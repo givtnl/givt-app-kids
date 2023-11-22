@@ -129,8 +129,8 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: Pages.organisations.path,
-          name: Pages.organisations.name,
+          path: Pages.recommendedOrganisations.path,
+          name: Pages.recommendedOrganisations.name,
           builder: (context, state) {
             final interestsState = (state.extra! as InterestsState);
             return BlocProvider(
