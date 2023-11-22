@@ -10,7 +10,7 @@ class FindCharityButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        context.pushNamed(Pages.recommend.name);
+        context.pushNamed(Pages.locationSelection.name);
         AnalyticsHelper.logEvent(
             eventName: AmplitudeEvent.helpMeFindCharityPressed);
       },

@@ -23,6 +23,10 @@ class FlowsCubit extends Cubit<FlowsState> {
     emit(const FlowsState(flowType: FlowType.inAppQRCode));
   }
 
+  void startRecommendationFlow() {
+    emit(const FlowsState(flowType: FlowType.recommendation));
+  }
+
   void resetFlow() {
     emit(const FlowsState(flowType: FlowType.none));
     getIt<SharedPreferences>().setBool('isInAppCoinFlow', false);

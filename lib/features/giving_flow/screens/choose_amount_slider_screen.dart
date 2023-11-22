@@ -56,13 +56,15 @@ class ChooseAmountSliderScreen extends StatelessWidget {
         final size = MediaQuery.sizeOf(context);
         return Scaffold(
           appBar: AppBar(
-            toolbarHeight: flow.isQRCode ? 85 : null,
+            toolbarHeight: flow.isQRCode || flow.isRecommendation ? 85 : null,
             automaticallyImplyLeading: false,
             leading: GivtBackButton(onPressedExt: () {
               context.read<FlowsCubit>().resetFlow();
             }),
             actions: [
-              flow.isQRCode ? const Wallet() : const CoinWidget(),
+              flow.isQRCode || flow.isRecommendation
+                  ? const Wallet()
+                  : const CoinWidget(),
             ],
           ),
           body: SafeArea(
