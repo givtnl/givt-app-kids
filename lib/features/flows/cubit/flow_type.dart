@@ -3,4 +3,5 @@ enum FlowType {
   inAppQRCode,
   inAppCoin,
   deepLinkCoin,
+  recommendation,
 }
