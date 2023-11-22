@@ -30,7 +30,7 @@ dependencies:
   package_info_plus: ^4.0.1
   path_provider: ^2.0.15
   provider: ^6.0.4
-  shared_preferences: ^2.0.15
+  shared_preferences: ^2.2.2
   vibration: ^1.7.6
   visibility_detector: ^0.3.3
   nfc_manager: ^3.3.0
