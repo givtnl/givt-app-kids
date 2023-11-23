@@ -17,7 +17,6 @@ class BackHomeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flow = context.read<FlowsCubit>().state;
     return FloatingActoinButton(
       text: "Back to home",
       backgroundColor: AppTheme.givt4KidsYellow,
@@ -28,13 +27,8 @@ class BackHomeButton extends StatelessWidget {
         context.read<FlowsCubit>().resetFlow();
 
         AnalyticsHelper.logEvent(
-            eventName: AmplitudeEvent.buttonPressed,
-            eventProperties: {
-              'button_name': 'Back to home',
-              'formatted_date': DateTime.now().toIso8601String(),
-              'screen_name':
-                  flow.isCoin ? Pages.successCoin.name : Pages.success.name,
-            });
+          eventName: AmplitudeEvent.returnToHomePressed,
+        );
       },
     );
   }

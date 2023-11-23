@@ -20,7 +20,7 @@ class QrGiveButton extends StatelessWidget {
       onPressed: isActive
           ? () {
               AnalyticsHelper.logEvent(
-                  eventName: AmplitudeEvent.iWantToGiveToPressed,
+                  eventName: AmplitudeEvent.iWantToGivePressed,
                   eventProperties: {
                     'current_amount_in_wallet': context
                         .read<ProfilesCubit>()

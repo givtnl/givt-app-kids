@@ -130,14 +130,21 @@ class _WalletScreenState extends State<WalletScreen>
                           margin: EdgeInsets.zero,
                           backgroundColor: AppTheme.givt4KidsYellow,
                           foregroundColor: AppTheme.defaultTextColor,
-                          onPressed: () => showModalBottomSheet<void>(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            builder: (context) => const GiveBottomSheet(),
-                          ),
-                        )
+                          onPressed: () {
+                            AnalyticsHelper.logEvent(
+                                eventName: AmplitudeEvent.iWantToGivePressed,
+                                eventProperties: {
+                                  AnalyticsHelper.walletAmountKey:
+                                      state.activeProfile.wallet.balance,
+                                });
+                            showModalBottomSheet<void>(
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              builder: (context) => const GiveBottomSheet(),
+                            );
+                          })
                       : const SizedBox(),
                   SizedBox(height: size.height * 0.02),
                   Row(

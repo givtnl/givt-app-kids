@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
 part 'scan_nfc_state.dart';
@@ -28,6 +29,9 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
       coinAnimationStatus: CoinAnimationStatus.animating,
       scanNFCStatus: ScanNFCStatus.initial,
     ));
+    AnalyticsHelper.logEvent(
+      eventName: AmplitudeEvent.startScanningCoin,
+    );
     await Future.delayed(delay);
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
@@ -77,6 +81,9 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
           scanNFCStatus: ScanNFCStatus.error,
           coinAnimationStatus: CoinAnimationStatus.stopped));
       NfcManager.instance.stopSession();
+      AnalyticsHelper.logEvent(
+          eventName: AmplitudeEvent.coinScannedError,
+          eventProperties: {'error': e.toString()});
     }
   }
 }

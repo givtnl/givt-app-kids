@@ -12,6 +12,7 @@ import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_scanning_bot
 import 'package:givt_app_kids/features/coin_flow/widgets/search_coin_animated_widget.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/start_scan_nfc_button.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -71,6 +72,12 @@ class NFCScanPage extends StatelessWidget {
           Future.delayed(ScanNfcCubit.foundDelay, () {
             context.pushReplacementNamed(Pages.chooseAmountSlider.name);
           });
+          AnalyticsHelper.logEvent(
+            eventName: AmplitudeEvent.inAppCoinScannedSuccessfully,
+            eventProperties: {
+              AnalyticsHelper.mediumIdKey: state.mediumId,
+            },
+          );
         }
       },
       builder: (context, state) {

@@ -201,7 +201,7 @@ class AppRouter {
                 .getOrganisationDetails(mediumID);
             return BlocProvider<SearchCoinCubit>(
               lazy: false,
-              create: (context) => SearchCoinCubit()..startAnimation(),
+              create: (context) => SearchCoinCubit()..startAnimation(mediumID),
               child: const SearchForCoinScreen(),
             );
           },

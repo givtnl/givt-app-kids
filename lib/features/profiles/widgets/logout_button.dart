@@ -17,13 +17,8 @@ class LogoutButton extends StatelessWidget {
       extendedPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       onPressed: () {
         AnalyticsHelper.logEvent(
-            eventName: AmplitudeEvent.buttonPressed,
-            eventProperties: {
-              'button_name': 'Log out',
-              'formatted_date': DateTime.now().toIso8601String(),
-              'screen_name': Pages.profileSelection.name,
-            });
-
+          eventName: AmplitudeEvent.logOutPressed,
+        );
         context.read<AuthCubit>().logout();
         context.read<ProfilesCubit>().clearProfiles();
         context.read<FlowsCubit>().resetFlow();
