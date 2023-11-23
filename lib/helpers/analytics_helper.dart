@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:amplitude_flutter/amplitude.dart';
-import 'package:givt_app_kids/features/profiles/models/profile.dart';
 
 enum AmplitudeEvent {
   amountPressed('amount_pressed'),
@@ -55,21 +54,12 @@ class AnalyticsHelper {
     await _amplitude!.trackingSessionEvents(true);
   }
 
-  static Future<void> setUserId(
-      String profileName, List<Profile> profiles) async {
+  static Future<void> setUserId(String profileName) async {
     final currentUserId = await _amplitude?.getUserId();
     final isNewUser = profileName != currentUserId;
-    Map<String, double> walletTracker = {
-      for (var profile in profiles)
-        '${profile.firstName} ${profile.lastName}': profile.wallet.balance
-    };
 
     log('The ${isNewUser ? 'new' : 'same'} amplitude user $profileName is set.');
     await _amplitude?.setUserId(profileName, startNewSession: isNewUser);
-    await _amplitude?.logEvent(
-      AmplitudeEvent.walletTracker.value,
-      eventProperties: walletTracker,
-    );
   }
 
   static Future<void> logEvent({
