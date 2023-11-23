@@ -29,13 +29,12 @@ class CoinErrorPage extends StatelessWidget {
               ),
               ElevatedButton.icon(
                 onPressed: () {
+                  String mediumId =
+                      context.read<OrganisationDetailsCubit>().state.mediumId;
                   context
                       .read<OrganisationDetailsCubit>()
-                      .getOrganisationDetails(context
-                          .read<OrganisationDetailsCubit>()
-                          .state
-                          .mediumId);
-                  context.read<SearchCoinCubit>().startAnimation();
+                      .getOrganisationDetails(mediumId);
+                  context.read<SearchCoinCubit>().startAnimation(mediumId);
                 },
                 icon: const Icon(Icons.refresh_rounded),
                 label: const Text("Retry"),

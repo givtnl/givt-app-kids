@@ -7,7 +7,7 @@ enum AmplitudeEvent {
   backButtonPressed('back_button_pressed'),
   returnToHomePressed('return_to_home_pressed'),
   giveToThisGoalPressed('give_to_this_goal_pressed'),
-  iWantToGiveToPressed('i_want_to_give_pressed'),
+  iWantToGivePressed('i_want_to_give_pressed'),
   choseGiveWithCoin('chose_give_with_coin'),
   choseGiveWithQRCode('chose_give_with_qr_code'),
   cancelGive('cancel_give'),
@@ -44,6 +44,7 @@ class AnalyticsHelper {
   static const String amountKey = "amount";
   static const String goalKey = "goal_name";
   static const String walletAmountKey = "wallet_amount";
+  static const String mediumIdKey = "medium_id";
 
   static Amplitude? _amplitude;
 

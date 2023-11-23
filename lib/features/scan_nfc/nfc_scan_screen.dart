@@ -74,6 +74,9 @@ class NFCScanPage extends StatelessWidget {
           });
           AnalyticsHelper.logEvent(
             eventName: AmplitudeEvent.inAppCoinScannedSuccessfully,
+            eventProperties: {
+              AnalyticsHelper.mediumIdKey: state.mediumId,
+            },
           );
         }
       },

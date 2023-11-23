@@ -132,7 +132,7 @@ class _WalletScreenState extends State<WalletScreen>
                           foregroundColor: AppTheme.defaultTextColor,
                           onPressed: () {
                             AnalyticsHelper.logEvent(
-                                eventName: AmplitudeEvent.iWantToGiveToPressed,
+                                eventName: AmplitudeEvent.iWantToGivePressed,
                                 eventProperties: {
                                   AnalyticsHelper.walletAmountKey:
                                       state.activeProfile.wallet.balance,

@@ -11,13 +11,16 @@ class SearchCoinCubit extends Cubit<SearchCoinState> {
 
   static const searchDuration = Duration(milliseconds: 2000);
 
-  void startAnimation() async {
+  void startAnimation(String mediumId) async {
     emit(state.copyWith(
       status: CoinAnimationStatus.animating,
       stopwatch: state.stopwatch..start(),
     ));
     AnalyticsHelper.logEvent(
       eventName: AmplitudeEvent.deeplinkCoinScanned,
+      eventProperties: {
+        AnalyticsHelper.mediumIdKey: mediumId,
+      },
     );
   }
 
