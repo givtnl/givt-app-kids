@@ -29,66 +29,62 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CameraCubit(),
-      child: BlocConsumer<CameraCubit, CameraState>(
-        listener: (context, state) {
-          log('camera state changed to $state');
-          if (state is CameraScanned) {
-            log("QR code scanned: ${state.qrValue} \n Getting organisation details");
-            context
-                .read<OrganisationDetailsCubit>()
-                .getOrganisationDetails(state.qrValue);
-          }
-        },
-        builder: (context, state) {
-          return BlocConsumer<OrganisationDetailsCubit,
-              OrganisationDetailsState>(
-            listener: (context, orgState) {
-              log('organisation details state changed to $orgState');
-              if (orgState is OrganisationDetailsSetState) {
-                log("Organisation is set: ${orgState.organisation.name}");
-                AnalyticsHelper.logEvent(
-                    eventName: AmplitudeEvent.qrCodeScanned,
-                    eventProperties: {
-                      'goal_name': orgState.organisation.name,
-                    });
-                context.pushReplacementNamed(Pages.chooseAmountSlider.name);
-              }
-              ;
-            },
-            builder: (context, orgState) {
-              return CameraScreenFrame(
-                feedback: orgState is OrganisationDetailsErrorState
-                    ? orgState.organisation.name
-                    : state.feedback,
-                child: Stack(
-                  children: [
-                    MobileScanner(
-                      controller: _cameraController,
-                      onDetect: (barcode, args) async {
-                        if (state is CameraScanned) {
-                          return;
-                        }
-                        await context
-                            .read<CameraCubit>()
-                            .scanQrCode(barcode.rawValue);
-                      },
-                    ),
-                    Positioned.fill(
-                      child: state is CameraScanned
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : const QrCodeTarget(),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
-      ),
+    return BlocConsumer<CameraCubit, CameraState>(
+      listener: (context, state) {
+        log('camera state changed to $state');
+        if (state is CameraScanned) {
+          log("QR code scanned: ${state.qrValue} \n Getting organisation details");
+          context
+              .read<OrganisationDetailsCubit>()
+              .getOrganisationDetails(state.qrValue);
+        }
+      },
+      builder: (context, state) {
+        return BlocConsumer<OrganisationDetailsCubit, OrganisationDetailsState>(
+          listener: (context, orgState) {
+            log('organisation details state changed to $orgState');
+            if (orgState is OrganisationDetailsSetState) {
+              log("Organisation is set: ${orgState.organisation.name}");
+              AnalyticsHelper.logEvent(
+                  eventName: AmplitudeEvent.qrCodeScanned,
+                  eventProperties: {
+                    'goal_name': orgState.organisation.name,
+                  });
+              context.pushReplacementNamed(Pages.chooseAmountSlider.name);
+            }
+            ;
+          },
+          builder: (context, orgState) {
+            return CameraScreenFrame(
+              feedback: orgState is OrganisationDetailsErrorState
+                  ? orgState.organisation.name
+                  : state.feedback,
+              child: Stack(
+                children: [
+                  MobileScanner(
+                    controller: _cameraController,
+                    onDetect: (barcode, args) async {
+                      if (state is CameraScanned) {
+                        return;
+                      }
+                      await context
+                          .read<CameraCubit>()
+                          .scanQrCode(barcode.rawValue);
+                    },
+                  ),
+                  Positioned.fill(
+                    child: state is CameraScanned
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : const QrCodeTarget(),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

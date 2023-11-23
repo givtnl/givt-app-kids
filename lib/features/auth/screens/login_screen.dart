@@ -79,164 +79,176 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: AppBar(
           toolbarHeight: 0,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 45),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: size.height * 0.33,
-                  alignment: Alignment.center,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 45),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: size.height * 0.33,
+                    alignment: Alignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Welcome',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.copyWith(
+                                color: AppTheme.givt4KidsBlue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          'Ask your parent(s) to sign in\nwith their Givt account',
+                          textAlign: TextAlign.center,
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    color: AppTheme.defaultTextColor,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
                     mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Welcome',
+                        "Email",
                         style:
-                            Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                  color: AppTheme.givt4KidsBlue,
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: (state is InputFieldErrorState &&
+                                          state.emailErrorMessage.isNotEmpty)
+                                      ? AppTheme.givt4KidsRedAlt
+                                      : AppTheme.defaultTextColor,
                                   fontWeight: FontWeight.bold,
                                 ),
                       ),
                       const SizedBox(height: 5),
+                      TextField(
+                        key: const ValueKey("email"),
+                        //scrool down hotfix
+                        scrollPadding: const EdgeInsets.only(bottom: 400),
+                        decoration: InputDecoration(
+                          fillColor: AppTheme.backButtonColor,
+                          filled: true,
+                          border: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide.none,
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide.none,
+                          ),
+                          errorText: (state is InputFieldErrorState &&
+                                  state.emailErrorMessage.isNotEmpty)
+                              ? state.emailErrorMessage
+                              : null,
+                        ),
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.emailAddress,
+                        onChanged: (value) => setState(() {
+                          _email = value;
+                        }),
+                      ),
+                      const SizedBox(height: 15),
                       Text(
-                        'Ask your parent(s) to sign in\nwith their Givt account',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: AppTheme.defaultTextColor,
+                        "Password",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(
+                              color: (state is InputFieldErrorState &&
+                                          state.passwordErrorMessage
+                                              .isNotEmpty ||
+                                      (state is ExternalErrorState &&
+                                          state.innerErrorType.isWrongPassword))
+                                  ? AppTheme.givt4KidsRed
+                                  : AppTheme.defaultTextColor,
+                              fontWeight: FontWeight.bold,
                             ),
                       ),
-                    ],
-                  ),
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Email",
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: (state is InputFieldErrorState &&
-                                    state.emailErrorMessage.isNotEmpty)
-                                ? AppTheme.givt4KidsRedAlt
-                                : AppTheme.defaultTextColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(height: 5),
-                    TextField(
-                      key: const ValueKey("email"),
-                      //scrool down hotfix
-                      scrollPadding: const EdgeInsets.only(bottom: 400),
-                      decoration: InputDecoration(
-                        fillColor: AppTheme.backButtonColor,
-                        filled: true,
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide.none,
-                        ),
-                        errorBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide.none,
-                        ),
-                        errorText: (state is InputFieldErrorState &&
-                                state.emailErrorMessage.isNotEmpty)
-                            ? state.emailErrorMessage
-                            : null,
-                      ),
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) => setState(() {
-                        _email = value;
-                      }),
-                    ),
-                    const SizedBox(height: 15),
-                    Text(
-                      "Password",
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: (state is InputFieldErrorState &&
-                                        state.passwordErrorMessage.isNotEmpty ||
-                                    (state is ExternalErrorState &&
-                                        state.innerErrorType.isWrongPassword))
-                                ? AppTheme.givt4KidsRed
-                                : AppTheme.defaultTextColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            key: const ValueKey("password"),
-                            //scrool down hotfix
-                            scrollPadding: const EdgeInsets.only(bottom: 400),
-                            decoration: InputDecoration(
-                              suffixIconConstraints: const BoxConstraints(
-                                  maxWidth: 50, maxHeight: 50),
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _isPasswordVisible = !_isPasswordVisible;
-                                  });
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: SvgPicture.asset(
-                                    _isPasswordVisible
-                                        ? "assets/images/password_hide.svg"
-                                        : "assets/images/password_show.svg",
-                                    width: 25,
-                                    height: 25,
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              key: const ValueKey("password"),
+                              //scrool down hotfix
+                              scrollPadding: const EdgeInsets.only(bottom: 400),
+                              decoration: InputDecoration(
+                                suffixIconConstraints: const BoxConstraints(
+                                    maxWidth: 50, maxHeight: 50),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _isPasswordVisible = !_isPasswordVisible;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: SvgPicture.asset(
+                                      _isPasswordVisible
+                                          ? "assets/images/password_hide.svg"
+                                          : "assets/images/password_show.svg",
+                                      width: 25,
+                                      height: 25,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              fillColor: AppTheme.backButtonColor,
-                              filled: true,
-                              border: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide.none,
-                              ),
-                              errorBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide.none,
-                              ),
-                              errorText: (state is InputFieldErrorState &&
-                                      state.passwordErrorMessage.isNotEmpty)
-                                  ? state.passwordErrorMessage
-                                  : null,
-                            ),
-                            obscureText: !_isPasswordVisible,
-                            textInputAction: TextInputAction.done,
-                            keyboardType: TextInputType.visiblePassword,
-                            onChanged: (value) => setState(() {
-                              _password = value;
-                            }),
-                            onSubmitted: (value) => _login(),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    if (state is ExternalErrorState &&
-                        state.innerErrorType.isWrongPassword)
-                      Text(
-                        state.innerErrorType.errorMessage,
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AppTheme.givt4KidsRedAlt,
+                                fillColor: AppTheme.backButtonColor,
+                                filled: true,
+                                border: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  borderSide: BorderSide.none,
                                 ),
+                                errorBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  borderSide: BorderSide.none,
+                                ),
+                                errorText: (state is InputFieldErrorState &&
+                                        state.passwordErrorMessage.isNotEmpty)
+                                    ? state.passwordErrorMessage
+                                    : null,
+                              ),
+                              obscureText: !_isPasswordVisible,
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.visiblePassword,
+                              onChanged: (value) => setState(() {
+                                _password = value;
+                              }),
+                              onSubmitted: (value) => _login(),
+                            ),
+                          ),
+                        ],
                       ),
-                  ],
-                ),
-                const SizedBox(height: 160),
-              ],
+                      const SizedBox(height: 20),
+                      if (state is ExternalErrorState &&
+                          state.innerErrorType.isWrongPassword)
+                        Text(
+                          state.innerErrorType.errorMessage,
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: AppTheme.givt4KidsRedAlt,
+                                  ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 160),
+                ],
+              ),
             ),
           ),
         ),

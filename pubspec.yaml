@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  amplitude_flutter: ^3.16.0
+  amplitude_flutter: ^3.16.1
   countup: ^0.1.4
   currency_text_input_formatter: ^2.1.8
   cupertino_icons: ^1.0.2
@@ -36,6 +36,7 @@ dependencies:
   nfc_manager: ^3.3.0
   loading_animation_widget: ^1.2.0+4
   bloc: ^8.1.2
+  flutter_guid: ^0.3.1
 
 dev_dependencies:
   flutter_test:

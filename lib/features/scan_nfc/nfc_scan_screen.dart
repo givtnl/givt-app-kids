@@ -88,39 +88,42 @@ class NFCScanPage extends StatelessWidget {
               },
             ),
           ),
-          body: Center(
-            child: Flex(
-              direction: Axis.vertical,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Text(
+          body: SafeArea(
+            child: Center(
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Text(
+                        state.coinAnimationStatus ==
+                                CoinAnimationStatus.animating
+                            ? 'Ready to make a difference?'
+                            : 'Found it!',
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
+                  Text(
                       state.coinAnimationStatus == CoinAnimationStatus.animating
-                          ? 'Ready to make a difference?'
-                          : 'Found it!',
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      )),
-                ),
-                Text(
-                    state.coinAnimationStatus == CoinAnimationStatus.animating
-                        ? 'Grab your coin and \nlet\'s begin!'
-                        : 'Let\'s continue...',
-                    style: const TextStyle(fontSize: 20),
-                    textAlign: TextAlign.center),
-                const Spacer(flex: 2),
-                state.coinAnimationStatus == CoinAnimationStatus.animating
-                    ? const SearchCoinAnimatedWidget()
-                    : const CoinFound(),
-                const SizedBox(height: 20),
-                state.scanNFCStatus == ScanNFCStatus.error
-                    ? const Text('Error scanning the coin')
-                    : const Text(''),
-                const Spacer(flex: 3),
-              ],
+                          ? 'Grab your coin and \nlet\'s begin!'
+                          : 'Let\'s continue...',
+                      style: const TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center),
+                  const Spacer(flex: 2),
+                  state.coinAnimationStatus == CoinAnimationStatus.animating
+                      ? const SearchCoinAnimatedWidget()
+                      : const CoinFound(),
+                  const SizedBox(height: 20),
+                  state.scanNFCStatus == ScanNFCStatus.error
+                      ? const Text('Error scanning the coin')
+                      : const Text(''),
+                  const Spacer(flex: 3),
+                ],
+              ),
             ),
           ),
           floatingActionButton: state.scanNFCStatus == ScanNFCStatus.cancelled
