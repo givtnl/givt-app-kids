@@ -42,6 +42,9 @@ class AuthCubit extends HydratedCubit<AuthState> {
       if (errorState.innerErrorType == GivtInnerErrorType.wrongPasswordLocked) {
         emit(AccountLockedState.initial());
         _handleLockedAccount();
+        AnalyticsHelper.logEvent(
+            eventName: AmplitudeEvent.accountLocked,
+            eventProperties: {'email_address': email});
       } else {
         emit(errorState);
       }

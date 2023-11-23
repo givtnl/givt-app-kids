@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 part 'search_coin_state.dart';
 
@@ -15,6 +16,9 @@ class SearchCoinCubit extends Cubit<SearchCoinState> {
       status: CoinAnimationStatus.animating,
       stopwatch: state.stopwatch..start(),
     ));
+    AnalyticsHelper.logEvent(
+      eventName: AmplitudeEvent.deeplinkCoinScanned,
+    );
   }
 
   void stopAnimation() async {

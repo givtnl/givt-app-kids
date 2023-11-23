@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:amplitude_flutter/amplitude.dart';
+import 'package:givt_app_kids/features/profiles/models/profile.dart';
 
 enum AmplitudeEvent {
   amountPressed('amount_pressed'),
@@ -10,6 +11,7 @@ enum AmplitudeEvent {
   iWantToGiveToPressed('i_want_to_give_pressed'),
   choseGiveWithCoin('chose_give_with_coin'),
   choseGiveWithQRCode('chose_give_with_qr_code'),
+  cancelGive('cancel_give'),
   helpMeFindCharityPressed('help_me_find_charity_pressed'),
   askToFindCharityPressed('ask_my_parents_to_find_charity_pressed'),
   loginPressed('login_pressed'),
@@ -26,6 +28,12 @@ enum AmplitudeEvent {
   nextToCharitiesPressed('next_to_charities_pressed'),
   charitiesShown('charities_shown'),
   charityCardPressed('charity_card_pressed'),
+  accountLocked('account_locked_for_wrong_password'),
+  walletTracker('wallet_tracker'),
+  startScanningCoin('start_scanning_coin_in_app'),
+  inAppCoinScannedSuccessfully('in_app_coin_scanned_successfully'),
+  coinScannedError('coin_scanned_in_app_error'),
+  deeplinkCoinScanned('deeplink_coin_scanned'),
   ;
 
   final String value;
@@ -34,16 +42,8 @@ enum AmplitudeEvent {
 }
 
 class AnalyticsHelper {
-  // static const String userNameKey = "user_name";
-  // static const String userAgeKey = "user_age";
-  // static const String newTransactionKey = "new_transaction";
   static const String amountKey = "amount";
   static const String goalKey = "goal_name";
-  // static const String buttonPressedKey = "button_pressed";
-  // static const String buttonNameKey = "button_name";
-  // static const String screenNameKey = "screen_name";
-  // static const String timestampKey = "timestamp";
-  // static const String formattedDateKey = "formatted_date";
   static const String walletAmountKey = "wallet_amount";
 
   static Amplitude? _amplitude;
@@ -55,12 +55,21 @@ class AnalyticsHelper {
     await _amplitude!.trackingSessionEvents(true);
   }
 
-  static Future<void> setUserId(String profileName) async {
+  static Future<void> setUserId(
+      String profileName, List<Profile> profiles) async {
     final currentUserId = await _amplitude?.getUserId();
     final isNewUser = profileName != currentUserId;
+    Map<String, double> walletTracker = {
+      for (var profile in profiles)
+        '${profile.firstName} ${profile.lastName}': profile.wallet.balance
+    };
 
     log('The ${isNewUser ? 'new' : 'same'} amplitude user $profileName is set.');
     await _amplitude?.setUserId(profileName, startNewSession: isNewUser);
+    await _amplitude?.logEvent(
+      AmplitudeEvent.walletTracker.value,
+      eventProperties: walletTracker,
+    );
   }
 
   static Future<void> logEvent({

@@ -46,7 +46,8 @@ class GivtApp extends StatelessWidget {
         return BlocConsumer<ProfilesCubit, ProfilesState>(
             listener: (context, profilesState) {
           if (profilesState is ProfilesUpdatedState) {
-            AnalyticsHelper.setUserId(profilesState.activeProfile.firstName);
+            AnalyticsHelper.setUserId(
+                profilesState.activeProfile.firstName, profilesState.profiles);
           }
         }, builder: (context, profilesState) {
           return const _AppView();

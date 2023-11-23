@@ -58,7 +58,12 @@ class GiveBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: size.width * 0.05),
           ElevatedButton(
-            onPressed: () => context.pop(),
+            onPressed: () {
+              context.pop();
+              AnalyticsHelper.logEvent(
+                eventName: AmplitudeEvent.cancelGive,
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               minimumSize: const Size(double.maxFinite, 60),
