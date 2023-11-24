@@ -8,6 +8,7 @@ import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
@@ -16,9 +17,14 @@ import 'package:givt_app_kids/features/history/history_screen.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
+import 'package:givt_app_kids/features/qr_scanner/cubit/camera_cubit.dart';
 import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
-import 'package:givt_app_kids/features/recommendation/cubit/recommendation_cubit.dart';
-import 'package:givt_app_kids/features/recommendation/recommendation_screen.dart';
+import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_cubit.dart';
+import 'package:givt_app_kids/features/recommendation/interests/screens/interests_selection_screen.dart';
+import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
+import 'package:givt_app_kids/features/recommendation/organisations/screens/organisations_screen.dart';
+import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart';
+import 'package:givt_app_kids/features/recommendation/tags/screens/location_selection_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -55,7 +61,14 @@ class AppRouter {
         GoRoute(
           path: Pages.profileSelection.path,
           name: Pages.profileSelection.name,
-          builder: (context, state) => const ProfileSelectionScreen(),
+          builder: (context, state) {
+            final parentGuid =
+                (context.read<AuthCubit>().state as LoggedInState)
+                    .session
+                    .userGUID;
+            context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+            return const ProfileSelectionScreen();
+          },
         ),
         GoRoute(
           path: Pages.wallet.path,
@@ -65,12 +78,19 @@ class AppRouter {
         GoRoute(
           path: Pages.camera.path,
           name: Pages.camera.name,
-          builder: (context, state) => const CameraScreen(),
+          builder: (context, state) => BlocProvider(
+            create: (context) => CameraCubit(),
+            child: const CameraScreen(),
+          ),
         ),
         GoRoute(
           path: Pages.chooseAmountSlider.path,
           name: Pages.chooseAmountSlider.name,
-          builder: (context, state) => const ChooseAmountSliderScreen(),
+          builder: (context, state) => BlocProvider(
+            create: (BuildContext context) =>
+                CreateTransactionCubit(context.read<ProfilesCubit>(), getIt()),
+            child: const ChooseAmountSliderScreen(),
+          ),
         ),
         GoRoute(
           path: Pages.success.path,
@@ -101,12 +121,45 @@ class AppRouter {
           ),
         ),
         GoRoute(
-          path: Pages.recommend.path,
-          name: Pages.recommend.name,
-          builder: (context, state) => BlocProvider<RecommendationCubit>(
-            create: (context) => RecommendationCubit(getIt()),
-            child: const RecommendationScreen(),
+          path: Pages.locationSelection.path,
+          name: Pages.locationSelection.name,
+          builder: (context, state) => BlocProvider(
+            create: (context) => TagsCubit(
+              getIt(),
+            )..fetchTags(),
+            child: const LocationSelectionScreen(),
           ),
+        ),
+        GoRoute(
+          path: Pages.interestsSelection.path,
+          name: Pages.interestsSelection.name,
+          builder: (context, state) {
+            final tagsState = (state.extra! as TagsStateFetched);
+            return BlocProvider(
+              create: (context) => InterestsCubit(
+                location: tagsState.selectedLocation,
+                interests: tagsState.interests,
+              ),
+              child: const InterestsSelectionScreen(),
+            );
+          },
+        ),
+        GoRoute(
+          path: Pages.recommendedOrganisations.path,
+          name: Pages.recommendedOrganisations.name,
+          builder: (context, state) {
+            final interestsState = (state.extra! as InterestsState);
+            return BlocProvider(
+              create: (context) => OrganisationsCubit(
+                getIt(),
+              )..getRecommendedOrganisations(
+                  location: interestsState.location,
+                  interests: interestsState.selectedInterests,
+                  fakeComputingExtraDelay: const Duration(seconds: 1),
+                ),
+              child: const OrganisationsScreen(),
+            );
+          },
         ),
         GoRoute(
           path: Pages.searchForCoin.path,
@@ -131,7 +184,11 @@ class AppRouter {
 
             context.read<FlowsCubit>().startInAppCoinFlow();
 
-            return const ChooseAmountSliderScreen();
+            return BlocProvider(
+              create: (BuildContext context) => CreateTransactionCubit(
+                  context.read<ProfilesCubit>(), getIt()),
+              child: const ChooseAmountSliderScreen(),
+            );
           },
         ),
         GoRoute(
@@ -148,7 +205,7 @@ class AppRouter {
                 .getOrganisationDetails(mediumID);
             return BlocProvider<SearchCoinCubit>(
               lazy: false,
-              create: (context) => SearchCoinCubit()..startAnimation(),
+              create: (context) => SearchCoinCubit()..startAnimation(mediumID),
               child: const SearchForCoinScreen(),
             );
           },

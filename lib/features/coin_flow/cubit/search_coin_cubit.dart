@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 part 'search_coin_state.dart';
 
@@ -10,11 +11,17 @@ class SearchCoinCubit extends Cubit<SearchCoinState> {
 
   static const searchDuration = Duration(milliseconds: 2000);
 
-  void startAnimation() async {
+  void startAnimation(String mediumId) async {
     emit(state.copyWith(
       status: CoinAnimationStatus.animating,
       stopwatch: state.stopwatch..start(),
     ));
+    AnalyticsHelper.logEvent(
+      eventName: AmplitudeEvent.deeplinkCoinScanned,
+      eventProperties: {
+        AnalyticsHelper.mediumIdKey: mediumId,
+      },
+    );
   }
 
   void stopAnimation() async {

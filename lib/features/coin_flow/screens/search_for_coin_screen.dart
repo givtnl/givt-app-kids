@@ -30,7 +30,7 @@ class SearchForCoinScreen extends StatelessWidget {
             if (orgState is OrganisationDetailsSetState) {
               log("Organisation is set: ${orgState.organisation.name}");
               AnalyticsHelper.logEvent(
-                  eventName: AmplitudeEvent.nfcScanned,
+                  eventName: AmplitudeEvent.deeplinkCoinScanned,
                   eventProperties: {
                     'goal_name': orgState.organisation.name,
                   });
@@ -63,13 +63,8 @@ class SearchForCoinScreen extends StatelessWidget {
                       text: "Assign the coin",
                       onPressed: () {
                         AnalyticsHelper.logEvent(
-                            eventName: AmplitudeEvent.buttonPressed,
-                            eventProperties: {
-                              'button_name': 'Assign the coin',
-                              'formatted_date':
-                                  DateTime.now().toIso8601String(),
-                              'screen_name': Pages.searchForCoin.name,
-                            });
+                          eventName: AmplitudeEvent.assignCoinPressed,
+                        );
 
                         final isLoggedIn =
                             context.read<AuthCubit>().state is LoggedInState;

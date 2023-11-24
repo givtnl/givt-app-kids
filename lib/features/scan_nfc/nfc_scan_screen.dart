@@ -12,6 +12,7 @@ import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_scanning_bot
 import 'package:givt_app_kids/features/coin_flow/widgets/search_coin_animated_widget.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/start_scan_nfc_button.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -71,6 +72,12 @@ class NFCScanPage extends StatelessWidget {
           Future.delayed(ScanNfcCubit.foundDelay, () {
             context.pushReplacementNamed(Pages.chooseAmountSlider.name);
           });
+          AnalyticsHelper.logEvent(
+            eventName: AmplitudeEvent.inAppCoinScannedSuccessfully,
+            eventProperties: {
+              AnalyticsHelper.mediumIdKey: state.mediumId,
+            },
+          );
         }
       },
       builder: (context, state) {
@@ -84,39 +91,42 @@ class NFCScanPage extends StatelessWidget {
               },
             ),
           ),
-          body: Center(
-            child: Flex(
-              direction: Axis.vertical,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Text(
+          body: SafeArea(
+            child: Center(
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Text(
+                        state.coinAnimationStatus ==
+                                CoinAnimationStatus.animating
+                            ? 'Ready to make a difference?'
+                            : 'Found it!',
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
+                  Text(
                       state.coinAnimationStatus == CoinAnimationStatus.animating
-                          ? 'Ready to make a difference?'
-                          : 'Found it!',
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      )),
-                ),
-                Text(
-                    state.coinAnimationStatus == CoinAnimationStatus.animating
-                        ? 'Grab your coin and \nlet\'s begin!'
-                        : 'Let\'s continue...',
-                    style: const TextStyle(fontSize: 20),
-                    textAlign: TextAlign.center),
-                const Spacer(flex: 2),
-                state.coinAnimationStatus == CoinAnimationStatus.animating
-                    ? const SearchCoinAnimatedWidget()
-                    : const CoinFound(),
-                const SizedBox(height: 20),
-                state.scanNFCStatus == ScanNFCStatus.error
-                    ? const Text('Error scanning the coin')
-                    : const Text(''),
-                const Spacer(flex: 3),
-              ],
+                          ? 'Grab your coin and \nlet\'s begin!'
+                          : 'Let\'s continue...',
+                      style: const TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center),
+                  const Spacer(flex: 2),
+                  state.coinAnimationStatus == CoinAnimationStatus.animating
+                      ? const SearchCoinAnimatedWidget()
+                      : const CoinFound(),
+                  const SizedBox(height: 20),
+                  state.scanNFCStatus == ScanNFCStatus.error
+                      ? const Text('Error scanning the coin')
+                      : const Text(''),
+                  const Spacer(flex: 3),
+                ],
+              ),
             ),
           ),
           floatingActionButton: state.scanNFCStatus == ScanNFCStatus.cancelled

@@ -32,15 +32,9 @@ class SwitchProfileSuccessButton extends StatelessWidget {
           context.read<FlowsCubit>().startInAppCoinFlow();
         }
         context.goNamed(Pages.profileSelection.name);
-
         AnalyticsHelper.logEvent(
-            eventName: AmplitudeEvent.buttonPressed,
-            eventProperties: {
-              'button_name': 'Switch profile',
-              'formatted_date': DateTime.now().toIso8601String(),
-              'screen_name':
-                  flow.isCoin ? Pages.successCoin.name : Pages.success.name,
-            });
+          eventName: AmplitudeEvent.profileSwitchPressed,
+        );
       },
     );
   }

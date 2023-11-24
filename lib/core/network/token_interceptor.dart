@@ -4,6 +4,7 @@ import 'dart:developer';
 // import 'package:givt_app/app/injection/injection.dart';
 // import 'package:givt_app/core/logging/logging.dart';
 // import 'package:givt_app/features/auth/repositories/auth_repository.dart';
+import 'package:flutter_guid/flutter_guid.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/models/session.dart';
 import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
@@ -16,11 +17,12 @@ class TokenInterceptor implements InterceptorContract {
     try {
       final prefs = await SharedPreferences.getInstance();
       final sessionString = prefs.getString(Session.tag);
-
+      final correlationId = Guid.newGuid;
       if (!data.headers.containsKey('Content-Type')) {
         data.headers['Content-Type'] = 'application/json';
       }
       data.headers['Accept'] = 'application/json';
+      data.headers['Correlation-Id'] = correlationId.toString();
 
       if (sessionString == null) {
         return data;

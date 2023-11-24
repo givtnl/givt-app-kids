@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
-import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/giving_option_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
@@ -34,6 +33,9 @@ class GiveBottomSheet extends StatelessWidget {
                   context.pop();
                   context.pushNamed(Pages.scanNFC.name);
                   context.read<FlowsCubit>().startInAppCoinFlow();
+                  AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.choseGiveWithCoin,
+                  );
                 },
               ),
               GiveOptionButton(
@@ -46,15 +48,8 @@ class GiveBottomSheet extends StatelessWidget {
                 onPressed: () {
                   context.pop();
                   AnalyticsHelper.logEvent(
-                      eventName: AmplitudeEvent.iWantToGiveToPressed,
-                      eventProperties: {
-                        'current_amount_in_wallet': context
-                            .read<ProfilesCubit>()
-                            .state
-                            .activeProfile
-                            .wallet
-                            .balance,
-                      });
+                    eventName: AmplitudeEvent.choseGiveWithQRCode,
+                  );
                   context.pushNamed(Pages.camera.name);
                   context.read<FlowsCubit>().startInAppQRCodeFlow();
                 },
@@ -63,7 +58,12 @@ class GiveBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: size.width * 0.05),
           ElevatedButton(
-            onPressed: () => context.pop(),
+            onPressed: () {
+              context.pop();
+              AnalyticsHelper.logEvent(
+                eventName: AmplitudeEvent.cancelGive,
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               minimumSize: const Size(double.maxFinite, 60),
