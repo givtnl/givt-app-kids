@@ -22,8 +22,8 @@ import 'package:givt_app_kids/shared/widgets/wallet.dart';
 import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderScreen extends StatelessWidget {
-  const ChooseAmountSliderScreen({Key? key}) : super(key: key);
-
+  const ChooseAmountSliderScreen({super.key, this.recommendedLogoUrl});
+  final String? recommendedLogoUrl;
   @override
   Widget build(BuildContext context) {
     final organisationDetailsState =
@@ -81,6 +81,16 @@ class ChooseAmountSliderScreen extends StatelessWidget {
                         if (flow.isCoin)
                           SvgPicture.asset('assets/images/church.svg'),
                         if (flow.isCoin) const SizedBox(width: 25),
+                        if (flow.isRecommendation)
+                          SizedBox(
+                            width: size.width * .3,
+                            height: size.width * .3,
+                            //margin: const EdgeInsets.symmetric(vertical: 12),
+                            child: Image.network(
+                              organisation.logoLink ?? '',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         BlocBuilder<OrganisationDetailsCubit,
                             OrganisationDetailsState>(
                           builder: (context, state) {
@@ -194,8 +204,15 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: FloatingActoinButton(
-            text: flow.isCoin ? 'Activate the coin' : 'Next',
+            text: flow.isCoin
+                ? 'Activate the coin'
+                : flow.isRecommendation
+                    ? 'Finish donation'
+                    : 'Next',
             isLoading: state is CreateTransactionUploadingState,
+            backgroundColor: flow.isRecommendation
+                ? AppTheme.givt4KidsOrange
+                : AppTheme.givt4KidsBlue,
             onPressed: state.amount == 0
                 ? null
                 : () async {

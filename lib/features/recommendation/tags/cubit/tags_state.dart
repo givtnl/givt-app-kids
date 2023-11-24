@@ -44,6 +44,13 @@ class TagsStateFetched extends TagsState {
 
   @override
   List<Object> get props => [tags, selectedLocation];
+
+  static TagsStateFetched empty() {
+    return const TagsStateFetched(
+      tags: [],
+      selectedLocation: Tag.empty(),
+    );
+  }
 }
 
 class TagsStateError extends TagsState {

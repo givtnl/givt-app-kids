@@ -28,6 +28,21 @@ class OrganisationDetails extends Equatable {
 
   @override
   List<Object?> get props => [collectGroupId, name, goal];
+  OrganisationDetails copyWith({
+    String? collectGroupId,
+    String? name,
+    String? goal,
+    String? logoLink,
+    String? thankYou,
+  }) {
+    return OrganisationDetails(
+      collectGroupId: collectGroupId ?? this.collectGroupId,
+      name: name ?? this.name,
+      goal: goal ?? this.goal,
+      logoLink: logoLink ?? this.logoLink,
+      thankYou: thankYou ?? this.thankYou,
+    );
+  }
 
   factory OrganisationDetails.fromMap(Map<String, dynamic> map) {
     return OrganisationDetails(

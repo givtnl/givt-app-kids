@@ -9,7 +9,6 @@ import 'package:givt_app_kids/features/recommendation/organisations/cubit/organi
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_item.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/recommendation_givy_bubble.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -42,40 +41,44 @@ class OrganisationsScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                'assets/images/gradient.jpg',
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+            ),
+            // toolbarHeight: 0,
+            automaticallyImplyLeading: false,
+            leading: const GivtBackButton(),
+          ),
+          extendBodyBehindAppBar: true,
+          backgroundColor: Colors.transparent,
+          body: Container(
+            width: double.maxFinite,
+            height: size.height,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/gradient.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
-            Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                systemOverlayStyle: const SystemUiOverlayStyle(
-                  statusBarColor: AppTheme.offWhite,
-                ),
-                // toolbarHeight: 0,
-                automaticallyImplyLeading: false,
-                leading: const GivtBackButton(),
-              ),
-              backgroundColor: Colors.transparent,
-              body: SizedBox(
-                width: double.maxFinite,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const SizedBox(height: 20),
-                    RecommendationGivyBubble(
-                      text: state is OrganisationsFetchingState
-                          ? 'Loading...'
-                          : state.organisations.isEmpty
-                              ? 'Oops, something went wrong...'
-                              : 'These charities fit your interests!',
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 12),
+                      child: RecommendationGivyBubble(
+                        text: state is OrganisationsFetchingState
+                            ? 'Loading...'
+                            : state.organisations.isEmpty
+                                ? 'Oops, something went wrong...'
+                                : 'These charities fit your interests!',
+                      ),
                     ),
-                    const SizedBox(height: 20),
                     if (state is OrganisationsFetchingState)
                       Padding(
                         padding: EdgeInsets.only(top: size.height * 0.25),
@@ -85,17 +88,25 @@ class OrganisationsScreen extends StatelessWidget {
                       ),
                     Expanded(
                       child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: state.organisations
-                              .map(
-                                (organisation) => OrganisationItem(
-                                  width: size.width * .8,
-                                  height: size.width * .8,
-                                  organisation: organisation,
-                                ),
-                              )
-                              .toList(),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 10),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: state.organisations
+                                .map(
+                                  (organisation) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: OrganisationItem(
+                                      width: double.maxFinite,
+                                      height: size.height * .4,
+                                      organisation: organisation,
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
                         ),
                       ),
                     ),
@@ -104,7 +115,7 @@ class OrganisationsScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ],
+          ),
         );
       },
     );
