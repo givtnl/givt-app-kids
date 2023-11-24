@@ -6,10 +6,12 @@ class RecommendationGivyBubble extends StatelessWidget {
   const RecommendationGivyBubble({
     required this.text,
     this.extraChild,
+    this.secondaryText = '',
     super.key,
   });
   final String text;
   final Widget? extraChild;
+  final String secondaryText;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +37,32 @@ class RecommendationGivyBubble extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 16),
-                child: Text(
-                  text,
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppTheme.defaultTextColor,
-                        fontWeight: FontWeight.w600,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      text,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: AppTheme.defaultTextColor,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    if (secondaryText.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 3),
+                        child: Text(
+                          secondaryText,
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    color: AppTheme.defaultTextColor,
+                                  ),
+                        ),
                       ),
+                  ],
                 ),
               ),
             ),
