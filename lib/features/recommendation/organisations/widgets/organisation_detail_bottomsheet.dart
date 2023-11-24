@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
+import 'package:go_router/go_router.dart';
 
 class OrganisationDetailBottomSheet extends StatelessWidget {
   const OrganisationDetailBottomSheet({
@@ -17,21 +19,40 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       heightFactor: 0.95,
-      child: Column(
-        children: [
-          SizedBox(
-            height: height * .3,
-            child: OrganisationHeader(
-              organisation: organisation,
-            ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            actions: [
+              IconButton(
+                onPressed: () => context.pop(),
+                icon: SvgPicture.asset(
+                  'assets/images/close_icon.svg',
+                ),
+              )
+            ],
           ),
-          Column(
+          body: Column(
             children: [
-              SizedBox(
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: height * .2,
+                  maxHeight: height * .35,
+                ),
+                child: OrganisationHeader(
+                  organisation: organisation,
+                  height: height,
+                ),
+              ),
+              Container(
                 height: height * .55,
+                width: double.maxFinite,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Image.network(
                   organisation.promoPictureUrl,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                 ),
               ),
               Container(
@@ -50,7 +71,7 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

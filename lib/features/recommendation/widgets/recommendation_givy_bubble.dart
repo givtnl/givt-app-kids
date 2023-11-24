@@ -19,7 +19,7 @@ class RecommendationGivyBubble extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(36),
       child: Container(
-        width: size.width * 0.9,
+        width: double.maxFinite,
         padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
         decoration: const BoxDecoration(
           color: AppTheme.givyBubbleBackground,

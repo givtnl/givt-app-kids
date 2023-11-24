@@ -134,7 +134,8 @@ class AppRouter {
           path: Pages.interestsSelection.path,
           name: Pages.interestsSelection.name,
           builder: (context, state) {
-            final tagsState = (state.extra! as TagsStateFetched);
+            final extra = state.extra ?? TagsStateFetched.empty();
+            final tagsState = (extra as TagsStateFetched);
             return BlocProvider(
               create: (context) => InterestsCubit(
                 location: tagsState.selectedLocation,
@@ -148,7 +149,8 @@ class AppRouter {
           path: Pages.recommendedOrganisations.path,
           name: Pages.recommendedOrganisations.name,
           builder: (context, state) {
-            final interestsState = (state.extra! as InterestsState);
+            final extra = state.extra ?? InterestsState.empty();
+            final interestsState = (extra as InterestsState);
             return BlocProvider(
               create: (context) => OrganisationsCubit(
                 getIt(),
