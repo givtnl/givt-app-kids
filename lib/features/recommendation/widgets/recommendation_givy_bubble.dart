@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class RecommendationGivyBubble extends StatelessWidget {
   const RecommendationGivyBubble({
@@ -16,35 +17,31 @@ class RecommendationGivyBubble extends StatelessWidget {
     final height = size.height * 0.6;
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(height * 0.4),
+      borderRadius: BorderRadius.circular(36),
       child: Container(
         width: size.width * 0.9,
+        padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
         decoration: const BoxDecoration(
-          color: Color.fromARGB(200, 226, 241, 246),
+          color: AppTheme.givyBubbleBackground,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: EdgeInsets.all(height * 0.015),
-              child: SvgPicture.asset(
-                'assets/images/givy_pink_bubble.svg',
-                alignment: Alignment.centerLeft,
-                height: height * 0.12,
-              ),
+            SvgPicture.asset(
+              'assets/images/givy_pink_bubble.svg',
+              alignment: Alignment.centerLeft,
+              height: height * 0.12,
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: height * 0.01, vertical: 0),
+                padding: const EdgeInsets.only(left: 16),
                 child: Text(
                   text,
                   textAlign: TextAlign.left,
-                  style: const TextStyle(
-                    color: Color(0xFF405A66),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppTheme.defaultTextColor,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
             ),

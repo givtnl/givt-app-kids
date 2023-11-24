@@ -25,7 +25,7 @@ class LocationSelectionScreen extends StatelessWidget {
           children: [
             Positioned.fill(
               child: Image.asset(
-                'assets/images/gradient.png',
+                'assets/images/gradient.jpg',
                 fit: BoxFit.cover,
               ),
             ),
@@ -39,6 +39,7 @@ class LocationSelectionScreen extends StatelessWidget {
                 automaticallyImplyLeading: false,
                 leading: const GivtBackButton(),
               ),
+              // extendBodyBehindAppBar: true,
               backgroundColor: Colors.transparent,
               body: SizedBox(
                 width: double.maxFinite,
@@ -50,35 +51,37 @@ class LocationSelectionScreen extends StatelessWidget {
                       const SizedBox(height: 20),
                       RecommendationGivyBubble(
                         text: state is TagsStateFetching
-                            ? 'Loading...'
+                            ? 'Give me a moment to think'
                             : 'Where do you want to help?',
                       ),
-                      SizedBox(height: size.height * 0.20),
+                      SizedBox(height: size.height * 0.05),
                       if (state is TagsStateFetching)
-                        Center(
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.2),
                           child: LoadingAnimationWidget.waveDots(
-                              color: const Color(0xFF54A1EE),
+                              color: AppTheme.givt4KidsBlue,
                               size: size.width * 0.2),
                         ),
                       if (state is TagsStateFetched)
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: state.locations.reversed
-                                .map((item) => LocationCard(
-                                      location: item,
-                                      width: size.width * 0.32,
-                                      isSelected:
-                                          item == state.selectedLocation,
-                                      onPressed: () {
-                                        context
-                                            .read<TagsCubit>()
-                                            .selectLocation(location: item);
-                                      },
-                                    ))
-                                .toList(),
-                          ),
+                        GridView.count(
+                          childAspectRatio: 1 / 1.055,
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 24,
+                          crossAxisSpacing: 24,
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          shrinkWrap: true,
+                          children: state.locations.reversed
+                              .map((item) => LocationCard(
+                                    location: item,
+                                    width: size.width * 0.45,
+                                    isSelected: item == state.selectedLocation,
+                                    onPressed: () {
+                                      context
+                                          .read<TagsCubit>()
+                                          .selectLocation(location: item);
+                                    },
+                                  ))
+                              .toList(),
                         ),
                     ],
                   ),
@@ -86,30 +89,34 @@ class LocationSelectionScreen extends StatelessWidget {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
-              floatingActionButton: FloatingActoinButton(
-                text: "Next",
-                onPressed: state is TagsStateFetched &&
-                        state.selectedLocation != const Tag.empty()
-                    ? () {
-                        AnalyticsHelper.logEvent(
-                          eventName: AmplitudeEvent.nextToInterestsPressed,
-                          eventProperties: {
-                            'location': state.selectedLocation.displayText,
-                            'page_name': Pages.locationSelection.name,
-                          },
-                        );
+              floatingActionButton: state is! TagsStateFetching
+                  ? FloatingActoinButton(
+                      text: "Next",
+                      onPressed: state is TagsStateFetched &&
+                              state.selectedLocation != const Tag.empty()
+                          ? () {
+                              AnalyticsHelper.logEvent(
+                                eventName:
+                                    AmplitudeEvent.nextToInterestsPressed,
+                                eventProperties: {
+                                  'location':
+                                      state.selectedLocation.displayText,
+                                  'page_name': Pages.locationSelection.name,
+                                },
+                              );
 
-                        context.pushNamed(
-                          Pages.interestsSelection.name,
-                          extra: state,
-                        );
-                        context.read<TagsCubit>().selectLocation(
-                              location: const Tag.empty(),
-                              logAmplitude: false,
-                            );
-                      }
-                    : null,
-              ),
+                              context.pushNamed(
+                                Pages.interestsSelection.name,
+                                extra: state,
+                              );
+                              context.read<TagsCubit>().selectLocation(
+                                    location: const Tag.empty(),
+                                    logAmplitude: false,
+                                  );
+                            }
+                          : null,
+                    )
+                  : null,
             )
           ],
         );

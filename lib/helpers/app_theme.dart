@@ -32,6 +32,11 @@ class AppTheme {
   static const givt4KidsDarkGreen = Color(0xFF006C47);
   static const givt4KidsRedAlt = Color(0xFFDA2D37);
 
+  static const givyBubbleBackground = Color(0xFFEAEFFD);
+
+  static const recommendationItemSelected = Color(0xFFC7DFBC);
+  static const recommendationItemText = Color(0xFF405A66);
+
   static const actionButtonStyle = TextStyle(
     fontSize: 26,
     fontWeight: FontWeight.bold,

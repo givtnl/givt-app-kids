@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class LocationCard extends StatelessWidget {
   const LocationCard({
@@ -18,41 +19,46 @@ class LocationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
-      height: width * 1.2,
-      padding: const EdgeInsets.all(5),
+      // height: width * 1.055,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          elevation: 25,
+          elevation: 5,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: isSelected
-                ? const BorderSide(
-                    color: Color(0xFF97A486),
-                    width: 2,
-                  )
-                : BorderSide.none,
+            borderRadius: BorderRadius.circular(24),
           ),
           backgroundColor:
-              isSelected ? const Color(0XFFDFF3C5) : const Color(0XFFFAF4D8),
+              isSelected ? AppTheme.recommendationItemSelected : Colors.white,
         ),
         onPressed: onPressed,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.network(location.pictureUrl, height: width * 0.45),
-            SizedBox(height: width * 0.05),
-            Text(
-              location.displayText,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xFF405A66),
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 5,
+                child: Center(
+                  child: SizedBox.square(
+                    dimension: 80,
+                    child: SvgPicture.network(location.pictureUrl),
+                  ),
+                ),
               ),
-            )
-          ],
+              Expanded(
+                flex: 2,
+                child: Text(
+                  location.displayText,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppTheme.recommendationItemText,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

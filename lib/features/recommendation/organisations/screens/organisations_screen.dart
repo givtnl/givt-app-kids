@@ -46,7 +46,7 @@ class OrganisationsScreen extends StatelessWidget {
           children: [
             Positioned.fill(
               child: Image.asset(
-                'assets/images/gradient.png',
+                'assets/images/gradient.jpg',
                 fit: BoxFit.cover,
               ),
             ),
