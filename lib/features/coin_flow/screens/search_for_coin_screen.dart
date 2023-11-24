@@ -30,7 +30,7 @@ class SearchForCoinScreen extends StatelessWidget {
             if (orgState is OrganisationDetailsSetState) {
               log("Organisation is set: ${orgState.organisation.name}");
               AnalyticsHelper.logEvent(
-                  eventName: AmplitudeEvent.nfcScanned,
+                  eventName: AmplitudeEvent.deeplinkCoinScanned,
                   eventProperties: {
                     'goal_name': orgState.organisation.name,
                   });
