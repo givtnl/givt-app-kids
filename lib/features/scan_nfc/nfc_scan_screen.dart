@@ -68,7 +68,7 @@ class NFCScanPage extends StatelessWidget {
         if (state.scanNFCStatus == ScanNFCStatus.scanned) {
           context
               .read<OrganisationDetailsCubit>()
-              .getOrganisationDetails(state.mediumId);
+              .getOrganisationDetails(state.mediumId, '');
           Future.delayed(ScanNfcCubit.foundDelay, () {
             context.pushReplacementNamed(Pages.chooseAmountSlider.name);
           });

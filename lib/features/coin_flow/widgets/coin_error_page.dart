@@ -33,7 +33,7 @@ class CoinErrorPage extends StatelessWidget {
                       context.read<OrganisationDetailsCubit>().state.mediumId;
                   context
                       .read<OrganisationDetailsCubit>()
-                      .getOrganisationDetails(mediumId);
+                      .getOrganisationDetails(mediumId, '');
                   context.read<SearchCoinCubit>().startAnimation(mediumId);
                 },
                 icon: const Icon(Icons.refresh_rounded),

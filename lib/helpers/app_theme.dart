@@ -5,6 +5,7 @@ class AppTheme {
   static const givt4KidsBlue = Color(0xFF54A1EE);
   static const givt4KidsRed = Color(0xFFD53D4C);
   static const givt4KidsYellow = Color(0xFFF2DF7F);
+  static const givt4KidsOrange = Color(0xFFE28D4D);
 
   static const offWhite = Color(0xFFEEEDE4);
   static const backButtonColor = Color(0xFFBFDBFC);
