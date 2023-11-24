@@ -54,53 +54,55 @@ class OrganisationsScreen extends StatelessWidget {
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
                 systemOverlayStyle: const SystemUiOverlayStyle(
-                  statusBarColor: AppTheme.offWhite,
+                  statusBarColor: Colors.transparent,
                 ),
                 // toolbarHeight: 0,
                 automaticallyImplyLeading: false,
                 leading: const GivtBackButton(),
               ),
+              extendBodyBehindAppBar: true,
               backgroundColor: Colors.transparent,
-              body: SizedBox(
-                width: double.maxFinite,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(height: 20),
-                    RecommendationGivyBubble(
-                      text: state is OrganisationsFetchingState
-                          ? 'Loading...'
-                          : state.organisations.isEmpty
-                              ? 'Oops, something went wrong...'
-                              : 'These charities fit your interests!',
-                    ),
-                    const SizedBox(height: 20),
-                    if (state is OrganisationsFetchingState)
-                      Padding(
-                        padding: EdgeInsets.only(top: size.height * 0.25),
-                        child: LoadingAnimationWidget.waveDots(
-                            color: const Color(0xFF54A1EE),
-                            size: size.width * 0.2),
+              body: SafeArea(
+                child: SizedBox(
+                  width: double.maxFinite,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RecommendationGivyBubble(
+                        text: state is OrganisationsFetchingState
+                            ? 'Loading...'
+                            : state.organisations.isEmpty
+                                ? 'Oops, something went wrong...'
+                                : 'These charities fit your interests!',
                       ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: state.organisations
-                              .map(
-                                (organisation) => OrganisationItem(
-                                  width: size.width * .8,
-                                  height: size.width * .8,
-                                  organisation: organisation,
-                                ),
-                              )
-                              .toList(),
+                      const SizedBox(height: 20),
+                      if (state is OrganisationsFetchingState)
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.25),
+                          child: LoadingAnimationWidget.waveDots(
+                              color: const Color(0xFF54A1EE),
+                              size: size.width * 0.2),
+                        ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: state.organisations
+                                .map(
+                                  (organisation) => OrganisationItem(
+                                    width: size.width * .8,
+                                    height: size.width * .8,
+                                    organisation: organisation,
+                                  ),
+                                )
+                                .toList(),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
             ),
