@@ -21,104 +21,101 @@ class LocationSelectionScreen extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     return BlocBuilder<TagsCubit, TagsState>(
       builder: (context, state) {
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                'assets/images/gradient.jpg',
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+            ),
+            // toolbarHeight: 0,
+            automaticallyImplyLeading: false,
+            leading: const GivtBackButton(),
+          ),
+          extendBodyBehindAppBar: true,
+          backgroundColor: Colors.transparent,
+          body: Container(
+            width: double.maxFinite,
+            height: size.height,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/gradient.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
-            Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                systemOverlayStyle: const SystemUiOverlayStyle(
-                  statusBarColor: AppTheme.offWhite,
-                ),
-                // toolbarHeight: 0,
-                automaticallyImplyLeading: false,
-                leading: const GivtBackButton(),
-              ),
-              // extendBodyBehindAppBar: true,
-              backgroundColor: Colors.transparent,
-              body: SizedBox(
-                width: double.maxFinite,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 20),
-                      RecommendationGivyBubble(
-                        text: state is TagsStateFetching
-                            ? 'Give me a moment to think'
-                            : 'Where do you want to help?',
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //const SizedBox(height: 20),
+                    RecommendationGivyBubble(
+                      text: state is TagsStateFetching
+                          ? 'Give me a moment to think'
+                          : 'Where do you want to help?',
+                    ),
+                    SizedBox(height: size.height * 0.05),
+                    if (state is TagsStateFetching)
+                      Padding(
+                        padding: EdgeInsets.only(top: size.height * 0.2),
+                        child: LoadingAnimationWidget.waveDots(
+                            color: AppTheme.givt4KidsBlue,
+                            size: size.width * 0.2),
                       ),
-                      SizedBox(height: size.height * 0.05),
-                      if (state is TagsStateFetching)
-                        Padding(
-                          padding: EdgeInsets.only(top: size.height * 0.2),
-                          child: LoadingAnimationWidget.waveDots(
-                              color: AppTheme.givt4KidsBlue,
-                              size: size.width * 0.2),
-                        ),
-                      if (state is TagsStateFetched)
-                        GridView.count(
-                          childAspectRatio: 1 / 1.055,
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 24,
-                          crossAxisSpacing: 24,
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          shrinkWrap: true,
-                          children: state.locations.reversed
-                              .map((item) => LocationCard(
-                                    location: item,
-                                    width: size.width * 0.45,
-                                    isSelected: item == state.selectedLocation,
-                                    onPressed: () {
-                                      context
-                                          .read<TagsCubit>()
-                                          .selectLocation(location: item);
-                                    },
-                                  ))
-                              .toList(),
-                        ),
-                    ],
-                  ),
+                    if (state is TagsStateFetched)
+                      GridView.count(
+                        childAspectRatio: 1 / 1.055,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 24,
+                        crossAxisSpacing: 24,
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        shrinkWrap: true,
+                        children: state.locations.reversed
+                            .map((item) => LocationCard(
+                                  location: item,
+                                  width: size.width * 0.45,
+                                  isSelected: item == state.selectedLocation,
+                                  onPressed: () {
+                                    context
+                                        .read<TagsCubit>()
+                                        .selectLocation(location: item);
+                                  },
+                                ))
+                            .toList(),
+                      ),
+                  ],
                 ),
               ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerFloat,
-              floatingActionButton: state is! TagsStateFetching
-                  ? FloatingActoinButton(
-                      text: "Next",
-                      onPressed: state is TagsStateFetched &&
-                              state.selectedLocation != const Tag.empty()
-                          ? () {
-                              AnalyticsHelper.logEvent(
-                                eventName:
-                                    AmplitudeEvent.nextToInterestsPressed,
-                                eventProperties: {
-                                  'location':
-                                      state.selectedLocation.displayText,
-                                  'page_name': Pages.locationSelection.name,
-                                },
-                              );
+            ),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: state is! TagsStateFetching
+              ? FloatingActoinButton(
+                  text: "Next",
+                  onPressed: state is TagsStateFetched &&
+                          state.selectedLocation != const Tag.empty()
+                      ? () {
+                          AnalyticsHelper.logEvent(
+                            eventName: AmplitudeEvent.nextToInterestsPressed,
+                            eventProperties: {
+                              'location': state.selectedLocation.displayText,
+                              'page_name': Pages.locationSelection.name,
+                            },
+                          );
 
-                              context.pushNamed(
-                                Pages.interestsSelection.name,
-                                extra: state,
+                          context.pushNamed(
+                            Pages.interestsSelection.name,
+                            extra: state,
+                          );
+                          context.read<TagsCubit>().selectLocation(
+                                location: const Tag.empty(),
+                                logAmplitude: false,
                               );
-                              context.read<TagsCubit>().selectLocation(
-                                    location: const Tag.empty(),
-                                    logAmplitude: false,
-                                  );
-                            }
-                          : null,
-                    )
-                  : null,
-            )
-          ],
+                        }
+                      : null,
+                )
+              : null,
         );
       },
     );
