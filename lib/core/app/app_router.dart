@@ -184,7 +184,11 @@ class AppRouter {
 
             context.read<FlowsCubit>().startInAppCoinFlow();
 
-            return const ChooseAmountSliderScreen();
+            return BlocProvider(
+              create: (BuildContext context) => CreateTransactionCubit(
+                  context.read<ProfilesCubit>(), getIt()),
+              child: const ChooseAmountSliderScreen(),
+            );
           },
         ),
         GoRoute(
