@@ -188,7 +188,7 @@ class AppRouter {
 
             context
                 .read<OrganisationDetailsCubit>()
-                .getOrganisationDetails(mediumID, '');
+                .getOrganisationDetails(mediumID);
 
             context.read<FlowsCubit>().startInAppCoinFlow();
 
@@ -210,7 +210,7 @@ class AppRouter {
 
             context
                 .read<OrganisationDetailsCubit>()
-                .getOrganisationDetails(mediumID, '');
+                .getOrganisationDetails(mediumID);
             return BlocProvider<SearchCoinCubit>(
               lazy: false,
               create: (context) => SearchCoinCubit()..startAnimation(mediumID),
