@@ -36,7 +36,7 @@ class _CameraScreenState extends State<CameraScreen> {
           log("QR code scanned: ${state.qrValue} \n Getting organisation details");
           context
               .read<OrganisationDetailsCubit>()
-              .getOrganisationDetails(state.qrValue, '');
+              .getOrganisationDetails(state.qrValue);
         }
       },
       builder: (context, state) {

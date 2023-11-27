@@ -36,8 +36,9 @@ class OrganisationItem extends StatelessWidget {
         onTap: () {
           String generatedMediumId =
               base64.encode(organisation.namespace.codeUnits);
-          context.read<OrganisationDetailsCubit>().getOrganisationDetails(
-              generatedMediumId, organisation.organisationLogoURL);
+          context
+              .read<OrganisationDetailsCubit>()
+              .getOrganisationDetails(generatedMediumId);
 
           context.read<FlowsCubit>().startRecommendationFlow();
 

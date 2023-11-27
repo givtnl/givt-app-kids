@@ -14,21 +14,16 @@ class OrganisationDetailsCubit extends Cubit<OrganisationDetailsState> {
   static const String defaultMediumId =
       'NjFmN2VkMDE1NTUzMDEyMmMwMDAuZmMwMDAwMDAwMDAx';
 
-  Future<void> getOrganisationDetails(String mediumId, String logoLink) async {
+  Future<void> getOrganisationDetails(String mediumId) async {
     emit(const OrganisationDetailsLoadingState());
     mediumId = mediumId.isEmpty ? defaultMediumId : mediumId;
 
     try {
       final response =
           await _organisationRepository.fetchOrganisationDetails(mediumId);
-      if (logoLink.isNotEmpty) {
-        emit(OrganisationDetailsSetState(
-            organisation: response.copyWith(logoLink: logoLink),
-            mediumId: mediumId));
-      } else {
-        emit(OrganisationDetailsSetState(
-            organisation: response, mediumId: mediumId));
-      }
+
+      emit(OrganisationDetailsSetState(
+          organisation: response, mediumId: mediumId));
     } catch (error) {
       emit(OrganisationDetailsErrorState(mediumId: mediumId));
     }
