@@ -23,6 +23,7 @@ import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_
 import 'package:givt_app_kids/features/recommendation/interests/screens/interests_selection_screen.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/screens/organisations_screen.dart';
+import 'package:givt_app_kids/features/recommendation/start_recommendation/start_recommendation_screen.dart';
 import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/tags/screens/location_selection_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
@@ -119,6 +120,11 @@ class AppRouter {
                         ),
                         child: child),
           ),
+        ),
+        GoRoute(
+          path: Pages.recommendationStart.path,
+          name: Pages.recommendationStart.name,
+          builder: (context, state) => const StartRecommendationScreen(),
         ),
         GoRoute(
           path: Pages.locationSelection.path,
