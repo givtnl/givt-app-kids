@@ -43,7 +43,6 @@ class InterestsSelectionScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 20),
                   RecommendationGivyBubble(
                     text: 'I want to help people...',
                     secondaryText: 'Select your top 3 choices',
@@ -59,9 +58,9 @@ class InterestsSelectionScreen extends StatelessWidget {
                       crossAxisSpacing: 24,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 24,
-                        vertical: 20,
+                        vertical: 0,
                       ),
-                      shrinkWrap: true,
+                      shrinkWrap: false,
                       children: state.interests
                           .map((item) => InterestCard(
                                 interest: item,
@@ -83,18 +82,22 @@ class InterestsSelectionScreen extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActoinButton(
-            text: "Next",
-            onPressed:
-                state.selectedInterests.length == InterestsState.maxInterests
-                    ? () {
-                        context.pushNamed(
-                          Pages.recommendedOrganisations.name,
-                          extra: state,
-                        );
-                        context.read<InterestsCubit>().clearSelectedInterests();
-                      }
-                    : null,
+          floatingActionButton: Visibility(
+            visible:
+                state.selectedInterests.length == InterestsState.maxInterests,
+            child: FloatingActoinButton(
+              text: "Next",
+              onPressed: state.selectedInterests.length ==
+                      InterestsState.maxInterests
+                  ? () {
+                      context.pushNamed(
+                        Pages.recommendedOrganisations.name,
+                        extra: state,
+                      );
+                      context.read<InterestsCubit>().clearSelectedInterests();
+                    }
+                  : null,
+            ),
           ),
         );
       },

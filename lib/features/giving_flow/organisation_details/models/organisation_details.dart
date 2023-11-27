@@ -49,7 +49,7 @@ class OrganisationDetails extends Equatable {
       collectGroupId: map['collectGroupId'] ?? 'no id fetched',
       name: map['title'] ?? 'no name fetched',
       goal: map['goal'] ?? 'no description of goal',
-      logoLink: map['logo'],
+      logoLink: map['organisationLogoLink'],
       thankYou: map['thankYou'],
     );
   }

@@ -63,56 +63,50 @@ class OrganisationsScreen extends StatelessWidget {
               ),
             ),
             child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  RecommendationGivyBubble(
+                    text: state is OrganisationsFetchingState
+                        ? 'Loading...'
+                        : state.organisations.isEmpty
+                            ? 'Oops, something went wrong...'
+                            : 'These charities fit your interests!',
+                  ),
+                  if (state is OrganisationsFetchingState)
                     Padding(
-                      padding: const EdgeInsets.only(top: 16, bottom: 12),
-                      child: RecommendationGivyBubble(
-                        text: state is OrganisationsFetchingState
-                            ? 'Loading...'
-                            : state.organisations.isEmpty
-                                ? 'Oops, something went wrong...'
-                                : 'These charities fit your interests!',
-                      ),
+                      padding: EdgeInsets.only(top: size.height * 0.25),
+                      child: LoadingAnimationWidget.waveDots(
+                          color: const Color(0xFF54A1EE),
+                          size: size.width * 0.2),
                     ),
-                    if (state is OrganisationsFetchingState)
-                      Padding(
-                        padding: EdgeInsets.only(top: size.height * 0.25),
-                        child: LoadingAnimationWidget.waveDots(
-                            color: const Color(0xFF54A1EE),
-                            size: size.width * 0.2),
-                      ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: state.organisations
-                                .map(
-                                  (organisation) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: OrganisationItem(
-                                      width: double.maxFinite,
-                                      height: size.height * .4,
-                                      organisation: organisation,
-                                    ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 10),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: state.organisations
+                              .map(
+                                (organisation) => Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: OrganisationItem(
+                                    width: double.maxFinite,
+                                    height: size.height * .4,
+                                    organisation: organisation,
                                   ),
-                                )
-                                .toList(),
-                          ),
+                                ),
+                              )
+                              .toList(),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
             ),
           ),

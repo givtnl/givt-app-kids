@@ -22,8 +22,7 @@ import 'package:givt_app_kids/shared/widgets/wallet.dart';
 import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderScreen extends StatelessWidget {
-  const ChooseAmountSliderScreen({super.key, this.recommendedLogoUrl});
-  final String? recommendedLogoUrl;
+  const ChooseAmountSliderScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final organisationDetailsState =
@@ -75,19 +74,21 @@ class ChooseAmountSliderScreen extends StatelessWidget {
                   Container(
                     alignment: Alignment.topLeft,
                     padding:
-                        const EdgeInsets.only(left: 30, right: 30, top: 75),
+                        const EdgeInsets.only(left: 20, right: 20, top: 75),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         if (flow.isCoin)
                           SvgPicture.asset('assets/images/church.svg'),
                         if (flow.isCoin) const SizedBox(width: 25),
-                        if (flow.isRecommendation)
-                          SizedBox(
-                            width: size.width * .3,
-                            height: size.width * .3,
-                            //margin: const EdgeInsets.symmetric(vertical: 12),
+                        if (flow.isRecommendation &&
+                            organisation.logoLink != null)
+                          Container(
+                            width: size.width * .22,
+                            height: size.width * .22,
+                            padding: const EdgeInsets.only(right: 12),
                             child: Image.network(
-                              organisation.logoLink ?? '',
+                              organisation.logoLink!,
                               fit: BoxFit.contain,
                             ),
                           ),

@@ -47,13 +47,11 @@ class LocationSelectionScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 20),
                     RecommendationGivyBubble(
                       text: state is TagsStateFetching
                           ? 'Give me a moment to think'
                           : 'Where do you want to help?',
                     ),
-                    SizedBox(height: size.height * 0.05),
                     if (state is TagsStateFetching)
                       Padding(
                         padding: EdgeInsets.only(top: size.height * 0.2),
