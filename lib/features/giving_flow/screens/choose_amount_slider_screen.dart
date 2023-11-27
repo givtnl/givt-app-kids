@@ -232,8 +232,10 @@ class ChooseAmountSliderScreen extends StatelessWidget {
                     AnalyticsHelper.logEvent(
                         eventName: AmplitudeEvent.giveToThisGoalPressed,
                         eventProperties: {
-                          AnalyticsHelper.amountKey: state.amount,
                           AnalyticsHelper.goalKey: organisation.name,
+                          AnalyticsHelper.amountKey: state.amount,
+                          AnalyticsHelper.walletAmountKey:
+                              profilesCubit.state.activeProfile.wallet.balance,
                         });
                   },
           ),
