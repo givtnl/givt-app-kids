@@ -38,6 +38,9 @@ class AppTheme {
   static const recommendationItemSelected = Color(0xFFC7DFBC);
   static const recommendationItemText = Color(0xFF405A66);
 
+  static const interestsTallyText = Color(0xFFFBFCFF);
+  static const interestCardRadio = Color(0xFF7AAA35);
+
   static const actionButtonStyle = TextStyle(
     fontSize: 26,
     fontWeight: FontWeight.bold,
