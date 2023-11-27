@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
@@ -31,10 +30,8 @@ class InterestsCubit extends Cubit<InterestsState> {
     AnalyticsHelper.logEvent(
       eventName: AmplitudeEvent.interestSelected,
       eventProperties: {
-        'interest_name': interest.displayText,
-        'selected_interests':
+        AnalyticsHelper.interestKey:
             newSelectedInterests.map((e) => e.displayText).toList().toString(),
-        'page_name': Pages.interestsSelection.name,
       },
     );
 

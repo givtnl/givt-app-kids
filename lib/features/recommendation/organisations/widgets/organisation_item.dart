@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/or
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_detail_bottomsheet.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class OrganisationItem extends StatelessWidget {
   const OrganisationItem({
@@ -39,6 +40,13 @@ class OrganisationItem extends StatelessWidget {
               generatedMediumId, organisation.organisationLogoURL);
 
           context.read<FlowsCubit>().startRecommendationFlow();
+
+          AnalyticsHelper.logEvent(
+            eventName: AmplitudeEvent.charityCardPressed,
+            eventProperties: {
+              AnalyticsHelper.charityNameKey: organisation.name,
+            },
+          );
 
           showModalBottomSheet<void>(
             context: context,

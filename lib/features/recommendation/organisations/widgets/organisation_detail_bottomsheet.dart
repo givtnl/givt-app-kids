@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:go_router/go_router.dart';
@@ -105,6 +106,12 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
           floatingActionButton: FloatingActoinButton(
             text: "Donate",
             onPressed: () {
+              AnalyticsHelper.logEvent(
+                eventName: AmplitudeEvent.donateToRecommendedCharityPressed,
+                eventProperties: {
+                  AnalyticsHelper.charityNameKey: organisation.name,
+                },
+              );
               context.pushNamed(Pages.chooseAmountSlider.name);
             },
           ),

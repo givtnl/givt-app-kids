@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_item.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/recommendation_givy_bubble.dart';
@@ -33,9 +32,8 @@ class OrganisationsScreen extends StatelessWidget {
           AnalyticsHelper.logEvent(
             eventName: AmplitudeEvent.charitiesShown,
             eventProperties: {
-              'charities_names':
+              AnalyticsHelper.recommendedCharitiesKey:
                   state.organisations.map((e) => e.name).toList().toString(),
-              'page_name': Pages.recommendedOrganisations.name,
             },
           );
         }

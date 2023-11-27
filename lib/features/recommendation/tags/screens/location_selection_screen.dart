@@ -6,7 +6,6 @@ import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
 import 'package:givt_app_kids/features/recommendation/tags/widgets/location_card.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/recommendation_givy_bubble.dart';
-import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
@@ -93,14 +92,6 @@ class LocationSelectionScreen extends StatelessWidget {
                   onPressed: state is TagsStateFetched &&
                           state.selectedLocation != const Tag.empty()
                       ? () {
-                          AnalyticsHelper.logEvent(
-                            eventName: AmplitudeEvent.nextToInterestsPressed,
-                            eventProperties: {
-                              'location': state.selectedLocation.displayText,
-                              'page_name': Pages.locationSelection.name,
-                            },
-                          );
-
                           context.pushNamed(
                             Pages.interestsSelection.name,
                             extra: state,

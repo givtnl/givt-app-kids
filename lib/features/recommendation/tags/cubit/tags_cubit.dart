@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
 import 'package:givt_app_kids/features/recommendation/tags/repositories/tags_repository.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -21,8 +20,7 @@ class TagsCubit extends Cubit<TagsState> {
         AnalyticsHelper.logEvent(
           eventName: AmplitudeEvent.locationSelected,
           eventProperties: {
-            'location': location.displayText,
-            'page_name': Pages.locationSelection.name,
+            AnalyticsHelper.locationKey: location.displayText,
           },
         );
       }
