@@ -27,4 +27,12 @@ class InterestsState extends Equatable {
       selectedInterests: selectedInterests ?? this.selectedInterests,
     );
   }
+
+  static InterestsState empty() {
+    return const InterestsState(
+      location: Tag.empty(),
+      interests: [],
+      selectedInterests: [],
+    );
+  }
 }

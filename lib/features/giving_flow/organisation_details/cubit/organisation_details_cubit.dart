@@ -17,9 +17,11 @@ class OrganisationDetailsCubit extends Cubit<OrganisationDetailsState> {
   Future<void> getOrganisationDetails(String mediumId) async {
     emit(const OrganisationDetailsLoadingState());
     mediumId = mediumId.isEmpty ? defaultMediumId : mediumId;
+
     try {
       final response =
           await _organisationRepository.fetchOrganisationDetails(mediumId);
+
       emit(OrganisationDetailsSetState(
           organisation: response, mediumId: mediumId));
     } catch (error) {

@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/repositories/organisations_repository.dart';
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
@@ -26,10 +25,11 @@ class OrganisationsCubit extends Cubit<OrganisationsState> {
 
     try {
       AnalyticsHelper.logEvent(
-        eventName: AmplitudeEvent.nextToCharitiesPressed,
+        eventName: AmplitudeEvent.showCharitiesPressed,
         eventProperties: {
-          'interests': '${interests.map((e) => e.displayText).toList()}',
-          'page_name': Pages.interestsSelection.name,
+          AnalyticsHelper.interestKey:
+              '${interests.map((e) => e.displayText).toList()}',
+          AnalyticsHelper.locationKey: location.displayText,
         },
       );
       final response =

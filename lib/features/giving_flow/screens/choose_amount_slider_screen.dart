@@ -22,8 +22,7 @@ import 'package:givt_app_kids/shared/widgets/wallet.dart';
 import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderScreen extends StatelessWidget {
-  const ChooseAmountSliderScreen({Key? key}) : super(key: key);
-
+  const ChooseAmountSliderScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final organisationDetailsState =
@@ -75,12 +74,24 @@ class ChooseAmountSliderScreen extends StatelessWidget {
                   Container(
                     alignment: Alignment.topLeft,
                     padding:
-                        const EdgeInsets.only(left: 30, right: 30, top: 75),
+                        const EdgeInsets.only(left: 20, right: 20, top: 75),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         if (flow.isCoin)
                           SvgPicture.asset('assets/images/church.svg'),
                         if (flow.isCoin) const SizedBox(width: 25),
+                        if (flow.isRecommendation &&
+                            organisation.logoLink != null)
+                          Container(
+                            width: size.width * .22,
+                            height: size.width * .22,
+                            padding: const EdgeInsets.only(right: 12),
+                            child: Image.network(
+                              organisation.logoLink!,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         BlocBuilder<OrganisationDetailsCubit,
                             OrganisationDetailsState>(
                           builder: (context, state) {
@@ -193,9 +204,16 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActoinButton(
-            text: flow.isCoin ? 'Activate the coin' : 'Next',
+          floatingActionButton: GivtFloatingActionButton(
+            text: flow.isCoin
+                ? 'Activate the coin'
+                : flow.isRecommendation
+                    ? 'Finish donation'
+                    : 'Next',
             isLoading: state is CreateTransactionUploadingState,
+            backgroundColor: flow.isRecommendation
+                ? AppTheme.givt4KidsOrange
+                : AppTheme.givt4KidsBlue,
             onPressed: state.amount == 0
                 ? null
                 : () async {
