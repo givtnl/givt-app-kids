@@ -11,13 +11,10 @@ import 'package:go_router/go_router.dart';
 class OrganisationDetailBottomSheet extends StatelessWidget {
   const OrganisationDetailBottomSheet({
     super.key,
-    required this.width,
-    required this.height,
     required this.organisation,
   });
 
-  final double width;
-  final double height;
+  final double height = 100;
   final Organisation organisation;
   @override
   Widget build(BuildContext context) {
@@ -25,9 +22,11 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
       heightFactor: 0.95,
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         child: Scaffold(
+          extendBodyBehindAppBar: true,
           appBar: AppBar(
+            forceMaterialTransparency: true,
             automaticallyImplyLeading: false,
             actions: [
               IconButton(
@@ -40,70 +39,71 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
               )
             ],
           ),
-          body: Column(
-            children: [
-              Container(
-                constraints: BoxConstraints(maxHeight: height * .35),
-                padding: const EdgeInsets.only(right: 20),
-                child: OrganisationHeader(
+          body: Scrollable(
+            viewportBuilder: (context, offset) => ListView(
+              children: [
+                OrganisationHeader(
                   organisation: organisation,
-                  height: height,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: height * .55,
-                      width: double.maxFinite,
-                      margin: const EdgeInsets.symmetric(vertical: 12),
-                      child: Image.network(
-                        organisation.promoPictureUrl,
-                        fit: BoxFit.cover,
+                Container(
+                  height: 168,
+                  width: double.maxFinite,
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  child: Image.network(
+                    organisation.promoPictureUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        organisation.name,
+                        textAlign: TextAlign.start,
+                        style:
+                            AppTheme.lightTheme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
-                    ),
-                    Text(
-                      organisation.name,
-                      textAlign: TextAlign.start,
-                      style: AppTheme.lightTheme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                      const SizedBox(height: 12),
+                      Text(
+                        organisation.shortDescription,
+                        textAlign: TextAlign.start,
+                        style:
+                            AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      organisation.shortDescription,
-                      textAlign: TextAlign.start,
-                      style:
-                          AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                      const SizedBox(height: 12),
+                      Text(
+                        organisation.longDescription,
+                        textAlign: TextAlign.start,
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      organisation.longDescription,
-                      textAlign: TextAlign.start,
-                    ),
-                    const SizedBox(height: 12),
-                    Text("Even \$1 helps!",
+                      const SizedBox(height: 12),
+                      Text(
+                        "Even \$1 helps!",
                         textAlign: TextAlign.start,
                         style:
                             AppTheme.lightTheme.textTheme.labelMedium?.copyWith(
                           color: AppTheme.givt4KidsBlue,
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
-                        )),
-                  ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: FloatingActoinButton(
+          floatingActionButton: GivtFloatingActionButton(
             text: "Donate",
             onPressed: () {
               AnalyticsHelper.logEvent(

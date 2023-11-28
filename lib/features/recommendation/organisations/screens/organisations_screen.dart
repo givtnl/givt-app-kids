@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
@@ -17,7 +16,6 @@ class OrganisationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return BlocConsumer<OrganisationsCubit, OrganisationsState>(
       listener: (context, state) {
         if (state is OrganisationsExternalErrorState) {
@@ -40,20 +38,9 @@ class OrganisationsScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-            ),
-            // toolbarHeight: 0,
-            automaticallyImplyLeading: false,
-            leading: const GivtBackButton(),
-          ),
-          extendBodyBehindAppBar: true,
-          backgroundColor: Colors.transparent,
           body: Container(
             width: double.maxFinite,
-            height: size.height,
+            height: double.maxFinite,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/gradient.jpg'),
@@ -61,49 +48,49 @@ class OrganisationsScreen extends StatelessWidget {
               ),
             ),
             child: SafeArea(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  RecommendationGivyBubble(
-                    text: state is OrganisationsFetchingState
-                        ? 'Loading...'
-                        : state.organisations.isEmpty
-                            ? 'Oops, something went wrong...'
-                            : 'These charities fit your interests!',
+              child: CustomScrollView(
+                slivers: [
+                  const SliverAppBar(
+                    backgroundColor: Colors.transparent,
+                    automaticallyImplyLeading: false,
+                    leading: GivtBackButton(),
                   ),
-                  if (state is OrganisationsFetchingState)
-                    Padding(
-                      padding: EdgeInsets.only(top: size.height * 0.25),
-                      child: LoadingAnimationWidget.waveDots(
-                          color: const Color(0xFF54A1EE),
-                          size: size.width * 0.2),
-                    ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 10),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: state.organisations
-                              .map(
-                                (organisation) => Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: OrganisationItem(
-                                    width: double.maxFinite,
-                                    height: size.height * .4,
-                                    organisation: organisation,
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
+                  SliverPadding(
+                    padding: const EdgeInsets.only(top: 16),
+                    sliver: SliverAppBar(
+                      elevation: 4,
+                      pinned: true,
+                      backgroundColor: Colors.transparent,
+                      forceMaterialTransparency: true,
+                      automaticallyImplyLeading: false,
+                      toolbarHeight: 80,
+                      title: RecommendationGivyBubble(
+                        text: state is OrganisationsFetchingState
+                            ? 'Loading...'
+                            : state.organisations.isEmpty
+                                ? 'Oops, something went wrong...'
+                                : 'These charities fit your interests!',
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  // if (state is OrganisationsFetchingState)
+                  //   LoadingAnimationWidget.waveDots(
+                  //       color: const Color(0xFF54A1EE), size: 50),
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 32,
+                    ),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return OrganisationItem(
+                              organisation: state.organisations[index]);
+                        },
+                        childCount: state.organisations.length,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

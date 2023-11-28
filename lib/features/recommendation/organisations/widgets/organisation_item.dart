@@ -8,17 +8,14 @@ import 'package:givt_app_kids/features/recommendation/organisations/models/organ
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_detail_bottomsheet.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class OrganisationItem extends StatelessWidget {
   const OrganisationItem({
     super.key,
-    required this.width,
-    required this.height,
     required this.organisation,
   });
 
-  final double width;
-  final double height;
   final Organisation organisation;
 
   @override
@@ -30,8 +27,8 @@ class OrganisationItem extends StatelessWidget {
 
     precacheImage(image.image, context);
 
-    return SizedBox(
-      width: width,
+    return Container(
+      padding: const EdgeInsets.only(bottom: 20),
       child: InkWell(
         onTap: () {
           String generatedMediumId =
@@ -54,54 +51,52 @@ class OrganisationItem extends StatelessWidget {
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
             builder: (context) => OrganisationDetailBottomSheet(
-              width: width,
-              height: height,
               organisation: organisation,
             ),
           );
         },
-        borderRadius: BorderRadius.circular(25),
         child: Card(
           elevation: 5,
-          color: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(24),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  constraints: BoxConstraints(maxHeight: height * .35),
-                  padding: const EdgeInsets.only(right: 12),
-                  child: OrganisationHeader(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  OrganisationHeader(
                     organisation: organisation,
-                    height: height,
                   ),
-                ),
-                Container(
-                  height: height * .5,
-                  width: double.maxFinite,
-                  margin: const EdgeInsets.symmetric(vertical: 12),
-                  child: Image.network(
-                    organisation.promoPictureUrl,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    organisation.name,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                  Container(
+                    height: 168,
+                    width: double.maxFinite,
+                    margin: const EdgeInsets.symmetric(vertical: 12),
+                    child: Image.network(
+                      organisation.promoPictureUrl,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      organisation.name,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: AppTheme.recommendationItemText,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        height: 0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

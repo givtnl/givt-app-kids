@@ -125,7 +125,7 @@ class _WalletScreenState extends State<WalletScreen>
                       : const SizedBox(),
                   const Spacer(),
                   isGiveButtonActive
-                      ? FloatingActoinButton(
+                      ? GivtFloatingActionButton(
                           text: "I want to give",
                           margin: EdgeInsets.zero,
                           backgroundColor: AppTheme.givt4KidsYellow,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_cubit.dart';
@@ -16,23 +15,12 @@ class InterestsSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
     return BlocBuilder<InterestsCubit, InterestsState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-            ),
-            automaticallyImplyLeading: false,
-            leading: const GivtBackButton(),
-          ),
-          extendBodyBehindAppBar: true,
-          backgroundColor: Colors.transparent,
           body: Container(
             width: double.maxFinite,
-            height: size.height,
+            height: double.maxFinite,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/gradient.jpg'),
@@ -40,40 +28,56 @@ class InterestsSelectionScreen extends StatelessWidget {
               ),
             ),
             child: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  RecommendationGivyBubble(
-                    text: 'I want to help people...',
-                    secondaryText: 'Select your top 3 choices',
-                    extraChild: InterestsTally(
-                      tally: state.selectedInterests.length,
+              child: CustomScrollView(
+                slivers: [
+                  const SliverAppBar(
+                    backgroundColor: Colors.transparent,
+                    automaticallyImplyLeading: false,
+                    leading: GivtBackButton(),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.only(top: 16),
+                    sliver: SliverAppBar(
+                      pinned: true,
+                      backgroundColor: Colors.transparent,
+                      automaticallyImplyLeading: false,
+                      toolbarHeight: 80,
+                      title: RecommendationGivyBubble(
+                        text: 'I want to help people...',
+                        secondaryText: 'Select your top 3 choices',
+                        extraChild: InterestsTally(
+                          tally: state.selectedInterests.length,
+                        ),
+                      ),
                     ),
                   ),
-                  Expanded(
-                    child: GridView.count(
-                      childAspectRatio: 1 / 1.055,
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 24,
-                      crossAxisSpacing: 24,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 0,
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 32,
+                    ),
+                    sliver: SliverGrid(
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return InterestCard(
+                            interest: state.interests[index],
+                            isSelected: state.selectedInterests
+                                .contains(state.interests[index]),
+                            onPressed: () {
+                              context
+                                  .read<InterestsCubit>()
+                                  .selectInterest(state.interests[index]);
+                            },
+                          );
+                        },
+                        childCount: state.interests.length,
                       ),
-                      shrinkWrap: false,
-                      children: state.interests
-                          .map((item) => InterestCard(
-                                interest: item,
-                                width: size.width * 0.45,
-                                isSelected:
-                                    state.selectedInterests.contains(item),
-                                onPressed: () {
-                                  context
-                                      .read<InterestsCubit>()
-                                      .selectInterest(item);
-                                },
-                              ))
-                          .toList(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 20.0,
+                        mainAxisSpacing: 20.0,
+                      ),
                     ),
                   ),
                 ],
@@ -85,7 +89,7 @@ class InterestsSelectionScreen extends StatelessWidget {
           floatingActionButton: Visibility(
             visible:
                 state.selectedInterests.length == InterestsState.maxInterests,
-            child: FloatingActoinButton(
+            child: GivtFloatingActionButton(
               text: "Next",
               onPressed: state.selectedInterests.length ==
                       InterestsState.maxInterests

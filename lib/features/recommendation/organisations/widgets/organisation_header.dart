@@ -4,27 +4,24 @@ import 'package:givt_app_kids/features/recommendation/organisations/models/organ
 class OrganisationHeader extends StatelessWidget {
   const OrganisationHeader({
     required this.organisation,
-    required this.height,
     super.key,
   });
 
   final Organisation organisation;
-  final double height;
 
   @override
   Widget build(BuildContext context) {
-    final iconHeight = organisation.tags.length * 30.0;
-    return Flex(
-      direction: Axis.horizontal,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Expanded(
-          flex: 3,
-          child: Column(
+    return Container(
+      padding: const EdgeInsets.only(right: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: organisation.tags
+                .take(3)
                 .map(
                   (tag) => Container(
                     margin: const EdgeInsets.symmetric(vertical: 3),
@@ -37,8 +34,8 @@ class OrganisationHeader extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 3,
-                        horizontal: 15,
+                        vertical: 4,
+                        horizontal: 20,
                       ),
                       child: Text(
                         tag.displayText,
@@ -51,15 +48,11 @@ class OrganisationHeader extends StatelessWidget {
                     ),
                   ),
                 )
-                .take(3)
                 .toList(),
           ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
+          Container(
             constraints: BoxConstraints(
-              maxHeight: iconHeight,
+              maxHeight: organisation.tags.length * 25.0,
             ),
             child: Image.network(
               organisation.organisationLogoURL,
@@ -67,8 +60,8 @@ class OrganisationHeader extends StatelessWidget {
               alignment: Alignment.centerRight,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
