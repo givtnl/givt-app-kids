@@ -204,7 +204,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActoinButton(
+          floatingActionButton: GivtFloatingActionButton(
             text: flow.isCoin
                 ? 'Activate the coin'
                 : flow.isRecommendation

@@ -253,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActoinButton(
+        floatingActionButton: GivtFloatingActionButton(
           text: 'Sign in',
           isLoading: state is LoadingState,
           onPressed: _isInputNotEmpty()
