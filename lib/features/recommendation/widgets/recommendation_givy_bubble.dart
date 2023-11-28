@@ -15,61 +15,52 @@ class RecommendationGivyBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    final height = size.height * 0.6;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(36),
-        child: Container(
-          width: double.maxFinite,
-          padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
-          decoration: const BoxDecoration(
-            color: AppTheme.givyBubbleBackground,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SvgPicture.asset(
-                'assets/images/givy_pink_bubble.svg',
-                alignment: Alignment.centerLeft,
-                height: height * 0.12,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      text,
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: AppTheme.defaultTextColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    if (secondaryText.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 3),
-                        child: Text(
-                          secondaryText,
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    color: AppTheme.defaultTextColor,
-                                  ),
-                        ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(64),
+      child: Container(
+        width: double.maxFinite,
+        padding: EdgeInsets.only(
+            left: 8, right: extraChild != null ? 8 : 16, top: 8, bottom: 8),
+        decoration: const BoxDecoration(
+          color: AppTheme.givyBubbleBackground,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SvgPicture.asset(
+              'assets/images/givy_pink_bubble.svg',
+              alignment: Alignment.centerLeft,
+              height: 64,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  text,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppTheme.defaultTextColor,
+                        fontWeight: FontWeight.w600,
+                        height: 1.4,
                       ),
-                  ],
                 ),
-              ),
-              extraChild ?? const SizedBox()
-            ],
-          ),
+                if (secondaryText.isNotEmpty)
+                  Text(
+                    secondaryText,
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: AppTheme.defaultTextColor,
+                          fontWeight: FontWeight.w500,
+                          height: 1.4,
+                        ),
+                  ),
+              ],
+            ),
+            extraChild ?? const SizedBox()
+          ],
         ),
       ),
     );

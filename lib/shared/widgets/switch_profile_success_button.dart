@@ -17,7 +17,7 @@ class SwitchProfileSuccessButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final flow = context.read<FlowsCubit>().state;
 
-    return FloatingActoinButton(
+    return GivtFloatingActionButton(
       text: "Switch profile",
       backgroundColor: AppTheme.white85,
       foregroundColor: AppTheme.woodColor,

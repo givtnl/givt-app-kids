@@ -6,7 +6,6 @@ import 'package:givt_app_kids/helpers/app_theme.dart';
 class InterestCard extends StatelessWidget {
   const InterestCard({
     required this.interest,
-    required this.width,
     required this.onPressed,
     this.isSelected = false,
     super.key,
@@ -14,24 +13,25 @@ class InterestCard extends StatelessWidget {
 
   final Tag interest;
   final void Function() onPressed;
-  final double width;
   final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          elevation: 5,
-          padding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          backgroundColor:
-              isSelected ? AppTheme.recommendationItemSelected : Colors.white,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        elevation: 5,
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
         ),
-        onPressed: onPressed,
+      ),
+      onPressed: onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          color:
+              isSelected ? AppTheme.recommendationItemSelected : Colors.white,
+          borderRadius: BorderRadius.circular(24),
+        ),
         child: Stack(
           children: [
             Positioned(
@@ -46,7 +46,7 @@ class InterestCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
@@ -71,6 +71,8 @@ class InterestCard extends StatelessWidget {
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   color: AppTheme.recommendationItemText,
                                   fontWeight: FontWeight.w600,
+                                  height: 0,
+                                  fontSize: 16,
                                 ),
                       ),
                     ),

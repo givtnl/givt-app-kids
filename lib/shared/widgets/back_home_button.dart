@@ -17,7 +17,7 @@ class BackHomeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActoinButton(
+    return GivtFloatingActionButton(
       text: "Back to home",
       backgroundColor: AppTheme.givt4KidsYellow,
       foregroundColor: AppTheme.defaultTextColor,

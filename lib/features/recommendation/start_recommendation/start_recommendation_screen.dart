@@ -26,17 +26,23 @@ class StartRecommendationScreen extends StatelessWidget {
           Text(
             'Hi there!',
             style: AppTheme.lightTheme.textTheme.displayLarge?.copyWith(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.defaultTextColor),
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+              color: AppTheme.defaultTextColor,
+              height: 0,
+            ),
           ),
           const SizedBox(height: 6),
           Text(
-            "Let\’s find charities that you like",
-            style: AppTheme.lightTheme.textTheme.displayLarge
-                ?.copyWith(fontSize: 18, color: AppTheme.defaultTextColor),
+            "Let's find charities that you like",
+            style: AppTheme.lightTheme.textTheme.displayLarge?.copyWith(
+              fontSize: 18,
+              color: AppTheme.defaultTextColor,
+              fontWeight: FontWeight.w500,
+              height: 0,
+            ),
           ),
-          Spacer(),
+          const Spacer(),
           Center(
             child: SvgPicture.asset(
               'assets/images/givy_bubble_grey.svg',
@@ -44,13 +50,13 @@ class StartRecommendationScreen extends StatelessWidget {
               width: MediaQuery.sizeOf(context).width * .7,
             ),
           ),
-          Spacer(
+          const Spacer(
             flex: 2,
           )
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActoinButton(
+      floatingActionButton: GivtFloatingActionButton(
         text: "Start",
         onPressed: () => context.pushNamed(Pages.locationSelection.name),
       ),
