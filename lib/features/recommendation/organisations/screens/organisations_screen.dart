@@ -9,7 +9,6 @@ import 'package:givt_app_kids/features/recommendation/organisations/widgets/orga
 import 'package:givt_app_kids/features/recommendation/widgets/recommendation_givy_bubble.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
-import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class OrganisationsScreen extends StatelessWidget {
@@ -40,17 +39,15 @@ class OrganisationsScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
+          extendBodyBehindAppBar: true,
           appBar: AppBar(
+            toolbarHeight: 0,
             backgroundColor: Colors.transparent,
             systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.light,
             ),
-            // toolbarHeight: 0,
-            automaticallyImplyLeading: false,
-            leading: const GivtBackButton(),
           ),
-          extendBodyBehindAppBar: true,
-          backgroundColor: Colors.transparent,
           body: Container(
             width: double.maxFinite,
             height: size.height,
