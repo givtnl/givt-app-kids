@@ -50,6 +50,7 @@ class AppTheme {
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
 
   static final ThemeData lightTheme = ThemeData(
+    useMaterial3: false,
     scaffoldBackgroundColor: Colors.white,
     primaryColor: const Color.fromARGB(255, 62, 73, 112),
     fontFamily: "Raleway",
