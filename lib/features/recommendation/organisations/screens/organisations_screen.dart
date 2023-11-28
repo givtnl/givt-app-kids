@@ -84,8 +84,15 @@ class OrganisationsScreen extends StatelessWidget {
                     ),
                   ),
                   if (state is OrganisationsFetchingState)
-                    LoadingAnimationWidget.waveDots(
-                        color: const Color(0xFF54A1EE), size: 50),
+                    SliverFillViewport(delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.sizeOf(context).width * .3),
+                        child: LoadingAnimationWidget.waveDots(
+                            color: const Color(0xFF54A1EE), size: 100),
+                      );
+                    })),
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,

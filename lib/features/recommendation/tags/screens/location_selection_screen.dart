@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart';
@@ -17,6 +18,15 @@ class LocationSelectionScreen extends StatelessWidget {
     return BlocBuilder<TagsCubit, TagsState>(
       builder: (context, state) {
         return Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            toolbarHeight: 0,
+            backgroundColor: Colors.transparent,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.light,
+            ),
+          ),
           body: Container(
             width: double.maxFinite,
             height: double.maxFinite,
