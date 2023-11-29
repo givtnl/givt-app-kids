@@ -7,6 +7,14 @@ class AppTheme {
   static const givt4KidsYellow = Color(0xFFF2DF7F);
   static const givt4KidsOrange = Color(0xFFE28D4D);
 
+  static const lightOrange = Color(0xFFFFF7E9);
+  static const orange = Color(0xFFF9CD7E);
+  static const orangeText = Color(0xFFA97A27);
+
+  static const lightGreen = Color(0xFFFAFCF3);
+  static const greenBorder = Color(0xFFCCD3B7);
+  static const greenText = Color(0xFF5F7620);
+
   static const offWhite = Color(0xFFEEEDE4);
   static const backButtonColor = Color(0xFFBFDBFC);
   static const walletBackgroundColor = Color(0xFFF1F7FF);
@@ -21,6 +29,8 @@ class AppTheme {
   static const defaultTextColor = Color(0xFF3B3240);
   static const darkBlueTextColor = Color(0xFF06509B);
   static const greyButtonColor = Color(0xFFAAAAAA);
+  static const disabledTileBackground = Color(0xFFF5F4F5);
+  static const disabledTileBorder = Color(0xFFC8C6C9);
 
   static const woodColor = Color(0xFFD48256);
 
