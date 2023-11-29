@@ -31,7 +31,7 @@ dependencies:
   path_provider: ^2.0.15
   provider: ^6.0.4
   shared_preferences: ^2.0.15
-  vibration: ^1.7.6
+  vibration: ^1.8.4
   visibility_detector: ^0.3.3
   nfc_manager: ^3.3.0
   loading_animation_widget: ^1.2.0+4
