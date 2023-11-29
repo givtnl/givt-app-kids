@@ -54,6 +54,12 @@ class _ActionTileState extends State<ActionTile> {
           widgetHeight = widget.size.width * .5 - 7;
         });
       },
+      onTapCancel: () {
+        setState(() {
+          bottomBorderWidth = 10.0;
+          widgetHeight = widget.size.width * .5;
+        });
+      },
       onTapUp: (details) {
         setState(() {
           bottomBorderWidth = 10.0;
