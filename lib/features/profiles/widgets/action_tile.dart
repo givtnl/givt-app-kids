@@ -51,13 +51,13 @@ class _ActionTileState extends State<ActionTile> {
       onTapDown: (details) {
         setState(() {
           bottomBorderWidth = 3.0;
-          widgetHeight = widgetHeight! - 7;
+          widgetHeight = widget.size.width * .5 - 7;
         });
       },
       onTapUp: (details) {
         setState(() {
           bottomBorderWidth = 10.0;
-          widgetHeight = widgetHeight! + 7;
+          widgetHeight = widget.size.width * .5;
         });
       },
       child: Container(
