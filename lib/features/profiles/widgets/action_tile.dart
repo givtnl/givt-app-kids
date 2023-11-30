@@ -81,7 +81,7 @@ class _ActionTileState extends State<ActionTile> {
               top: BorderSide(color: borderColor!, width: 2),
             ),
             borderRadius: const BorderRadius.all(
-              Radius.circular(8),
+              Radius.circular(10),
             ),
           ),
           height: widgetHeight,
