@@ -26,15 +26,14 @@ class ActionTile extends StatefulWidget {
 }
 
 class _ActionTileState extends State<ActionTile> {
-  double bottomBorderWidth = 10.0;
-  double? widgetHeight;
+  double bottomBorderWidth = 6;
+  double widgetHeight = 208;
   Color? backgroundColor;
   Color? borderColor;
 
   @override
   void initState() {
     super.initState();
-    widgetHeight = widget.size.width * .5;
     backgroundColor = widget.backgroundColor;
     borderColor = widget.borderColor;
     if (widget.isDisabled) {
@@ -50,20 +49,20 @@ class _ActionTileState extends State<ActionTile> {
       onTap: widget.onTap,
       onTapDown: (details) {
         setState(() {
-          bottomBorderWidth = 3.0;
-          widgetHeight = widget.size.width * .5 - 7;
+          bottomBorderWidth = 2;
+          widgetHeight = 205;
         });
       },
       onTapCancel: () {
         setState(() {
-          bottomBorderWidth = 10.0;
-          widgetHeight = widget.size.width * .5;
+          bottomBorderWidth = 6;
+          widgetHeight = 209;
         });
       },
       onTapUp: (details) {
         setState(() {
-          bottomBorderWidth = 10.0;
-          widgetHeight = widget.size.width * .5;
+          bottomBorderWidth = 6;
+          widgetHeight = 209;
         });
       },
       child: Container(
@@ -71,9 +70,9 @@ class _ActionTileState extends State<ActionTile> {
           color: borderColor!,
           border: Border(
             bottom: BorderSide(color: borderColor!, width: bottomBorderWidth),
-            right: BorderSide(color: borderColor!, width: 3.0),
-            left: BorderSide(color: borderColor!, width: 3.0),
-            top: BorderSide(color: borderColor!, width: 3.0),
+            right: BorderSide(color: borderColor!, width: 2),
+            left: BorderSide(color: borderColor!, width: 2),
+            top: BorderSide(color: borderColor!, width: 2),
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(10),
@@ -86,14 +85,17 @@ class _ActionTileState extends State<ActionTile> {
           child: Container(
             color: backgroundColor,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                const SizedBox(height: 16),
                 Opacity(
                   opacity: widget.isDisabled ? 0.5 : 1,
                   child: SvgPicture.asset(
                     widget.iconPath,
+                    height: 140,
                   ),
                 ),
+                const SizedBox(height: 8),
                 Text(
                   widget.text,
                   textAlign: TextAlign.center,
@@ -106,6 +108,7 @@ class _ActionTileState extends State<ActionTile> {
                     height: 0,
                   ),
                 ),
+                const SizedBox(height: 16),
               ],
             ),
           ),
