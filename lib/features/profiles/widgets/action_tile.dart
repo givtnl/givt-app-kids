@@ -46,25 +46,31 @@ class _ActionTileState extends State<ActionTile> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: widget.onTap,
-      onTapDown: (details) {
-        setState(() {
-          bottomBorderWidth = 2;
-          widgetHeight = 205;
-        });
-      },
-      onTapCancel: () {
-        setState(() {
-          bottomBorderWidth = 6;
-          widgetHeight = 209;
-        });
-      },
-      onTapUp: (details) {
-        setState(() {
-          bottomBorderWidth = 6;
-          widgetHeight = 209;
-        });
-      },
+      onTap: widget.isDisabled ? null : widget.onTap,
+      onTapDown: widget.isDisabled
+          ? null
+          : (details) {
+              setState(() {
+                bottomBorderWidth = 2;
+                widgetHeight = 205;
+              });
+            },
+      onTapCancel: widget.isDisabled
+          ? null
+          : () {
+              setState(() {
+                bottomBorderWidth = 6;
+                widgetHeight = 209;
+              });
+            },
+      onTapUp: widget.isDisabled
+          ? null
+          : (details) {
+              setState(() {
+                bottomBorderWidth = 6;
+                widgetHeight = 209;
+              });
+            },
       child: Container(
         decoration: BoxDecoration(
           color: borderColor!,
@@ -75,7 +81,7 @@ class _ActionTileState extends State<ActionTile> {
             top: BorderSide(color: borderColor!, width: 2),
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(8),
           ),
         ),
         width: size.width * .5 - 32,
