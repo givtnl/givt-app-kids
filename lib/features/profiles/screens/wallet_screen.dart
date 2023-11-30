@@ -151,6 +151,7 @@ class _WalletScreenState extends State<WalletScreen>
                           );
                         },
                       ),
+                      const SizedBox(width: 16),
                       ActionTile(
                         size: size,
                         isDisabled: false,

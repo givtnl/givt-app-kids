@@ -44,78 +44,80 @@ class _ActionTileState extends State<ActionTile> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: widget.isDisabled ? null : widget.onTap,
-      onTapDown: widget.isDisabled
-          ? null
-          : (details) {
-              setState(() {
-                bottomBorderWidth = 2;
-                widgetHeight = 205;
-              });
-            },
-      onTapCancel: widget.isDisabled
-          ? null
-          : () {
-              setState(() {
-                bottomBorderWidth = 6;
-                widgetHeight = 209;
-              });
-            },
-      onTapUp: widget.isDisabled
-          ? null
-          : (details) {
-              setState(() {
-                bottomBorderWidth = 6;
-                widgetHeight = 209;
-              });
-            },
-      child: Container(
-        decoration: BoxDecoration(
-          color: borderColor!,
-          border: Border(
-            bottom: BorderSide(color: borderColor!, width: bottomBorderWidth),
-            right: BorderSide(color: borderColor!, width: 2),
-            left: BorderSide(color: borderColor!, width: 2),
-            top: BorderSide(color: borderColor!, width: 2),
+    return Expanded(
+      child: GestureDetector(
+        onTap: widget.isDisabled ? null : widget.onTap,
+        onTapDown: widget.isDisabled
+            ? null
+            : (details) {
+                setState(() {
+                  bottomBorderWidth = 2;
+                  widgetHeight = 205;
+                });
+              },
+        onTapCancel: widget.isDisabled
+            ? null
+            : () {
+                setState(() {
+                  bottomBorderWidth = 6;
+                  widgetHeight = 209;
+                });
+              },
+        onTapUp: widget.isDisabled
+            ? null
+            : (details) {
+                setState(() {
+                  bottomBorderWidth = 6;
+                  widgetHeight = 209;
+                });
+              },
+        child: Container(
+          decoration: BoxDecoration(
+            color: borderColor!,
+            border: Border(
+              bottom: BorderSide(color: borderColor!, width: bottomBorderWidth),
+              right: BorderSide(color: borderColor!, width: 2),
+              left: BorderSide(color: borderColor!, width: 2),
+              top: BorderSide(color: borderColor!, width: 2),
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(8),
+            ),
           ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(8),
-          ),
-        ),
-        width: size.width * .5 - 32,
-        height: widgetHeight,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Container(
-            color: backgroundColor,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                Opacity(
-                  opacity: widget.isDisabled ? 0.5 : 1,
-                  child: SvgPicture.asset(
-                    widget.iconPath,
-                    height: 140,
+          //width: size.width * .5 - 24 - 8,
+          height: widgetHeight,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              color: backgroundColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 16),
+                  Opacity(
+                    opacity: widget.isDisabled ? 0.5 : 1,
+                    child: SvgPicture.asset(
+                      widget.iconPath,
+                      height: 140,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  widget.text,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: widget.isDisabled
-                        ? AppTheme.disabledTileBorder
-                        : widget.textColor,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700,
-                    height: 0,
+                  const SizedBox(height: 8),
+                  Text(
+                    widget.text,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: widget.isDisabled
+                          ? AppTheme.disabledTileBorder
+                          : widget.textColor,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-              ],
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
           ),
         ),
