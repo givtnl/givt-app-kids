@@ -128,7 +128,6 @@ class _WalletScreenState extends State<WalletScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ActionTile(
-                        size: size,
                         isDisabled: !isGiveButtonActive,
                         text: "Give",
                         iconPath: 'assets/images/give_tile.svg',
@@ -153,7 +152,6 @@ class _WalletScreenState extends State<WalletScreen>
                       ),
                       const SizedBox(width: 16),
                       ActionTile(
-                        size: size,
                         isDisabled: false,
                         text: "Find Charity",
                         iconPath: 'assets/images/find_tile.svg',

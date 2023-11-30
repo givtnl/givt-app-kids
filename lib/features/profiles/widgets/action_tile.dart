@@ -5,7 +5,6 @@ import 'package:givt_app_kids/helpers/app_theme.dart';
 class ActionTile extends StatefulWidget {
   const ActionTile(
       {super.key,
-      required this.size,
       required this.isDisabled,
       required this.text,
       required this.iconPath,
@@ -13,7 +12,6 @@ class ActionTile extends StatefulWidget {
       required this.backgroundColor,
       required this.textColor,
       required this.onTap});
-  final Size size;
   final String text;
   final String iconPath;
   final VoidCallback onTap;
