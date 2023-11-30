@@ -84,7 +84,6 @@ class _ActionTileState extends State<ActionTile> {
               Radius.circular(8),
             ),
           ),
-          //width: size.width * .5 - 24 - 8,
           height: widgetHeight,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
