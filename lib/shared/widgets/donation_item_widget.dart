@@ -20,7 +20,7 @@ class DonationItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '\$${donation.amount.toStringAsFixed(2)}',
+                '\$${donation.amount.toStringAsFixed(0)}',
                 style: TextStyle(
                   color: DonationState.getAmountColor(donation.state),
                   fontFamily: 'Roboto',
@@ -30,7 +30,7 @@ class DonationItemWidget extends StatelessWidget {
               SizedBox(
                 width: donation.medium == DonationMediumType.nfc
                     ? size.width * 0.55
-                    : size.width * 0.75,
+                    : size.width * 0.72,
                 child: Text(
                   donation.organizationName,
                   maxLines: 2,

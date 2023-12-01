@@ -5,14 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
-import 'package:givt_app_kids/features/profiles/widgets/find_charity_button.dart';
+import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/history_header.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/donation_item_widget.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:givt_app_kids/shared/widgets/heading_2.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
@@ -124,42 +123,62 @@ class _WalletScreenState extends State<WalletScreen>
                         )
                       : const SizedBox(),
                   const Spacer(),
-                  isGiveButtonActive
-                      ? GivtFloatingActionButton(
-                          text: "I want to give",
-                          margin: EdgeInsets.zero,
-                          backgroundColor: AppTheme.givt4KidsYellow,
-                          foregroundColor: AppTheme.defaultTextColor,
-                          onPressed: () {
-                            AnalyticsHelper.logEvent(
-                                eventName: AmplitudeEvent.iWantToGivePressed,
-                                eventProperties: {
-                                  AnalyticsHelper.walletAmountKey:
-                                      state.activeProfile.wallet.balance,
-                                });
-                            showModalBottomSheet<void>(
-                              context: context,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              builder: (context) => const GiveBottomSheet(),
-                            );
-                          })
-                      : const SizedBox(),
-                  SizedBox(height: size.height * 0.02),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      ActionTile(
+                        isDisabled: !isGiveButtonActive,
+                        text: "Give",
+                        iconPath: 'assets/images/give_tile.svg',
+                        backgroundColor: AppTheme.lightOrange,
+                        borderColor: AppTheme.orange,
+                        textColor: AppTheme.orangeText,
+                        onTap: () {
+                          AnalyticsHelper.logEvent(
+                              eventName: AmplitudeEvent.iWantToGivePressed,
+                              eventProperties: {
+                                AnalyticsHelper.walletAmountKey:
+                                    state.activeProfile.wallet.balance,
+                              });
+                          showModalBottomSheet<void>(
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            builder: (context) => const GiveBottomSheet(),
+                          );
+                        },
+                      ),
+                      const SizedBox(width: 16),
+                      ActionTile(
+                        isDisabled: false,
+                        text: "Find Charity",
+                        iconPath: 'assets/images/find_tile.svg',
+                        backgroundColor: AppTheme.lightGreen,
+                        borderColor: AppTheme.greenBorder,
+                        textColor: AppTheme.greenText,
+                        onTap: () {
+                          context.pushNamed(Pages.recommendationStart.name);
+                          AnalyticsHelper.logEvent(
+                              eventName:
+                                  AmplitudeEvent.helpMeFindCharityPressed);
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
                       ProfileSwitchButton(
-                          name: state.activeProfile.firstName,
-                          onClicked: () {
-                            context.pushNamed(Pages.profileSelection.name);
+                        name: state.activeProfile.firstName,
+                        onClicked: () {
+                          context.pushNamed(Pages.profileSelection.name);
 
-                            AnalyticsHelper.logEvent(
-                              eventName: AmplitudeEvent.profileSwitchPressed,
-                            );
-                          }),
-                      const FindCharityButton(),
+                          AnalyticsHelper.logEvent(
+                            eventName: AmplitudeEvent.profileSwitchPressed,
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],
