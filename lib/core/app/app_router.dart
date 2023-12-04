@@ -23,6 +23,7 @@ import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_
 import 'package:givt_app_kids/features/recommendation/interests/screens/interests_selection_screen.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/screens/organisations_screen.dart';
+import 'package:givt_app_kids/features/recommendation/start_recommendation/start_recommendation_screen.dart';
 import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/tags/screens/location_selection_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
@@ -121,6 +122,11 @@ class AppRouter {
           ),
         ),
         GoRoute(
+          path: Pages.recommendationStart.path,
+          name: Pages.recommendationStart.name,
+          builder: (context, state) => const StartRecommendationScreen(),
+        ),
+        GoRoute(
           path: Pages.locationSelection.path,
           name: Pages.locationSelection.name,
           builder: (context, state) => BlocProvider(
@@ -134,7 +140,8 @@ class AppRouter {
           path: Pages.interestsSelection.path,
           name: Pages.interestsSelection.name,
           builder: (context, state) {
-            final tagsState = (state.extra! as TagsStateFetched);
+            final extra = state.extra ?? TagsStateFetched.empty();
+            final tagsState = (extra as TagsStateFetched);
             return BlocProvider(
               create: (context) => InterestsCubit(
                 location: tagsState.selectedLocation,
@@ -148,7 +155,8 @@ class AppRouter {
           path: Pages.recommendedOrganisations.path,
           name: Pages.recommendedOrganisations.name,
           builder: (context, state) {
-            final interestsState = (state.extra! as InterestsState);
+            final extra = state.extra ?? InterestsState.empty();
+            final interestsState = (extra as InterestsState);
             return BlocProvider(
               create: (context) => OrganisationsCubit(
                 getIt(),

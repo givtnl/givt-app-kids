@@ -16,8 +16,8 @@ class WalletFrame extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: size.width * 0.08, horizontal: size.width * 0.05),
+          padding:
+              EdgeInsets.symmetric(vertical: size.width * 0.08, horizontal: 24),
           child: body,
         ),
       ),

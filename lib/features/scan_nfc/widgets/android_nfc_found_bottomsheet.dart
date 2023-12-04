@@ -36,7 +36,7 @@ class FoundNfcAnimation extends StatelessWidget {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            child: FloatingActoinButton(
+            child: GivtFloatingActionButton(
               text: "",
             ),
           ),

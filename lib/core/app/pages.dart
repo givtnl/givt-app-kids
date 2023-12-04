@@ -12,6 +12,8 @@ enum Pages {
   history(path: '/history', name: 'HISTORY'),
 
   //recommendation flow
+  recommendationStart(
+      path: '/recommendation-start', name: 'RECOMMENDATION_START'),
   locationSelection(path: '/location-selection', name: 'LOCATION_SELECTION'),
   interestsSelection(path: '/interests-selection', name: 'INTERESTS_SELECTION'),
   recommendedOrganisations(path: '/organisations', name: 'ORGANISATIONS'),

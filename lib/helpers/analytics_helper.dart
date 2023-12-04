@@ -22,10 +22,10 @@ enum AmplitudeEvent {
   seeDonationHistoryPressed('see_donation_history_pressed'),
   nfcScanned('nfc_scanned'),
   locationSelected('location_selected'),
-  nextToInterestsPressed('next_to_interests_pressed'),
   interestSelected('interest_selected'),
-  nextToCharitiesPressed('next_to_charities_pressed'),
+  showCharitiesPressed('show_charities_pressed'),
   charitiesShown('charities_shown'),
+  donateToRecommendedCharityPressed('donate_to_recommended_charity_pressed'),
   charityCardPressed('charity_card_pressed'),
   accountLocked('account_locked_for_wrong_password'),
   walletTracker('wallet_tracker'),
@@ -45,7 +45,10 @@ class AnalyticsHelper {
   static const String goalKey = "goal_name";
   static const String walletAmountKey = "wallet_amount";
   static const String mediumIdKey = "medium_id";
-
+  static const String locationKey = "location";
+  static const String interestKey = "all_selected_interests";
+  static const String recommendedCharitiesKey = "recommended_charities";
+  static const String charityNameKey = "charity_name";
   static Amplitude? _amplitude;
 
   static Future<void> init(String key) async {

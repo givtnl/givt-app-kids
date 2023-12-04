@@ -5,6 +5,15 @@ class AppTheme {
   static const givt4KidsBlue = Color(0xFF54A1EE);
   static const givt4KidsRed = Color(0xFFD53D4C);
   static const givt4KidsYellow = Color(0xFFF2DF7F);
+  static const givt4KidsOrange = Color(0xFFE28D4D);
+
+  static const lightOrange = Color(0xFFFFF7E9);
+  static const orange = Color(0xFFF9CD7E);
+  static const orangeText = Color(0xFFA97A27);
+
+  static const lightGreen = Color(0xFFFAFCF3);
+  static const greenBorder = Color(0xFFCCD3B7);
+  static const greenText = Color(0xFF5F7620);
 
   static const offWhite = Color(0xFFEEEDE4);
   static const backButtonColor = Color(0xFFBFDBFC);
@@ -20,6 +29,8 @@ class AppTheme {
   static const defaultTextColor = Color(0xFF3B3240);
   static const darkBlueTextColor = Color(0xFF06509B);
   static const greyButtonColor = Color(0xFFAAAAAA);
+  static const disabledTileBackground = Color(0xFFF5F4F5);
+  static const disabledTileBorder = Color(0xFFC8C6C9);
 
   static const woodColor = Color(0xFFD48256);
 
@@ -32,6 +43,14 @@ class AppTheme {
   static const givt4KidsDarkGreen = Color(0xFF006C47);
   static const givt4KidsRedAlt = Color(0xFFDA2D37);
 
+  static const givyBubbleBackground = Color(0xFFEAEFFD);
+
+  static const recommendationItemSelected = Color(0xFFC7DFBC);
+  static const recommendationItemText = Color(0xFF405A66);
+
+  static const interestsTallyText = Color(0xFFFBFCFF);
+  static const interestCardRadio = Color(0xFF7AAA35);
+
   static const actionButtonStyle = TextStyle(
     fontSize: 26,
     fontWeight: FontWeight.bold,
@@ -41,6 +60,7 @@ class AppTheme {
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
 
   static final ThemeData lightTheme = ThemeData(
+    useMaterial3: false,
     scaffoldBackgroundColor: Colors.white,
     primaryColor: const Color.fromARGB(255, 62, 73, 112),
     fontFamily: "Raleway",

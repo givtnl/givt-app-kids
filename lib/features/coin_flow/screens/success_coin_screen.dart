@@ -79,7 +79,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 BackHomeButton(
-                  marging: EdgeInsets.only(left: 35, right: 35, bottom: 13),
+                  marging: EdgeInsets.only(left: 24, right: 24, bottom: 14),
                 ),
                 SwitchProfileSuccessButton(),
               ],
