@@ -8,6 +8,8 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/history_header.dart';
+import 'package:givt_app_kids/features/profiles/widgets/label_button_trial.dart';
+import 'package:givt_app_kids/features/profiles/widgets/label_elevated_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
@@ -123,49 +125,66 @@ class _WalletScreenState extends State<WalletScreen>
                         )
                       : const SizedBox(),
                   const Spacer(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ActionTile(
-                        isDisabled: !isGiveButtonActive,
-                        text: "Give",
-                        iconPath: 'assets/images/give_tile.svg',
-                        backgroundColor: AppTheme.lightOrange,
-                        borderColor: AppTheme.orange,
-                        textColor: AppTheme.orangeText,
-                        onTap: () {
-                          AnalyticsHelper.logEvent(
-                              eventName: AmplitudeEvent.iWantToGivePressed,
-                              eventProperties: {
-                                AnalyticsHelper.walletAmountKey:
-                                    state.activeProfile.wallet.balance,
-                              });
-                          showModalBottomSheet<void>(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            builder: (context) => const GiveBottomSheet(),
-                          );
-                        },
-                      ),
-                      const SizedBox(width: 16),
-                      ActionTile(
-                        isDisabled: false,
-                        text: "Find Charity",
-                        iconPath: 'assets/images/find_tile.svg',
-                        backgroundColor: AppTheme.lightGreen,
-                        borderColor: AppTheme.greenBorder,
-                        textColor: AppTheme.greenText,
-                        onTap: () {
-                          context.pushNamed(Pages.recommendationStart.name);
-                          AnalyticsHelper.logEvent(
-                              eventName:
-                                  AmplitudeEvent.helpMeFindCharityPressed);
-                        },
-                      ),
-                    ],
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.end,
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     ActionTile(
+                  //       isDisabled: !isGiveButtonActive,
+                  //       text: "Give",
+                  //       iconPath: 'assets/images/give_tile.svg',
+                  //       backgroundColor: AppTheme.lightOrange,
+                  //       borderColor: AppTheme.orange,
+                  //       textColor: AppTheme.orangeText,
+                  //       onTap: () {
+                  //         AnalyticsHelper.logEvent(
+                  //             eventName: AmplitudeEvent.iWantToGivePressed,
+                  //             eventProperties: {
+                  //               AnalyticsHelper.walletAmountKey:
+                  //                   state.activeProfile.wallet.balance,
+                  //             });
+                  //         showModalBottomSheet<void>(
+                  //           context: context,
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius: BorderRadius.circular(10.0),
+                  //           ),
+                  //           builder: (context) => const GiveBottomSheet(),
+                  //         );
+                  //       },
+                  //     ),
+                  //     const SizedBox(width: 16),
+                  //     ActionTile(
+                  //       isDisabled: false,
+                  //       text: "Find Charity",
+                  //       iconPath: 'assets/images/find_tile.svg',
+                  //       backgroundColor: AppTheme.lightGreen,
+                  //       borderColor: AppTheme.greenBorder,
+                  //       textColor: AppTheme.greenText,
+                  //       onTap: () {
+                  //         context.pushNamed(Pages.recommendationStart.name);
+                  //         AnalyticsHelper.logEvent(
+                  //             eventName:
+                  //                 AmplitudeEvent.helpMeFindCharityPressed);
+                  //       },
+                  //     ),
+                  //   ],
+                  // ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  LabelButton(
+                    isDisabled: false,
+                    onTap: () {},
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  LabelElevatedButton(
+                    isDisabled: false,
+                    onTap: () {},
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   Row(
                     children: [
