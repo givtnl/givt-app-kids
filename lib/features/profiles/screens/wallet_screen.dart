@@ -172,6 +172,10 @@ class _WalletScreenState extends State<WalletScreen>
                   SizedBox(
                     height: 20,
                   ),
+                  LabelInkwell(isDisabled: false, onTap: () {}),
+                  SizedBox(
+                    height: 20,
+                  ),
                   LabelButton(
                     isDisabled: false,
                     onTap: () {},
