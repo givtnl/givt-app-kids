@@ -48,6 +48,28 @@ class APIService {
     }
   }
 
+  Future<Map<String, dynamic>> loginByVoucherCode(
+      Map<String, dynamic> body) async {
+    final url =
+        Uri.https(_apiURL, '/givt4kidsservice/v1/Authentication/voucher');
+
+    var response = await client.post(
+      url,
+      body: body,
+    );
+
+    log('login by voucher status code: ${response.statusCode}');
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } else {
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    }
+  }
+
   Future<List<dynamic>> fetchProfiles(String parentGuid) async {
     final url = Uri.https(_apiURL, '/givt4kidsservice/v1/User/get-children');
 

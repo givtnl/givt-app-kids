@@ -4,4 +4,5 @@ enum FlowType {
   inAppCoin,
   deepLinkCoin,
   recommendation,
+  exhibition
 }

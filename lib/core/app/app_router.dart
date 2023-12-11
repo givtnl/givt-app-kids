@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
+import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -219,19 +220,25 @@ class AppRouter {
           },
         ),
         GoRoute(
-            path: Pages.scanNFC.path,
-            name: Pages.scanNFC.name,
-            builder: (context, state) {
-              return BlocProvider(
-                create: (context) => ScanNfcCubit()
-                  ..startTagRead(delay: ScanNfcCubit.startDelay),
-                child: const NFCScanPage(),
-              );
-            }),
+          path: Pages.scanNFC.path,
+          name: Pages.scanNFC.name,
+          builder: (context, state) {
+            return BlocProvider(
+              create: (context) =>
+                  ScanNfcCubit()..startTagRead(delay: ScanNfcCubit.startDelay),
+              child: const NFCScanPage(),
+            );
+          },
+        ),
         GoRoute(
           path: Pages.successCoin.path,
           name: Pages.successCoin.name,
           builder: (context, state) => const SuccessCoinScreen(),
+        ),
+        GoRoute(
+          path: Pages.voucherCodeScreen.path,
+          name: Pages.voucherCodeScreen.name,
+          builder: (context, state) => const VoucherCodeScreen(),
         ),
       ]);
 }
