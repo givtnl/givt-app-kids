@@ -54,7 +54,7 @@ class _VoucherCodeInputState extends State<VoucherCodeInput> {
             color: AppTheme.defaultTextColor,
           );
         } else {
-          return const SizedBox(width: 10);
+          return const SizedBox(width: 8);
         }
       },
       hapticFeedbackType: HapticFeedbackType.lightImpact,

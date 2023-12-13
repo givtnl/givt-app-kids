@@ -259,7 +259,6 @@ class AppRouter {
               )..getRecommendedOrganisations(
                   location: OrganisationsCubit.exhibitionLocation,
                   interests: OrganisationsCubit.exhibitionInterests,
-                  // fakeComputingExtraDelay: const Duration(seconds: 1),
                   pageSize: 10,
                   filterInterests: false,
                 ),

@@ -25,7 +25,7 @@ class OrganisationsScreen extends StatelessWidget {
           SnackBarHelper.showMessage(
             context,
             text:
-                'Cannot find organisations. Please try again later. ${state.errorMessage}',
+                'Cannot find organizations. Please try again later. ${state.errorMessage}',
             isError: true,
           );
         } else if (state is OrganisationsFetchedState) {
