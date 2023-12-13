@@ -95,15 +95,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          'Welcome',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineLarge
-                              ?.copyWith(
-                                color: AppTheme.givt4KidsBlue,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        GestureDetector(
+                          onDoubleTap: () {
+                            context.pushReplacementNamed(
+                                Pages.voucherCodeScreen.name);
+                          },
+                          child: Text(
+                            'Welcome',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(
+                                  color: AppTheme.givt4KidsBlue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Text(

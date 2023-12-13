@@ -27,6 +27,10 @@ class FlowsCubit extends Cubit<FlowsState> {
     emit(const FlowsState(flowType: FlowType.recommendation));
   }
 
+  void startExhibitionFlow() {
+    emit(const FlowsState(flowType: FlowType.exhibition));
+  }
+
   void resetFlow() {
     emit(const FlowsState(flowType: FlowType.none));
     getIt<SharedPreferences>().setBool('isInAppCoinFlow', false);

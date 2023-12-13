@@ -6,6 +6,8 @@ mixin OrganisationsRepository {
   Future<List<Organisation>> getRecommendedOrganisations({
     required Tag location,
     required List<Tag> interests,
+    required int pageSize,
+    required bool filterInterests,
   });
 }
 
@@ -20,11 +22,13 @@ class OrganisationsRepositoryImpl with OrganisationsRepository {
   Future<List<Organisation>> getRecommendedOrganisations({
     required Tag location,
     required List<Tag> interests,
+    required int pageSize,
+    required bool filterInterests,
   }) async {
     final response = await _apiService.getRecommendedOrganisations(
       {
         "range": location.key,
-        "pageSize": 3,
+        "pageSize": pageSize,
         "tags": interests.map((interest) => interest.key).toList(),
       },
     );
@@ -32,10 +36,11 @@ class OrganisationsRepositoryImpl with OrganisationsRepository {
     List<Organisation> result = [];
     for (final organisationMap in response) {
       final organisation = Organisation.fromMap(organisationMap);
-      organisation.tags.removeWhere((tag) =>
-          !interests.contains(tag) && tag.type == TagType.INTERESTS ||
-          location.key != tag.key && tag.type == TagType.LOCATION);
-
+      if (filterInterests) {
+        organisation.tags.removeWhere((tag) =>
+            !interests.contains(tag) && tag.type == TagType.INTERESTS ||
+            location.key != tag.key && tag.type == TagType.LOCATION);
+      }
       result.add(organisation);
     }
     return result;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
@@ -14,7 +16,9 @@ class StartRecommendationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const GivtBackButton(),
+        leading: GivtBackButton(
+          onPressedExt: () => context.read<FlowsCubit>().resetFlow(),
+        ),
         backgroundColor: AppTheme.offWhite,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: AppTheme.offWhite,

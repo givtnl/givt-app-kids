@@ -21,6 +21,7 @@ class NFCScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final flow = context.read<FlowsCubit>().state;
     return BlocConsumer<ScanNfcCubit, ScanNfcState>(
       listener: (context, state) {
         final scanNfcCubit = context.read<ScanNfcCubit>();
@@ -49,9 +50,15 @@ class NFCScanPage extends StatelessWidget {
                               isLoading: context
                                   .read<OrganisationDetailsCubit>()
                                   .state is OrganisationDetailsLoadingState,
-                              onPressed: () => context.pushReplacementNamed(
-                                Pages.chooseAmountSlider.name,
-                              ),
+                              onPressed: () {
+                                if (flow.isExhibition) {
+                                  context.pushReplacementNamed(
+                                      Pages.exhibitionOrganisations.name);
+                                } else {
+                                  context.pushReplacementNamed(
+                                      Pages.chooseAmountSlider.name);
+                                }
+                              },
                             );
                           },
                         );
@@ -70,7 +77,11 @@ class NFCScanPage extends StatelessWidget {
               .read<OrganisationDetailsCubit>()
               .getOrganisationDetails(state.mediumId);
           Future.delayed(ScanNfcCubit.foundDelay, () {
-            context.pushReplacementNamed(Pages.chooseAmountSlider.name);
+            if (flow.isExhibition) {
+              context.pushReplacementNamed(Pages.exhibitionOrganisations.name);
+            } else {
+              context.pushReplacementNamed(Pages.chooseAmountSlider.name);
+            }
           });
           AnalyticsHelper.logEvent(
             eventName: AmplitudeEvent.inAppCoinScannedSuccessfully,
@@ -86,9 +97,7 @@ class NFCScanPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: GivtBackButton(
-              onPressedExt: () {
-                context.read<FlowsCubit>().resetFlow();
-              },
+              onPressedExt: () => context.read<FlowsCubit>().resetFlow(),
             ),
           ),
           body: SafeArea(
