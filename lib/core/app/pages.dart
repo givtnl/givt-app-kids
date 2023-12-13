@@ -26,6 +26,10 @@ enum Pages {
 
   //exhibition flow
   voucherCodeScreen(path: '/voucher-code-screen', name: 'VOUCHER_CODE_SCREEN'),
+  exhibitionOrganisations(
+      path: '/exhibition-organisations', name: 'EXHIBITION_ORGANISATIONS'),
+  successExhibitionCoin(
+      path: '/success-exhibition-coin', name: 'SUCCESS_EXHIBITION_COIN'),
   ;
 
   final String path;

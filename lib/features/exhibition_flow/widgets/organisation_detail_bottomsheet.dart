@@ -104,7 +104,7 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: GivtFloatingActionButton(
-            text: "Donate",
+            text: "Give",
             onPressed: () {
               AnalyticsHelper.logEvent(
                 eventName: AmplitudeEvent.donateToRecommendedCharityPressed,

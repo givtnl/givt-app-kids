@@ -55,7 +55,8 @@ class APIService {
 
     var response = await client.post(
       url,
-      body: body,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(body),
     );
 
     log('login by voucher status code: ${response.statusCode}');

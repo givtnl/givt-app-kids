@@ -32,6 +32,11 @@ import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:givt_app_kids/features/exhibition_flow/screens/organisations_screen.dart'
+    as exhibition_flow;
+import 'package:givt_app_kids/features/exhibition_flow/screens/success_coin_screen.dart'
+    as exhibition_flow;
+
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -125,7 +130,10 @@ class AppRouter {
         GoRoute(
           path: Pages.recommendationStart.path,
           name: Pages.recommendationStart.name,
-          builder: (context, state) => const StartRecommendationScreen(),
+          builder: (context, state) {
+            context.read<FlowsCubit>().startRecommendationFlow();
+            return const StartRecommendationScreen();
+          },
         ),
         GoRoute(
           path: Pages.locationSelection.path,
@@ -191,6 +199,7 @@ class AppRouter {
                 .read<OrganisationDetailsCubit>()
                 .getOrganisationDetails(mediumID);
 
+            //TODO: Ask Daniela why not startDeepLinkCoinFlow instead?
             context.read<FlowsCubit>().startInAppCoinFlow();
 
             return BlocProvider(
@@ -239,6 +248,30 @@ class AppRouter {
           path: Pages.voucherCodeScreen.path,
           name: Pages.voucherCodeScreen.name,
           builder: (context, state) => const VoucherCodeScreen(),
+        ),
+        GoRoute(
+          path: Pages.exhibitionOrganisations.path,
+          name: Pages.exhibitionOrganisations.name,
+          builder: (context, state) {
+            return BlocProvider(
+              create: (context) => OrganisationsCubit(
+                getIt(),
+              )..getRecommendedOrganisations(
+                  location: OrganisationsCubit.exhibitionLocation,
+                  interests: OrganisationsCubit.exhibitionInterests,
+                  // fakeComputingExtraDelay: const Duration(seconds: 1),
+                  pageSize: 10,
+                  filterInterests: false,
+                ),
+              child: const exhibition_flow.OrganisationsScreen(),
+            );
+          },
+        ),
+        GoRoute(
+          path: Pages.successExhibitionCoin.path,
+          name: Pages.successExhibitionCoin.name,
+          builder: (context, state) =>
+              const exhibition_flow.SuccessCoinScreen(),
         ),
       ]);
 }

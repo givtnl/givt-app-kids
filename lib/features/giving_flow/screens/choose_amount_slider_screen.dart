@@ -47,7 +47,11 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           context.read<ProfilesCubit>().fetchProfiles(parentGuid);
 
           context.pushReplacementNamed(
-            flow.isCoin ? Pages.successCoin.name : Pages.success.name,
+            flow.isExhibition
+                ? Pages.successExhibitionCoin.name
+                : flow.isCoin
+                    ? Pages.successCoin.name
+                    : Pages.success.name,
           );
         }
       },
@@ -57,9 +61,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           appBar: AppBar(
             toolbarHeight: flow.isQRCode || flow.isRecommendation ? 85 : null,
             automaticallyImplyLeading: false,
-            leading: GivtBackButton(onPressedExt: () {
-              context.read<FlowsCubit>().resetFlow();
-            }),
+            leading: const GivtBackButton(),
             actions: [
               flow.isQRCode || flow.isRecommendation
                   ? const Wallet()
@@ -81,7 +83,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
                         if (flow.isCoin)
                           SvgPicture.asset('assets/images/church.svg'),
                         if (flow.isCoin) const SizedBox(width: 25),
-                        if (flow.isRecommendation &&
+                        if ((flow.isRecommendation || flow.isExhibition) &&
                             organisation.logoLink != null)
                           Container(
                             width: size.width * .22,
@@ -205,7 +207,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: GivtFloatingActionButton(
-            text: flow.isCoin
+            text: (flow.isCoin || flow.isExhibition)
                 ? 'Activate the coin'
                 : flow.isRecommendation
                     ? 'Finish donation'
