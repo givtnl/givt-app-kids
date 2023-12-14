@@ -18,7 +18,7 @@ class BackHomeButton extends StatelessWidget {
       text: "Back to home",
       leftIcon: Icon(
         FontAwesomeIcons.house,
-        size: 16,
+        size: 24,
         color: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
       onTap: () async {

@@ -28,7 +28,7 @@ class LogoutButton extends StatelessWidget {
       text: 'Log out',
       leftIcon: Icon(
         FontAwesomeIcons.arrowLeft,
-        size: 16,
+        size: 24,
         color: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
     );

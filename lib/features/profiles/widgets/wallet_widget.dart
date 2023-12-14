@@ -68,7 +68,7 @@ class WalletWidget extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 4),
                             child: Icon(
                               FontAwesomeIcons.arrowRight,
-                              size: 16,
+                              size: 24,
                               color: Theme.of(context)
                                   .colorScheme
                                   .onPrimaryContainer,
