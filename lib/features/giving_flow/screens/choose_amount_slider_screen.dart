@@ -15,8 +15,8 @@ import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
 import 'package:go_router/go_router.dart';
@@ -206,17 +206,15 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: GivtFloatingActionButton(
+          floatingActionButton: GivtElevatedButton(
+            isDisabled: state.amount == 0 ? true : false,
             text: (flow.isCoin || flow.isExhibition)
                 ? 'Activate the coin'
                 : flow.isRecommendation
                     ? 'Finish donation'
                     : 'Next',
             isLoading: state is CreateTransactionUploadingState,
-            backgroundColor: flow.isRecommendation
-                ? AppTheme.givt4KidsOrange
-                : AppTheme.givt4KidsBlue,
-            onPressed: state.amount == 0
+            onTap: state.amount == 0
                 ? null
                 : () async {
                     if (state is CreateTransactionUploadingState) {

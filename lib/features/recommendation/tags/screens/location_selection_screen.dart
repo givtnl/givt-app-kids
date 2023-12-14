@@ -6,8 +6,8 @@ import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
 import 'package:givt_app_kids/features/recommendation/tags/widgets/location_card.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/recommendation_givy_bubble.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
 class LocationSelectionScreen extends StatelessWidget {
@@ -97,9 +97,13 @@ class LocationSelectionScreen extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: state is! TagsStateFetching
-              ? GivtFloatingActionButton(
+              ? GivtElevatedButton(
+                  isDisabled: state is TagsStateFetched &&
+                          state.selectedLocation != const Tag.empty()
+                      ? false
+                      : true,
                   text: "Next",
-                  onPressed: state is TagsStateFetched &&
+                  onTap: state is TagsStateFetched &&
                           state.selectedLocation != const Tag.empty()
                       ? () {
                           context.pushNamed(

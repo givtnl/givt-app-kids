@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/coin_ready_animated_widget.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:go_router/go_router.dart';
 
 class ScanningNfcAnimation extends StatelessWidget {
@@ -27,7 +26,7 @@ class ScanningNfcAnimation extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.greyButtonColor,
+                backgroundColor: Theme.of(context).colorScheme.outline,
                 minimumSize: const Size(double.maxFinite, 60),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -37,9 +36,9 @@ class ScanningNfcAnimation extends StatelessWidget {
                 context.pop();
                 scanNfcCubit.cancelScanning();
               },
-              child: const Text(
+              child: Text(
                 'Cancel',
-                style: AppTheme.actionButtonStyle,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
           )

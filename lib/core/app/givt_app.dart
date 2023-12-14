@@ -60,9 +60,10 @@ class _AppView extends StatelessWidget {
   const _AppView();
   @override
   Widget build(BuildContext context) {
+    const theme = AppTheme();
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
+      theme: theme.toThemeData(),
       routeInformationProvider: AppRouter.router.routeInformationProvider,
       routeInformationParser: AppRouter.router.routeInformationParser,
       routerDelegate: AppRouter.router.routerDelegate,
