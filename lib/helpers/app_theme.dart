@@ -136,13 +136,13 @@ class AppTheme extends ThemeExtension<AppTheme> {
   @override
   ThemeExtension<AppTheme> copyWith({
     Color? primaryColor,
+    Color? secondaryColor,
     Color? tertiaryColor,
-    Color? neutralColor,
   }) =>
       AppTheme(
         primaryColor: primaryColor ?? this.primaryColor,
-        secondaryColor: tertiaryColor ?? this.secondaryColor,
-        tertiaryColor: neutralColor ?? this.tertiaryColor,
+        secondaryColor: secondaryColor ?? this.secondaryColor,
+        tertiaryColor: tertiaryColor ?? this.tertiaryColor,
       );
 
   @override
