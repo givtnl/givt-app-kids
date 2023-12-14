@@ -84,59 +84,85 @@ class _WalletScreenState extends State<WalletScreen>
             statusBarBrightness: Brightness.light, // For iOS (dark icons)
           ),
         ),
-        body: Column(children: [
-          WalletWidget(
-            balance: state.activeProfile.wallet.balance,
-            countdownAmount: countdownAmount,
-            hasDonations: hasDonations,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ActionTile(
-                  isDisabled: !isGiveButtonActive,
-                  text: "Give",
-                  iconPath: 'assets/images/give_tile.svg',
-                  backgroundColor: AppTheme.lightOrange,
-                  borderColor: AppTheme.orange,
-                  textColor: AppTheme.orangeText,
-                  onTap: () {
-                    AnalyticsHelper.logEvent(
-                        eventName: AmplitudeEvent.iWantToGivePressed,
-                        eventProperties: {
-                          AnalyticsHelper.walletAmountKey:
-                              state.activeProfile.wallet.balance,
-                        });
-                    showModalBottomSheet<void>(
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+        body: RefreshIndicator(
+          onRefresh: refresh,
+          child: Stack(
+            children: [
+              ListView(),
+              Column(children: [
+                GestureDetector(
+                  onLongPress: () =>
+                      context.pushReplacementNamed(Pages.searchForCoin.name),
+                  onDoubleTap: () async {
+                    final appInfoString = await _getAppIDAndVersion();
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            appInfoString,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: WalletWidget(
+                    balance: state.activeProfile.wallet.balance,
+                    countdownAmount: countdownAmount,
+                    hasDonations: hasDonations,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ActionTile(
+                        isDisabled: !isGiveButtonActive,
+                        text: "Give",
+                        iconPath: 'assets/images/give_tile.svg',
+                        backgroundColor: AppTheme.lightOrange,
+                        borderColor: AppTheme.orange,
+                        textColor: AppTheme.orangeText,
+                        onTap: () {
+                          AnalyticsHelper.logEvent(
+                              eventName: AmplitudeEvent.iWantToGivePressed,
+                              eventProperties: {
+                                AnalyticsHelper.walletAmountKey:
+                                    state.activeProfile.wallet.balance,
+                              });
+                          showModalBottomSheet<void>(
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            builder: (context) => const GiveBottomSheet(),
+                          );
+                        },
                       ),
-                      builder: (context) => const GiveBottomSheet(),
-                    );
-                  },
+                      const SizedBox(width: 16),
+                      ActionTile(
+                        isDisabled: false,
+                        text: "Find Charity",
+                        iconPath: 'assets/images/find_tile.svg',
+                        backgroundColor: AppTheme.lightGreen,
+                        borderColor: AppTheme.greenBorder,
+                        textColor: AppTheme.greenText,
+                        onTap: () {
+                          context.pushNamed(Pages.recommendationStart.name);
+                          AnalyticsHelper.logEvent(
+                              eventName:
+                                  AmplitudeEvent.helpMeFindCharityPressed);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(width: 16),
-                ActionTile(
-                  isDisabled: false,
-                  text: "Find Charity",
-                  iconPath: 'assets/images/find_tile.svg',
-                  backgroundColor: AppTheme.lightGreen,
-                  borderColor: AppTheme.greenBorder,
-                  textColor: AppTheme.greenText,
-                  onTap: () {
-                    context.pushNamed(Pages.recommendationStart.name);
-                    AnalyticsHelper.logEvent(
-                        eventName: AmplitudeEvent.helpMeFindCharityPressed);
-                  },
-                ),
-              ],
-            ),
+              ]),
+            ],
           ),
-        ]),
+        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: GivtFAButton(
           onTap: () {

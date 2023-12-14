@@ -40,6 +40,8 @@ dependencies:
   flutter_layout_grid: ^2.0.5
   material_color_utilities: ^0.5.0
   font_awesome_flutter: ^10.6.0
+  pinput: ^3.0.1
+  google_fonts: ^4.0.4
 
 dev_dependencies:
   flutter_test:
