@@ -97,8 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         GestureDetector(
                           onDoubleTap: () {
                             context.read<FlowsCubit>().startExhibitionFlow();
-                            context.pushReplacementNamed(
-                                Pages.voucherCodeScreen.name);
+                            context.pushNamed(Pages.voucherCodeScreen.name);
                           },
                           child: Text(
                             'Welcome',

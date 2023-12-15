@@ -32,10 +32,9 @@ class _GivtBackButtonState extends State<GivtBackButton> {
   @override
   Widget build(BuildContext context) {
     final flow = context.read<FlowsCubit>().state;
-    final forceEnable =
-        (!context.canPop() && flow.flowType == FlowType.inAppCoin) ||
-            (flow.flowType == FlowType.exhibition);
-    final isVisible = context.canPop() || forceEnable;
+    final isDeepLink =
+        (!context.canPop() && flow.flowType == FlowType.inAppCoin);
+    final isVisible = context.canPop() || isDeepLink;
     if (isPressed == true) {
       dropShadowHeight = 2;
       paddingtop = 4;
@@ -57,7 +56,7 @@ class _GivtBackButtonState extends State<GivtBackButton> {
 
                 AnalyticsHelper.logEvent(
                     eventName: AmplitudeEvent.backButtonPressed);
-                if (forceEnable) {
+                if (isDeepLink) {
                   context.goNamed(Pages.wallet.name);
                   return;
                 }
