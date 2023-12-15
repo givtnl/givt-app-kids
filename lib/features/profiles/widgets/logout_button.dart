@@ -14,7 +14,7 @@ class LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GivtFAButton(
+    return GivtFloatingActionButton(
       onTap: () {
         AnalyticsHelper.logEvent(
           eventName: AmplitudeEvent.logOutPressed,

@@ -12,6 +12,7 @@ import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -96,13 +97,10 @@ class _WalletScreenState extends State<WalletScreen>
                   onDoubleTap: () async {
                     final appInfoString = await _getAppIDAndVersion();
                     if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            appInfoString,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+                      SnackBarHelper.showMessage(
+                        context,
+                        text: appInfoString,
+                        isError: false,
                       );
                     }
                   },
@@ -164,7 +162,7 @@ class _WalletScreenState extends State<WalletScreen>
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        floatingActionButton: GivtFAButton(
+        floatingActionButton: GivtFloatingActionButton(
           onTap: () {
             context.pushNamed(Pages.profileSelection.name);
 

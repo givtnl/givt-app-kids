@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class GivtFAButton extends StatefulWidget {
-  const GivtFAButton({
+class GivtFloatingActionButton extends StatefulWidget {
+  const GivtFloatingActionButton({
     super.key,
     this.isDisabled,
     required this.onTap,
@@ -17,10 +17,11 @@ class GivtFAButton extends StatefulWidget {
   final Widget? leftIcon;
   final Widget? rightIcon;
   @override
-  _GivtFAButtonState createState() => _GivtFAButtonState();
+  _GivtFloatingActionButtonState createState() =>
+      _GivtFloatingActionButtonState();
 }
 
-class _GivtFAButtonState extends State<GivtFAButton> {
+class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
   double dropShadowHeight = 4;
   double paddingtop = 4;
 
