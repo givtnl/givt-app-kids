@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/shared/widgets/givt_button_wrapper.dart';
 
-class GivtFloatingActionButton extends StatefulWidget {
+class GivtFloatingActionButton extends StatelessWidget {
   const GivtFloatingActionButton({
     super.key,
     this.isDisabled,
@@ -17,94 +18,37 @@ class GivtFloatingActionButton extends StatefulWidget {
   final Widget? leftIcon;
   final Widget? rightIcon;
   @override
-  _GivtFloatingActionButtonState createState() =>
-      _GivtFloatingActionButtonState();
-}
-
-class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
-  double dropShadowHeight = 4;
-  double paddingtop = 4;
-
-  @override
-  void initState() {
-    widget.isDisabled == true ? dropShadowHeight = 0 : dropShadowHeight = 4;
-    widget.isDisabled == true ? paddingtop = 4 : paddingtop = 0;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: paddingtop),
-      child: GestureDetector(
-        onTap: widget.isDisabled == true ? null : widget.onTap,
-        onTapDown: widget.isDisabled == true
-            ? null
-            : (details) {
-                setState(() {
-                  dropShadowHeight = 0;
-                  paddingtop = 4;
-                });
-              },
-        onTapCancel: widget.isDisabled == true
-            ? null
-            : () {
-                setState(() {
-                  dropShadowHeight = 4;
-                  paddingtop = 0;
-                });
-              },
-        onTapUp: widget.isDisabled == true
-            ? null
-            : (details) {
-                setState(() {
-                  dropShadowHeight = 4;
-                  paddingtop = 0;
-                });
-              },
+    return GivtButtonWrapper(
+        onTap: onTap,
+        isDisabled: isDisabled,
         child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).colorScheme.secondary,
-                  blurRadius: 0,
-                  offset: const Offset(0, 0),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.only(bottom: dropShadowHeight),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Theme.of(context).colorScheme.secondaryContainer,
-              ),
-              child: getChild(),
-            )),
-      ),
-    );
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Theme.of(context).colorScheme.secondaryContainer,
+          ),
+          child: getChild(context),
+        ));
   }
 
-  Widget getChild() {
-    if (widget.leftIcon != null) {
+  Widget getChild(BuildContext context) {
+    if (leftIcon != null) {
       return Padding(
         // 14 padding right is intentional from design to sizually balance the button
         padding: const EdgeInsets.fromLTRB(12, 12, 14, 12),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: widget.leftIcon),
+            Padding(padding: const EdgeInsets.only(right: 8), child: leftIcon),
             Text(
-              widget.text,
+              text,
               style: Theme.of(context).textTheme.labelMedium,
             ),
           ],
         ),
       );
     }
-    if (widget.rightIcon != null) {
+    if (rightIcon != null) {
       return Padding(
         // 14 padding right is intentional from design to sizually balance the button
         padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
@@ -112,12 +56,10 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              widget.text,
+              text,
               style: Theme.of(context).textTheme.labelMedium,
             ),
-            Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: widget.rightIcon),
+            Padding(padding: const EdgeInsets.only(left: 8), child: rightIcon),
           ],
         ),
       );
@@ -125,7 +67,7 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Text(
-        widget.text,
+        text,
         style: Theme.of(context).textTheme.labelMedium,
       ),
     );

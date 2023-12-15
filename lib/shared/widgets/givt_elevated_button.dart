@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/shared/widgets/givt_button_wrapper.dart';
 
-class GivtElevatedButton extends StatefulWidget {
+class GivtElevatedButton extends StatelessWidget {
   const GivtElevatedButton({
     super.key,
     this.isDisabled,
@@ -23,101 +24,38 @@ class GivtElevatedButton extends StatefulWidget {
   final Widget? leadingImage;
 
   @override
-  _GivtElevatedButtonState createState() => _GivtElevatedButtonState();
-}
-
-class _GivtElevatedButtonState extends State<GivtElevatedButton> {
-  double dropShadowHeight = 4;
-  double paddingtop = 4;
-
-  @override
-  void initState() {
-    if (widget.isDisabled == true) {
-      dropShadowHeight = 0;
-      paddingtop = 4;
-    } else {
-      dropShadowHeight = 4;
-      paddingtop = 0;
-    }
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: widget.isDisabled == true ? 4 : paddingtop),
-      child: GestureDetector(
-        onTap: widget.isDisabled == true ? null : widget.onTap,
-        onTapDown: widget.isDisabled == true
-            ? null
-            : (details) {
-                setState(() {
-                  dropShadowHeight = 0;
-                  paddingtop = 4;
-                });
-              },
-        onTapCancel: widget.isDisabled == true
-            ? null
-            : () {
-                setState(() {
-                  dropShadowHeight = 4;
-                  paddingtop = 0;
-                });
-              },
-        onTapUp: widget.isDisabled == true
-            ? null
-            : (details) {
-                setState(() {
-                  dropShadowHeight = 4;
-                  paddingtop = 0;
-                });
-              },
-        child: Container(
+    return GivtButtonWrapper(
+      onTap: onTap,
+      isDisabled: isDisabled,
+      child: Container(
+          width: MediaQuery.sizeOf(context).width * .9,
+          height: 58,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: widget.isSecondary == true
-                    ? Theme.of(context).colorScheme.secondaryContainer
-                    : Theme.of(context).colorScheme.onPrimaryContainer,
-                blurRadius: 0,
-                offset: const Offset(0, 0),
-              ),
-            ],
+            color: isDisabled == true
+                ? Theme.of(context).colorScheme.surfaceVariant
+                : isSecondary == true
+                    ? Theme.of(context).colorScheme.onSecondary
+                    : Theme.of(context).colorScheme.primaryContainer,
           ),
-          padding: EdgeInsets.only(
-              bottom: widget.isDisabled == true ? 0 : dropShadowHeight),
-          child: Container(
-              width: MediaQuery.sizeOf(context).width * .9,
-              height: 58,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: widget.isDisabled == true
-                    ? Theme.of(context).colorScheme.surfaceVariant
-                    : widget.isSecondary == true
-                        ? Theme.of(context).colorScheme.onSecondary
-                        : Theme.of(context).colorScheme.primaryContainer,
-              ),
-              child: getChild()),
-        ),
-      ),
+          child: getChild(context)),
     );
   }
 
-  Widget getChild() {
-    if (widget.isLoading == true) {
+  Widget getChild(BuildContext context) {
+    if (isLoading == true) {
       return const Center(child: CircularProgressIndicator());
     }
-    if (widget.leftIcon != null) {
+    if (leftIcon != null) {
       return Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-              padding: const EdgeInsets.only(right: 8), child: widget.leftIcon),
+          Padding(padding: const EdgeInsets.only(right: 8), child: leftIcon),
           Text(
-            widget.text,
-            style: widget.isDisabled == true
+            text,
+            style: isDisabled == true
                 ? Theme.of(context)
                     .textTheme
                     .labelMedium
@@ -127,36 +65,35 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
         ],
       );
     }
-    if (widget.rightIcon != null) {
+    if (rightIcon != null) {
       return Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            widget.text,
-            style: widget.isDisabled == true
+            text,
+            style: isDisabled == true
                 ? Theme.of(context)
                     .textTheme
                     .labelMedium
                     ?.copyWith(color: Theme.of(context).colorScheme.outline)
                 : Theme.of(context).textTheme.labelMedium,
           ),
-          Padding(
-              padding: const EdgeInsets.only(left: 8), child: widget.leftIcon),
+          Padding(padding: const EdgeInsets.only(left: 8), child: leftIcon),
         ],
       );
     }
-    if (widget.leadingImage != null) {
+    if (leadingImage != null) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            widget.leadingImage!,
+            leadingImage!,
             Text(
-              widget.text,
-              style: widget.isDisabled == true
+              text,
+              style: isDisabled == true
                   ? Theme.of(context)
                       .textTheme
                       .labelMedium
@@ -172,8 +109,8 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
     }
     return Center(
       child: Text(
-        widget.text,
-        style: widget.isDisabled == true
+        text,
+        style: isDisabled == true
             ? Theme.of(context)
                 .textTheme
                 .labelMedium
