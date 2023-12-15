@@ -6,8 +6,8 @@ import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_
 import 'package:givt_app_kids/features/recommendation/interests/widgets/interest_card.dart';
 import 'package:givt_app_kids/features/recommendation/interests/widgets/interests_tally.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/recommendation_givy_bubble.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 
 import 'package:go_router/go_router.dart';
 
@@ -99,9 +99,13 @@ class InterestsSelectionScreen extends StatelessWidget {
           floatingActionButton: Visibility(
             visible:
                 state.selectedInterests.length == InterestsState.maxInterests,
-            child: GivtFloatingActionButton(
+            child: GivtElevatedButton(
+              isDisabled:
+                  state.selectedInterests.length == InterestsState.maxInterests
+                      ? false
+                      : true,
               text: "Next",
-              onPressed: state.selectedInterests.length ==
+              onTap: state.selectedInterests.length ==
                       InterestsState.maxInterests
                   ? () {
                       context.pushNamed(

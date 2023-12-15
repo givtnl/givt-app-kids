@@ -9,7 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/auth/dialogs/account_locked_dialog.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -84,8 +84,6 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 45),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     width: double.infinity,
@@ -116,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Ask your parent(s) to sign in\nwith their Givt account',
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
                                     color: AppTheme.defaultTextColor,
                                   ),
                         ),
@@ -133,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   color: (state is InputFieldErrorState &&
                                           state.emailErrorMessage.isNotEmpty)
-                                      ? AppTheme.givt4KidsRedAlt
+                                      ? Theme.of(context).colorScheme.error
                                       : AppTheme.defaultTextColor,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -179,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               .isNotEmpty ||
                                       (state is ExternalErrorState &&
                                           state.innerErrorType.isWrongPassword))
-                                  ? AppTheme.givt4KidsRed
+                                  ? Theme.of(context).colorScheme.error
                                   : AppTheme.defaultTextColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -247,30 +245,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           state.innerErrorType.errorMessage,
                           style:
                               Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppTheme.givt4KidsRedAlt,
+                                    color: Theme.of(context).colorScheme.error,
                                   ),
                         ),
                     ],
                   ),
-                  const SizedBox(height: 160),
+                  const SizedBox(height: 24),
+                  GivtElevatedButton(
+                    text: 'Sign in',
+                    isLoading: state is LoadingState,
+                    onTap: _isInputNotEmpty()
+                        ? () {
+                            if (state is LoadingState) {
+                              return;
+                            }
+
+                            _login();
+                          }
+                        : null,
+                  ),
                 ],
               ),
             ),
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: GivtFloatingActionButton(
-          text: 'Sign in',
-          isLoading: state is LoadingState,
-          onPressed: _isInputNotEmpty()
-              ? () {
-                  if (state is LoadingState) {
-                    return;
-                  }
-
-                  _login();
-                }
-              : null,
         ),
       ),
     );

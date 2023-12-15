@@ -12,7 +12,7 @@ import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchForCoinScreen extends StatelessWidget {
@@ -59,9 +59,9 @@ class SearchForCoinScreen extends StatelessWidget {
                   FloatingActionButtonLocation.centerFloat,
               floatingActionButton: coinState.status ==
                       CoinAnimationStatus.stopped
-                  ? GivtFloatingActionButton(
+                  ? GivtElevatedButton(
                       text: "Assign the coin",
-                      onPressed: () {
+                      onTap: () {
                         AnalyticsHelper.logEvent(
                           eventName: AmplitudeEvent.assignCoinPressed,
                         );

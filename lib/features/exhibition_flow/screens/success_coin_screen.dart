@@ -7,7 +7,7 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 
 import 'package:givt_app_kids/helpers/vibrator.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
@@ -75,9 +75,9 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: GivtFloatingActionButton(
+      floatingActionButton: GivtElevatedButton(
           text: "Done",
-          onPressed: () {
+          onTap: () {
             context.read<AuthCubit>().logout();
             context.read<ProfilesCubit>().clearProfiles();
             context.read<FlowsCubit>().resetFlow();

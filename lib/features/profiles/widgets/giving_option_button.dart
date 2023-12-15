@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class GiveOptionButton extends StatelessWidget {
   const GiveOptionButton(
@@ -35,8 +34,8 @@ class GiveOptionButton extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        width: size.width * 0.5 - size.width * 0.15,
-        height: size.width * 0.5 - size.width * 0.15,
+        width: size.width * 0.5 - 74,
+        height: size.width * 0.5 - 40,
         child: Flex(
           direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -46,10 +45,9 @@ class GiveOptionButton extends StatelessWidget {
             Text(
               text,
               textAlign: TextAlign.center,
-              style: AppTheme.actionButtonStyle.copyWith(
-                fontSize: 20,
-                color: secondColor,
-              ),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: secondColor,
+                  ),
             ),
           ],
         ),

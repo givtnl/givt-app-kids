@@ -1,20 +1,19 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
-import 'package:givt_app_kids/features/profiles/widgets/history_header.dart';
-import 'package:givt_app_kids/features/profiles/widgets/profile_switch_button.dart';
+import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
-import 'package:givt_app_kids/shared/widgets/donation_item_widget.dart';
-import 'package:givt_app_kids/shared/widgets/heading_2.dart';
-import 'package:givt_app_kids/features/profiles/widgets/wallet_frame.dart';
-import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
+import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
+import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -63,7 +62,6 @@ class _WalletScreenState extends State<WalletScreen>
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return BlocBuilder<ProfilesCubit, ProfilesState>(builder: (context, state) {
       final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
       final hasDonations = state.activeProfile.lastDonationItem.amount > 0;
@@ -73,57 +71,48 @@ class _WalletScreenState extends State<WalletScreen>
         countdownAmount = state.amount;
       }
 
-      return WalletFrame(
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            state.activeProfile.firstName,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Theme.of(context).colorScheme.onPrimary,
+            statusBarIconBrightness:
+                Brightness.dark, // For Android (dark icons)
+            statusBarBrightness: Brightness.light, // For iOS (dark icons)
+          ),
+        ),
         body: RefreshIndicator(
-          color: const Color(0xFF54A1EE),
           onRefresh: refresh,
           child: Stack(
             children: [
               ListView(),
-              Column(
-                key: UniqueKey(),
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Heading2(text: state.activeProfile.firstName),
-                  GestureDetector(
-                    onLongPress: () =>
-                        context.pushReplacementNamed(Pages.searchForCoin.name),
-                    onDoubleTap: () async {
-                      final appInfoString = await _getAppIDAndVersion();
-                      if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              appInfoString,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    child: WalletWidget(
-                      balance: state.activeProfile.wallet.balance,
-                      countdownAmount: countdownAmount,
-                    ),
+              Column(children: [
+                GestureDetector(
+                  onLongPress: () =>
+                      context.pushReplacementNamed(Pages.searchForCoin.name),
+                  onDoubleTap: () async {
+                    final appInfoString = await _getAppIDAndVersion();
+                    if (mounted) {
+                      SnackBarHelper.showMessage(
+                        context,
+                        text: appInfoString,
+                        isError: false,
+                      );
+                    }
+                  },
+                  child: WalletWidget(
+                    balance: state.activeProfile.wallet.balance,
+                    countdownAmount: countdownAmount,
+                    hasDonations: hasDonations,
                   ),
-                  SizedBox(height: size.height * 0.01),
-                  hasDonations ? const HistoryHeader() : const SizedBox(),
-                  hasDonations
-                      ? GestureDetector(
-                          onTap: () {
-                            context.pushNamed(Pages.history.name);
-                            AnalyticsHelper.logEvent(
-                              eventName:
-                                  AmplitudeEvent.seeDonationHistoryPressed,
-                            );
-                          },
-                          child: DonationItemWidget(
-                            donation: state.activeProfile.lastDonationItem,
-                          ),
-                        )
-                      : const SizedBox(),
-                  const Spacer(),
-                  Row(
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -167,23 +156,25 @@ class _WalletScreenState extends State<WalletScreen>
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      ProfileSwitchButton(
-                        name: state.activeProfile.firstName,
-                        onClicked: () {
-                          context.pushNamed(Pages.profileSelection.name);
-
-                          AnalyticsHelper.logEvent(
-                            eventName: AmplitudeEvent.profileSwitchPressed,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ]),
             ],
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: GivtFloatingActionButton(
+          onTap: () {
+            context.pushNamed(Pages.profileSelection.name);
+
+            AnalyticsHelper.logEvent(
+              eventName: AmplitudeEvent.profileSwitchPressed,
+            );
+          },
+          text: state.activeProfile.firstName,
+          leftIcon: Icon(
+            FontAwesomeIcons.arrowLeft,
+            size: 24,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
       );

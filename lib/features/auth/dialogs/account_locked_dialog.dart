@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:go_router/go_router.dart';
 
 class AccountLockedDialog extends StatelessWidget {
@@ -47,7 +46,9 @@ class AccountLockedDialog extends StatelessWidget {
                       Text(
                         'Oops!',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: AppTheme.givt4KidsDarkBlue,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer,
                               fontWeight: FontWeight.bold,
                             ),
                       ),
@@ -57,7 +58,9 @@ class AccountLockedDialog extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AppTheme.givt4KidsDarkBlue,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondaryContainer,
                                   fontWeight: FontWeight.w600,
                                 ),
                       ),
@@ -69,7 +72,9 @@ class AccountLockedDialog extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AppTheme.givt4KidsDarkBlue,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondaryContainer,
                                   fontWeight: FontWeight.w600,
                                 ),
                       ),
@@ -78,7 +83,9 @@ class AccountLockedDialog extends StatelessWidget {
                         'We sent you an email in case you want to reset your password.',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppTheme.givt4KidsDarkGreyBlue,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
                             ),
                       ),
                       const SizedBox(height: 20),
@@ -96,8 +103,10 @@ class AccountLockedDialog extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
-                            backgroundColor: AppTheme.givt4KidsLightGreen,
-                            foregroundColor: AppTheme.givt4KidsDarkGreen,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            foregroundColor:
+                                Theme.of(context).colorScheme.primary,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 15),

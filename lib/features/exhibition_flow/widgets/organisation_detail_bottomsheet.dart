@@ -5,7 +5,7 @@ import 'package:givt_app_kids/features/recommendation/organisations/models/organ
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
 class OrganisationDetailBottomSheet extends StatelessWidget {
@@ -60,25 +60,13 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        organisation.name,
-                        textAlign: TextAlign.start,
-                        style:
-                            AppTheme.lightTheme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
+                      Text(organisation.name,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.titleLarge),
                       const SizedBox(height: 12),
-                      Text(
-                        organisation.shortDescription,
-                        textAlign: TextAlign.start,
-                        style:
-                            AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
+                      Text(organisation.shortDescription,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.labelSmall),
                       const SizedBox(height: 12),
                       Text(
                         organisation.longDescription,
@@ -89,11 +77,9 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
                         "Even \$1 helps!",
                         textAlign: TextAlign.start,
                         style:
-                            AppTheme.lightTheme.textTheme.labelMedium?.copyWith(
-                          color: AppTheme.givt4KidsBlue,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  color: AppTheme.givt4KidsBlue,
+                                ),
                       ),
                     ],
                   ),
@@ -103,9 +89,9 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: GivtFloatingActionButton(
+          floatingActionButton: GivtElevatedButton(
             text: "Give",
-            onPressed: () {
+            onTap: () {
               AnalyticsHelper.logEvent(
                 eventName: AmplitudeEvent.donateToRecommendedCharityPressed,
                 eventProperties: {

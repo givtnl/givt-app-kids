@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 
 class FoundNfcAnimation extends StatelessWidget {
   const FoundNfcAnimation(
@@ -36,8 +36,10 @@ class FoundNfcAnimation extends StatelessWidget {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            child: GivtFloatingActionButton(
-              text: "",
+            child: GivtElevatedButton(
+              isDisabled: true,
+              onTap: null,
+              text: '',
             ),
           ),
         ],

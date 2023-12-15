@@ -7,7 +7,7 @@ import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -107,17 +107,16 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
                   FloatingActionButtonLocation.centerFloat,
               floatingActionButton: authState is! LoadingState &&
                       propfilesState is! ProfilesLoadingState
-                  ? GivtFloatingActionButton(
+                  ? GivtElevatedButton(
                       text: 'Start',
-                      onPressed:
-                          _voucherCode.length == AuthCubit.voucherCodeLength
-                              ? () {
-                                  context
-                                      .read<AuthCubit>()
-                                      .loginByVoucherCode(_voucherCode);
-                                  _updateVoucherCode('');
-                                }
-                              : null,
+                      onTap: _voucherCode.length == AuthCubit.voucherCodeLength
+                          ? () {
+                              context
+                                  .read<AuthCubit>()
+                                  .loginByVoucherCode(_voucherCode);
+                              _updateVoucherCode('');
+                            }
+                          : null,
                     )
                   : null,
             );
