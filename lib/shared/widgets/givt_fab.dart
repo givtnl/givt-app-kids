@@ -24,16 +24,21 @@ class GivtFloatingActionButton extends StatefulWidget {
 class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
   double dropShadowHeight = 4;
   double paddingtop = 4;
-
+  bool isPressed = false;
   @override
   void initState() {
-    widget.isDisabled == true ? dropShadowHeight = 0 : dropShadowHeight = 4;
-    widget.isDisabled == true ? paddingtop = 4 : paddingtop = 0;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isDisabled == true || isPressed == true) {
+      dropShadowHeight = 0;
+      paddingtop = 4;
+    } else {
+      dropShadowHeight = 4;
+      paddingtop = 0;
+    }
     return Padding(
       padding: EdgeInsets.only(top: paddingtop),
       child: GestureDetector(
@@ -42,24 +47,21 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
             ? null
             : (details) {
                 setState(() {
-                  dropShadowHeight = 0;
-                  paddingtop = 4;
+                  isPressed = true;
                 });
               },
         onTapCancel: widget.isDisabled == true
             ? null
             : () {
                 setState(() {
-                  dropShadowHeight = 4;
-                  paddingtop = 0;
+                  isPressed = false;
                 });
               },
         onTapUp: widget.isDisabled == true
             ? null
             : (details) {
                 setState(() {
-                  dropShadowHeight = 4;
-                  paddingtop = 0;
+                  isPressed = false;
                 });
               },
         child: Container(

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:go_router/go_router.dart';
 
-class GivtBackButton extends StatelessWidget {
+class GivtBackButton extends StatefulWidget {
   const GivtBackButton({
     super.key,
     this.onPressedExt,
@@ -17,37 +17,89 @@ class GivtBackButton extends StatelessWidget {
   final void Function()? onPressedExt;
 
   @override
+  State<GivtBackButton> createState() => _GivtBackButtonState();
+}
+
+class _GivtBackButtonState extends State<GivtBackButton> {
+  double dropShadowHeight = 4;
+  double paddingtop = 4;
+  bool isPressed = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final flow = context.read<FlowsCubit>().state;
-    final isDeeplinkInApp =
+    final isDeepLink =
         (!context.canPop() && flow.flowType == FlowType.inAppCoin);
-    final isVisible = context.canPop() || isDeeplinkInApp;
+    final isVisible = context.canPop() || isDeepLink;
+    if (isPressed == true) {
+      dropShadowHeight = 2;
+      paddingtop = 4;
+    } else {
+      dropShadowHeight = 4;
+      paddingtop = 2;
+    }
     return Container(
-      alignment: Alignment.topLeft,
-      padding: const EdgeInsets.only(left: 15, top: 15),
+      alignment: Alignment.center,
       child: Opacity(
         opacity: isVisible ? 1 : 0,
         child: AbsorbPointer(
           absorbing: !isVisible,
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor: AppTheme.backButtonColor,
-            child: IconButton(
-              iconSize: 25,
-              onPressed: () {
-                onPressedExt?.call();
+          child: Padding(
+            padding: EdgeInsets.only(top: paddingtop),
+            child: GestureDetector(
+              onTap: () {
+                widget.onPressedExt?.call();
 
                 AnalyticsHelper.logEvent(
                     eventName: AmplitudeEvent.backButtonPressed);
-                if (isDeeplinkInApp) {
+                if (isDeepLink) {
                   context.goNamed(Pages.wallet.name);
                   return;
                 }
                 context.pop();
               },
-              icon: const Icon(
-                Icons.arrow_back_rounded,
-                color: AppTheme.givt4KidsBlue,
+              onTapDown: (details) {
+                setState(() {
+                  isPressed = true;
+                });
+              },
+              onTapCancel: () {
+                setState(() {
+                  isPressed = false;
+                });
+              },
+              onTapUp: (details) {
+                setState(() {
+                  isPressed = false;
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      blurRadius: 0,
+                      offset: const Offset(0, 0),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.only(
+                    bottom: dropShadowHeight, left: 2, right: 2, top: 2),
+                child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Icon(FontAwesomeIcons.arrowLeft,
+                        size: 24,
+                        color:
+                            Theme.of(context).colorScheme.onPrimaryContainer)),
               ),
             ),
           ),

@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
+import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -66,6 +67,9 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
           },
           builder: (context, propfilesState) {
             return Scaffold(
+              appBar: AppBar(
+                leading: const GivtBackButton(),
+              ),
               body: authState is LoadingState ||
                       propfilesState is ProfilesLoadingState
                   ? const Center(child: CircularProgressIndicator())
