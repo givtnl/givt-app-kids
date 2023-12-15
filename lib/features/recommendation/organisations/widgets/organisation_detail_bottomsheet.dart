@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
-import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';

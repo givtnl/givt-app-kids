@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/auth/dialogs/account_locked_dialog.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
@@ -95,6 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         GestureDetector(
                           onDoubleTap: () {
+                            context.read<FlowsCubit>().startExhibitionFlow();
                             context.pushReplacementNamed(
                                 Pages.voucherCodeScreen.name);
                           },
