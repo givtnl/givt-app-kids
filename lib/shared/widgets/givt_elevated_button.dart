@@ -29,21 +29,23 @@ class GivtElevatedButton extends StatefulWidget {
 class _GivtElevatedButtonState extends State<GivtElevatedButton> {
   double dropShadowHeight = 4;
   double paddingtop = 4;
+  bool isPressed = false;
 
   @override
   void initState() {
-    if (widget.isDisabled == true) {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.isDisabled == true || isPressed == true) {
       dropShadowHeight = 0;
       paddingtop = 4;
     } else {
       dropShadowHeight = 4;
       paddingtop = 0;
     }
-    super.initState();
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: widget.isDisabled == true ? 4 : paddingtop),
       child: GestureDetector(
@@ -52,24 +54,21 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
             ? null
             : (details) {
                 setState(() {
-                  dropShadowHeight = 0;
-                  paddingtop = 4;
+                  isPressed = true;
                 });
               },
         onTapCancel: widget.isDisabled == true
             ? null
             : () {
                 setState(() {
-                  dropShadowHeight = 4;
-                  paddingtop = 0;
+                  isPressed = false;
                 });
               },
         onTapUp: widget.isDisabled == true
             ? null
             : (details) {
                 setState(() {
-                  dropShadowHeight = 4;
-                  paddingtop = 0;
+                  isPressed = false;
                 });
               },
         child: Container(
