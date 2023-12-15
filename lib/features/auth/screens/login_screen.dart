@@ -84,8 +84,6 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 45),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     width: double.infinity,
@@ -252,25 +250,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                     ],
                   ),
-                  const SizedBox(height: 160),
+                  const SizedBox(height: 24),
+                  GivtElevatedButton(
+                    text: 'Sign in',
+                    isLoading: state is LoadingState,
+                    onTap: _isInputNotEmpty()
+                        ? () {
+                            if (state is LoadingState) {
+                              return;
+                            }
+
+                            _login();
+                          }
+                        : null,
+                  ),
                 ],
               ),
             ),
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: GivtElevatedButton(
-          text: 'Sign in',
-          isLoading: state is LoadingState,
-          onTap: _isInputNotEmpty()
-              ? () {
-                  if (state is LoadingState) {
-                    return;
-                  }
-
-                  _login();
-                }
-              : null,
         ),
       ),
     );
