@@ -104,11 +104,6 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
                   AnalyticsHelper.charityNameKey: organisation.name,
                 },
               );
-              if (context.read<FlowsCubit>().state.flowType !=
-                  FlowType.recommendation) {
-                context.read<FlowsCubit>().startRecommendationFlow();
-              }
-              ;
               context.pushNamed(Pages.chooseAmountSlider.name);
             },
           ),
