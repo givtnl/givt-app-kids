@@ -22,13 +22,26 @@ class AuthRepositoryImpl with AuthRepository {
 
   @override
   Future<Session> login(AuthRequest authRequest) async {
-    final response = await _apiService.login(
-      {
-        'username': authRequest.email,
-        'password': authRequest.password,
-        'grant_type': 'password',
-      },
-    );
+    final Map<String, dynamic> response;
+
+    switch (authRequest.type) {
+      case LoginType.email:
+        response = await _apiService.login(
+          {
+            'username': authRequest.email,
+            'password': authRequest.password,
+            'grant_type': 'password',
+          },
+        );
+        break;
+      case LoginType.voucher:
+        response = await _apiService.loginByVoucherCode(
+          {
+            'code': authRequest.voucherCode,
+          },
+        );
+        break;
+    }
 
     final sessionJson = response['item'];
     final session = Session.fromJson(sessionJson);

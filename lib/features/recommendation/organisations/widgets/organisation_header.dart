@@ -16,48 +16,53 @@ class OrganisationHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: organisation.tags
-                .take(3)
-                .map(
-                  (tag) => Container(
-                    margin: const EdgeInsets.symmetric(vertical: 3),
-                    decoration: BoxDecoration(
-                      color: tag.area.color,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(25),
-                        bottomRight: Radius.circular(25),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: organisation.tags
+                  .take(3)
+                  .map(
+                    (tag) => Container(
+                      margin: const EdgeInsets.symmetric(vertical: 3),
+                      decoration: BoxDecoration(
+                        color: tag.area.color,
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 4,
-                        horizontal: 20,
-                      ),
-                      child: Text(
-                        tag.displayText,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4,
+                          horizontal: 20,
+                        ),
+                        child: Text(
+                          tag.displayText,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-                .toList(),
-          ),
-          Container(
-            constraints: BoxConstraints(
-              maxHeight: organisation.tags.length * 25.0,
+                  )
+                  .toList(),
             ),
-            child: Image.network(
-              organisation.organisationLogoURL,
-              fit: BoxFit.contain,
+          ),
+          Expanded(
+            child: Container(
               alignment: Alignment.centerRight,
+              constraints: BoxConstraints(
+                maxHeight: organisation.tags.length * 25.0,
+              ),
+              child: Image.network(
+                organisation.organisationLogoURL,
+                fit: BoxFit.contain,
+                alignment: Alignment.centerRight,
+              ),
             ),
           ),
         ],

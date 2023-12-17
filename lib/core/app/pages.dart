@@ -23,6 +23,13 @@ enum Pages {
   outAppCoinFlow(path: '/out-app-coin-flow', name: 'OUT_APP_COIN_FLOW'),
   successCoin(path: '/success-coin', name: 'SUCCESS_COIN'),
   redirectPopPage(path: '/redirect-pop-page', name: 'REDIRECT_POP_PAGE'),
+
+  //exhibition flow
+  voucherCodeScreen(path: '/voucher-code-screen', name: 'VOUCHER_CODE_SCREEN'),
+  exhibitionOrganisations(
+      path: '/exhibition-organisations', name: 'EXHIBITION_ORGANISATIONS'),
+  successExhibitionCoin(
+      path: '/success-exhibition-coin', name: 'SUCCESS_EXHIBITION_COIN'),
   ;
 
   final String path;

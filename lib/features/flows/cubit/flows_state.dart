@@ -19,6 +19,10 @@ class FlowsState extends Equatable {
     return flowType == FlowType.recommendation;
   }
 
+  bool get isExhibition {
+    return flowType == FlowType.exhibition;
+  }
+
   @override
   List<Object> get props => [flowType];
 }

@@ -74,8 +74,10 @@ class GiveBottomSheet extends StatelessWidget {
             ),
             child: Text(
               'Cancel',
-              style: AppTheme.actionButtonStyle
-                  .copyWith(color: AppTheme.givt4KidsBlue),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(color: AppTheme.givt4KidsBlue),
             ),
           ),
         ],

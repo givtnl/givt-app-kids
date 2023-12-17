@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.4.2
+version: 1.5.0
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -37,6 +37,11 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   bloc: ^8.1.2
   flutter_guid: ^0.3.1
+  flutter_layout_grid: ^2.0.5
+  material_color_utilities: ^0.5.0
+  font_awesome_flutter: ^10.6.0
+  pinput: ^3.0.1
+  google_fonts: ^4.0.4
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +79,10 @@ flutter:
       fonts:
         - asset: assets/fonts/RadioCanada-Regular.ttf
           weight: 400
+    - family: Rouna
+      fonts:
+        - asset: assets/fonts/Rouna-Bold.otf
+          weight: 700
 
 dependency_overrides:
   intl: ^0.18.0

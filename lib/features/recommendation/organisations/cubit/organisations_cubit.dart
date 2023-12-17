@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/repositories/organisations_repository.dart';
+import 'package:givt_app_kids/features/recommendation/tags/models/areas.dart';
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
@@ -14,10 +15,48 @@ class OrganisationsCubit extends Cubit<OrganisationsState> {
 
   final OrganisationsRepository _organisationsRepository;
 
+  static Tag get exhibitionLocation {
+    return const Tag(
+      key: 'USA',
+      area: Areas.location,
+      displayText: '',
+      pictureUrl: '',
+      type: TagType.LOCATION,
+    );
+  }
+
+  static List<Tag> get exhibitionInterests {
+    return const [
+      Tag(
+        key: 'CAREFORCHILDREN',
+        area: Areas.health,
+        displayText: '',
+        pictureUrl: '',
+        type: TagType.INTERESTS,
+      ),
+      Tag(
+        key: 'PROTECTANIMALS',
+        area: Areas.environment,
+        displayText: '',
+        pictureUrl: '',
+        type: TagType.INTERESTS,
+      ),
+      Tag(
+        key: 'GOTOSCHOOL',
+        area: Areas.education,
+        displayText: '',
+        pictureUrl: '',
+        type: TagType.INTERESTS,
+      ),
+    ];
+  }
+
   Future<void> getRecommendedOrganisations({
     required Tag location,
     required List<Tag> interests,
     Duration fakeComputingExtraDelay = Duration.zero,
+    int pageSize = 3,
+    bool filterInterests = true,
   }) async {
     emit(const OrganisationsFetchingState());
 
@@ -36,6 +75,8 @@ class OrganisationsCubit extends Cubit<OrganisationsState> {
           await _organisationsRepository.getRecommendedOrganisations(
         location: location,
         interests: interests,
+        pageSize: pageSize,
+        filterInterests: filterInterests,
       );
 
       emit(OrganisationsFetchedState(organisations: response));

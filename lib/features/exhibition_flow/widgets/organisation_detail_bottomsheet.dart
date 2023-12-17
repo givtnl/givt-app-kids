@@ -60,11 +60,9 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        organisation.name,
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
+                      Text(organisation.name,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.titleLarge),
                       const SizedBox(height: 12),
                       Text(organisation.shortDescription,
                           textAlign: TextAlign.start,
@@ -92,8 +90,7 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: GivtElevatedButton(
-            text: "Donate",
-            isDisabled: false,
+            text: "Give",
             onTap: () {
               AnalyticsHelper.logEvent(
                 eventName: AmplitudeEvent.donateToRecommendedCharityPressed,

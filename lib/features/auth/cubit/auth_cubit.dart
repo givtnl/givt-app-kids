@@ -13,6 +13,8 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends HydratedCubit<AuthState> {
+  static const int voucherCodeLength = 6;
+
   AuthCubit(this._authRepositoy) : super(const LoggedOutState()) {
     hydrate();
     _handleLockedAccount();
@@ -34,7 +36,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
     emit(const LoadingState());
     try {
       final response = await _authRepositoy.login(
-        AuthRequest(email: email, password: password),
+        AuthRequest.email(email: email, password: password),
       );
       emit(LoggedInState(session: response));
     } on GivtServerException catch (error) {
@@ -48,6 +50,23 @@ class AuthCubit extends HydratedCubit<AuthState> {
       } else {
         emit(errorState);
       }
+    } catch (error) {
+      emit(ExternalErrorState(errorMessage: error.toString()));
+    }
+  }
+
+  Future<void> loginByVoucherCode(String voucherCode) async {
+    if (!_isVoucherCodeValid(voucherCode)) {
+      return;
+    }
+
+    emit(const LoadingState());
+    try {
+      final response = await _authRepositoy.login(
+        AuthRequest.voucher(voucherCode: voucherCode),
+      );
+
+      emit(LoggedInState(session: response));
     } catch (error) {
       emit(ExternalErrorState(errorMessage: error.toString()));
     }
@@ -84,6 +103,10 @@ class AuthCubit extends HydratedCubit<AuthState> {
     } else {
       return true;
     }
+  }
+
+  bool _isVoucherCodeValid(String voucherCode) {
+    return voucherCode.length == voucherCodeLength;
   }
 
   bool _isEmailValid(String email) {

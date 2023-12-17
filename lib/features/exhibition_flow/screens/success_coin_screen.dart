@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
-import 'package:givt_app_kids/shared/widgets/back_home_button.dart';
 
 import 'package:givt_app_kids/helpers/vibrator.dart';
-import 'package:givt_app_kids/shared/widgets/switch_profile_success_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
 class SuccessCoinScreen extends StatefulWidget {
@@ -25,8 +28,6 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final profiles = context.read<ProfilesCubit>().state.profiles;
-
     return Scaffold(
       backgroundColor: AppTheme.successBackgroundLightBlue,
       body: SafeArea(
@@ -74,16 +75,15 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: profiles.length == 1
-          ? const BackHomeButton()
-          : const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                BackHomeButton(),
-                SizedBox(height: 12),
-                SwitchProfileSuccessButton(),
-              ],
-            ),
+      floatingActionButton: GivtElevatedButton(
+          text: "Done",
+          onTap: () {
+            context.read<AuthCubit>().logout();
+            context.read<ProfilesCubit>().clearProfiles();
+            context.read<FlowsCubit>().resetFlow();
+
+            context.goNamed(Pages.login.name);
+          }),
     );
   }
 }

@@ -15,8 +15,8 @@ import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
-import 'package:givt_app_kids/shared/widgets/floating_action_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
 import 'package:go_router/go_router.dart';
@@ -47,7 +47,11 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           context.read<ProfilesCubit>().fetchProfiles(parentGuid);
 
           context.pushReplacementNamed(
-            flow.isCoin ? Pages.successCoin.name : Pages.success.name,
+            flow.isExhibition
+                ? Pages.successExhibitionCoin.name
+                : flow.isCoin
+                    ? Pages.successCoin.name
+                    : Pages.success.name,
           );
         }
       },
@@ -57,9 +61,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           appBar: AppBar(
             toolbarHeight: flow.isQRCode || flow.isRecommendation ? 85 : null,
             automaticallyImplyLeading: false,
-            leading: GivtBackButton(onPressedExt: () {
-              context.read<FlowsCubit>().resetFlow();
-            }),
+            leading: const GivtBackButton(),
             actions: [
               flow.isQRCode || flow.isRecommendation
                   ? const Wallet()
@@ -81,7 +83,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
                         if (flow.isCoin)
                           SvgPicture.asset('assets/images/church.svg'),
                         if (flow.isCoin) const SizedBox(width: 25),
-                        if (flow.isRecommendation &&
+                        if ((flow.isRecommendation || flow.isExhibition) &&
                             organisation.logoLink != null)
                           Container(
                             width: size.width * .22,
@@ -204,17 +206,15 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: GivtFloatingActionButton(
-            text: flow.isCoin
+          floatingActionButton: GivtElevatedButton(
+            isDisabled: state.amount == 0 ? true : false,
+            text: (flow.isCoin || flow.isExhibition)
                 ? 'Activate the coin'
                 : flow.isRecommendation
                     ? 'Finish donation'
                     : 'Next',
             isLoading: state is CreateTransactionUploadingState,
-            backgroundColor: flow.isRecommendation
-                ? AppTheme.givt4KidsOrange
-                : AppTheme.givt4KidsBlue,
-            onPressed: state.amount == 0
+            onTap: state.amount == 0
                 ? null
                 : () async {
                     if (state is CreateTransactionUploadingState) {

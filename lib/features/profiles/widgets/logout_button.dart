@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:go_router/go_router.dart';
 
 class LogoutButton extends StatelessWidget {
@@ -12,10 +14,8 @@ class LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
-      backgroundColor: const Color(0xFF374A53),
-      extendedPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      onPressed: () {
+    return GivtFloatingActionButton(
+      onTap: () {
         AnalyticsHelper.logEvent(
           eventName: AmplitudeEvent.logOutPressed,
         );
@@ -25,16 +25,11 @@ class LogoutButton extends StatelessWidget {
 
         context.goNamed(Pages.login.name);
       },
-      label: const Text(
-        'Log out',
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.white,
-        ),
-      ),
-      icon: const Icon(
-        Icons.logout,
-        size: 25,
+      text: 'Log out',
+      leftIcon: Icon(
+        FontAwesomeIcons.arrowLeft,
+        size: 24,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
     );
   }
