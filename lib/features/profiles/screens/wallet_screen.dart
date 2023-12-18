@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,9 +27,13 @@ class WalletScreen extends StatefulWidget {
 
 class _WalletScreenState extends State<WalletScreen>
     with WidgetsBindingObserver {
+  bool isiPad = false;
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    isIpadCheck().then((value) => setState(() {
+          isiPad = value;
+        }));
     super.initState();
   }
 
@@ -58,6 +63,15 @@ class _WalletScreenState extends State<WalletScreen>
         '${packageInfo.packageName} v${packageInfo.version}(${packageInfo.buildNumber})';
     log(result);
     return result;
+  }
+
+  Future<bool> isIpadCheck() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    IosDeviceInfo info = await deviceInfo.iosInfo;
+    if (info.model.isNotEmpty && info.model.toLowerCase().contains("ipad")) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -120,9 +134,9 @@ class _WalletScreenState extends State<WalletScreen>
                         isDisabled: !isGiveButtonActive,
                         text: "Give",
                         iconPath: 'assets/images/give_tile.svg',
-                        backgroundColor: AppTheme.lightOrange,
-                        borderColor: AppTheme.orange,
-                        textColor: AppTheme.orangeText,
+                        backgroundColor: AppTheme.highlight98,
+                        borderColor: AppTheme.highlight80,
+                        textColor: AppTheme.highlight40,
                         onTap: () {
                           AnalyticsHelper.logEvent(
                               eventName: AmplitudeEvent.iWantToGivePressed,
@@ -135,7 +149,8 @@ class _WalletScreenState extends State<WalletScreen>
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            builder: (context) => const GiveBottomSheet(),
+                            builder: (context) =>
+                                GiveBottomSheet(isiPad: isiPad),
                           );
                         },
                       ),
@@ -144,9 +159,12 @@ class _WalletScreenState extends State<WalletScreen>
                         isDisabled: false,
                         text: "Find Charity",
                         iconPath: 'assets/images/find_tile.svg',
-                        backgroundColor: AppTheme.lightGreen,
-                        borderColor: AppTheme.greenBorder,
-                        textColor: AppTheme.greenText,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
+                        borderColor:
+                            Theme.of(context).colorScheme.primaryContainer,
+                        textColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer,
                         onTap: () {
                           context.pushNamed(Pages.recommendationStart.name);
                           AnalyticsHelper.logEvent(
@@ -165,7 +183,6 @@ class _WalletScreenState extends State<WalletScreen>
         floatingActionButton: GivtFloatingActionButton(
           onTap: () {
             context.pushNamed(Pages.profileSelection.name);
-
             AnalyticsHelper.logEvent(
               eventName: AmplitudeEvent.profileSwitchPressed,
             );

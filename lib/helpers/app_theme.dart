@@ -16,12 +16,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color tertiaryColor;
 
 //Colors of the tiles of wallet screen
-  static const lightOrange = Color(0xFFFFF7E9);
-  static const orange = Color(0xFFF9CD7E);
-  static const orangeText = Color(0xFFA97A27);
-  static const lightGreen = Color(0xFFFAFCF3);
-  static const greenBorder = Color(0xFFCCD3B7);
-  static const greenText = Color(0xFF5F7620);
+  static const highlight98 = Color(0xFFFFF9EB);
+  static const highlight80 = Color(0xFFDCC74D);
+  static const highlight40 = Color(0xFF6C5E00);
   static const disabledTileBackground = Color(0xFFF5F4F5);
   static const disabledTileBorder = Color(0xFFC8C6C9);
 
@@ -80,7 +77,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       shadow: tertiary.get(0),
       scrim: tertiary.get(0),
       inverseSurface: tertiary.get(20),
-      inverseOnSurface: tertiary.get(95),
+      inverseOnSurface: secondary.get(80),
       inversePrimary: primary.get(40),
     );
   }
