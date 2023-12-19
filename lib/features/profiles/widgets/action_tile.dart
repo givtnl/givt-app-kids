@@ -50,7 +50,7 @@ class _ActionTileState extends State<ActionTile> {
             : (details) {
                 setState(() {
                   bottomBorderWidth = 2;
-                  widgetHeight = 205;
+                  widgetHeight = 204;
                 });
               },
         onTapCancel: widget.isDisabled
@@ -58,7 +58,7 @@ class _ActionTileState extends State<ActionTile> {
             : () {
                 setState(() {
                   bottomBorderWidth = 6;
-                  widgetHeight = 209;
+                  widgetHeight = 208;
                 });
               },
         onTapUp: widget.isDisabled
@@ -66,7 +66,7 @@ class _ActionTileState extends State<ActionTile> {
             : (details) {
                 setState(() {
                   bottomBorderWidth = 6;
-                  widgetHeight = 209;
+                  widgetHeight = 208;
                 });
               },
         child: Container(
