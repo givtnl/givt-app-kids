@@ -234,7 +234,7 @@ class AppRouter {
           builder: (context, state) {
             return BlocProvider(
               create: (context) =>
-                  ScanNfcCubit()..startTagRead(delay: ScanNfcCubit.startDelay),
+                  ScanNfcCubit()..readTag(delay: ScanNfcCubit.startDelay),
               child: const NFCScanPage(),
             );
           },

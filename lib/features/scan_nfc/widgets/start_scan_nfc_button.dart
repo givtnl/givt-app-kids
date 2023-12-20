@@ -12,7 +12,7 @@ class StartScanNfcButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: GivtElevatedButton(
           onTap: () {
-            context.read<ScanNfcCubit>().startTagRead(delay: Duration.zero);
+            context.read<ScanNfcCubit>().readTag();
           },
           text: 'Start'),
     );

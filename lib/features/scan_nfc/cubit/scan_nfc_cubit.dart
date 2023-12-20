@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -13,35 +14,37 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
   ScanNfcCubit()
       : super(const ScanNfcState(
             coinAnimationStatus: CoinAnimationStatus.initial,
-            scanNFCStatus: ScanNFCStatus.initial));
+            scanNFCStatus: ScanNFCStatus.ready));
 
-  static const startDelay = Duration(milliseconds: 1600);
+  static const startDelay = Duration(milliseconds: 2500);
   static const foundDelay = Duration(milliseconds: 1600);
 
+  static const _closeIOSScanningScheetDelay = Duration(milliseconds: 2900);
+
   void cancelScanning() {
-    emit(state.copyWith(
-      scanNFCStatus: ScanNFCStatus.cancelled,
-    ));
+    NfcManager.instance.stopSession();
+    emit(state.copyWith(scanNFCStatus: ScanNFCStatus.ready));
   }
 
-  void startTagRead({required Duration delay}) async {
+  Future<void> readTag({Duration delay = Duration.zero}) async {
     emit(state.copyWith(
       coinAnimationStatus: CoinAnimationStatus.animating,
-      scanNFCStatus: ScanNFCStatus.initial,
-    ));
-    AnalyticsHelper.logEvent(
-      eventName: AmplitudeEvent.startScanningCoin,
-    );
-    await Future.delayed(delay);
-    emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
 
-    String mediumId = '';
-    String readData = '';
+    AnalyticsHelper.logEvent(eventName: AmplitudeEvent.startScanningCoin);
+
+    await Future.delayed(delay);
+
     try {
       NfcManager.instance.startSession(
           alertMessage: 'Tap your coin to the top\nof the iPhone',
+          onError: (error) async {
+            log('coin read error: ${error.message}');
+            if (error.type != NfcErrorType.systemIsBusy) {
+              cancelScanning();
+            }
+          },
           onDiscovered: (NfcTag tag) async {
             log('coin discovered: ${tag.data}');
             var ndef = Ndef.from(tag);
@@ -49,6 +52,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
               if (ndef.cachedMessage!.records.isNotEmpty &&
                   ndef.cachedMessage!.records.first.typeNameFormat ==
                       NdefTypeNameFormat.nfcWellknown) {
+                String mediumId = '';
+                String readData = '';
                 final wellKnownRecord = ndef.cachedMessage!.records.first;
                 if (wellKnownRecord.payload.first == 0x02) {
                   final languageCodeAndContentBytes =
@@ -67,12 +72,19 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
                   mediumId = uri.queryParameters['code'] ?? mediumId;
                   readData = decoded;
                 }
+
+                await NfcManager.instance
+                    .stopSession(alertMessage: 'Found it!');
+
+                if (Platform.isIOS) {
+                  await Future.delayed(_closeIOSScanningScheetDelay);
+                }
+
                 emit(state.copyWith(
                     mediumId: mediumId,
                     readData: readData,
                     scanNFCStatus: ScanNFCStatus.scanned,
                     coinAnimationStatus: CoinAnimationStatus.stopped));
-                NfcManager.instance.stopSession();
               }
             }
           });
