@@ -30,12 +30,14 @@ platform :android do
   lane :build_and_deploy do
     build_number = google_play_track_version_codes(package_name: ENV['PACKAGE_NAME'], track: ENV['TRACK'], json_key_data: ENV['GOOGLE_PLAY_JSON_KEY'])[0] + 1
     flavor = ENV['FLAVOR']
+    logit_api_key = ENV['LOGIT_API_KEY']
     Dir.chdir "../.." do
         sh("flutter", "packages", "get")
         sh("flutter", "clean")
         sh("flutter", "build", "appbundle", "--flavor", flavor,
           "--target", "lib/main_#{flavor}.dart",
-          "--build-number=#{build_number}")
+          "--build-number=#{build_number}",
+          "--dart-define=LOGIT_API_KEY=#{logit_api_key}")
     end
     signed_aab_path = match_keystore(git_url: "git@github.com:givtnl/givt.apps.codesigning.git", 
                     package_name: "net.givtapp.kids",
