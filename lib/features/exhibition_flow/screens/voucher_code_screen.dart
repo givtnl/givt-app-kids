@@ -60,7 +60,6 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
               context
                   .read<ProfilesCubit>()
                   .setActiveProfile(propfilesState.profiles[0]);
-              context.read<FlowsCubit>().startExhibitionFlow();
 
               context.pushNamed(Pages.scanNFC.name);
             }
@@ -68,7 +67,9 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
           builder: (context, propfilesState) {
             return Scaffold(
               appBar: AppBar(
-                leading: const GivtBackButton(),
+                leading: GivtBackButton(
+                  onPressedExt: () => context.read<FlowsCubit>().resetFlow(),
+                ),
               ),
               body: authState is LoadingState ||
                       propfilesState is ProfilesLoadingState
@@ -113,14 +114,14 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
                       propfilesState is! ProfilesLoadingState
                   ? GivtElevatedButton(
                       text: 'Start',
-                      onTap: _voucherCode.length == AuthCubit.voucherCodeLength
-                          ? () {
-                              context
-                                  .read<AuthCubit>()
-                                  .loginByVoucherCode(_voucherCode);
-                              _updateVoucherCode('');
-                            }
-                          : null,
+                      isDisabled:
+                          _voucherCode.length != AuthCubit.voucherCodeLength,
+                      onTap: () {
+                        context
+                            .read<AuthCubit>()
+                            .loginByVoucherCode(_voucherCode);
+                        _updateVoucherCode('');
+                      },
                     )
                   : null,
             );
