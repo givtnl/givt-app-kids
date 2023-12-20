@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
 import 'package:givt_app_kids/features/recommendation/tags/repositories/tags_repository.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -48,7 +49,11 @@ class TagsCubit extends Cubit<TagsState> {
       final List<Tag> response = await _tagsRepository.fetchTags();
 
       emit(TagsStateFetched(tags: response));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error(
+        'Error while fetching tags: $error',
+        methodName: stackTrace.toString(),
+      );
       emit(TagsStateError(errorMessage: error.toString()));
     }
   }

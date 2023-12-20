@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/repositories/organisations_repository.dart';
 import 'package:givt_app_kids/features/recommendation/tags/models/areas.dart';
@@ -80,7 +81,11 @@ class OrganisationsCubit extends Cubit<OrganisationsState> {
       );
 
       emit(OrganisationsFetchedState(organisations: response));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error(
+        'Error while fetching recommended organisations: $error',
+        methodName: stackTrace.toString(),
+      );
       emit(OrganisationsExternalErrorState(errorMessage: error.toString()));
     }
   }
