@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/core/exceptions/givt_server_exception.dart';
+import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/auth/cubit/givt_inner_error_type.dart';
 import 'package:givt_app_kids/features/auth/models/auth_request.dart';
 import 'package:givt_app_kids/features/auth/models/session.dart';
@@ -50,7 +49,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
       } else {
         emit(errorState);
       }
-    } catch (error) {
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error("Login failed: $error", methodName: stackTrace.toString());
       emit(ExternalErrorState(errorMessage: error.toString()));
     }
   }
@@ -67,7 +67,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
       );
 
       emit(LoggedInState(session: response));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.warning("Login by voucher code failed: $error", methodName: stackTrace.toString());
       emit(ExternalErrorState(errorMessage: error.toString()));
     }
   }
@@ -144,8 +145,6 @@ class AuthCubit extends HydratedCubit<AuthState> {
     final instanceType = json['instanceType'];
     final instance = jsonDecode(json['instance']);
 
-    log("auth:fromJSON: $json");
-
     if (instanceType == const LoggedInState().runtimeType.toString()) {
       return LoggedInState.fromJson(instance);
     } else if (instanceType ==
@@ -165,7 +164,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
       'instanceType': state.runtimeType.toString(),
       'instance': jsonEncode(state.toJson()),
     };
-    log("auth:toJSON: $result");
+
     return result;
   }
 }

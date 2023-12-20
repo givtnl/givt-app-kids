@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/repositories/organisation_details_repository.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -24,7 +25,10 @@ class OrganisationDetailsCubit extends Cubit<OrganisationDetailsState> {
 
       emit(OrganisationDetailsSetState(
           organisation: response, mediumId: mediumId));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error(
+          'Error while fetching organisation details: $error',
+          methodName: stackTrace.toString());
       emit(OrganisationDetailsErrorState(mediumId: mediumId));
     }
   }

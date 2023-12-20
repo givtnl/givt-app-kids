@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:nfc_manager/nfc_manager.dart';
@@ -88,14 +89,16 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
               }
             }
           });
-    } catch (e) {
+    } catch (e, stackTrace) {
+      LoggingInfo.instance.error('Error while scanning coin: $e',
+          methodName: stackTrace.toString());
+          
       emit(state.copyWith(
           scanNFCStatus: ScanNFCStatus.error,
           coinAnimationStatus: CoinAnimationStatus.stopped));
       NfcManager.instance.stopSession();
       AnalyticsHelper.logEvent(
-          eventName: AmplitudeEvent.coinScannedError,
-          eventProperties: {'error': e.toString()});
+          eventName: AmplitudeEvent.coinScannedError);
     }
   }
 }
