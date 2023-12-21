@@ -25,6 +25,10 @@ class TokenInterceptor implements InterceptorContract {
       data.headers['Accept'] = 'application/json';
       data.headers['Correlation-Id'] = correlationId.toString();
 
+      await LoggingInfo.instance.info(
+        '${data.method}: ${data.url} - Correlation-Id: $correlationId',
+      );
+
       if (sessionString == null) {
         return data;
       }
@@ -42,10 +46,6 @@ class TokenInterceptor implements InterceptorContract {
         methodName: stackTrace.toString(),
       );
     }
-    // await LoggingInfo.instance.error(
-    //   '${data.method}: ${data.baseUrl}${data.params}',
-    //   methodName: StackTrace.current.toString(),
-    // );
     return data;
   }
 
