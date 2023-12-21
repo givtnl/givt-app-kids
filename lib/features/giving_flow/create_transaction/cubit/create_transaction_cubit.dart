@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/repositories/create_transaction_repository.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -33,7 +34,10 @@ class CreateTransactionCubit extends Cubit<CreateTransactionState> {
           transaction: transaction);
       emit(CreateTransactionSuccessState(
           amount: state.amount, maxAmount: state.maxAmount));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error(
+          'Error while creating transaction: $error',
+          methodName: stackTrace.toString());
       emit(CreateTransactionErrorState(
           amount: state.amount,
           maxAmount: state.maxAmount,

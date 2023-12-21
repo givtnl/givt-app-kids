@@ -8,6 +8,8 @@ on:
         required: true
       MATCH_PASSWORD:
         required: true
+      LOGIT_API_KEY:
+        required: true
     inputs:
       flutter-version:
         required: true
@@ -60,6 +62,7 @@ jobs:
         env:
           GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          LOGIT_API_KEY: ${{ secrets.LOGIT_API_KEY }}
           PACKAGE_NAME: ${{ env.PACKAGE_NAME }}
           FLAVOR: ${{ env.FLAVOR }}
           TRACK: ${{ env.TRACK }}

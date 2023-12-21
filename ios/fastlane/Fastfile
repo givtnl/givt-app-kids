@@ -24,6 +24,7 @@ platform :ios do
   desc "Push a new build to Testflight"
   lane :release do
     app_identifier = ENV['PACKAGE_NAME']
+    logit_api_key = ENV['LOGIT_API_KEY']
     flavor = ENV['FLAVOR']
     setup_ci
     sync_code_signing(type: "appstore", readonly: true, app_identifier: app_identifier, git_url: git_url)
@@ -36,7 +37,10 @@ platform :ios do
     Dir.chdir "../.." do
         sh("flutter", "packages", "get")
         sh("flutter", "clean")
-        sh("flutter", "build", "ipa", "--flavor", flavor, "--target", "lib/main_#{flavor}.dart", "--build-number=#{build_number}")
+        sh("flutter", "build", "ipa", "--flavor", flavor,
+          "--target", "lib/main_#{flavor}.dart",
+          "--build-number=#{build_number}",
+          "--dart-define=LOGIT_API_KEY=#{logit_api_key}")
     end
     build_app(
       scheme: flavor,

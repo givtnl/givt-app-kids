@@ -147,6 +147,7 @@ class ProfileSelectionScreen extends StatelessWidget {
                                     ),
                                     GridView.count(
                                       shrinkWrap: true,
+                                      childAspectRatio: 0.95,
                                       crossAxisCount:
                                           gridItems.length == 1 ? 1 : 2,
                                       mainAxisSpacing: 10,

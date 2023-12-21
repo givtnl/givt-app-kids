@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/features/profiles/repository/profiles_repository.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -42,7 +43,10 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
           activeProfileIndex: state.activeProfileIndex,
         ));
       }
-    } catch (error) {
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error(
+          'Error while fetching profiles: $error',
+          methodName: stackTrace.toString());
       emit(ProfilesExternalErrorState(
         errorMessage: error.toString(),
         activeProfileIndex: state.activeProfileIndex,

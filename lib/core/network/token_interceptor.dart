@@ -6,6 +6,7 @@ import 'dart:developer';
 // import 'package:givt_app/features/auth/repositories/auth_repository.dart';
 import 'package:flutter_guid/flutter_guid.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
+import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/auth/models/session.dart';
 import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
 import 'package:http_interceptor/http_interceptor.dart';
@@ -24,6 +25,10 @@ class TokenInterceptor implements InterceptorContract {
       data.headers['Accept'] = 'application/json';
       data.headers['Correlation-Id'] = correlationId.toString();
 
+      await LoggingInfo.instance.info(
+        '${data.method}: ${data.url} - Correlation-Id: $correlationId',
+      );
+
       if (sessionString == null) {
         return data;
       }
@@ -35,13 +40,12 @@ class TokenInterceptor implements InterceptorContract {
       if (session.accessToken.isNotEmpty) {
         data.headers['Authorization'] = 'Bearer ${session.accessToken}';
       }
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stackTrace) {
+      await LoggingInfo.instance.error(
+        'Error while adding token to request: $e',
+        methodName: stackTrace.toString(),
+      );
     }
-    // await LoggingInfo.instance.error(
-    //   '${data.method}: ${data.baseUrl}${data.params}',
-    //   methodName: StackTrace.current.toString(),
-    // );
     return data;
   }
 

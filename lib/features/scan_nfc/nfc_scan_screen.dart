@@ -97,7 +97,10 @@ class NFCScanPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: GivtBackButton(
-              onPressedExt: () => context.read<FlowsCubit>().resetFlow(),
+              onPressedExt: () {
+                context.read<FlowsCubit>().resetFlow();
+                context.read<ScanNfcCubit>().cancelScanning();
+              },
             ),
           ),
           body: SafeArea(
@@ -138,15 +141,9 @@ class NFCScanPage extends StatelessWidget {
               ),
             ),
           ),
-          floatingActionButton: state.scanNFCStatus == ScanNFCStatus.cancelled
+          floatingActionButton: state.scanNFCStatus == ScanNFCStatus.ready
               ? const StartScanNfcButton()
-              // on iOS user dismissing the bottomsheet cannot be detected
-              // so we need to show the button always after the start of scanning
-              : Platform.isIOS && state.scanNFCStatus == ScanNFCStatus.scanning
-                  ? FutureBuilder(
-                      future: Future.delayed(ScanNfcCubit.startDelay),
-                      builder: (c, s) => const StartScanNfcButton())
-                  : null,
+              : null,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
         );

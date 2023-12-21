@@ -29,11 +29,6 @@ class SearchForCoinScreen extends StatelessWidget {
           listener: (context, orgState) async {
             if (orgState is OrganisationDetailsSetState) {
               log("Organisation is set: ${orgState.organisation.name}");
-              AnalyticsHelper.logEvent(
-                  eventName: AmplitudeEvent.deeplinkCoinScanned,
-                  eventProperties: {
-                    'goal_name': orgState.organisation.name,
-                  });
               coinCubit.stopAnimation();
             }
             if (orgState is OrganisationDetailsErrorState) {

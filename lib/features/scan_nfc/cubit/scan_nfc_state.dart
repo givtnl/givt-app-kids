@@ -1,10 +1,10 @@
 part of 'scan_nfc_cubit.dart';
 
 enum ScanNFCStatus {
-  initial,
+  ready,
+  prescanning,
   scanning,
   scanned,
-  cancelled,
   error,
 }
 

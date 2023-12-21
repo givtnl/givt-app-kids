@@ -20,7 +20,6 @@ enum AmplitudeEvent {
   assignCoinPressed('assign_coin_pressed'),
   qrCodeScanned('qr_code_scanned'),
   seeDonationHistoryPressed('see_donation_history_pressed'),
-  nfcScanned('nfc_scanned'),
   locationSelected('location_selected'),
   interestSelected('interest_selected'),
   showCharitiesPressed('show_charities_pressed'),
@@ -29,10 +28,11 @@ enum AmplitudeEvent {
   charityCardPressed('charity_card_pressed'),
   accountLocked('account_locked_for_wrong_password'),
   walletTracker('wallet_tracker'),
-  startScanningCoin('start_scanning_coin_in_app'),
+  startScanningCoin('in_app_start_scanning_coin'),
   inAppCoinScannedSuccessfully('in_app_coin_scanned_successfully'),
-  coinScannedError('coin_scanned_in_app_error'),
+  coinScannedError('in_app_coin_scanned_error'),
   deeplinkCoinScanned('deeplink_coin_scanned'),
+  organisationSelected('organisation_is_set'),
   ;
 
   final String value;
