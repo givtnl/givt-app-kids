@@ -2,6 +2,7 @@ part of 'scan_nfc_cubit.dart';
 
 enum ScanNFCStatus {
   ready,
+  prescanning,
   scanning,
   scanned,
   error,
