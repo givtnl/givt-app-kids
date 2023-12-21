@@ -42,10 +42,9 @@ class TokenInterceptor implements InterceptorContract {
         methodName: stackTrace.toString(),
       );
     }
-    // await LoggingInfo.instance.error(
-    //   '${data.method}: ${data.baseUrl}${data.params}',
-    //   methodName: StackTrace.current.toString(),
-    // );
+    await LoggingInfo.instance.info(
+      '${data.method}: ${data.url}',
+    );
     return data;
   }
 
