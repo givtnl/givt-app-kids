@@ -27,15 +27,19 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     emit(state.copyWith(scanNFCStatus: ScanNFCStatus.ready));
   }
 
-  Future<void> readTag({Duration delay = Duration.zero}) async {
+  Future<void> readTag({Duration prescanningDelay = Duration.zero}) async {
     emit(state.copyWith(
       coinAnimationStatus: CoinAnimationStatus.animating,
-      scanNFCStatus: ScanNFCStatus.scanning,
+      scanNFCStatus: ScanNFCStatus.prescanning,
     ));
 
     AnalyticsHelper.logEvent(eventName: AmplitudeEvent.startScanningCoin);
 
-    await Future.delayed(delay);
+    await Future.delayed(prescanningDelay);
+
+    emit(state.copyWith(
+      scanNFCStatus: ScanNFCStatus.scanning,
+    ));
 
     try {
       NfcManager.instance.startSession(
@@ -74,8 +78,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
                   readData = decoded;
                 }
 
-                await NfcManager.instance
-                    .stopSession(alertMessage: 'Found it!');
+                await NfcManager.instance.stopSession(alertMessage: ' ');
 
                 if (Platform.isIOS) {
                   await Future.delayed(_closeIOSScanningScheetDelay);
@@ -92,13 +95,12 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     } catch (e, stackTrace) {
       LoggingInfo.instance.error('Error while scanning coin: $e',
           methodName: stackTrace.toString());
-          
+
       emit(state.copyWith(
           scanNFCStatus: ScanNFCStatus.error,
           coinAnimationStatus: CoinAnimationStatus.stopped));
       NfcManager.instance.stopSession();
-      AnalyticsHelper.logEvent(
-          eventName: AmplitudeEvent.coinScannedError);
+      AnalyticsHelper.logEvent(eventName: AmplitudeEvent.coinScannedError);
     }
   }
 }

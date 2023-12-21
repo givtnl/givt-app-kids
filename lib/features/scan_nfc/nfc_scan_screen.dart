@@ -97,7 +97,10 @@ class NFCScanPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: GivtBackButton(
-              onPressedExt: () => context.read<FlowsCubit>().resetFlow(),
+              onPressedExt: () {
+                context.read<FlowsCubit>().resetFlow();
+                context.read<ScanNfcCubit>().cancelScanning();
+              },
             ),
           ),
           body: SafeArea(
