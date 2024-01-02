@@ -13,6 +13,7 @@ import 'package:givt_app_kids/features/coin_flow/widgets/search_coin_animated_wi
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/start_scan_nfc_button.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -122,10 +123,21 @@ class NFCScanPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         )),
                   ),
+                  if (flow.isExhibition)
+                    const Text(
+                      '\$10',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppTheme.givt4KidsBlue,
+                        fontSize: 32,
+                      ),
+                    ),
                   Text(
                       state.coinAnimationStatus == CoinAnimationStatus.animating
                           ? 'Grab your coin and \nlet\'s begin!'
-                          : 'Let\'s continue...',
+                          : flow.isExhibition
+                              ? 'to give away'
+                              : 'Let\'s continue...',
                       style: const TextStyle(fontSize: 20),
                       textAlign: TextAlign.center),
                   const Spacer(flex: 2),

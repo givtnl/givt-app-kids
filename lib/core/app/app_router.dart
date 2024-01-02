@@ -191,6 +191,12 @@ class AppRouter {
                     state.uri.queryParameters['code']!.contains('null')
                 ? OrganisationDetailsCubit.defaultMediumId
                 : state.uri.queryParameters['code']!;
+            // THE USECASE FOR THIS BUILDER IS
+            // When the user opens the app from in-app coin flow
+            // on andrioid accidentally scanning the coin twice
+
+            // So the flow we need to show is in-app coin flow
+
             // Because the deeplink opens a whole new app context we need to
             // re-fetch the organisation details
             // & emit the in-app coin flow
@@ -199,7 +205,6 @@ class AppRouter {
                 .read<OrganisationDetailsCubit>()
                 .getOrganisationDetails(mediumID);
 
-            //TODO: Ask Daniela why not startDeepLinkCoinFlow instead?
             context.read<FlowsCubit>().startInAppCoinFlow();
 
             return BlocProvider(
