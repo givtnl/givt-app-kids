@@ -7,7 +7,7 @@ class CoinWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: SvgPicture.asset(
         'assets/images/coin_activated_small.svg',
       ),

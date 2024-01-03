@@ -57,7 +57,19 @@ class OrganisationsScreen extends StatelessWidget {
                   automaticallyImplyLeading: false,
                   leading: GivtBackButton(),
                   actions: [
-                    CoinWidget(),
+                    Row(
+                      children: [
+                        Text(
+                          '\$10',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.w900),
+                        ),
+                        CoinWidget(),
+                      ],
+                    ),
                   ],
                 ),
                 SliverPadding(
