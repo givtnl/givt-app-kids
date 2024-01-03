@@ -14,17 +14,16 @@ class Vibrator {
   }
 
   static Future<void> tryVibratePattern({
-    List<int> pattern = const [
-      50,
-      100,
-      150,
-      400,
-    ],
+    List<int> pattern = const [50, 600, 450, 80],
+    List<int> intensities = const [0, 128, 0, 255],
   }) async {
     var hasVibrator = await Vibration.hasVibrator();
     if (hasVibrator == true) {
       Vibration.cancel();
-      Vibration.vibrate(pattern: pattern);
+      Vibration.vibrate(
+        pattern: pattern,
+        intensities: intensities,
+      );
     }
   }
 }

@@ -182,7 +182,7 @@ class _WalletScreenState extends State<WalletScreen>
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: GivtFloatingActionButton(
           onTap: () {
-            context.pushNamed(Pages.profileSelection.name);
+            context.pushReplacementNamed(Pages.profileSelection.name);
             AnalyticsHelper.logEvent(
               eventName: AmplitudeEvent.profileSwitchPressed,
             );
