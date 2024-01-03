@@ -126,7 +126,7 @@ class NFCScanPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         )),
                   ),
-                  if (flow.isExhibition)
+                  if (flow.isExhibition  && state.coinAnimationStatus != CoinAnimationStatus.animating)
                     Text(
                       '\$${user.wallet.balance.toString()}',
                       textAlign: TextAlign.center,
