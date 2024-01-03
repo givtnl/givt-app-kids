@@ -17,12 +17,15 @@ import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:go_router/go_router.dart';
 
+import '../profiles/cubit/profiles_cubit.dart';
+
 class NFCScanPage extends StatelessWidget {
   const NFCScanPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final flow = context.read<FlowsCubit>().state;
+    final user = context.read<ProfilesCubit>().state.activeProfile;
     return BlocConsumer<ScanNfcCubit, ScanNfcState>(
       listener: (context, state) {
         final scanNfcCubit = context.read<ScanNfcCubit>();
@@ -124,10 +127,10 @@ class NFCScanPage extends StatelessWidget {
                         )),
                   ),
                   if (flow.isExhibition)
-                    const Text(
-                      '\$10',
+                    Text(
+                      '\$${user.wallet.balance.toString()}',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppTheme.givt4KidsBlue,
                         fontSize: 32,
                       ),
