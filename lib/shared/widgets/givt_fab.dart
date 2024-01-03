@@ -42,7 +42,12 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
     return Padding(
       padding: EdgeInsets.only(top: paddingtop),
       child: GestureDetector(
-        onTap: widget.isDisabled == true ? null : widget.onTap,
+        onTap: widget.isDisabled == true
+            ? null
+            : () async {
+                await Future.delayed(const Duration(milliseconds: 100));
+                widget.onTap();
+              },
         onTapDown: widget.isDisabled == true
             ? null
             : (details) {
@@ -52,14 +57,16 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
               },
         onTapCancel: widget.isDisabled == true
             ? null
-            : () {
+            : () async {
+                await Future.delayed(const Duration(milliseconds: 50));
                 setState(() {
                   isPressed = false;
                 });
               },
         onTapUp: widget.isDisabled == true
             ? null
-            : (details) {
+            : (details) async {
+                await Future.delayed(const Duration(milliseconds: 50));
                 setState(() {
                   isPressed = false;
                 });

@@ -44,7 +44,12 @@ class _ActionTileState extends State<ActionTile> {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: widget.isDisabled ? null : widget.onTap,
+        onTap: widget.isDisabled
+            ? null
+            : () async {
+                await Future.delayed(const Duration(milliseconds: 50));
+                widget.onTap();
+              },
         onTapDown: widget.isDisabled
             ? null
             : (details) {
@@ -55,7 +60,8 @@ class _ActionTileState extends State<ActionTile> {
               },
         onTapCancel: widget.isDisabled
             ? null
-            : () {
+            : () async {
+                await Future.delayed(const Duration(milliseconds: 50));
                 setState(() {
                   bottomBorderWidth = 6;
                   widgetHeight = 208;
@@ -63,7 +69,8 @@ class _ActionTileState extends State<ActionTile> {
               },
         onTapUp: widget.isDisabled
             ? null
-            : (details) {
+            : (details) async {
+                await Future.delayed(const Duration(milliseconds: 50));
                 setState(() {
                   bottomBorderWidth = 6;
                   widgetHeight = 208;

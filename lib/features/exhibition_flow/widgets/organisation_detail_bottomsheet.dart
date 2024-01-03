@@ -89,17 +89,20 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: GivtElevatedButton(
-            text: "Give",
-            onTap: () {
-              AnalyticsHelper.logEvent(
-                eventName: AmplitudeEvent.donateToRecommendedCharityPressed,
-                eventProperties: {
-                  AnalyticsHelper.charityNameKey: organisation.name,
-                },
-              );
-              context.pushNamed(Pages.chooseAmountSlider.name);
-            },
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 24),
+            child: GivtElevatedButton(
+              text: "Give",
+              onTap: () {
+                AnalyticsHelper.logEvent(
+                  eventName: AmplitudeEvent.donateToRecommendedCharityPressed,
+                  eventProperties: {
+                    AnalyticsHelper.charityNameKey: organisation.name,
+                  },
+                );
+                context.pushNamed(Pages.chooseAmountSlider.name);
+              },
+            ),
           ),
         ),
       ),

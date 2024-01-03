@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/exhibition_flow/widgets/organisation_item.dart';
+import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -18,6 +19,8 @@ class OrganisationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<ProfilesCubit>().state.activeProfile;
+
     return BlocConsumer<OrganisationsCubit, OrganisationsState>(
       listener: (context, state) {
         if (state is OrganisationsExternalErrorState) {
@@ -52,12 +55,24 @@ class OrganisationsScreen extends StatelessWidget {
           body: SafeArea(
             child: CustomScrollView(
               slivers: [
-                const SliverAppBar(
+                SliverAppBar(
                   backgroundColor: Colors.transparent,
                   automaticallyImplyLeading: false,
                   leading: GivtBackButton(),
                   actions: [
-                    CoinWidget(),
+                    Row(
+                      children: [
+                        Text(
+                          '\$${user.wallet.balance}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 22,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.w900),
+                        ),
+                        const CoinWidget(),
+                      ],
+                    ),
                   ],
                 ),
                 SliverPadding(
