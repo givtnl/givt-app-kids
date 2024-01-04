@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DownloadGivtAppWidget extends StatelessWidget {
@@ -25,7 +26,7 @@ class DownloadGivtAppWidget extends StatelessWidget {
         //border radius
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8)),
-          color: Color.fromARGB(255, 46, 41, 87),
+          color: AppTheme.downloadAppBackground
         ),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           ClipRRect(
