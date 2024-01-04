@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/coin_found.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
@@ -102,8 +103,14 @@ class NFCScanPage extends StatelessWidget {
             elevation: 0,
             leading: GivtBackButton(
               onPressedExt: () {
-                context.read<FlowsCubit>().resetFlow();
                 context.read<ScanNfcCubit>().cancelScanning();
+
+                if (context.read<FlowsCubit>().state.isExhibition) {
+                  context.read<ProfilesCubit>().clearProfiles();
+                  context.read<AuthCubit>().logout();
+                } else {
+                  context.read<FlowsCubit>().resetFlow();
+                }
               },
             ),
           ),
@@ -126,7 +133,9 @@ class NFCScanPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         )),
                   ),
-                  if (flow.isExhibition  && state.coinAnimationStatus != CoinAnimationStatus.animating)
+                  if (flow.isExhibition &&
+                      state.coinAnimationStatus !=
+                          CoinAnimationStatus.animating)
                     Text(
                       '\$${user.wallet.balance.toStringAsFixed(0)}',
                       textAlign: TextAlign.center,

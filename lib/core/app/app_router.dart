@@ -130,10 +130,7 @@ class AppRouter {
         GoRoute(
           path: Pages.recommendationStart.path,
           name: Pages.recommendationStart.name,
-          builder: (context, state) {
-            context.read<FlowsCubit>().startRecommendationFlow();
-            return const StartRecommendationScreen();
-          },
+          builder: (context, state) => const StartRecommendationScreen(),
         ),
         GoRoute(
           path: Pages.locationSelection.path,
