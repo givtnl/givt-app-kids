@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/auth/dialogs/account_locked_dialog.dart';
+import 'package:givt_app_kids/features/auth/widgets/download_givt_app_widget.dart';
 import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
@@ -92,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Container(
                     width: double.infinity,
-                    height: size.height * 0.33,
+                    height: size.height * 0.25,
                     alignment: Alignment.center,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -269,6 +270,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         : null,
                   ),
+                  const SizedBox(height: 24),
+                    Column(children: [
+                      DownloadGivtAppWidget(),
+                      const SizedBox(height: 24),
+                    ]),
                 ],
               ),
             ),

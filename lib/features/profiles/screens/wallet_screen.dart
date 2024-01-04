@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
@@ -66,6 +68,8 @@ class _WalletScreenState extends State<WalletScreen>
   }
 
   Future<bool> isIpadCheck() async {
+    if (Platform.isAndroid) return false;
+
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     IosDeviceInfo info = await deviceInfo.iosInfo;
     if (info.model.isNotEmpty && info.model.toLowerCase().contains("ipad")) {
@@ -166,6 +170,7 @@ class _WalletScreenState extends State<WalletScreen>
                         textColor:
                             Theme.of(context).colorScheme.onPrimaryContainer,
                         onTap: () {
+                          context.read<FlowsCubit>().startRecommendationFlow();
                           context.pushNamed(Pages.recommendationStart.name);
                           AnalyticsHelper.logEvent(
                               eventName:
