@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,8 @@ class _WalletScreenState extends State<WalletScreen>
   }
 
   Future<bool> isIpadCheck() async {
+    if (Platform.isAndroid) return false;
+
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     IosDeviceInfo info = await deviceInfo.iosInfo;
     if (info.model.isNotEmpty && info.model.toLowerCase().contains("ipad")) {
