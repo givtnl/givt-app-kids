@@ -6,12 +6,14 @@ import 'package:givt_app_kids/helpers/app_theme.dart';
 class InterestCard extends StatelessWidget {
   const InterestCard({
     required this.interest,
+    required this.picture,
     required this.onPressed,
     this.isSelected = false,
     super.key,
   });
 
   final Tag interest;
+  final SvgPicture picture;
   final void Function() onPressed;
   final bool isSelected;
 
@@ -54,10 +56,7 @@ class InterestCard extends StatelessWidget {
                   Expanded(
                     flex: 5,
                     child: Center(
-                      child: SizedBox.square(
-                        dimension: 80,
-                        child: SvgPicture.network(interest.pictureUrl),
-                      ),
+                      child: picture,
                     ),
                   ),
                   Expanded(
