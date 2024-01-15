@@ -54,16 +54,16 @@ class ProfileSelectionScreen extends StatelessWidget {
             onTap: () {
               selectProfile(profiles[i]);
 
-              if (flow.isCoin) {
-                if (profiles[i].wallet.balance < 1) {
-                  SnackBarHelper.showMessage(
-                    context,
-                    text:
-                        '${profiles[i].firstName} has no money. Please top up first.',
-                  );
-                  return;
-                }
+              if (profiles[i].wallet.balance < 1) {
+                SnackBarHelper.showMessage(
+                  context,
+                  text:
+                      '${profiles[i].firstName} has no money. Please top up first.',
+                );
+                return;
+              }
 
+              if (flow.isCoin) {
                 if (flow.flowType == FlowType.deepLinkCoin) {
                   context.pushNamed(Pages.chooseAmountSlider.name);
                 } else {
@@ -71,6 +71,8 @@ class ProfileSelectionScreen extends StatelessWidget {
                 }
               } else if (flow.isQRCode) {
                 context.pushNamed(Pages.camera.name);
+              } else if (flow.isRecommendation) {
+                context.pushNamed(Pages.recommendationStart.name);
               } else {
                 context.pushReplacementNamed(Pages.wallet.name);
               }

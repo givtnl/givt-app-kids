@@ -63,7 +63,7 @@ class OrganisationsScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '\$${user.wallet.balance}',
+                          '\$${user.wallet.balance.toStringAsFixed(0)}',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontSize: 22,
@@ -99,6 +99,8 @@ class OrganisationsScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.w700,
+                              fontFamily: 'Raleway',
+                              fontSize: 18,
                             ),
                       ),
                     ),

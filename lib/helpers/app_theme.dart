@@ -43,6 +43,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const givyBubbleBackground = Color(0xFFEAEFFD);
   static final historyAllowanceColor =
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
+  static const downloadAppBackground = Color.fromARGB(255, 46, 41, 87);
 
   Scheme _schemeLight() {
     final base = CorePalette.of(primaryColor.value);
