@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 // import 'package:givt_app/app/injection/injection.dart';
 // import 'package:givt_app/core/logging/logging.dart';
