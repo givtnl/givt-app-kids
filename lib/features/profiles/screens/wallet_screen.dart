@@ -67,9 +67,12 @@ class _WalletScreenState extends State<WalletScreen>
 
   Future<bool> isIpadCheck() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    IosDeviceInfo info = await deviceInfo.iosInfo;
-    if (info.model.isNotEmpty && info.model.toLowerCase().contains("ipad")) {
-      return true;
+    if (deviceInfo.deviceInfo is IosDeviceInfo) {
+      IosDeviceInfo info = await deviceInfo.iosInfo;
+      if (info.model.isNotEmpty && info.model.toLowerCase().contains("ipad")) {
+        return true;
+      }
+      return false;
     }
     return false;
   }
