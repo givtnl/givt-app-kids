@@ -10,6 +10,7 @@ import 'package:givt_app_kids/features/history/history_logic/history_repository.
 import 'package:givt_app_kids/features/profiles/repository/profiles_repository.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/repositories/organisations_repository.dart';
 import 'package:givt_app_kids/features/recommendation/tags/repositories/tags_repository.dart';
+import 'package:givt_app_kids/helpers/svg_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
@@ -73,5 +74,8 @@ void _initRepositories() {
       () => OrganisationsRepositoryImpl(
         getIt(),
       ),
+    )
+    ..registerLazySingleton<SvgAssetLoaderManager>(
+      () => SvgAssetLoaderManager(),
     );
 }

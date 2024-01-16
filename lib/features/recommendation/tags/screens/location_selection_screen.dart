@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
 import 'package:givt_app_kids/features/recommendation/tags/widgets/location_card.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/recommendation_givy_bubble.dart';
+import 'package:givt_app_kids/helpers/svg_manager.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +19,7 @@ class LocationSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TagsCubit, TagsState>(
       builder: (context, state) {
+        final svgManager = getIt<SvgAssetLoaderManager>();
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
@@ -106,6 +109,9 @@ class LocationSelectionScreen extends StatelessWidget {
                   onTap: state is TagsStateFetched &&
                           state.selectedLocation != const Tag.empty()
                       ? () {
+                          svgManager.preloadSvgAssets(state.interests
+                              .map((e) => e.pictureUrl)
+                              .toList());
                           context.pushNamed(
                             Pages.interestsSelection.name,
                             extra: state,
