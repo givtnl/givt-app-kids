@@ -108,7 +108,7 @@ class LocationSelectionScreen extends StatelessWidget {
                   text: "Next",
                   onTap: state is TagsStateFetched &&
                           state.selectedLocation != const Tag.empty()
-                      ? () async {
+                      ? () {
                           svgManager.preloadSvgAssets(state.interests
                               .map((e) => e.pictureUrl)
                               .toList());
