@@ -13,7 +13,7 @@ class SvgAssetLoaderManager {
     }
   }
 
-  Future<void> preloadSvgAssets(List<String> pictureUrls) async {
+  void preloadSvgAssets(List<String> pictureUrls) {
     for (final url in pictureUrls) {
       getLoader(url);
     }

@@ -109,6 +109,9 @@ class LocationSelectionScreen extends StatelessWidget {
                   onTap: state is TagsStateFetched &&
                           state.selectedLocation != const Tag.empty()
                       ? () async {
+                          svgManager.preloadSvgAssets(state.interests
+                              .map((e) => e.pictureUrl)
+                              .toList());
                           context.pushNamed(
                             Pages.interestsSelection.name,
                             extra: state,
@@ -117,9 +120,6 @@ class LocationSelectionScreen extends StatelessWidget {
                                 location: const Tag.empty(),
                                 logAmplitude: false,
                               );
-                          await svgManager.preloadSvgAssets(state.interests
-                              .map((e) => e.pictureUrl)
-                              .toList());
                         }
                       : null,
                 )
