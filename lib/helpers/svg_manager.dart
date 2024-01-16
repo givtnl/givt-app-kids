@@ -15,9 +15,7 @@ class SvgAssetLoaderManager {
 
   Future<void> preloadSvgAssets(List<String> pictureUrls) async {
     for (final url in pictureUrls) {
-      final loader = getLoader(url);
-      await svg.cache
-          .putIfAbsent(loader.cacheKey(null), () => loader.loadBytes(null));
+      getLoader(url);
     }
   }
 
