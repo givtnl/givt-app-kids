@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
@@ -63,16 +64,19 @@ class _GivtBackButtonState extends State<GivtBackButton> {
                 context.pop();
               },
               onTapDown: (details) {
+                SystemSound.play(SystemSoundType.click);
                 setState(() {
                   isPressed = true;
                 });
               },
               onTapCancel: () {
+                HapticFeedback.lightImpact();
                 setState(() {
                   isPressed = false;
                 });
               },
               onTapUp: (details) {
+                HapticFeedback.lightImpact();
                 setState(() {
                   isPressed = false;
                 });

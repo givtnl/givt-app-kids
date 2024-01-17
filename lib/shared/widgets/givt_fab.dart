@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class GivtFloatingActionButton extends StatefulWidget {
   const GivtFloatingActionButton({
@@ -51,6 +52,7 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
         onTapDown: widget.isDisabled == true
             ? null
             : (details) {
+                SystemSound.play(SystemSoundType.click);
                 setState(() {
                   isPressed = true;
                 });
@@ -59,6 +61,7 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
             ? null
             : () async {
                 await Future.delayed(const Duration(milliseconds: 50));
+                HapticFeedback.lightImpact();
                 setState(() {
                   isPressed = false;
                 });
@@ -67,6 +70,7 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
             ? null
             : (details) async {
                 await Future.delayed(const Duration(milliseconds: 50));
+                HapticFeedback.lightImpact();
                 setState(() {
                   isPressed = false;
                 });
