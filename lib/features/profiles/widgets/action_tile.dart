@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 
@@ -47,12 +48,13 @@ class _ActionTileState extends State<ActionTile> {
         onTap: widget.isDisabled
             ? null
             : () async {
-                await Future.delayed(const Duration(milliseconds: 50));
+                await Future.delayed(const Duration(milliseconds: 30));
                 widget.onTap();
               },
         onTapDown: widget.isDisabled
             ? null
             : (details) {
+                SystemSound.play(SystemSoundType.click);
                 setState(() {
                   bottomBorderWidth = 2;
                   widgetHeight = 204;
@@ -61,7 +63,8 @@ class _ActionTileState extends State<ActionTile> {
         onTapCancel: widget.isDisabled
             ? null
             : () async {
-                await Future.delayed(const Duration(milliseconds: 50));
+                await Future.delayed(const Duration(milliseconds: 30));
+                HapticFeedback.lightImpact();
                 setState(() {
                   bottomBorderWidth = 6;
                   widgetHeight = 208;
@@ -70,7 +73,8 @@ class _ActionTileState extends State<ActionTile> {
         onTapUp: widget.isDisabled
             ? null
             : (details) async {
-                await Future.delayed(const Duration(milliseconds: 50));
+                await Future.delayed(const Duration(milliseconds: 30));
+                HapticFeedback.lightImpact();
                 setState(() {
                   bottomBorderWidth = 6;
                   widgetHeight = 208;
