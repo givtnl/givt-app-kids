@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
@@ -54,8 +53,6 @@ class _WalletScreenState extends State<WalletScreen>
   }
 
   Future<void> refresh() async {
-    final parentGuid =
-        (context.read<AuthCubit>().state as LoggedInState).session.userGUID;
     await context.read<ProfilesCubit>().fetchAllProfiles();
   }
 

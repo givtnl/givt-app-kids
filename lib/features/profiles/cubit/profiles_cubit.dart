@@ -90,13 +90,30 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     }
   }
 
-  void setActiveProfile(Profile profile) {
+  void setActiveProfile(Profile profile) async {
     final index = state.profiles.indexOf(profile);
-    // this should make another api call to get the profile details
-    emit(ProfilesUpdatedState(
+    final childGuid = state.profiles[index].id;
+    emit(ProfilesLoadingState(
       profiles: state.profiles,
-      activeProfileIndex: index,
+      activeProfileIndex: state.activeProfileIndex,
     ));
+    // this should make another api call to get the profile details
+    try {
+      final response = await _profilesRepositoy.fetchChildDetails(childGuid);
+      state.profiles[index] = response;
+      emit(ProfilesUpdatedState(
+        profiles: state.profiles,
+        activeProfileIndex: index,
+      ));
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error('Error while fetching profiles: $error',
+          methodName: stackTrace.toString());
+      emit(ProfilesExternalErrorState(
+        errorMessage: error.toString(),
+        activeProfileIndex: state.activeProfileIndex,
+        profiles: state.profiles,
+      ));
+    }
   }
 
   void clearProfiles() {

@@ -3,13 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
 import 'package:givt_app_kids/features/profiles/widgets/logout_button.dart';
+import 'package:givt_app_kids/features/profiles/widgets/parent_overview_widget.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_item.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profiles_empty_state_widget.dart';
 
@@ -29,8 +29,6 @@ class ProfileSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final flow = context.read<FlowsCubit>().state;
-    final parentGuid =
-        (context.read<AuthCubit>().state as LoggedInState).session.userGUID;
 
     Future<void> selectProfile(Profile profile) async {
       context.read<ProfilesCubit>().setActiveProfile(profile);
@@ -54,14 +52,14 @@ class ProfileSelectionScreen extends StatelessWidget {
             onTap: () {
               selectProfile(profiles[i]);
 
-              if (profiles[i].wallet.balance < 1) {
-                SnackBarHelper.showMessage(
-                  context,
-                  text:
-                      '${profiles[i].firstName} has no money. Please top up first.',
-                );
-                return;
-              }
+              // if (profiles[i].wallet.balance < 1) {
+              //   SnackBarHelper.showMessage(
+              //     context,
+              //     text:
+              //         '${profiles[i].firstName} has no money. Please top up first.',
+              //   );
+              //   return;
+              // }
 
               if (flow.isCoin) {
                 if (flow.flowType == FlowType.deepLinkCoin) {
@@ -99,11 +97,17 @@ class ProfileSelectionScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final gridItems = createGridItems(state.profiles);
+        final gridItems = createGridItems(
+            state.profiles.where((e) => e.type == 'Child').toList());
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
             leading: const GivtBackButton(),
+            title: Text(
+              'My Family',
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer),
+            ),
             actions: [
               if (flow.isCoin) const CoinWidget(),
             ],
@@ -118,20 +122,32 @@ class ProfileSelectionScreen extends StatelessWidget {
                   : SafeArea(
                       child: Column(
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 50,
-                                right: 50,
-                                top: size.height * 0.10,
-                                bottom: size.height * 0.03),
-                            child: const Text(
-                              'Who would like to give?',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: AppTheme.defaultTextColor,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          SizedBox(
+                              height: MediaQuery.sizeOf(context).height * 0.02),
+                          Text(
+                            'Parents',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.outline),
+                          ),
+                          const SizedBox(height: 8),
+                          ParentOverviewWidget(
+                            profiles: state.profiles
+                                .where((p) => p.type == 'Parent')
+                                .toList(),
+                          ),
+                          SizedBox(
+                              height: MediaQuery.sizeOf(context).height * 0.05),
+                          const Text(
+                            'Who would like to give?',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppTheme.defaultTextColor,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           SingleChildScrollView(
@@ -160,6 +176,7 @@ class ProfileSelectionScreen extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SizedBox(height: 100)
                         ],
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'package:givt_app_kids/features/profiles/models/profile.dart';
 
 mixin ProfilesRepository {
   Future<List<Profile>> fetchProfiles(String parentGuid);
+  Future<Profile> fetchChildDetails(String childGuid);
   Future<List<Profile>> fetchAllProfiles();
 }
 
@@ -32,5 +33,11 @@ class ProfilesRepositoryImpl with ProfilesRepository {
       result.add(Profile.fromMap(profileMap));
     }
     return result;
+  }
+
+  @override
+  Future<Profile> fetchChildDetails(String childGuid) async {
+    final response = await _apiService.fetchChildDetails(childGuid);
+    return Profile.fromMap(response);
   }
 }
