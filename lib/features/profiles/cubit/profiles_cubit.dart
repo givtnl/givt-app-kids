@@ -18,7 +18,7 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
 
   final ProfilesRepository _profilesRepositoy;
 
-  Future<void> fetchProfiles(String parentGuid) async {
+  Future<void> fetchNoProfiles(String parentGuid) async {
     final activeProfileBalance = state.activeProfile.wallet.balance;
     emit(ProfilesLoadingState(
       profiles: state.profiles,
@@ -44,8 +44,43 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
         ));
       }
     } catch (error, stackTrace) {
-      LoggingInfo.instance.error(
-          'Error while fetching profiles: $error',
+      LoggingInfo.instance.error('Error while fetching profiles: $error',
+          methodName: stackTrace.toString());
+      emit(ProfilesExternalErrorState(
+        errorMessage: error.toString(),
+        activeProfileIndex: state.activeProfileIndex,
+        profiles: state.profiles,
+      ));
+    }
+  }
+
+  Future<void> fetchAllProfiles() async {
+    final activeProfileBalance = state.activeProfile.wallet.balance;
+    emit(ProfilesLoadingState(
+      profiles: state.profiles,
+      activeProfileIndex: state.activeProfileIndex,
+    ));
+    try {
+      final response = await _profilesRepositoy.fetchAllProfiles();
+
+      var activeProfileNewBalance = state.activeProfileIndex >= 0 &&
+              state.activeProfileIndex < response.length
+          ? response[state.activeProfileIndex].wallet.balance
+          : activeProfileBalance;
+
+      if (activeProfileNewBalance < activeProfileBalance) {
+        emit(ProfilesCountdownState(
+            profiles: response,
+            activeProfileIndex: state.activeProfileIndex,
+            amount: activeProfileBalance - activeProfileNewBalance));
+      } else {
+        emit(ProfilesUpdatedState(
+          profiles: response,
+          activeProfileIndex: state.activeProfileIndex,
+        ));
+      }
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error('Error while fetching profiles: $error',
           methodName: stackTrace.toString());
       emit(ProfilesExternalErrorState(
         errorMessage: error.toString(),
@@ -57,6 +92,7 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
 
   void setActiveProfile(Profile profile) {
     final index = state.profiles.indexOf(profile);
+    // this should make another api call to get the profile details
     emit(ProfilesUpdatedState(
       profiles: state.profiles,
       activeProfileIndex: index,

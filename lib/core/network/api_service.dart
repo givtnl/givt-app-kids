@@ -80,7 +80,7 @@ class APIService {
       body: jsonEncode(parentGuid),
     );
 
-    log('fetch profiles status code: ${response.statusCode}');
+    log('fetch children status code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
@@ -91,6 +91,25 @@ class APIService {
       var decodedBody = jsonDecode(response.body);
       final itemMap = decodedBody['items'];
       return itemMap;
+    }
+  }
+
+  Future<List<dynamic>> fetchAllProfiles() async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles');
+
+    var response = await client.get(url);
+
+    log('fetch all profiles status code: ${response.statusCode}');
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } else {
+      Map<String, dynamic> decodedBody = jsonDecode(response.body);
+      List temp = decodedBody['item']['profiles'] as List<dynamic>;
+      return temp;
     }
   }
 

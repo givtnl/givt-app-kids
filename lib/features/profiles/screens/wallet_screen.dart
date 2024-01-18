@@ -56,7 +56,7 @@ class _WalletScreenState extends State<WalletScreen>
   Future<void> refresh() async {
     final parentGuid =
         (context.read<AuthCubit>().state as LoggedInState).session.userGUID;
-    await context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+    await context.read<ProfilesCubit>().fetchAllProfiles();
   }
 
   Future<String> _getAppIDAndVersion() async {

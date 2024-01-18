@@ -44,7 +44,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
           final parentGuid = (context.read<AuthCubit>().state as LoggedInState)
               .session
               .userGUID;
-          context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+          context.read<ProfilesCubit>().fetchAllProfiles();
 
           context.pushReplacementNamed(
             flow.isExhibition

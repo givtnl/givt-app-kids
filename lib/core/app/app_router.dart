@@ -73,7 +73,7 @@ class AppRouter {
                 (context.read<AuthCubit>().state as LoggedInState)
                     .session
                     .userGUID;
-            context.read<ProfilesCubit>().fetchProfiles(parentGuid);
+            context.read<ProfilesCubit>().fetchAllProfiles();
             return const ProfileSelectionScreen();
           },
         ),

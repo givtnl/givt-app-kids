@@ -57,7 +57,8 @@ class Profile extends Equatable {
       comment: map['comment'] ?? '',
       wallet: walletMap,
       lastDonationItem: donationMap,
-      pictureURL: pictureMap['pictureURL'],
+      pictureURL: pictureMap['pictureURL'] ??
+          "https://givtstoragedebug.blob.core.windows.net/public/cdn/tag-logos/children.svg",
     );
   }
 

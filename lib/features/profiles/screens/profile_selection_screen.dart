@@ -112,9 +112,8 @@ class ProfileSelectionScreen extends StatelessWidget {
               ? const LoadingProgressIndicator()
               : state.profiles.isEmpty
                   ? ProfilesEmptyStateWidget(
-                      onRetry: () => context
-                          .read<ProfilesCubit>()
-                          .fetchProfiles(parentGuid),
+                      onRetry: () =>
+                          context.read<ProfilesCubit>().fetchAllProfiles(),
                     )
                   : SafeArea(
                       child: Column(
