@@ -69,19 +69,19 @@ class AppRouter {
           path: Pages.profileSelection.path,
           name: Pages.profileSelection.name,
           builder: (context, state) {
-            final parentGuid =
-                (context.read<AuthCubit>().state as LoggedInState)
-                    .session
-                    .userGUID;
             context.read<ProfilesCubit>().fetchAllProfiles();
             return const ProfileSelectionScreen();
           },
         ),
         GoRoute(
-          path: Pages.wallet.path,
-          name: Pages.wallet.name,
-          builder: (context, state) => const WalletScreen(),
-        ),
+            path: Pages.wallet.path,
+            name: Pages.wallet.name,
+            builder: (context, state) {
+              final profileId =
+                  context.read<ProfilesCubit>().state.activeProfile.id;
+              context.read<ProfilesCubit>().setActiveProfile(profileId);
+              return const WalletScreen();
+            }),
         GoRoute(
           path: Pages.camera.path,
           name: Pages.camera.name,

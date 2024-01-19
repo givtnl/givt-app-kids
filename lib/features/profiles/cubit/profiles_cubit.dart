@@ -18,7 +18,7 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
 
   final ProfilesRepository _profilesRepositoy;
 
-  Future<void> fetchNoProfiles(String parentGuid) async {
+  Future<void> fetchProfilesOld(String parentGuid) async {
     final activeProfileBalance = state.activeProfile.wallet.balance;
     emit(ProfilesLoadingState(
       profiles: state.profiles,
@@ -61,21 +61,38 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
       activeProfileIndex: state.activeProfileIndex,
     ));
     try {
+      final List<Profile> newProfiles = [];
       final response = await _profilesRepositoy.fetchAllProfiles();
+      newProfiles.addAll(response);
+
+      for (var oldProfile in state.profiles) {
+        Profile? newProfile = response.firstWhere(
+          (element) => element.id == oldProfile.id,
+          orElse: () => Profile.empty(),
+        );
+        if (newProfile == Profile.empty()) {
+          final updatedProfile = oldProfile.copyWith(
+            firstName: newProfile.firstName,
+            lastName: newProfile.lastName,
+            pictureURL: newProfile.pictureURL,
+          );
+          newProfiles[state.profiles.indexOf(oldProfile)] = updatedProfile;
+        }
+      }
 
       var activeProfileNewBalance = state.activeProfileIndex >= 0 &&
               state.activeProfileIndex < response.length
-          ? response[state.activeProfileIndex].wallet.balance
+          ? newProfiles[state.activeProfileIndex].wallet.balance
           : activeProfileBalance;
 
       if (activeProfileNewBalance < activeProfileBalance) {
         emit(ProfilesCountdownState(
-            profiles: response,
+            profiles: newProfiles,
             activeProfileIndex: state.activeProfileIndex,
             amount: activeProfileBalance - activeProfileNewBalance));
       } else {
         emit(ProfilesUpdatedState(
-          profiles: response,
+          profiles: state.profiles,
           activeProfileIndex: state.activeProfileIndex,
         ));
       }
@@ -90,14 +107,14 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     }
   }
 
-  void setActiveProfile(Profile profile) async {
+  void setActiveProfile(String id) async {
+    final profile = state.profiles.firstWhere((element) => element.id == id);
     final index = state.profiles.indexOf(profile);
     final childGuid = state.profiles[index].id;
     emit(ProfilesLoadingState(
       profiles: state.profiles,
       activeProfileIndex: state.activeProfileIndex,
     ));
-    // this should make another api call to get the profile details
     try {
       final response = await _profilesRepositoy.fetchChildDetails(childGuid);
       state.profiles[index] = response;

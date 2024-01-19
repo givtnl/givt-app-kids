@@ -31,7 +31,6 @@ class ProfileSelectionScreen extends StatelessWidget {
     final flow = context.read<FlowsCubit>().state;
 
     Future<void> selectProfile(Profile profile) async {
-      context.read<ProfilesCubit>().setActiveProfile(profile);
       await AnalyticsHelper.logEvent(
         eventName: AmplitudeEvent.profilePressed,
         eventProperties: {

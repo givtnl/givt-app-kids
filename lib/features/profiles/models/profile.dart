@@ -40,6 +40,29 @@ class Profile extends Equatable {
   @override
   List<Object?> get props =>
       [id, firstName, lastName, nickname, comment, type, wallet, pictureURL];
+  Profile copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? nickname,
+    String? comment,
+    String? type,
+    Wallet? wallet,
+    Donation? lastDonationItem,
+    String? pictureURL,
+  }) {
+    return Profile(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      nickname: nickname ?? this.nickname,
+      comment: comment ?? this.comment,
+      type: type ?? this.type,
+      wallet: wallet ?? this.wallet,
+      lastDonationItem: lastDonationItem ?? this.lastDonationItem,
+      pictureURL: pictureURL ?? this.pictureURL,
+    );
+  }
 
   factory Profile.fromMap(Map<String, dynamic> map) {
     final pictureMap = map['picture'];
