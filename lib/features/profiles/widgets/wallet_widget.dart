@@ -1,21 +1,42 @@
+import 'dart:developer';
+
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-class WalletWidget extends StatelessWidget {
+class WalletWidget extends StatefulWidget {
   const WalletWidget({
     super.key,
     required this.balance,
     required this.hasDonations,
+    this.avatarUrl = '',
     this.countdownAmount = 0,
   });
   final double balance;
   final bool hasDonations;
   final double countdownAmount;
+  final String avatarUrl;
+
+  @override
+  State<WalletWidget> createState() => _WalletWidgetState();
+}
+
+class _WalletWidgetState extends State<WalletWidget> {
+  Future<String> _getAppIDAndVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    final result =
+        '${packageInfo.packageName} v${packageInfo.version}(${packageInfo.buildNumber})';
+    log(result);
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,21 +53,42 @@ class WalletWidget extends StatelessWidget {
         ),
         Column(
           children: [
+            const SizedBox(height: 10),
             Center(
-              child: SvgPicture.asset(
-                'assets/images/wallet_coins.svg',
-                fit: BoxFit.cover,
+              //TODO: replace with .network and avatarUrl from BE
+              child: Material(
+                color: Colors.transparent,
+                shape: const CircleBorder(),
+                child: InkWell(
+                  onTap: () {
+                    SystemSound.play(SystemSoundType.click);
+                    context.pushNamed(Pages.avatarSelection.name);
+                  },
+                  customBorder: const CircleBorder(),
+                  splashColor: Theme.of(context).primaryColor,
+                  onDoubleTap: () async {
+                    final appInfoString = await _getAppIDAndVersion();
+                    if (mounted) {
+                      SnackBarHelper.showMessage(context, text: appInfoString);
+                    }
+                  },
+                  child: SvgPicture.asset(
+                    'assets/images/superhero_placeholder.svg',
+                    width: 120,
+                  ),
+                ),
               ),
             ),
+            const SizedBox(height: 10),
             Countup(
-              begin: balance + countdownAmount,
-              end: balance,
+              begin: widget.balance + widget.countdownAmount,
+              end: widget.balance,
               duration: const Duration(seconds: 3),
               separator: '.',
               prefix: '\$ ',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            hasDonations
+            widget.hasDonations
                 ? Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: TextButton(

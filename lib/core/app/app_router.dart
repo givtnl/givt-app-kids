@@ -4,9 +4,12 @@ import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
+import 'package:givt_app_kids/features/avatars/cubit/avatars_cubit.dart';
+import 'package:givt_app_kids/features/avatars/widgets/avatar_selection_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
+import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
@@ -273,6 +276,32 @@ class AppRouter {
           name: Pages.successExhibitionCoin.name,
           builder: (context, state) =>
               const exhibition_flow.SuccessCoinScreen(),
+        ),
+        GoRoute(
+          path: Pages.avatarSelection.path,
+          name: Pages.avatarSelection.name,
+          builder: (context, state) {
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => AvatarsCubit(
+                    getIt(),
+                  )..fetchAvatars(),
+                  child: const AvatarSelectionScreen(),
+                ),
+                BlocProvider(
+                  create: (context) => EditProfileCubit(
+                    childGUID:
+                        context.read<ProfilesCubit>().state.activeProfile.id,
+                    editProfileRepository: getIt(),
+                    //TODO: replace with value from real profile
+                    currentProfilePicture: 'hero1.svg',
+                  ),
+                ),
+              ],
+              child: const AvatarSelectionScreen(),
+            );
+          },
         ),
       ]);
 }

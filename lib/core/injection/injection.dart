@@ -5,6 +5,7 @@ import 'package:givt_app_kids/core/app/app_config.dart';
 import 'package:givt_app_kids/core/network/api_service.dart';
 import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
 import 'package:givt_app_kids/features/avatars/repositories/avatars_repository.dart';
+import 'package:givt_app_kids/features/edit_profile/repositories/edit_profile_repository.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/repositories/create_transaction_repository.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/repositories/organisation_details_repository.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_repository.dart';
@@ -81,6 +82,11 @@ void _initRepositories() {
     )
     ..registerLazySingleton<AvatarsRepository>(
       () => AvatarsRepositoryImpl(
+        getIt(),
+      ),
+    )
+    ..registerLazySingleton<EditProfileRepository>(
+      () => EditProfileRepositoryImpl(
         getIt(),
       ),
     );
