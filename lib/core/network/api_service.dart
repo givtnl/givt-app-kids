@@ -234,4 +234,47 @@ class APIService {
       return itemsList;
     }
   }
+
+  Future<List<dynamic>> fetchAvatars() async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles/avatars');
+
+    final response = await client.get(url);
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: response.body.isNotEmpty
+            ? jsonDecode(response.body) as Map<String, dynamic>
+            : null,
+      );
+    }
+    final decodedBody = jsonDecode(response.body) as Map<String, dynamic>;
+    final itemMap = decodedBody['items'];
+    return itemMap as List<dynamic>;
+  }
+
+  Future<void> editProfile(
+    String childGUID,
+    Map<String, dynamic> body,
+  ) async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles/$childGUID');
+
+    var response = await client.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: response.body.isNotEmpty
+            ? jsonDecode(response.body) as Map<String, dynamic>
+            : null,
+      );
+    }
+  }
 }

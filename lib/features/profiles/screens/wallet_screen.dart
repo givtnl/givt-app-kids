@@ -15,10 +15,8 @@ import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
-import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:go_router/go_router.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -59,14 +57,6 @@ class _WalletScreenState extends State<WalletScreen>
     await context.read<ProfilesCubit>().fetchProfiles(parentGuid);
   }
 
-  Future<String> _getAppIDAndVersion() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    final result =
-        '${packageInfo.packageName} v${packageInfo.version}(${packageInfo.buildNumber})';
-    log(result);
-    return result;
-  }
-
   Future<bool> isIpadCheck() async {
     if (Platform.isAndroid) return false;
 
@@ -105,6 +95,15 @@ class _WalletScreenState extends State<WalletScreen>
                 Brightness.dark, // For Android (dark icons)
             statusBarBrightness: Brightness.light, // For iOS (dark icons)
           ),
+          actions: [
+            IconButton(
+              icon: const FaIcon(FontAwesomeIcons.solidPenToSquare),
+              onPressed: () {
+                SystemSound.play(SystemSoundType.click);
+                context.pushNamed(Pages.avatarSelection.name);
+              },
+            )
+          ],
         ),
         body: RefreshIndicator(
           onRefresh: refresh,
@@ -112,24 +111,11 @@ class _WalletScreenState extends State<WalletScreen>
             children: [
               ListView(),
               Column(children: [
-                GestureDetector(
-                  onLongPress: () =>
-                      context.pushReplacementNamed(Pages.searchForCoin.name),
-                  onDoubleTap: () async {
-                    final appInfoString = await _getAppIDAndVersion();
-                    if (mounted) {
-                      SnackBarHelper.showMessage(
-                        context,
-                        text: appInfoString,
-                        isError: false,
-                      );
-                    }
-                  },
-                  child: WalletWidget(
-                    balance: state.activeProfile.wallet.balance,
-                    countdownAmount: countdownAmount,
-                    hasDonations: hasDonations,
-                  ),
+                WalletWidget(
+                  balance: state.activeProfile.wallet.balance,
+                  countdownAmount: countdownAmount,
+                  hasDonations: hasDonations,
+                  avatarUrl: state.activeProfile.pictureURL,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
@@ -195,7 +181,7 @@ class _WalletScreenState extends State<WalletScreen>
               eventName: AmplitudeEvent.profileSwitchPressed,
             );
           },
-          text: state.activeProfile.firstName,
+          text: 'My Family',
           leftIcon: Icon(
             FontAwesomeIcons.arrowLeft,
             size: 24,

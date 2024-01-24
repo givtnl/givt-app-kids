@@ -10,6 +10,7 @@ enum Pages {
   test(path: '/test', name: 'TEST'),
   scanNFC(path: '/scan-nfc', name: 'SCAN_NFC'),
   history(path: '/history', name: 'HISTORY'),
+  avatarSelection(path: '/avatar-selection', name: 'AVATAR_SELECTION'),
 
   //recommendation flow
   recommendationStart(
