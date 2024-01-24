@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/features/edit_profile/models/edit_profile.dart';
 import 'package:givt_app_kids/features/edit_profile/repositories/edit_profile_repository.dart';
+import 'package:path/path.dart';
 
 part 'edit_profile_state.dart';
 
@@ -21,10 +24,11 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   final String childGUID;
 
   static String _extractFileNameFromPictureUrl(String url) {
-    if (url.isEmpty || !url.contains('/')) {
+    if (url.isEmpty) {
       return '';
     }
-    return url.split('/').last;
+    final File file = File(url);
+    return basename(file.path);
   }
 
   void selectProfilePicture(String profilePicture) {

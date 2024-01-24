@@ -240,8 +240,6 @@ class APIService {
 
     final response = await client.get(url);
 
-    log('fetch avatars response code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -269,8 +267,6 @@ class APIService {
       },
       body: jsonEncode(body),
     );
-
-    log('edit-profile status code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(

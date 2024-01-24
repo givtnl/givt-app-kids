@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,7 +31,6 @@ class _WalletWidgetState extends State<WalletWidget> {
     final packageInfo = await PackageInfo.fromPlatform();
     final result =
         '${packageInfo.packageName} v${packageInfo.version}(${packageInfo.buildNumber})';
-    log(result);
     return result;
   }
 
