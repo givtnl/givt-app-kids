@@ -130,40 +130,6 @@ class _WalletWidgetState extends State<WalletWidget> {
                           )
                         : SizedBox(),
                     SizedBox(height: widget.hasDonations ? 0 : 8),
-                    widget.hasDonations
-                        ? Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: TextButton(
-                              onPressed: () {
-                                context.pushNamed(Pages.history.name);
-                                AnalyticsHelper.logEvent(
-                                  eventName:
-                                      AmplitudeEvent.seeDonationHistoryPressed,
-                                );
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'All givts',
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 4),
-                                    child: Icon(
-                                      FontAwesomeIcons.arrowRight,
-                                      size: 24,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ))
-                        : const SizedBox(),
                   ],
                 );
               },
