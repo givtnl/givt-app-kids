@@ -23,6 +23,7 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
       profiles: state.profiles,
       activeProfileIndex: state.activeProfileIndex,
     ));
+
     try {
       final List<Profile> newProfiles = [];
       final response = await _profilesRepositoy.fetchAllProfiles();
@@ -71,7 +72,11 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     }
   }
 
-  Future<void> fetchActiveProfile(String id) async {
+  Future<void> fetchActiveProfile() async {
+    return fetchProfile(state.activeProfile.id);
+  }
+
+  Future<void> fetchProfile(String id) async {
     final profile = state.profiles.firstWhere((element) => element.id == id);
     final index = state.profiles.indexOf(profile);
     final childGuid = state.profiles[index].id;
@@ -131,7 +136,6 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
       'profiles': jsonEncode(state.profiles),
       'activeProfileIndex': state.activeProfileIndex,
     };
-    log('toJSON: $result');
     return result;
   }
 }

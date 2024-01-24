@@ -57,7 +57,7 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
                 propfilesState.activeProfile == Profile.empty()) {
               context
                   .read<ProfilesCubit>()
-                  .fetchActiveProfile(propfilesState.profiles[0].id);
+                  .fetchProfile(propfilesState.profiles[0].id);
 
               context.pushNamed(Pages.scanNFC.name);
             }

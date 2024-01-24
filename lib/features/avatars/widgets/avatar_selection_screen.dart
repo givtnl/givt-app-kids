@@ -20,8 +20,7 @@ class AvatarSelectionScreen extends StatelessWidget {
         if (state.status == EditProfileStatus.error) {
           SnackBarHelper.showMessage(context, text: state.error, isError: true);
         } else if (state.status == EditProfileStatus.edited) {
-          context.read<ProfilesCubit>().fetchActiveProfile(
-              context.read<ProfilesCubit>().state.activeProfile.id);
+          context.read<ProfilesCubit>().fetchActiveProfile();
           context.pop();
         }
       },
