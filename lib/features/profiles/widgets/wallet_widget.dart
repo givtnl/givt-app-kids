@@ -128,7 +128,7 @@ class _WalletWidgetState extends State<WalletWidget> {
                               ),
                             ),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                     SizedBox(height: widget.hasDonations ? 0 : 8),
                   ],
                 );

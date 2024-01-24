@@ -61,6 +61,7 @@ class AppRouter {
                     .fetchActiveProfile(profiles.activeProfile.id);
                 return Pages.wallet.path;
               }
+              context.read<ProfilesCubit>().fetchAllProfiles();
               return Pages.profileSelection.path;
             }
             return Pages.login.path;
@@ -74,16 +75,13 @@ class AppRouter {
         GoRoute(
           path: Pages.profileSelection.path,
           name: Pages.profileSelection.name,
-          builder: (context, state) {
-            return const ProfileSelectionScreen();
-          },
+          builder: (context, state) => const ProfileSelectionScreen(),
         ),
         GoRoute(
-            path: Pages.wallet.path,
-            name: Pages.wallet.name,
-            builder: (context, state) {
-              return const WalletScreen();
-            }),
+          path: Pages.wallet.path,
+          name: Pages.wallet.name,
+          builder: (context, state) => const WalletScreen(),
+        ),
         GoRoute(
           path: Pages.camera.path,
           name: Pages.camera.name,
