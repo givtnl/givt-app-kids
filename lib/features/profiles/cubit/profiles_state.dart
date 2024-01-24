@@ -35,13 +35,26 @@ class ProfilesInitialState extends ProfilesState {
 }
 
 class ProfilesLoadingState extends ProfilesState {
+
+  /// This is the state that is emitted when the profiles are being fetched for the first time.
   const ProfilesLoadingState({
     super.profiles = const [],
     super.activeProfileIndex = ProfilesState._noProfileSelected,
   });
 }
 
+class ProfilesUpdatingState extends ProfilesState {
+
+  /// This is the state that is emitted when the profiles are being updated
+  const ProfilesUpdatingState({
+    super.profiles = const [],
+    required super.activeProfileIndex,
+  });
+}
+
 class ProfilesUpdatedState extends ProfilesState {
+
+  /// This is the state that is emitted when the profiles are updated
   const ProfilesUpdatedState({
     required super.profiles,
     required super.activeProfileIndex,
