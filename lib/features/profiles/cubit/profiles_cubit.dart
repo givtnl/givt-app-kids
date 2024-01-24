@@ -27,22 +27,24 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     try {
       final response = await _profilesRepositoy.fetchProfiles(parentGuid);
 
-      var activeProfileNewBalance = state.activeProfileIndex >= 0 &&
-              state.activeProfileIndex < response.length
-          ? response[state.activeProfileIndex].wallet.balance
-          : activeProfileBalance;
+      // The countdown state does not work, let's please fix it in a separate ticket.
 
-      if (activeProfileNewBalance < activeProfileBalance) {
-        emit(ProfilesCountdownState(
-            profiles: response,
-            activeProfileIndex: state.activeProfileIndex,
-            amount: activeProfileBalance - activeProfileNewBalance));
-      } else {
-        emit(ProfilesUpdatedState(
-          profiles: response,
-          activeProfileIndex: state.activeProfileIndex,
-        ));
-      }
+      //final activeProfileBalance = state.activeProfile.wallet.balance;
+      // var activeProfileNewBalance = state.activeProfileIndex >= 0 &&
+      //         state.activeProfileIndex < response.length
+      //     ? response[state.activeProfileIndex].wallet.balance
+      //     : activeProfileBalance;
+
+      // if (activeProfileNewBalance < activeProfileBalance) {
+      //   emit(ProfilesCountdownState(
+      //       profiles: response,
+      //       activeProfileIndex: state.activeProfileIndex,
+      //       amount: activeProfileBalance - activeProfileNewBalance));
+      // }
+      emit(ProfilesUpdatedState(
+        profiles: response,
+        activeProfileIndex: state.activeProfileIndex,
+      ));
     } catch (error, stackTrace) {
       LoggingInfo.instance.error('Error while fetching profiles: $error',
           methodName: stackTrace.toString());
