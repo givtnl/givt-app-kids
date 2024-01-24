@@ -32,7 +32,6 @@ class ProfileSelectionScreen extends StatelessWidget {
 
     Future<void> selectProfile(Profile profile, int i) async {
       context.read<ProfilesCubit>().setActiveProfileIndex(i);
-
       await AnalyticsHelper.logEvent(
         eventName: AmplitudeEvent.profilePressed,
         eventProperties: {
@@ -51,15 +50,6 @@ class ProfileSelectionScreen extends StatelessWidget {
             onTap: () {
               selectProfile(profiles[i], i);
               context.read<ProfilesCubit>().fetchActiveProfile(profiles[i].id);
-              // if (profiles[i].wallet.balance < 1 &&
-              //     flow.flowType != FlowType.none) {
-              //   SnackBarHelper.showMessage(
-              //     context,
-              //     text:
-              //         '${profiles[i].firstName} has no money. Please top up first.',
-              //   );
-              //   return;
-              // }
 
               if (flow.isCoin) {
                 if (flow.flowType == FlowType.deepLinkCoin) {

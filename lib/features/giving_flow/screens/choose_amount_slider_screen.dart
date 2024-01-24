@@ -40,6 +40,8 @@ class ChooseAmountSliderScreen extends StatelessWidget {
               text: 'Cannot create transaction. Please try again later.',
               isError: true);
         } else if (state is CreateTransactionSuccessState) {
+          profilesCubit
+              .fetchActiveProfile(profilesCubit.state.activeProfile.id);
           context.pushReplacementNamed(
             flow.isExhibition
                 ? Pages.successExhibitionCoin.name
