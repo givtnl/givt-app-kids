@@ -107,20 +107,13 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     }
   }
 
-  void setActiveProfileIndex(int index) {
-    emit(ProfilesUpdatedState(
-      profiles: state.profiles,
-      activeProfileIndex: index,
-    ));
-  }
-
   Future<void> fetchActiveProfile(String id) async {
     final profile = state.profiles.firstWhere((element) => element.id == id);
     final index = state.profiles.indexOf(profile);
     final childGuid = state.profiles[index].id;
     emit(ProfilesLoadingState(
       profiles: state.profiles,
-      activeProfileIndex: state.activeProfileIndex,
+      activeProfileIndex: index,
     ));
     try {
       final response = await _profilesRepositoy.fetchChildDetails(childGuid);
