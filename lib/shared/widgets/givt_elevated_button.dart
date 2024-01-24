@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class GivtElevatedButton extends StatefulWidget {
   const GivtElevatedButton({
@@ -58,6 +59,7 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
         onTapDown: widget.isDisabled == true
             ? null
             : (details) {
+                SystemSound.play(SystemSoundType.click);
                 setState(() {
                   isPressed = true;
                 });
@@ -66,6 +68,7 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
             ? null
             : () async {
                 await Future.delayed(const Duration(milliseconds: 50));
+                HapticFeedback.lightImpact();
                 setState(() {
                   isPressed = false;
                 });
@@ -74,6 +77,7 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
             ? null
             : (details) async {
                 await Future.delayed(const Duration(milliseconds: 50));
+                HapticFeedback.lightImpact();
                 setState(() {
                   isPressed = false;
                 });
