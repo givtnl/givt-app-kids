@@ -40,9 +40,6 @@ class ChooseAmountSliderScreen extends StatelessWidget {
               text: 'Cannot create transaction. Please try again later.',
               isError: true);
         } else if (state is CreateTransactionSuccessState) {
-          // this doesnt do shit anymore because it doesnt fetch the balances
-          context.read<ProfilesCubit>().fetchAllProfiles();
-
           context.pushReplacementNamed(
             flow.isExhibition
                 ? Pages.successExhibitionCoin.name

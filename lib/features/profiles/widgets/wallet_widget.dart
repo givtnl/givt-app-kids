@@ -54,7 +54,7 @@ class WalletWidget extends StatelessWidget {
                         prefix: '\$ ',
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
-                const SizedBox(height: 8),
+                SizedBox(height: hasDonations ? 0 : 8),
                 hasDonations
                     ? Padding(
                         padding: const EdgeInsets.only(bottom: 8),

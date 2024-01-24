@@ -11,6 +11,7 @@ class Profile extends Equatable {
     required this.nickname,
     required this.comment,
     required this.wallet,
+    required this.hasDonations,
     required this.lastDonationItem,
     required this.pictureURL,
   });
@@ -23,6 +24,7 @@ class Profile extends Equatable {
             nickname: '',
             comment: '',
             type: '',
+            hasDonations: false,
             wallet: const Wallet.empty(),
             lastDonationItem: Donation.empty(),
             pictureURL: '');
@@ -33,13 +35,23 @@ class Profile extends Equatable {
   final String nickname;
   final String comment;
   final String type;
+  final bool hasDonations;
   final Wallet wallet;
   final Donation lastDonationItem;
   final String pictureURL;
 
   @override
-  List<Object?> get props =>
-      [id, firstName, lastName, nickname, comment, type, wallet, pictureURL];
+  List<Object?> get props => [
+        id,
+        firstName,
+        lastName,
+        nickname,
+        comment,
+        type,
+        hasDonations,
+        wallet,
+        pictureURL
+      ];
   Profile copyWith({
     String? id,
     String? firstName,
@@ -47,6 +59,7 @@ class Profile extends Equatable {
     String? nickname,
     String? comment,
     String? type,
+    bool? hasDonations,
     Wallet? wallet,
     Donation? lastDonationItem,
     String? pictureURL,
@@ -58,6 +71,7 @@ class Profile extends Equatable {
       nickname: nickname ?? this.nickname,
       comment: comment ?? this.comment,
       type: type ?? this.type,
+      hasDonations: hasDonations ?? this.hasDonations,
       wallet: wallet ?? this.wallet,
       lastDonationItem: lastDonationItem ?? this.lastDonationItem,
       pictureURL: pictureURL ?? this.pictureURL,
@@ -81,7 +95,8 @@ class Profile extends Equatable {
       lastName: map['lastName'] ?? '',
       nickname: map['nickname'] ?? '',
       comment: map['comment'] ?? '',
-      type: map['type'] ?? 'XX',
+      type: map['type'] ?? '',
+      hasDonations: map['hasDonations'] ?? false,
       wallet: walletMap,
       lastDonationItem: donationMap,
       pictureURL: pictureMap['pictureURL'] ??
@@ -97,6 +112,7 @@ class Profile extends Equatable {
       'nickname': nickname,
       'comment': comment,
       'type': type,
+      'hasDonations': hasDonations,
       'wallet': wallet.toJson(),
       'latestDonation': lastDonationItem.toJson(),
       'picture': {

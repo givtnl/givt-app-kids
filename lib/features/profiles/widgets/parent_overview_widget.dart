@@ -14,23 +14,37 @@ class ParentOverviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: _padding,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: profiles
-            .map(
-              (profile) => ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: SvgPicture.network(
-                  profile.pictureURL,
-                  width: 48,
-                  height: 48,
-                ),
-              ),
-            )
-            .toList(),
-      ),
+    return Column(
+      children: [
+        SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+        Text(
+          'Parents',
+          style: Theme.of(context)
+              .textTheme
+              .labelSmall
+              ?.copyWith(color: Theme.of(context).colorScheme.outline),
+        ),
+        const SizedBox(height: 8),
+        Padding(
+          padding: _padding,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: profiles
+                .map(
+                  (profile) => ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: SvgPicture.network(
+                      profile.pictureURL,
+                      width: 48,
+                      height: 48,
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+        SizedBox(height: MediaQuery.sizeOf(context).height * 0.05),
+      ],
     );
   }
 }

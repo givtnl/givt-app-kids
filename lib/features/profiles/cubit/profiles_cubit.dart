@@ -92,7 +92,7 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
             amount: activeProfileBalance - activeProfileNewBalance));
       } else {
         emit(ProfilesUpdatedState(
-          profiles: state.profiles,
+          profiles: newProfiles,
           activeProfileIndex: state.activeProfileIndex,
         ));
       }
@@ -107,7 +107,14 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     }
   }
 
-  void setActiveProfile(String id) async {
+  void setActiveProfileIndex(int index) {
+    emit(ProfilesUpdatedState(
+      profiles: state.profiles,
+      activeProfileIndex: index,
+    ));
+  }
+
+  Future<void> fetchActiveProfile(String id) async {
     final profile = state.profiles.firstWhere((element) => element.id == id);
     final index = state.profiles.indexOf(profile);
     final childGuid = state.profiles[index].id;

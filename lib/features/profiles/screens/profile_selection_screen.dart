@@ -30,7 +30,9 @@ class ProfileSelectionScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final flow = context.read<FlowsCubit>().state;
 
-    Future<void> selectProfile(Profile profile) async {
+    Future<void> selectProfile(Profile profile, int i) async {
+      context.read<ProfilesCubit>().setActiveProfileIndex(i);
+
       await AnalyticsHelper.logEvent(
         eventName: AmplitudeEvent.profilePressed,
         eventProperties: {
@@ -41,17 +43,16 @@ class ProfileSelectionScreen extends StatelessWidget {
 
     List<Widget> createGridItems(List<Profile> profiles) {
       List<Widget> gridItems = [];
-      final flow = context.read<FlowsCubit>().state;
-
       for (var i = 0, j = 0;
           i < profiles.length && i < maxVivibleProfiles;
           i++, j++) {
         gridItems.add(
           GestureDetector(
             onTap: () {
-              selectProfile(profiles[i]);
-
-              // if (profiles[i].wallet.balance < 1) {
+              selectProfile(profiles[i], i);
+              context.read<ProfilesCubit>().fetchActiveProfile(profiles[i].id);
+              // if (profiles[i].wallet.balance < 1 &&
+              //     flow.flowType != FlowType.none) {
               //   SnackBarHelper.showMessage(
               //     context,
               //     text:
@@ -121,25 +122,15 @@ class ProfileSelectionScreen extends StatelessWidget {
                   : SafeArea(
                       child: Column(
                         children: [
-                          SizedBox(
-                              height: MediaQuery.sizeOf(context).height * 0.02),
-                          Text(
-                            'Parents',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                          ),
-                          const SizedBox(height: 8),
-                          ParentOverviewWidget(
-                            profiles: state.profiles
-                                .where((p) => p.type == 'Parent')
-                                .toList(),
-                          ),
-                          SizedBox(
-                              height: MediaQuery.sizeOf(context).height * 0.05),
+                          flow.flowType == FlowType.none
+                              ? ParentOverviewWidget(
+                                  profiles: state.profiles
+                                      .where((p) => p.type == 'Parent')
+                                      .toList(),
+                                )
+                              : SizedBox(
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.1),
                           const Text(
                             'Who would like to give?',
                             textAlign: TextAlign.center,
