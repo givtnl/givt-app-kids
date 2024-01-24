@@ -19,7 +19,6 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
   final ProfilesRepository _profilesRepositoy;
 
   Future<void> fetchProfilesOld(String parentGuid) async {
-    final activeProfileBalance = state.activeProfile.wallet.balance;
     emit(ProfilesLoadingState(
       profiles: state.profiles,
       activeProfileIndex: state.activeProfileIndex,
