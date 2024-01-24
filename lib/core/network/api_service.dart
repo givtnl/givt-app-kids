@@ -238,28 +238,19 @@ class APIService {
   Future<List<dynamic>> fetchAvatars() async {
     final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles/avatars');
 
-    final response = await client.get(
-      url,
-      //not sure do we need headers here?
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    );
+    final response = await client.get(url);
 
     log('fetch avatars response code: ${response.statusCode}');
 
-    // if (response.statusCode >= 400) {
-    //   throw GivtServerException(
-    //     statusCode: response.statusCode,
-    //     body: response.body.isNotEmpty
-    //         ? jsonDecode(response.body) as Map<String, dynamic>
-    //         : null,
-    //   );
-    // }
-    // final decodedBody = jsonDecode(response.body) as Map<String, dynamic>;
-
-    final decodedBody = _getMockAvatars();
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: response.body.isNotEmpty
+            ? jsonDecode(response.body) as Map<String, dynamic>
+            : null,
+      );
+    }
+    final decodedBody = jsonDecode(response.body) as Map<String, dynamic>;
     final itemMap = decodedBody['items'];
     return itemMap as List<dynamic>;
   }
@@ -272,7 +263,6 @@ class APIService {
 
     var response = await client.put(
       url,
-      //not sure do we need headers here?
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -291,103 +281,4 @@ class APIService {
       );
     }
   }
-}
-
-/////////////////////
-
-Map<String, dynamic> _getMockAvatars() {
-  return {
-    "items": [
-      {
-        "filename": "hero1.svg",
-        "url":
-            "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero1.svg",
-      },
-      {
-        "filename": "hero2.svg",
-        "url":
-            "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero2.svg",
-      },
-      {
-        "filename": "hero3.svg",
-        "url":
-            "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero3.svg",
-      },
-      {
-        "filename": "hero4.svg",
-        "url":
-            "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero4.svg",
-      },
-      {
-        "filename": "hero5.svg",
-        "url":
-            "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero5.svg",
-      },
-      {
-        "filename": "hero6.svg",
-        "url":
-            "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero6.svg",
-      },
-      {
-        "filename": "hero7.svg",
-        "url":
-            "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero7.svg",
-      },
-      {
-        "filename": "hero8.svg",
-        "url":
-            "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero8.svg",
-      },
-      {
-        "filename": "hero9.svg",
-        "url":
-            "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero9.svg",
-      },
-      // {
-      //   "filename": "hero1.svg",
-      //   "url":
-      //       "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero1.svg",
-      // },
-      // {
-      //   "filename": "hero2.svg",
-      //   "url":
-      //       "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero2.svg",
-      // },
-      // {
-      //   "filename": "hero3.svg",
-      //   "url":
-      //       "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero3.svg",
-      // },
-      // {
-      //   "filename": "hero4.svg",
-      //   "url":
-      //       "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero4.svg",
-      // },
-      // {
-      //   "filename": "hero5.svg",
-      //   "url":
-      //       "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero5.svg",
-      // },
-      // {
-      //   "filename": "hero6.svg",
-      //   "url":
-      //       "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero6.svg",
-      // },
-      // {
-      //   "filename": "hero7.svg",
-      //   "url":
-      //       "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero7.svg",
-      // },
-      // {
-      //   "filename": "hero8.svg",
-      //   "url":
-      //       "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero8.svg",
-      // },
-      // {
-      //   "filename": "hero9.svg",
-      //   "url":
-      //       "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero9.svg",
-      // }
-    ]
-  };
 }

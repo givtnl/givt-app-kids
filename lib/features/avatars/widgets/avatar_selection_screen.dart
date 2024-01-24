@@ -90,9 +90,9 @@ Widget _getContent({
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return AvatarItem(
-                  filename: avatarsState.avatars[index].filename,
-                  url: avatarsState.avatars[index].url,
-                  isSelected: avatarsState.avatars[index].filename ==
+                  filename: avatarsState.avatars[index].fileName,
+                  url: avatarsState.avatars[index].pictureURL,
+                  isSelected: avatarsState.avatars[index].fileName ==
                       editProfileState.selectedProfilePicture,
                 );
               },

@@ -281,21 +281,20 @@ class AppRouter {
           path: Pages.avatarSelection.path,
           name: Pages.avatarSelection.name,
           builder: (context, state) {
+            final activeProfile =
+                context.read<ProfilesCubit>().state.activeProfile;
             return MultiBlocProvider(
               providers: [
                 BlocProvider(
                   create: (context) => AvatarsCubit(
                     getIt(),
                   )..fetchAvatars(),
-                  child: const AvatarSelectionScreen(),
                 ),
                 BlocProvider(
                   create: (context) => EditProfileCubit(
-                    childGUID:
-                        context.read<ProfilesCubit>().state.activeProfile.id,
+                    childGUID: activeProfile.id,
                     editProfileRepository: getIt(),
-                    //TODO: replace with value from real profile
-                    currentProfilePicture: 'hero1.svg',
+                    currentProfilePicture: activeProfile.pictureURL,
                   ),
                 ),
               ],

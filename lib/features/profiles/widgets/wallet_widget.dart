@@ -55,7 +55,6 @@ class _WalletWidgetState extends State<WalletWidget> {
           children: [
             const SizedBox(height: 10),
             Center(
-              //TODO: replace with .network and avatarUrl from BE
               child: Material(
                 color: Colors.transparent,
                 shape: const CircleBorder(),
@@ -72,8 +71,8 @@ class _WalletWidgetState extends State<WalletWidget> {
                       SnackBarHelper.showMessage(context, text: appInfoString);
                     }
                   },
-                  child: SvgPicture.asset(
-                    'assets/images/superhero_placeholder.svg',
+                  child: SvgPicture.network(
+                    widget.avatarUrl,
                     width: 120,
                   ),
                 ),

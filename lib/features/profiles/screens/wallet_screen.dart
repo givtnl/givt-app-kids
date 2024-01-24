@@ -115,6 +115,7 @@ class _WalletScreenState extends State<WalletScreen>
                   balance: state.activeProfile.wallet.balance,
                   countdownAmount: countdownAmount,
                   hasDonations: hasDonations,
+                  avatarUrl: state.activeProfile.pictureURL,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),

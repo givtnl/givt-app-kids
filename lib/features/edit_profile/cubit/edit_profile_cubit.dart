@@ -11,12 +11,21 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     required this.childGUID,
     required String currentProfilePicture,
   }) : super(EditProfileState(
-          currentProfilePicture: currentProfilePicture,
-          selectedProfilePicture: currentProfilePicture,
+          currentProfilePicture:
+              _extractFileNameFromPictureUrl(currentProfilePicture),
+          selectedProfilePicture:
+              _extractFileNameFromPictureUrl(currentProfilePicture),
         ));
 
   final EditProfileRepository editProfileRepository;
   final String childGUID;
+
+  static String _extractFileNameFromPictureUrl(String url) {
+    if (url.isEmpty || !url.contains('/')) {
+      return '';
+    }
+    return url.split('/').last;
+  }
 
   void selectProfilePicture(String profilePicture) {
     emit(state.copyWith(selectedProfilePicture: profilePicture));
