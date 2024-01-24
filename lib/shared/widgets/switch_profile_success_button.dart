@@ -32,6 +32,7 @@ class SwitchProfileSuccessButton extends StatelessWidget {
         if (flowsCubit.state.flowType == FlowType.deepLinkCoin) {
           flowsCubit.startInAppCoinFlow();
         }
+        profilesCubit.fetchAllProfiles();
         context.goNamed(Pages.profileSelection.name);
         AnalyticsHelper.logEvent(
           eventName: AmplitudeEvent.profileSwitchPressed,
