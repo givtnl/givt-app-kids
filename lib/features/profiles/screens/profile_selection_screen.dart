@@ -30,16 +30,6 @@ class ProfileSelectionScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final flow = context.read<FlowsCubit>().state;
 
-    Future<void> selectProfile(Profile profile, int i) async {
-      context.read<ProfilesCubit>().setActiveProfileIndex(i);
-      await AnalyticsHelper.logEvent(
-        eventName: AmplitudeEvent.profilePressed,
-        eventProperties: {
-          "profile_name": '${profile.firstName} ${profile.lastName}',
-        },
-      );
-    }
-
     List<Widget> createGridItems(List<Profile> profiles) {
       List<Widget> gridItems = [];
       for (var i = 0, j = 0;
@@ -48,22 +38,33 @@ class ProfileSelectionScreen extends StatelessWidget {
         gridItems.add(
           GestureDetector(
             onTap: () {
-              selectProfile(profiles[i], i);
               context.read<ProfilesCubit>().fetchActiveProfile(profiles[i].id);
 
-              if (flow.isCoin) {
-                if (flow.flowType == FlowType.deepLinkCoin) {
-                  context.pushNamed(Pages.chooseAmountSlider.name);
-                } else {
-                  context.pushNamed(Pages.scanNFC.name);
-                }
-              } else if (flow.isQRCode) {
+              AnalyticsHelper.logEvent(
+                eventName: AmplitudeEvent.profilePressed,
+                eventProperties: {
+                  "profile_name":
+                      '${profiles[i].firstName} ${profiles[i].lastName}',
+                },
+              );
+
+              if (flow.isQRCode) {
                 context.pushNamed(Pages.camera.name);
-              } else if (flow.isRecommendation) {
-                context.pushNamed(Pages.recommendationStart.name);
-              } else {
-                context.pushReplacementNamed(Pages.wallet.name);
+                return;
               }
+              if (flow.isRecommendation) {
+                context.pushNamed(Pages.recommendationStart.name);
+                return;
+              }
+              if (flow.flowType == FlowType.deepLinkCoin) {
+                context.pushNamed(Pages.chooseAmountSlider.name);
+                return;
+              }
+              if (flow.isCoin) {
+                context.pushNamed(Pages.scanNFC.name);
+                return;
+              }
+              context.pushReplacementNamed(Pages.wallet.name);
             },
             child: ProfileItem(
               name: profiles[i].firstName,
