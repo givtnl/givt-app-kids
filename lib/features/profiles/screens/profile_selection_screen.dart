@@ -27,14 +27,11 @@ class ProfileSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     final flow = context.read<FlowsCubit>().state;
 
     List<Widget> createGridItems(List<Profile> profiles) {
       List<Widget> gridItems = [];
-      for (var i = 0, j = 0;
-          i < profiles.length && i < maxVivibleProfiles;
-          i++, j++) {
+      for (var i = 0; i < profiles.length && i < maxVivibleProfiles; i++) {
         gridItems.add(
           GestureDetector(
             onTap: () {
@@ -64,6 +61,7 @@ class ProfileSelectionScreen extends StatelessWidget {
                 context.pushNamed(Pages.scanNFC.name);
                 return;
               }
+
               context.pushReplacementNamed(Pages.wallet.name);
             },
             child: ProfileItem(
@@ -111,54 +109,42 @@ class ProfileSelectionScreen extends StatelessWidget {
                           context.read<ProfilesCubit>().fetchAllProfiles(),
                     )
                   : SafeArea(
-                      child: Column(
-                        children: [
-                          flow.flowType == FlowType.none
-                              ? ParentOverviewWidget(
-                                  profiles: state.profiles
-                                      .where((p) => p.type == 'Parent')
-                                      .toList(),
-                                )
-                              : SizedBox(
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 0.1),
-                          const Text(
-                            'Who would like to give?',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppTheme.defaultTextColor,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SingleChildScrollView(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.height * 0.06),
-                              child: Center(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: size.height * 0.02,
-                                    ),
-                                    GridView.count(
-                                      shrinkWrap: true,
-                                      childAspectRatio: 0.95,
-                                      crossAxisCount:
-                                          gridItems.length == 1 ? 1 : 2,
-                                      mainAxisSpacing: 10,
-                                      crossAxisSpacing: 10,
-                                      children: gridItems,
-                                    ),
-                                  ],
-                                ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          children: [
+                            flow.flowType == FlowType.none
+                                ? ParentOverviewWidget(
+                                    profiles: state.profiles
+                                        .where((p) => p.type == 'Parent')
+                                        .toList(),
+                                  )
+                                : SizedBox(
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.1),
+                            const Text(
+                              'Who would like to give?',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppTheme.defaultTextColor,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                          SizedBox(height: 100)
-                        ],
+                            const SizedBox(height: 24),
+                            SingleChildScrollView(
+                              child: GridView.count(
+                                shrinkWrap: true,
+                                childAspectRatio: 0.74,
+                                crossAxisCount:
+                                    gridItems.length < 3 ? gridItems.length : 3,
+                                mainAxisSpacing: 20,
+                                crossAxisSpacing: 20,
+                                children: gridItems,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,

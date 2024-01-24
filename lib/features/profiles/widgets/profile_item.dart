@@ -13,33 +13,26 @@ class ProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Width - 2*24 (side padding) - 2*20 (item padding) / 3 (items in a row)
+    var imgSize = (MediaQuery.of(context).size.width - 24*2 - 20*2) / 3;
+
     return Container(
       alignment: Alignment.center,
-      child: Stack(
+      child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: SvgPicture.network(
-                  imageUrl,
-                  width: size.width * 0.3,
-                  height: size.width * 0.3,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 15,
-                  color: Color(0xFF3B3240),
-                ),
-              ),
-            ],
+          SvgPicture.network(
+            imageUrl,
+            width: imgSize,
+            height: imgSize,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            name,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Color(0xFF3B3240),
+            ),
           ),
         ],
       ),
