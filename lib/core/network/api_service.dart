@@ -36,8 +36,6 @@ class APIService {
       body: body,
     );
 
-    log('login status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -59,8 +57,6 @@ class APIService {
       body: jsonEncode(body),
     );
 
-    log('login by voucher status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -75,8 +71,6 @@ class APIService {
     final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles');
 
     var response = await client.get(url);
-
-    log('fetch all profiles status code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
@@ -93,8 +87,6 @@ class APIService {
     final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles/$id');
 
     var response = await client.get(url);
-
-    log('fetch all profiles status code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
@@ -120,8 +112,6 @@ class APIService {
       },
     );
 
-    log('get organisation details status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -143,8 +133,6 @@ class APIService {
       body: json.encode(transaction.toJson()),
     );
 
-    log('create transaction status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -164,8 +152,6 @@ class APIService {
       url,
       body: body,
     );
-
-    log('refresh-accesstoken status code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
@@ -191,8 +177,6 @@ class APIService {
       body: jsonEncode(body),
     );
 
-    log('fetch donation history pageNr: ${body['pageNumber']}, status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -209,8 +193,6 @@ class APIService {
     final url = Uri.https(_apiURL, '/givt4kidsservice/v1/Organisation/tags');
 
     var response = await client.get(url);
-
-    log('get-tags response code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
@@ -234,8 +216,6 @@ class APIService {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(body),
     );
-
-    log('get-recommended-organisations status code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
