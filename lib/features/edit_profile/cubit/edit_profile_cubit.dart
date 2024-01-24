@@ -32,7 +32,10 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   }
 
   void selectProfilePicture(String profilePicture) {
-    emit(state.copyWith(selectedProfilePicture: profilePicture));
+    emit(state.copyWith(
+        selectedProfilePicture: profilePicture,
+        status: EditProfileStatus.selectingAvatar,
+        error: ''));
   }
 
   Future<void> editProfile() async {
