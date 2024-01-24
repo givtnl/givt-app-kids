@@ -56,8 +56,12 @@ class AppRouter {
             final profiles = context.read<ProfilesCubit>().state;
             if (auth is LoggedInState) {
               if (profiles.isProfileSelected) {
+                context
+                    .read<ProfilesCubit>()
+                    .fetchActiveProfile(profiles.activeProfile.id);
                 return Pages.wallet.path;
               }
+              context.read<ProfilesCubit>().fetchAllProfiles();
               return Pages.profileSelection.path;
             }
             return Pages.login.path;
@@ -71,14 +75,7 @@ class AppRouter {
         GoRoute(
           path: Pages.profileSelection.path,
           name: Pages.profileSelection.name,
-          builder: (context, state) {
-            final parentGuid =
-                (context.read<AuthCubit>().state as LoggedInState)
-                    .session
-                    .userGUID;
-            context.read<ProfilesCubit>().fetchProfiles(parentGuid);
-            return const ProfileSelectionScreen();
-          },
+          builder: (context, state) => const ProfileSelectionScreen(),
         ),
         GoRoute(
           path: Pages.wallet.path,

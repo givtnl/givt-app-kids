@@ -31,18 +31,13 @@ class _ActionTileState extends State<ActionTile> {
   Color? borderColor;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     backgroundColor = widget.backgroundColor;
     borderColor = widget.borderColor;
     if (widget.isDisabled) {
       backgroundColor = AppTheme.disabledTileBackground;
       borderColor = AppTheme.disabledTileBorder;
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
         onTap: widget.isDisabled

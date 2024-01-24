@@ -45,9 +45,7 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
         if (authState is ExternalErrorState) {
           _showErrorMessage();
         } else if (authState is LoggedInState) {
-          context
-              .read<ProfilesCubit>()
-              .fetchProfiles(authState.session.userGUID);
+          context.read<ProfilesCubit>().fetchAllProfiles();
         }
       },
       builder: (context, authState) {
@@ -59,7 +57,7 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
                 propfilesState.activeProfile == Profile.empty()) {
               context
                   .read<ProfilesCubit>()
-                  .setActiveProfile(propfilesState.profiles[0]);
+                  .fetchActiveProfile(propfilesState.profiles[0].id);
 
               context.pushNamed(Pages.scanNFC.name);
             }

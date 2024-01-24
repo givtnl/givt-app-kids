@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/avatars/cubit/avatars_cubit.dart';
 import 'package:givt_app_kids/features/avatars/widgets/avatar_item.dart';
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
@@ -21,10 +20,8 @@ class AvatarSelectionScreen extends StatelessWidget {
         if (state.status == EditProfileStatus.error) {
           SnackBarHelper.showMessage(context, text: state.error, isError: true);
         } else if (state.status == EditProfileStatus.edited) {
-          context.read<ProfilesCubit>().fetchProfiles(
-              (context.read<AuthCubit>().state as LoggedInState)
-                  .session
-                  .userGUID);
+          context.read<ProfilesCubit>().fetchActiveProfile(
+              context.read<ProfilesCubit>().state.activeProfile.id);
           context.pop();
         }
       },

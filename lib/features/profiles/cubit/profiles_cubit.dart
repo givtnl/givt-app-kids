@@ -18,34 +18,50 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
 
   final ProfilesRepository _profilesRepositoy;
 
-  Future<void> fetchProfiles(String parentGuid) async {
-    final activeProfileBalance = state.activeProfile.wallet.balance;
+  Future<void> fetchAllProfiles() async {
     emit(ProfilesLoadingState(
       profiles: state.profiles,
       activeProfileIndex: state.activeProfileIndex,
     ));
     try {
-      final response = await _profilesRepositoy.fetchProfiles(parentGuid);
+      final List<Profile> newProfiles = [];
+      final response = await _profilesRepositoy.fetchAllProfiles();
+      newProfiles.addAll(response);
 
-      var activeProfileNewBalance = state.activeProfileIndex >= 0 &&
-              state.activeProfileIndex < response.length
-          ? response[state.activeProfileIndex].wallet.balance
-          : activeProfileBalance;
-
-      if (activeProfileNewBalance < activeProfileBalance) {
-        emit(ProfilesCountdownState(
-            profiles: response,
-            activeProfileIndex: state.activeProfileIndex,
-            amount: activeProfileBalance - activeProfileNewBalance));
-      } else {
-        emit(ProfilesUpdatedState(
-          profiles: response,
-          activeProfileIndex: state.activeProfileIndex,
-        ));
+      for (var oldProfile in state.profiles) {
+        Profile? newProfile = response.firstWhere(
+          (element) => element.id == oldProfile.id,
+          orElse: () => Profile.empty(),
+        );
+        if (newProfile == Profile.empty()) {
+          final updatedProfile = oldProfile.copyWith(
+            firstName: newProfile.firstName,
+            lastName: newProfile.lastName,
+            pictureURL: newProfile.pictureURL,
+          );
+          newProfiles[state.profiles.indexOf(oldProfile)] = updatedProfile;
+        }
       }
+      // The countdown state does not work, let's please fix it in a separate ticket.
+
+      // final activeProfileBalance = state.activeProfile.wallet.balance;
+      // var activeProfileNewBalance = state.activeProfileIndex >= 0 &&
+      //         state.activeProfileIndex < response.length
+      //     ? newProfiles[state.activeProfileIndex].wallet.balance
+      //     : activeProfileBalance;
+
+      // if (activeProfileNewBalance < activeProfileBalance) {
+      //   emit(ProfilesCountdownState(
+      //       profiles: newProfiles,
+      //       activeProfileIndex: state.activeProfileIndex,
+      //       amount: activeProfileBalance - activeProfileNewBalance));
+      // }
+      emit(ProfilesUpdatedState(
+        profiles: newProfiles,
+        activeProfileIndex: state.activeProfileIndex,
+      ));
     } catch (error, stackTrace) {
-      LoggingInfo.instance.error(
-          'Error while fetching profiles: $error',
+      LoggingInfo.instance.error('Error while fetching profiles: $error',
           methodName: stackTrace.toString());
       emit(ProfilesExternalErrorState(
         errorMessage: error.toString(),
@@ -55,12 +71,30 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     }
   }
 
-  void setActiveProfile(Profile profile) {
+  Future<void> fetchActiveProfile(String id) async {
+    final profile = state.profiles.firstWhere((element) => element.id == id);
     final index = state.profiles.indexOf(profile);
-    emit(ProfilesUpdatedState(
+    final childGuid = state.profiles[index].id;
+    emit(ProfilesLoadingState(
       profiles: state.profiles,
       activeProfileIndex: index,
     ));
+    try {
+      final response = await _profilesRepositoy.fetchChildDetails(childGuid);
+      state.profiles[index] = response;
+      emit(ProfilesUpdatedState(
+        profiles: state.profiles,
+        activeProfileIndex: index,
+      ));
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error('Error while fetching profiles: $error',
+          methodName: stackTrace.toString());
+      emit(ProfilesExternalErrorState(
+        errorMessage: error.toString(),
+        activeProfileIndex: state.activeProfileIndex,
+        profiles: state.profiles,
+      ));
+    }
   }
 
   void clearProfiles() {
