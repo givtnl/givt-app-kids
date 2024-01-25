@@ -33,17 +33,20 @@ class ParentOverviewWidget extends StatelessWidget {
                 .map(
                   (profile) => ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: SvgPicture.network(
-                      profile.pictureURL,
-                      width: 48,
-                      height: 48,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: SvgPicture.network(
+                        profile.pictureURL,
+                        width: 64,
+                        height: 64,
+                      ),
                     ),
                   ),
                 )
                 .toList(),
           ),
         ),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.05),
+        const SizedBox(height: 32),
       ],
     );
   }
