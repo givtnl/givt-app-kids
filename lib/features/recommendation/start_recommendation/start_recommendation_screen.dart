@@ -18,7 +18,7 @@ class StartRecommendationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: GivtBackButton(onPressedExt: () {
-          context.read<ProfilesCubit>().fetchAllProfiles();
+          context.read<ProfilesCubit>().fetchActiveProfile();
           context.read<FlowsCubit>().resetFlow();
         }),
         backgroundColor: AppTheme.offWhite,

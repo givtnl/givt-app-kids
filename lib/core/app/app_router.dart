@@ -56,9 +56,7 @@ class AppRouter {
             final profiles = context.read<ProfilesCubit>().state;
             if (auth is LoggedInState) {
               if (profiles.isProfileSelected) {
-                context
-                    .read<ProfilesCubit>()
-                    .fetchActiveProfile(profiles.activeProfile.id);
+                context.read<ProfilesCubit>().fetchActiveProfile();
                 return Pages.wallet.path;
               }
               context.read<ProfilesCubit>().fetchAllProfiles();

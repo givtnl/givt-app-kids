@@ -23,6 +23,7 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
       profiles: state.profiles,
       activeProfileIndex: state.activeProfileIndex,
     ));
+
     try {
       final List<Profile> newProfiles = [];
       final response = await _profilesRepositoy.fetchAllProfiles();
@@ -71,14 +72,27 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     }
   }
 
-  Future<void> fetchActiveProfile(String id) async {
+  Future<void> fetchActiveProfile() async {
+    return fetchProfile(state.activeProfile.id);
+  }
+
+  Future<void> fetchProfile(String id, [bool forceLoading = false]) async {
     final profile = state.profiles.firstWhere((element) => element.id == id);
     final index = state.profiles.indexOf(profile);
     final childGuid = state.profiles[index].id;
-    emit(ProfilesLoadingState(
-      profiles: state.profiles,
-      activeProfileIndex: index,
-    ));
+
+    if (index == state.activeProfileIndex && !forceLoading) {
+      // When updating the same profile, we don't want to show the loading state
+      emit(ProfilesUpdatingState(
+        profiles: state.profiles,
+        activeProfileIndex: index,
+      ));
+    } else {
+      emit(ProfilesLoadingState(
+        profiles: state.profiles,
+        activeProfileIndex: index,
+      ));
+    }
     try {
       final response = await _profilesRepositoy.fetchChildDetails(childGuid);
       state.profiles[index] = response;
@@ -122,7 +136,6 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
       'profiles': jsonEncode(state.profiles),
       'activeProfileIndex': state.activeProfileIndex,
     };
-    log('toJSON: $result');
     return result;
   }
 }
