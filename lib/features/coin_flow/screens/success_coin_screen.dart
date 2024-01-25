@@ -25,7 +25,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final profiles = context.read<ProfilesCubit>().state.profiles;
+    final profilesState = context.read<ProfilesCubit>().state;
 
     return Scaffold(
       backgroundColor: AppTheme.successBackgroundLightBlue,
@@ -74,16 +74,17 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: profiles.length == 1
-          ? const BackHomeButton()
-          : const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                BackHomeButton(),
-                SizedBox(height: 12),
-                SwitchProfileSuccessButton(),
-              ],
-            ),
+      floatingActionButton:
+          (profilesState is ProfilesUpdatedState && profilesState.isOnlyChild)
+              ? const BackHomeButton()
+              : const Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    BackHomeButton(),
+                    SizedBox(height: 12),
+                    SwitchProfileSuccessButton(),
+                  ],
+                ),
     );
   }
 }
