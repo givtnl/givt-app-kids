@@ -30,7 +30,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
   Widget build(BuildContext context) {
     final organisation =
         context.read<OrganisationDetailsCubit>().state.organisation;
-    final profiles = context.read<ProfilesCubit>().state.profiles;
+    final profilesState = context.read<ProfilesCubit>().state;
 
     return Scaffold(
       appBar: AppBar(
@@ -82,8 +82,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton:
-          (profiles.where((profile) => profile.type.contains('Child')).length ==
-                  1)
+          (profilesState is ProfilesUpdatedState && profilesState.isOnlyChild)
               ? const BackHomeButton()
               : const Column(
                   mainAxisSize: MainAxisSize.min,
