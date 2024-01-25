@@ -182,7 +182,10 @@ class _WalletScreenState extends State<WalletScreen>
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: GivtFloatingActionButton(
           onTap: () {
+            // Reset data + flow and go back to profile selection
             context.read<ProfilesCubit>().fetchAllProfiles();
+            context.read<FlowsCubit>().resetFlow();
+
             context.pushReplacementNamed(Pages.profileSelection.name);
             AnalyticsHelper.logEvent(
               eventName: AmplitudeEvent.profileSwitchPressed,
