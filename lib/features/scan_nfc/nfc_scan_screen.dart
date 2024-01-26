@@ -108,8 +108,6 @@ class NFCScanPage extends StatelessWidget {
                 if (context.read<FlowsCubit>().state.isExhibition) {
                   context.read<ProfilesCubit>().clearProfiles();
                   context.read<AuthCubit>().logout();
-                } else {
-                  context.read<FlowsCubit>().resetFlow();
                 }
               },
             ),
