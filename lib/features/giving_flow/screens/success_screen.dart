@@ -30,7 +30,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
   Widget build(BuildContext context) {
     final organisation =
         context.read<OrganisationDetailsCubit>().state.organisation;
-    final profiles = context.read<ProfilesCubit>().state.profiles;
+    final profilesState = context.read<ProfilesCubit>().state;
 
     return Scaffold(
       appBar: AppBar(
@@ -81,16 +81,17 @@ class _SuccessScreenState extends State<SuccessScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: profiles.length == 1
-          ? const BackHomeButton()
-          : const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                BackHomeButton(),
-                SizedBox(height: 12),
-                SwitchProfileSuccessButton(),
-              ],
-            ),
+      floatingActionButton:
+          profilesState.isOnlyChild
+              ? const BackHomeButton()
+              : const Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    BackHomeButton(),
+                    SizedBox(height: 12),
+                    SwitchProfileSuccessButton(),
+                  ],
+                ),
     );
   }
 }

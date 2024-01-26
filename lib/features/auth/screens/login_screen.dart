@@ -10,6 +10,7 @@ import 'package:givt_app_kids/features/auth/dialogs/account_locked_dialog.dart';
 import 'package:givt_app_kids/features/auth/widgets/download_givt_app_widget.dart';
 import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
+import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
@@ -75,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (state is LoggedInState) {
           if (context.read<FlowsCubit>().state.flowType !=
               FlowType.exhibition) {
+            context.read<ProfilesCubit>().fetchAllProfiles();
             context.pushReplacementNamed(Pages.profileSelection.name);
           }
         } else if (state is AccountLockedState) {
@@ -271,10 +273,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         : null,
                   ),
                   const SizedBox(height: 24),
-                    Column(children: [
-                      DownloadGivtAppWidget(),
-                      const SizedBox(height: 24),
-                    ]),
+                  Column(children: [
+                    DownloadGivtAppWidget(),
+                    const SizedBox(height: 24),
+                  ]),
                 ],
               ),
             ),

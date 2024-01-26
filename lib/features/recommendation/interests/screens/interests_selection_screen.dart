@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/interests/widgets/interest_card.dart';
 import 'package:givt_app_kids/features/recommendation/interests/widgets/interests_tally.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/recommendation_givy_bubble.dart';
+import 'package:givt_app_kids/helpers/svg_manager.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 
@@ -18,6 +20,8 @@ class InterestsSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<InterestsCubit, InterestsState>(
       builder: (context, state) {
+        final svgManager = getIt<SvgAssetLoaderManager>();
+
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
@@ -71,6 +75,8 @@ class InterestsSelectionScreen extends StatelessWidget {
                         (BuildContext context, int index) {
                           return InterestCard(
                             interest: state.interests[index],
+                            picture: svgManager.buildSvgPicture(
+                                state.interests[index].pictureUrl),
                             isSelected: state.selectedInterests
                                 .contains(state.interests[index]),
                             onPressed: () {

@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -41,11 +40,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
               text: 'Cannot create transaction. Please try again later.',
               isError: true);
         } else if (state is CreateTransactionSuccessState) {
-          final parentGuid = (context.read<AuthCubit>().state as LoggedInState)
-              .session
-              .userGUID;
-          context.read<ProfilesCubit>().fetchProfiles(parentGuid);
-
+          profilesCubit.fetchActiveProfile();
           context.pushReplacementNamed(
             flow.isExhibition
                 ? Pages.successExhibitionCoin.name

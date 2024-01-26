@@ -4,9 +4,12 @@ import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
+import 'package:givt_app_kids/features/avatars/cubit/avatars_cubit.dart';
+import 'package:givt_app_kids/features/avatars/widgets/avatar_selection_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
+import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
@@ -53,8 +56,10 @@ class AppRouter {
             final profiles = context.read<ProfilesCubit>().state;
             if (auth is LoggedInState) {
               if (profiles.isProfileSelected) {
+                context.read<ProfilesCubit>().fetchActiveProfile();
                 return Pages.wallet.path;
               }
+              context.read<ProfilesCubit>().fetchAllProfiles();
               return Pages.profileSelection.path;
             }
             return Pages.login.path;
@@ -68,14 +73,7 @@ class AppRouter {
         GoRoute(
           path: Pages.profileSelection.path,
           name: Pages.profileSelection.name,
-          builder: (context, state) {
-            final parentGuid =
-                (context.read<AuthCubit>().state as LoggedInState)
-                    .session
-                    .userGUID;
-            context.read<ProfilesCubit>().fetchProfiles(parentGuid);
-            return const ProfileSelectionScreen();
-          },
+          builder: (context, state) => const ProfileSelectionScreen(),
         ),
         GoRoute(
           path: Pages.wallet.path,
@@ -273,6 +271,31 @@ class AppRouter {
           name: Pages.successExhibitionCoin.name,
           builder: (context, state) =>
               const exhibition_flow.SuccessCoinScreen(),
+        ),
+        GoRoute(
+          path: Pages.avatarSelection.path,
+          name: Pages.avatarSelection.name,
+          builder: (context, state) {
+            final activeProfile =
+                context.read<ProfilesCubit>().state.activeProfile;
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => AvatarsCubit(
+                    getIt(),
+                  )..fetchAvatars(),
+                ),
+                BlocProvider(
+                  create: (context) => EditProfileCubit(
+                    childGUID: activeProfile.id,
+                    editProfileRepository: getIt(),
+                    currentProfilePicture: activeProfile.pictureURL,
+                  ),
+                ),
+              ],
+              child: const AvatarSelectionScreen(),
+            );
+          },
         ),
       ]);
 }

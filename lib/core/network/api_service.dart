@@ -36,8 +36,6 @@ class APIService {
       body: body,
     );
 
-    log('login status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -59,8 +57,6 @@ class APIService {
       body: jsonEncode(body),
     );
 
-    log('login by voucher status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -71,16 +67,10 @@ class APIService {
     }
   }
 
-  Future<List<dynamic>> fetchProfiles(String parentGuid) async {
-    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/User/get-children');
+  Future<List<dynamic>> fetchAllProfiles() async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles');
 
-    var response = await client.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(parentGuid),
-    );
-
-    log('fetch profiles status code: ${response.statusCode}');
+    var response = await client.get(url);
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
@@ -88,9 +78,25 @@ class APIService {
         body: jsonDecode(response.body) as Map<String, dynamic>,
       );
     } else {
-      var decodedBody = jsonDecode(response.body);
-      final itemMap = decodedBody['items'];
-      return itemMap;
+      Map<String, dynamic> decodedBody = jsonDecode(response.body);
+      return decodedBody['item']['profiles'] as List<dynamic>;
+    }
+  }
+
+  Future<dynamic> fetchChildDetails(String id) async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles/$id');
+
+    var response = await client.get(url);
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } else {
+      Map<String, dynamic> decodedBody = jsonDecode(response.body);
+      final temp = decodedBody['item']['profile'];
+      return temp;
     }
   }
 
@@ -105,8 +111,6 @@ class APIService {
         'Accept': 'application/json',
       },
     );
-
-    log('get organisation details status code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
@@ -129,8 +133,6 @@ class APIService {
       body: json.encode(transaction.toJson()),
     );
 
-    log('create transaction status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -150,8 +152,6 @@ class APIService {
       url,
       body: body,
     );
-
-    log('refresh-accesstoken status code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
@@ -177,8 +177,6 @@ class APIService {
       body: jsonEncode(body),
     );
 
-    log('fetch donation history pageNr: ${body['pageNumber']}, status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -195,8 +193,6 @@ class APIService {
     final url = Uri.https(_apiURL, '/givt4kidsservice/v1/Organisation/tags');
 
     var response = await client.get(url);
-
-    log('get-tags response code: ${response.statusCode}');
 
     if (response.statusCode >= 400) {
       throw GivtServerException(
@@ -221,8 +217,6 @@ class APIService {
       body: jsonEncode(body),
     );
 
-    log('get-recommended-organisations status code: ${response.statusCode}');
-
     if (response.statusCode >= 400) {
       throw GivtServerException(
         statusCode: response.statusCode,
@@ -232,6 +226,49 @@ class APIService {
       var decodedBody = json.decode(response.body);
       var itemsList = decodedBody['items'] as List<dynamic>;
       return itemsList;
+    }
+  }
+
+  Future<List<dynamic>> fetchAvatars() async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles/avatars');
+
+    final response = await client.get(url);
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: response.body.isNotEmpty
+            ? jsonDecode(response.body) as Map<String, dynamic>
+            : null,
+      );
+    }
+    final decodedBody = jsonDecode(response.body) as Map<String, dynamic>;
+    final itemMap = decodedBody['items'];
+    return itemMap as List<dynamic>;
+  }
+
+  Future<void> editProfile(
+    String childGUID,
+    Map<String, dynamic> body,
+  ) async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles/$childGUID');
+
+    var response = await client.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: response.body.isNotEmpty
+            ? jsonDecode(response.body) as Map<String, dynamic>
+            : null,
+      );
     }
   }
 }
