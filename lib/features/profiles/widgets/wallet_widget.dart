@@ -64,6 +64,10 @@ class _WalletWidgetState extends State<WalletWidget> {
                           onTap: () {
                             SystemSound.play(SystemSoundType.click);
                             context.pushNamed(Pages.avatarSelection.name);
+                            AnalyticsHelper.logEvent(
+                              eventName:
+                                  AmplitudeEvent.editProfilePictureClicked,
+                            );
                           },
                           customBorder: const CircleBorder(),
                           splashColor: Theme.of(context).primaryColor,

@@ -6,6 +6,7 @@ import 'package:givt_app_kids/features/avatars/cubit/avatars_cubit.dart';
 import 'package:givt_app_kids/features/avatars/widgets/avatar_item.dart';
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
@@ -112,7 +113,16 @@ Widget _getContent({
                 child: GivtElevatedButton(
                   text: 'Save',
                   isDisabled: !editProfileState.isSameProfilePicture,
-                  onTap: () => context.read<EditProfileCubit>().editProfile(),
+                  onTap: () {
+                    context.read<EditProfileCubit>().editProfile();
+                    AnalyticsHelper.logEvent(
+                      eventName: AmplitudeEvent.saveAvatarClicked,
+                      eventProperties: {
+                        AnalyticsHelper.avatarImageKey:
+                            editProfileState.selectedProfilePicture,
+                      },
+                    );
+                  },
                 ),
               ),
             ],
