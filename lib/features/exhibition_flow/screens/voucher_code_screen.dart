@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/widgets/voucher_code_input.dart';
-import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
@@ -65,9 +64,7 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
           builder: (context, propfilesState) {
             return Scaffold(
               appBar: AppBar(
-                leading: GivtBackButton(
-                  onPressedExt: () => context.read<FlowsCubit>().resetFlow(),
-                ),
+                leading: const GivtBackButton(),
               ),
               body: authState is LoadingState ||
                       propfilesState is ProfilesLoadingState

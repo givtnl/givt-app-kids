@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -33,8 +32,8 @@ class _GivtBackButtonState extends State<GivtBackButton> {
   @override
   Widget build(BuildContext context) {
     final flow = context.read<FlowsCubit>().state;
-    final isDeepLink =
-        (!context.canPop() && (flow.isCoin || flow.isRecommendation || flow.isQRCode));
+    final isDeepLink = (!context.canPop() &&
+        (flow.isCoin || flow.isRecommendation || flow.isQRCode));
     final isVisible = context.canPop() || isDeepLink;
     if (isPressed == true) {
       dropShadowHeight = 2;
