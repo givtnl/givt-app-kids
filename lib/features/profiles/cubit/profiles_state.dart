@@ -25,6 +25,12 @@ abstract class ProfilesState extends Equatable {
       return profiles[activeProfileIndex];
     }
   }
+
+  bool get isOnlyChild {
+    if (profiles.isEmpty) return false;
+    return profiles.where((element) => element.type.contains('Child')).length ==
+        1;
+  }
 }
 
 class ProfilesInitialState extends ProfilesState {
@@ -56,11 +62,6 @@ class ProfilesUpdatedState extends ProfilesState {
     required super.profiles,
     required super.activeProfileIndex,
   });
-
-  bool get isOnlyChild {
-    return profiles.where((element) => element.type.contains('Child')).length ==
-        1;
-  }
 }
 
 class ProfilesExternalErrorState extends ProfilesState {

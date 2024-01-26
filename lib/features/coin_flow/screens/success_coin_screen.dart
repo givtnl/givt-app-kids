@@ -74,17 +74,16 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:
-          (profilesState is ProfilesUpdatedState && profilesState.isOnlyChild)
-              ? const BackHomeButton()
-              : const Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    BackHomeButton(),
-                    SizedBox(height: 12),
-                    SwitchProfileSuccessButton(),
-                  ],
-                ),
+      floatingActionButton: profilesState.isOnlyChild
+          ? const BackHomeButton()
+          : const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BackHomeButton(),
+                SizedBox(height: 12),
+                SwitchProfileSuccessButton(),
+              ],
+            ),
     );
   }
 }
