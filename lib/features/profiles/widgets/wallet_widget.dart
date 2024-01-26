@@ -65,7 +65,8 @@ class _WalletWidgetState extends State<WalletWidget> {
                             SystemSound.play(SystemSoundType.click);
                             context.pushNamed(Pages.avatarSelection.name);
                             AnalyticsHelper.logEvent(
-                              eventName: AmplitudeEvent.profileImageClicked,
+                              eventName:
+                                  AmplitudeEvent.editProfilePictureClicked,
                             );
                           },
                           customBorder: const CircleBorder(),

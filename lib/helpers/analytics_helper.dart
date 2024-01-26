@@ -33,9 +33,9 @@ enum AmplitudeEvent {
   coinScannedError('in_app_coin_scanned_error'),
   deeplinkCoinScanned('deeplink_coin_scanned'),
   organisationSelected('organisation_is_set'),
-  profileImageClicked('profile_image_clicked'),
+  editAvatarIconClicked('edit_avatar_icon_clicked'),
   avatarImageSelected('avatar_image_selected'),
-  editProfileClicked('edit_profile_clicked'),
+  editProfilePictureClicked('edit_profile_picture_clicked'),
   saveAvatarClicked('save_avatar_clicked'),
   ;
 

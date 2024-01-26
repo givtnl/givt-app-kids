@@ -100,7 +100,7 @@ class _WalletScreenState extends State<WalletScreen>
                 SystemSound.play(SystemSoundType.click);
                 context.pushNamed(Pages.avatarSelection.name);
                 AnalyticsHelper.logEvent(
-                  eventName: AmplitudeEvent.editProfileClicked,
+                  eventName: AmplitudeEvent.editAvatarIconClicked,
                 );
               },
             )
