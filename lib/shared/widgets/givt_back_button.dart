@@ -34,7 +34,7 @@ class _GivtBackButtonState extends State<GivtBackButton> {
   Widget build(BuildContext context) {
     final flow = context.read<FlowsCubit>().state;
     final isDeepLink =
-        (!context.canPop() && flow.flowType == FlowType.inAppCoin);
+        (!context.canPop() && (flow.isCoin || flow.isRecommendation || flow.isQRCode));
     final isVisible = context.canPop() || isDeepLink;
     if (isPressed == true) {
       dropShadowHeight = 2;

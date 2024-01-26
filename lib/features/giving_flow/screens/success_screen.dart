@@ -82,7 +82,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton:
-          (profilesState is ProfilesUpdatedState && profilesState.isOnlyChild)
+          profilesState.isOnlyChild
               ? const BackHomeButton()
               : const Column(
                   mainAxisSize: MainAxisSize.min,
