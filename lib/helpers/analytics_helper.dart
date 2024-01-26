@@ -33,6 +33,10 @@ enum AmplitudeEvent {
   coinScannedError('in_app_coin_scanned_error'),
   deeplinkCoinScanned('deeplink_coin_scanned'),
   organisationSelected('organisation_is_set'),
+  profileImageClicked('profile_image_clicked'),
+  avatarImageSelected('avatar_image_selected'),
+  editProfileClicked('edit_profile_clicked'),
+  saveAvatarClicked('save_avatar_clicked'),
   ;
 
   final String value;
@@ -49,6 +53,7 @@ class AnalyticsHelper {
   static const String interestKey = "all_selected_interests";
   static const String recommendedCharitiesKey = "recommended_charities";
   static const String charityNameKey = "charity_name";
+  static const String avatarImageKey = 'avatar_image_selected';
   static Amplitude? _amplitude;
 
   static Future<void> init(String key) async {

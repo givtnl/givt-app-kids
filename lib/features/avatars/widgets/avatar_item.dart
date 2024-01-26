@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class AvatarItem extends StatelessWidget {
   const AvatarItem({
@@ -25,6 +26,12 @@ class AvatarItem extends StatelessWidget {
         onTap: () {
           SystemSound.play(SystemSoundType.click);
           context.read<EditProfileCubit>().selectProfilePicture(filename);
+          AnalyticsHelper.logEvent(
+            eventName: AmplitudeEvent.avatarImageSelected,
+            eventProperties: {
+              AnalyticsHelper.avatarImageKey: filename,
+            },
+          );
         },
         customBorder: const CircleBorder(),
         splashColor: Theme.of(context).primaryColor,
