@@ -61,7 +61,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       onSecondaryContainer: secondary.get(10),
       tertiary: tertiary.get(40),
       onTertiary: tertiary.get(98),
-      tertiaryContainer: tertiary.get(90),
+      tertiaryContainer: tertiary.get(80),
       onTertiaryContainer: tertiary.get(10),
       error: base.error.get(40),
       onError: base.error.get(100),

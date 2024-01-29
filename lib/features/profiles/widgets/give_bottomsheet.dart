@@ -45,9 +45,9 @@ class GiveBottomSheet extends StatelessWidget {
                 isDisabled: false,
                 text: "QR Code",
                 iconPath: 'assets/images/give_with_qr.svg',
-                borderColor: Theme.of(context).colorScheme.onInverseSurface,
-                backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                textColor: Theme.of(context).colorScheme.secondary,
+                borderColor: Theme.of(context).colorScheme.tertiaryContainer,
+                backgroundColor: Theme.of(context).colorScheme.onTertiary,
+                textColor: Theme.of(context).colorScheme.tertiary,
                 onTap: () {
                   AnalyticsHelper.logEvent(
                     eventName: AmplitudeEvent.choseGiveWithQRCode,
