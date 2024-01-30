@@ -9,6 +9,7 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
+import 'package:givt_app_kids/shared/widgets/reward_banner_dialog.dart';
 import 'package:go_router/go_router.dart';
 
 class AvatarSelectionScreen extends StatelessWidget {
@@ -23,6 +24,21 @@ class AvatarSelectionScreen extends StatelessWidget {
         } else if (state.status == EditProfileStatus.edited) {
           context.read<ProfilesCubit>().fetchActiveProfile();
           context.pop();
+          if (state.isAvatarDefault) {
+            AnalyticsHelper.logEvent(
+              eventName: AmplitudeEvent.rewardAchieved,
+              eventProperties: {
+                AnalyticsHelper.rewardKey: 'Avatar updated',
+              },
+            );
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              barrierColor:
+                  Theme.of(context).colorScheme.primary.withOpacity(.25),
+              builder: (context) => const RewardBannerDialog(),
+            );
+          }
         }
       },
       builder: (BuildContext context, EditProfileState editProfileState) =>
@@ -112,7 +128,7 @@ Widget _getContent({
                 padding: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
                 child: GivtElevatedButton(
                   text: 'Save',
-                  isDisabled: !editProfileState.isSameProfilePicture,
+                  isDisabled: editProfileState.isSameProfilePicture,
                   onTap: () {
                     context.read<EditProfileCubit>().editProfile();
                     AnalyticsHelper.logEvent(

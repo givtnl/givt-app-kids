@@ -10,13 +10,19 @@ class EditProfileState extends Equatable {
     this.error = '',
   });
 
+  static const String _defaultAvatarFilename = 'Default.svg';
+
   final EditProfileStatus status;
   final String currentProfilePicture;
   final String selectedProfilePicture;
   final String error;
 
   bool get isSameProfilePicture {
-    return currentProfilePicture != selectedProfilePicture;
+    return currentProfilePicture == selectedProfilePicture;
+  }
+
+  bool get isAvatarDefault {
+    return currentProfilePicture == _defaultAvatarFilename;
   }
 
   @override

@@ -44,7 +44,10 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     try {
       await editProfileRepository.editProfile(
         childGUID: childGUID,
-        editProfile: EditProfile(profilePicture: state.selectedProfilePicture),
+        editProfile: EditProfile(
+          profilePicture: state.selectedProfilePicture,
+          rewardAchieved: state.isAvatarDefault,
+        ),
       );
 
       emit(state.copyWith(status: EditProfileStatus.edited));
