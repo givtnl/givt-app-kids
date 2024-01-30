@@ -13,7 +13,6 @@ import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
@@ -130,9 +129,13 @@ class _WalletScreenState extends State<WalletScreen>
                               isDisabled: !isGiveButtonActive,
                               text: "Give",
                               iconPath: 'assets/images/give_tile.svg',
-                              backgroundColor: AppTheme.highlight98,
-                              borderColor: AppTheme.highlight80,
-                              textColor: AppTheme.highlight40,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.onSecondary,
+                              borderColor: Theme.of(context)
+                                  .colorScheme
+                                  .onInverseSurface,
+                              textColor:
+                                  Theme.of(context).colorScheme.secondary,
                               onTap: () {
                                 AnalyticsHelper.logEvent(
                                     eventName:
