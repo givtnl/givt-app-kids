@@ -9,6 +9,7 @@ import 'package:givt_app_kids/features/avatars/screens/avatar_selection_screen.d
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
+import 'package:givt_app_kids/features/design_alignment_screen/design_alignment_screen.dart';
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
@@ -296,6 +297,11 @@ class AppRouter {
               child: const AvatarSelectionScreen(),
             );
           },
+        ),
+        GoRoute(
+          path: Pages.designAlignmentScreen.path,
+          name: Pages.designAlignmentScreen.name,
+          builder: (context, state) => const DesignAlignmentScreen(),
         ),
       ]);
 }

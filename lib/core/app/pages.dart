@@ -31,7 +31,10 @@ enum Pages {
       path: '/exhibition-organisations', name: 'EXHIBITION_ORGANISATIONS'),
   successExhibitionCoin(
       path: '/success-exhibition-coin', name: 'SUCCESS_EXHIBITION_COIN'),
-  ;
+
+  //design alignment
+  designAlignmentScreen(
+      path: '/design-alignment-screen', name: 'DESIGN_ALIGNMENT_SCREEN');
 
   final String path;
   final String name;
