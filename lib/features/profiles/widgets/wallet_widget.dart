@@ -61,6 +61,12 @@ class _WalletWidgetState extends State<WalletWidget> {
                         color: Colors.transparent,
                         shape: const CircleBorder(),
                         child: InkWell(
+                          onLongPress: () {
+                            if (appFlavor == 'development') {
+                              context
+                                  .pushNamed(Pages.designAlignmentScreen.name);
+                            }
+                          },
                           onTap: () {
                             SystemSound.play(SystemSoundType.click);
                             context.pushNamed(Pages.avatarSelection.name);
