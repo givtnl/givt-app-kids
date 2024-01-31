@@ -55,8 +55,8 @@ jobs:
           channel: 'stable'
           flutter-version: ${{ inputs.flutter-version }}
 
-      - name: Run Fastlane Testflight
-        if: github.ref != 'refs/heads/main'
+      - name: Run Fastlane Testflight Dev/Custom branch
+        if: ${{ github.ref != 'refs/heads/main' }}
         uses: maierj/fastlane-action@v2.3.0
         with:
           lane: ios testflight_release
@@ -70,7 +70,7 @@ jobs:
           FLAVOR: ${{ env.FLAVOR }}
 
       - name: Run Fastlane Production
-        if: github.ref == 'refs/heads/main'
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: maierj/fastlane-action@v2.3.0
         with:
           lane: ios prod_release
