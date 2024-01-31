@@ -24,7 +24,7 @@ class AvatarSelectionScreen extends StatelessWidget {
         } else if (state.status == EditProfileStatus.edited) {
           context.read<ProfilesCubit>().fetchActiveProfile();
           context.pop();
-          if (state.isAvatarDefault) {
+          if (state.isRewardAchieved) {
             AnalyticsHelper.logEvent(
               eventName: AmplitudeEvent.rewardAchieved,
               eventProperties: {
