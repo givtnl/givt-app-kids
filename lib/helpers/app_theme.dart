@@ -22,6 +22,10 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const disabledTileBackground = Color(0xFFF5F4F5);
   static const disabledTileBorder = Color(0xFFC8C6C9);
 
+//reward banner colors
+  static const highlight30 = Color(0xFF514700);
+  static const highlight95 = Color(0xFFFFF1B2);
+
 //colors of tiles in the give bottomsheet
   static const lightPurple = Color(0xFFF9F6FD);
   static const darkPurpleText = Color(0xFF7957A2);

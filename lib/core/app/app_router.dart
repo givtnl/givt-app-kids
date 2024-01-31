@@ -5,7 +5,7 @@ import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/avatars/cubit/avatars_cubit.dart';
-import 'package:givt_app_kids/features/avatars/widgets/avatar_selection_screen.dart';
+import 'package:givt_app_kids/features/avatars/screens/avatar_selection_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/search_for_coin_screen.dart';
 import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dart';
