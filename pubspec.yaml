@@ -46,6 +46,7 @@ dependencies:
   ios_utsname_ext: ^2.2.0
   logging: ^1.2.0
   path: ^1.8.3
+  responsive_sizer: ^3.3.0+1
 
 dev_dependencies:
   flutter_test:
