@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class GivtFloatingActionButton extends StatefulWidget {
   const GivtFloatingActionButton({
@@ -9,14 +10,16 @@ class GivtFloatingActionButton extends StatefulWidget {
     required this.text,
     this.leftIcon,
     this.rightIcon,
+    this.scalePixels = false,
   });
 
   final VoidCallback onTap;
   final bool? isDisabled;
   final String text;
-
   final Widget? leftIcon;
   final Widget? rightIcon;
+  final bool scalePixels;
+
   @override
   _GivtFloatingActionButtonState createState() =>
       _GivtFloatingActionButtonState();
@@ -111,7 +114,9 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
                 child: widget.leftIcon),
             Text(
               widget.text,
-              style: Theme.of(context).textTheme.labelMedium,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    fontSize: widget.scalePixels ? 20.sp : 20,
+                  ),
             ),
           ],
         ),

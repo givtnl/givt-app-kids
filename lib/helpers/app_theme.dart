@@ -48,7 +48,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static final historyAllowanceColor =
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
   static const downloadAppBackground = Color.fromARGB(255, 46, 41, 87);
-
+// FOR TESTING
+  static const testingTextStyleLabelMedium = TextStyle(fontSize: 20);
   Scheme _schemeLight() {
     final base = CorePalette.of(primaryColor.value);
     final primary = base.primary;

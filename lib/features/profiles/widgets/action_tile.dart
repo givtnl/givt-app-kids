@@ -4,15 +4,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class ActionTile extends StatefulWidget {
-  const ActionTile(
-      {super.key,
-      required this.isDisabled,
-      required this.text,
-      required this.iconPath,
-      required this.borderColor,
-      required this.backgroundColor,
-      required this.textColor,
-      required this.onTap});
+  const ActionTile({
+    super.key,
+    required this.isDisabled,
+    required this.text,
+    required this.iconPath,
+    required this.borderColor,
+    required this.backgroundColor,
+    required this.textColor,
+    required this.onTap,
+    this.fontSize = 20,
+    this.imageSize = 140,
+  });
   final String text;
   final String iconPath;
   final VoidCallback onTap;
@@ -20,13 +23,16 @@ class ActionTile extends StatefulWidget {
   final Color borderColor;
   final Color backgroundColor;
   final Color textColor;
+  final double fontSize;
+  final double imageSize;
+
   @override
   _ActionTileState createState() => _ActionTileState();
 }
 
 class _ActionTileState extends State<ActionTile> {
   double bottomBorderWidth = 6;
-  double widgetHeight = 208;
+  double widgetHeight = 218;
   Color? backgroundColor;
   Color? borderColor;
 
@@ -52,7 +58,7 @@ class _ActionTileState extends State<ActionTile> {
                 SystemSound.play(SystemSoundType.click);
                 setState(() {
                   bottomBorderWidth = 2;
-                  widgetHeight = 204;
+                  widgetHeight = 214;
                 });
               },
         onTapCancel: widget.isDisabled
@@ -62,7 +68,7 @@ class _ActionTileState extends State<ActionTile> {
                 HapticFeedback.lightImpact();
                 setState(() {
                   bottomBorderWidth = 6;
-                  widgetHeight = 208;
+                  widgetHeight = 218;
                 });
               },
         onTapUp: widget.isDisabled
@@ -72,7 +78,7 @@ class _ActionTileState extends State<ActionTile> {
                 HapticFeedback.lightImpact();
                 setState(() {
                   bottomBorderWidth = 6;
-                  widgetHeight = 208;
+                  widgetHeight = 218;
                 });
               },
         child: Container(
@@ -102,7 +108,7 @@ class _ActionTileState extends State<ActionTile> {
                     opacity: widget.isDisabled ? 0.5 : 1,
                     child: SvgPicture.asset(
                       widget.iconPath,
-                      height: 140,
+                      height: MediaQuery.sizeOf(context).width * .35,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -113,8 +119,7 @@ class _ActionTileState extends State<ActionTile> {
                       color: widget.isDisabled
                           ? AppTheme.disabledTileBorder
                           : widget.textColor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
+                      fontSize: widget.fontSize,
                       height: 0,
                     ),
                   ),

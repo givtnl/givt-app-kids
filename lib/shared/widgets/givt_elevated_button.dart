@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class GivtElevatedButton extends StatefulWidget {
   const GivtElevatedButton({
@@ -13,6 +15,8 @@ class GivtElevatedButton extends StatefulWidget {
     this.rightIcon,
     this.leadingImage,
     this.widthMultiplier = .9,
+    this.scalePixels = false,
+    this.textStyle = AppTheme.testingTextStyleLabelMedium,
   });
 
   final VoidCallback? onTap;
@@ -24,7 +28,8 @@ class GivtElevatedButton extends StatefulWidget {
   final Widget? rightIcon;
   final Widget? leadingImage;
   final double widthMultiplier;
-
+  final bool scalePixels;
+  final TextStyle? textStyle;
   @override
   _GivtElevatedButtonState createState() => _GivtElevatedButtonState();
 }
@@ -100,8 +105,8 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
           padding: EdgeInsets.only(
               bottom: widget.isDisabled == true ? 0 : dropShadowHeight),
           child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 12),
               width: MediaQuery.sizeOf(context).width * widget.widthMultiplier,
-              height: 58,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: widget.isDisabled == true
@@ -130,11 +135,9 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
           Text(
             widget.text,
             style: widget.isDisabled == true
-                ? Theme.of(context)
-                    .textTheme
-                    .labelMedium
+                ? widget.textStyle
                     ?.copyWith(color: Theme.of(context).colorScheme.outline)
-                : Theme.of(context).textTheme.labelMedium,
+                : widget.textStyle,
           ),
         ],
       );
@@ -147,11 +150,9 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
           Text(
             widget.text,
             style: widget.isDisabled == true
-                ? Theme.of(context)
-                    .textTheme
-                    .labelMedium
+                ? widget.textStyle
                     ?.copyWith(color: Theme.of(context).colorScheme.outline)
-                : Theme.of(context).textTheme.labelMedium,
+                : widget.textStyle,
           ),
           Padding(
               padding: const EdgeInsets.only(left: 8), child: widget.leftIcon),
@@ -169,15 +170,13 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
             Text(
               widget.text,
               style: widget.isDisabled == true
-                  ? Theme.of(context)
-                      .textTheme
-                      .labelMedium
+                  ? widget.textStyle
                       ?.copyWith(color: Theme.of(context).colorScheme.outline)
-                  : Theme.of(context).textTheme.labelMedium,
+                  : widget.textStyle,
             ),
             // all leading images must be 32 pixels wide
             // this centers the text
-            const SizedBox(width: 32),
+            SizedBox(width: widget.scalePixels ? 32.sp : 32),
           ],
         ),
       );
@@ -186,11 +185,9 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
       child: Text(
         widget.text,
         style: widget.isDisabled == true
-            ? Theme.of(context)
-                .textTheme
-                .labelMedium
+            ? widget.textStyle
                 ?.copyWith(color: Theme.of(context).colorScheme.outline)
-            : Theme.of(context).textTheme.labelMedium,
+            : widget.textStyle,
       ),
     );
   }
