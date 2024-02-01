@@ -17,6 +17,7 @@ class GivtElevatedButton extends StatefulWidget {
     this.widthMultiplier = .9,
     this.scalePixels = false,
     this.textStyle = AppTheme.testingTextStyleLabelMedium,
+    this.givenHeight,
   });
 
   final VoidCallback? onTap;
@@ -30,6 +31,7 @@ class GivtElevatedButton extends StatefulWidget {
   final double widthMultiplier;
   final bool scalePixels;
   final TextStyle? textStyle;
+  final double? givenHeight;
   @override
   _GivtElevatedButtonState createState() => _GivtElevatedButtonState();
 }
@@ -106,6 +108,8 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
               bottom: widget.isDisabled == true ? 0 : dropShadowHeight),
           child: Container(
               padding: const EdgeInsets.symmetric(vertical: 12),
+              height: widget.givenHeight ?? 58,
+              // widget.scalePixels == true ? 58 + 20.sp : 58,
               width: MediaQuery.sizeOf(context).width * widget.widthMultiplier,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
