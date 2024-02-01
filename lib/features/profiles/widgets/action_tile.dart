@@ -108,7 +108,7 @@ class _ActionTileState extends State<ActionTile> {
                     opacity: widget.isDisabled ? 0.5 : 1,
                     child: SvgPicture.asset(
                       widget.iconPath,
-                      height: MediaQuery.sizeOf(context).width * .35,
+                      height: 140,
                     ),
                   ),
                   const SizedBox(height: 8),
