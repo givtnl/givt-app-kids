@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class GivtElevatedButton extends StatefulWidget {
   const GivtElevatedButton({
@@ -15,9 +13,6 @@ class GivtElevatedButton extends StatefulWidget {
     this.rightIcon,
     this.leadingImage,
     this.widthMultiplier = .9,
-    this.scalePixels = false,
-    this.textStyle = AppTheme.testingTextStyleLabelMedium,
-    this.givenHeight,
   });
 
   final VoidCallback? onTap;
@@ -25,13 +20,10 @@ class GivtElevatedButton extends StatefulWidget {
   final bool? isTertiary;
   final String text;
   final bool? isLoading;
-  final Widget? leftIcon;
-  final Widget? rightIcon;
+  final IconData? leftIcon;
+  final IconData? rightIcon;
   final Widget? leadingImage;
   final double widthMultiplier;
-  final bool scalePixels;
-  final TextStyle? textStyle;
-  final double? givenHeight;
   @override
   _GivtElevatedButtonState createState() => _GivtElevatedButtonState();
 }
@@ -108,8 +100,7 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
               bottom: widget.isDisabled == true ? 0 : dropShadowHeight),
           child: Container(
               padding: const EdgeInsets.symmetric(vertical: 12),
-              height: widget.givenHeight ?? 58,
-              // widget.scalePixels == true ? 58 + 20.sp : 58,
+              height: 58,
               width: MediaQuery.sizeOf(context).width * widget.widthMultiplier,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
@@ -135,13 +126,21 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-              padding: const EdgeInsets.only(right: 8), child: widget.leftIcon),
+            padding: const EdgeInsets.only(right: 12),
+            child: Icon(
+              widget.leftIcon,
+              size: 24,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
+          ),
           Text(
             widget.text,
             style: widget.isDisabled == true
-                ? widget.textStyle
+                ? Theme.of(context)
+                    .textTheme
+                    .labelMedium
                     ?.copyWith(color: Theme.of(context).colorScheme.outline)
-                : widget.textStyle,
+                : Theme.of(context).textTheme.labelMedium,
           ),
         ],
       );
@@ -154,12 +153,20 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
           Text(
             widget.text,
             style: widget.isDisabled == true
-                ? widget.textStyle
+                ? Theme.of(context)
+                    .textTheme
+                    .labelMedium
                     ?.copyWith(color: Theme.of(context).colorScheme.outline)
-                : widget.textStyle,
+                : Theme.of(context).textTheme.labelMedium,
           ),
           Padding(
-              padding: const EdgeInsets.only(left: 8), child: widget.leftIcon),
+            padding: const EdgeInsets.only(left: 12),
+            child: Icon(
+              widget.rightIcon,
+              size: 24,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
+          ),
         ],
       );
     }
@@ -174,13 +181,15 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
             Text(
               widget.text,
               style: widget.isDisabled == true
-                  ? widget.textStyle
+                  ? Theme.of(context)
+                      .textTheme
+                      .labelMedium
                       ?.copyWith(color: Theme.of(context).colorScheme.outline)
-                  : widget.textStyle,
+                  : Theme.of(context).textTheme.labelMedium,
             ),
             // all leading images must be 32 pixels wide
             // this centers the text
-            SizedBox(width: widget.scalePixels ? 32.sp : 32),
+            const SizedBox(width: 32),
           ],
         ),
       );
@@ -189,9 +198,11 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
       child: Text(
         widget.text,
         style: widget.isDisabled == true
-            ? widget.textStyle
+            ? Theme.of(context)
+                .textTheme
+                .labelMedium
                 ?.copyWith(color: Theme.of(context).colorScheme.outline)
-            : widget.textStyle,
+            : Theme.of(context).textTheme.labelMedium,
       ),
     );
   }
