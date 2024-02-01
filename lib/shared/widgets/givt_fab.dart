@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class GivtFloatingActionButton extends StatefulWidget {
   const GivtFloatingActionButton({
@@ -10,15 +9,13 @@ class GivtFloatingActionButton extends StatefulWidget {
     required this.text,
     this.leftIcon,
     this.rightIcon,
-    this.scalePixels = false,
   });
 
   final VoidCallback onTap;
   final bool? isDisabled;
   final String text;
-  final Widget? leftIcon;
-  final Widget? rightIcon;
-  final bool scalePixels;
+  final IconData? leftIcon;
+  final IconData? rightIcon;
 
   @override
   _GivtFloatingActionButtonState createState() =>
@@ -110,13 +107,16 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: widget.leftIcon),
+              padding: const EdgeInsets.only(right: 8),
+              child: Icon(
+                widget.leftIcon,
+                size: 20,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
             Text(
               widget.text,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    fontSize: widget.scalePixels ? 20.sp : 20,
-                  ),
+              style: Theme.of(context).textTheme.labelMedium,
             ),
           ],
         ),
@@ -134,8 +134,13 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
               style: Theme.of(context).textTheme.labelMedium,
             ),
             Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: widget.rightIcon),
+              padding: const EdgeInsets.only(left: 8),
+              child: Icon(
+                widget.rightIcon,
+                size: 20,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
           ],
         ),
       );

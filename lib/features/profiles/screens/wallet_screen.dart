@@ -198,11 +198,7 @@ class _WalletScreenState extends State<WalletScreen>
             );
           },
           text: 'My Family',
-          leftIcon: Icon(
-            FontAwesomeIcons.arrowLeft,
-            size: 24,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
+          leftIcon: FontAwesomeIcons.arrowLeft,
         ),
       );
     });
