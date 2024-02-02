@@ -85,21 +85,26 @@ platform :ios do
       archive_path: "../build/ios/archive/Runner.xcarchive"
     )
     dsym_zip
-    upload_to_app_store(
+    upload_to_testflight(
       app_identifier: app_identifier,
       api_key: api_key,
-      submit_for_review: true,
-      automatic_release: true,
-      force: true,
-      precheck_include_in_app_purchases: false,
-      submission_information: {
-        add_id_info_uses_idfa: false,
-        export_compliance_uses_encryption: false,
-      },
-      release_notes: {
-        'default': 'This release includes bug fixes and performance improvements.',
-        'en-US': 'This release includes bug fixes and performance improvements.',
-      }
+      skip_waiting_for_build_processing: true
     )
+    # upload_to_app_store(
+    #   app_identifier: app_identifier,
+    #   api_key: api_key,
+    #   submit_for_review: true,
+    #   automatic_release: true,
+    #   force: true,
+    #   precheck_include_in_app_purchases: false,
+    #   submission_information: {
+    #     add_id_info_uses_idfa: false,
+    #     export_compliance_uses_encryption: false,
+    #   },
+    #   release_notes: {
+    #     'default': 'This release includes bug fixes and performance improvements.',
+    #     'en-US': 'This release includes bug fixes and performance improvements.',
+    #   }
+    # )
   end
 end
