@@ -11,11 +11,11 @@ class RewardBannerDialog extends StatefulWidget {
 
 class _RewardBannerDialogState extends State<RewardBannerDialog>
     with SingleTickerProviderStateMixin {
-  static const Duration _animationDuration = Duration(milliseconds: 1500);
+  static const Duration _animationDuration = Duration(milliseconds: 600);
   static const Duration _showingBannerInitialDelay =
       Duration(milliseconds: 300);
   static const Duration _showingBannerDuration = Duration(milliseconds: 3000);
-  static const Curve _animationCurve = Curves.elasticOut;
+  static const Curve _animationCurve = Curves.easeInOutBack;
 
   late final AnimationController _controller = AnimationController(
     duration: _animationDuration,
