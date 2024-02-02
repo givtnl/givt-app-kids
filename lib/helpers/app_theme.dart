@@ -22,6 +22,10 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const disabledTileBackground = Color(0xFFF5F4F5);
   static const disabledTileBorder = Color(0xFFC8C6C9);
 
+//reward banner colors
+  static const highlight30 = Color(0xFF514700);
+  static const highlight95 = Color(0xFFFFF1B2);
+
 //colors of tiles in the give bottomsheet
   static const lightPurple = Color(0xFFF9F6FD);
   static const darkPurpleText = Color(0xFF7957A2);
@@ -44,7 +48,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static final historyAllowanceColor =
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
   static const downloadAppBackground = Color.fromARGB(255, 46, 41, 87);
-
+// FOR TESTING
+  static const testingTextStyleLabelMedium = TextStyle(fontSize: 20);
   Scheme _schemeLight() {
     final base = CorePalette.of(primaryColor.value);
     final primary = base.primary;

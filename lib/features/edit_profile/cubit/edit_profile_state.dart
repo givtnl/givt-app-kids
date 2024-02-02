@@ -8,26 +8,34 @@ class EditProfileState extends Equatable {
     required this.selectedProfilePicture,
     this.status = EditProfileStatus.selectingAvatar,
     this.error = '',
+    this.isRewardAchieved = false,
   });
 
   final EditProfileStatus status;
   final String currentProfilePicture;
   final String selectedProfilePicture;
   final String error;
+  final bool isRewardAchieved;
 
   bool get isSameProfilePicture {
-    return currentProfilePicture != selectedProfilePicture;
+    return currentProfilePicture == selectedProfilePicture;
   }
 
   @override
-  List<Object> get props =>
-      [status, currentProfilePicture, selectedProfilePicture, error];
+  List<Object> get props => [
+        status,
+        currentProfilePicture,
+        selectedProfilePicture,
+        error,
+        isRewardAchieved,
+      ];
 
   EditProfileState copyWith({
     EditProfileStatus? status,
     String? currentProfilePicture,
     String? selectedProfilePicture,
     String? error,
+    bool? isRewardAchieved,
   }) {
     return EditProfileState(
       status: status ?? this.status,
@@ -36,6 +44,7 @@ class EditProfileState extends Equatable {
       selectedProfilePicture:
           selectedProfilePicture ?? this.selectedProfilePicture,
       error: error ?? this.error,
+      isRewardAchieved: isRewardAchieved ?? this.isRewardAchieved,
     );
   }
 }

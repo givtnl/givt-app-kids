@@ -19,7 +19,7 @@ class SwitchProfileSuccessButton extends StatelessWidget {
 
     return GivtElevatedButton(
       text: "Switch profile",
-      isSecondary: true,
+      isTertiary: true,
       leadingImage: ClipRRect(
         borderRadius: BorderRadius.circular(6),
         child: SvgPicture.network(
@@ -32,7 +32,7 @@ class SwitchProfileSuccessButton extends StatelessWidget {
         if (flowsCubit.state.flowType == FlowType.deepLinkCoin) {
           flowsCubit.startInAppCoinFlow();
         }
-        
+
         context.goNamed(Pages.profileSelection.name);
         AnalyticsHelper.logEvent(
           eventName: AmplitudeEvent.profileSwitchPressed,

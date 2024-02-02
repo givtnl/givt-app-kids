@@ -23,13 +23,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### ios release
+### ios testflight_release
 
 ```sh
-[bundle exec] fastlane ios release
+[bundle exec] fastlane ios testflight_release
 ```
 
 Push a new build to Testflight
+
+### ios prod_release
+
+```sh
+[bundle exec] fastlane ios prod_release
+```
+
+Push a new release
 
 ----
 

@@ -14,9 +14,9 @@ class GivtFloatingActionButton extends StatefulWidget {
   final VoidCallback onTap;
   final bool? isDisabled;
   final String text;
+  final IconData? leftIcon;
+  final IconData? rightIcon;
 
-  final Widget? leftIcon;
-  final Widget? rightIcon;
   @override
   _GivtFloatingActionButtonState createState() =>
       _GivtFloatingActionButtonState();
@@ -107,8 +107,13 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: widget.leftIcon),
+              padding: const EdgeInsets.only(right: 8),
+              child: Icon(
+                widget.leftIcon,
+                size: 20,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
             Text(
               widget.text,
               style: Theme.of(context).textTheme.labelMedium,
@@ -129,8 +134,13 @@ class _GivtFloatingActionButtonState extends State<GivtFloatingActionButton> {
               style: Theme.of(context).textTheme.labelMedium,
             ),
             Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: widget.rightIcon),
+              padding: const EdgeInsets.only(left: 8),
+              child: Icon(
+                widget.rightIcon,
+                size: 20,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
           ],
         ),
       );

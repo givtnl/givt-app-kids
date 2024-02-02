@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.5.8
+version: 1.5.9
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -46,6 +46,7 @@ dependencies:
   ios_utsname_ext: ^2.2.0
   logging: ^1.2.0
   path: ^1.8.3
+  responsive_sizer: ^3.3.0+1
 
 dev_dependencies:
   flutter_test:

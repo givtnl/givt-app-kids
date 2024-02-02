@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class GivtElevatedButton extends StatefulWidget {
-  const GivtElevatedButton({
+class GivtElevatedSecondaryButton extends StatefulWidget {
+  const GivtElevatedSecondaryButton({
     super.key,
     this.isDisabled,
     required this.onTap,
     required this.text,
     this.isLoading,
-    this.isTertiary,
     this.leftIcon,
     this.rightIcon,
     this.leadingImage,
@@ -17,18 +16,20 @@ class GivtElevatedButton extends StatefulWidget {
 
   final VoidCallback? onTap;
   final bool? isDisabled;
-  final bool? isTertiary;
   final String text;
   final bool? isLoading;
-  final IconData? leftIcon;
-  final IconData? rightIcon;
+  final Widget? leftIcon;
+  final Widget? rightIcon;
   final Widget? leadingImage;
   final double widthMultiplier;
+
   @override
-  _GivtElevatedButtonState createState() => _GivtElevatedButtonState();
+  _GivtElevatedSecondaryButtonState createState() =>
+      _GivtElevatedSecondaryButtonState();
 }
 
-class _GivtElevatedButtonState extends State<GivtElevatedButton> {
+class _GivtElevatedSecondaryButtonState
+    extends State<GivtElevatedSecondaryButton> {
   double dropShadowHeight = 4;
   double paddingtop = 4;
   bool isPressed = false;
@@ -41,11 +42,11 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
   @override
   Widget build(BuildContext context) {
     if (widget.isDisabled == true || isPressed == true) {
-      dropShadowHeight = 0;
+      dropShadowHeight = 2;
       paddingtop = 4;
     } else {
       dropShadowHeight = 4;
-      paddingtop = 0;
+      paddingtop = 2;
     }
 
     return Padding(
@@ -88,27 +89,26 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: widget.isTertiary == true
-                    ? Theme.of(context).colorScheme.secondaryContainer
-                    : Theme.of(context).colorScheme.onPrimaryContainer,
+                color: Theme.of(context).colorScheme.primaryContainer,
                 blurRadius: 0,
                 offset: const Offset(0, 0),
               ),
             ],
           ),
           padding: EdgeInsets.only(
-              bottom: widget.isDisabled == true ? 0 : dropShadowHeight),
+            bottom: widget.isDisabled == true ? 0 : dropShadowHeight,
+            right: 2,
+            left: 2,
+            top: 2,
+          ),
           child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              height: 58,
               width: MediaQuery.sizeOf(context).width * widget.widthMultiplier,
+              height: 58,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: widget.isDisabled == true
                     ? Theme.of(context).colorScheme.surfaceVariant
-                    : widget.isTertiary == true
-                        ? Colors.white
-                        : Theme.of(context).colorScheme.primaryContainer,
+                    : Colors.white,
               ),
               child: getChild()),
         ),
@@ -126,13 +126,7 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: Icon(
-              widget.leftIcon,
-              size: 24,
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            ),
-          ),
+              padding: const EdgeInsets.only(right: 8), child: widget.leftIcon),
           Text(
             widget.text,
             style: widget.isDisabled == true
@@ -160,13 +154,7 @@ class _GivtElevatedButtonState extends State<GivtElevatedButton> {
                 : Theme.of(context).textTheme.labelMedium,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12),
-            child: Icon(
-              widget.rightIcon,
-              size: 24,
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            ),
-          ),
+              padding: const EdgeInsets.only(left: 8), child: widget.leftIcon),
         ],
       );
     }

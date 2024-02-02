@@ -16,11 +16,7 @@ class BackHomeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GivtElevatedButton(
       text: "Back to home",
-      leftIcon: Icon(
-        FontAwesomeIcons.house,
-        size: 24,
-        color: Theme.of(context).colorScheme.onPrimaryContainer,
-      ),
+      leftIcon: FontAwesomeIcons.house,
       onTap: () async {
         context.goNamed(Pages.wallet.name);
         context.read<FlowsCubit>().resetFlow();

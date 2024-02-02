@@ -61,6 +61,17 @@ class _WalletWidgetState extends State<WalletWidget> {
                         color: Colors.transparent,
                         shape: const CircleBorder(),
                         child: InkWell(
+                          onLongPress: () async {
+                            final packageInfo =
+                                await PackageInfo.fromPlatform();
+                            final isDebug =
+                                packageInfo.packageName.contains('test');
+                            if (isDebug) {
+                              // ignore: use_build_context_synchronously
+                              context
+                                  .pushNamed(Pages.designAlignmentScreen.name);
+                            }
+                          },
                           onTap: () {
                             SystemSound.play(SystemSoundType.click);
                             context.pushNamed(Pages.avatarSelection.name);
