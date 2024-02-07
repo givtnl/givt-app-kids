@@ -37,6 +37,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const recommendationItemText = Color(0xFF405A66);
   static const interestsTallyText = Color(0xFFFBFCFF);
   static const interestCardRadio = Color(0xFF7AAA35);
+  static const primary60 = Color(0xFF15A569);
 
 //functionally used on screen
   static const givt4KidsBlue = Color(0xFF54A1EE);

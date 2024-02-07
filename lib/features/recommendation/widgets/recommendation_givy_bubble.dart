@@ -25,13 +25,14 @@ class RecommendationGivyBubble extends StatelessWidget {
           color: AppTheme.givyBubbleBackground,
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SvgPicture.asset(
               'assets/images/givy_pink_bubble.svg',
               alignment: Alignment.centerLeft,
               height: 64,
             ),
+            const SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +60,9 @@ class RecommendationGivyBubble extends StatelessWidget {
                   ),
               ],
             ),
-            extraChild ?? const SizedBox()
+            const Spacer(),
+            extraChild ?? const SizedBox(),
+            extraChild != null ? const SizedBox(width: 8) : const SizedBox(),
           ],
         ),
       ),
