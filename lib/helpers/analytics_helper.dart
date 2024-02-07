@@ -21,6 +21,7 @@ enum AmplitudeEvent {
   qrCodeScanned('qr_code_scanned'),
   seeDonationHistoryPressed('see_donation_history_pressed'),
   locationSelected('location_selected'),
+  citySelected('city_selected'),
   interestSelected('interest_selected'),
   showCharitiesPressed('show_charities_pressed'),
   charitiesShown('charities_shown'),
@@ -56,6 +57,7 @@ class AnalyticsHelper {
   static const String charityNameKey = "charity_name";
   static const String avatarImageKey = 'avatar_image_selected';
   static const String rewardKey = 'reward';
+  static const String cityKey = 'city';
   static Amplitude? _amplitude;
 
   static Future<void> init(String key) async {
