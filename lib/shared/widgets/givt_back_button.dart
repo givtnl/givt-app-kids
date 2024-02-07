@@ -12,9 +12,11 @@ class GivtBackButton extends StatefulWidget {
   const GivtBackButton({
     super.key,
     this.onPressedExt,
+    this.onPressedForced,
   });
 
   final void Function()? onPressedExt;
+  final void Function()? onPressedForced;
 
   @override
   State<GivtBackButton> createState() => _GivtBackButtonState();
@@ -51,17 +53,19 @@ class _GivtBackButtonState extends State<GivtBackButton> {
           child: Padding(
             padding: EdgeInsets.only(top: paddingtop),
             child: GestureDetector(
-              onTap: () {
-                widget.onPressedExt?.call();
+              onTap: widget.onPressedForced == null
+                  ? () {
+                      widget.onPressedExt?.call();
 
-                AnalyticsHelper.logEvent(
-                    eventName: AmplitudeEvent.backButtonPressed);
-                if (isDeepLink) {
-                  context.goNamed(Pages.wallet.name);
-                  return;
-                }
-                context.pop();
-              },
+                      AnalyticsHelper.logEvent(
+                          eventName: AmplitudeEvent.backButtonPressed);
+                      if (isDeepLink) {
+                        context.goNamed(Pages.wallet.name);
+                        return;
+                      }
+                      context.pop();
+                    }
+                  : widget.onPressedForced!,
               onTapDown: (details) {
                 SystemSound.play(SystemSoundType.click);
                 setState(() {

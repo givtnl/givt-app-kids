@@ -8,6 +8,7 @@ mixin OrganisationsRepository {
     required List<Tag> interests,
     required int pageSize,
     required bool filterInterests,
+    required String cityName,
   });
 }
 
@@ -24,12 +25,14 @@ class OrganisationsRepositoryImpl with OrganisationsRepository {
     required List<Tag> interests,
     required int pageSize,
     required bool filterInterests,
+    required String cityName,
   }) async {
     final response = await _apiService.getRecommendedOrganisations(
       {
         "range": location.key,
         "pageSize": pageSize,
         "tags": interests.map((interest) => interest.key).toList(),
+        "city": cityName,
       },
     );
 

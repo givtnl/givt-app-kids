@@ -8,15 +8,18 @@ part 'interests_state.dart';
 class InterestsCubit extends Cubit<InterestsState> {
   InterestsCubit({
     required this.location,
+    required this.cityName,
     required this.interests,
   }) : super(
           InterestsState(
             location: location,
+            cityName: cityName,
             interests: interests,
             selectedInterests: const [],
           ),
         );
   final Tag location;
+  final String cityName;
   final List<Tag> interests;
 
   void selectInterest(Tag interest) {

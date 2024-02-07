@@ -11,6 +11,33 @@ class TagsCubit extends Cubit<TagsState> {
   TagsCubit(this._tagsRepository) : super(const TagsStateInitial());
 
   final TagsRepository _tagsRepository;
+  void clearCitySelection() {
+    return emit(TagsStateFetched(
+      tags: state.tags,
+      selectedLocation: state.selectedLocation,
+      status: LocationSelectionStatus.general,
+      selectedCity: '',
+    ));
+  }
+
+  void goToCitySelection() {
+    return emit(TagsStateFetched(
+      tags: state.tags,
+      selectedLocation: state.selectedLocation,
+      status: LocationSelectionStatus.city,
+    ));
+  }
+
+  void selectCity(int index) {
+    final previousCity = (state as TagsStateFetched).selectedCity;
+    final currentTapCity = state.hardcodedCities[index]['cityName'].toString();
+    return emit(TagsStateFetched(
+      tags: state.tags,
+      selectedLocation: state.selectedLocation,
+      status: LocationSelectionStatus.city,
+      selectedCity: previousCity == currentTapCity ? '' : currentTapCity,
+    ));
+  }
 
   void selectLocation({
     required Tag location,
@@ -42,10 +69,6 @@ class TagsCubit extends Cubit<TagsState> {
     emit(const TagsStateFetching());
 
     try {
-      //PP: shall we remove the event?
-      // AnalyticsHelper.logEvent(
-      //   eventName: AmplitudeEvent.recommendationFlowStarted,
-      // );
       final List<Tag> response = await _tagsRepository.fetchTags();
 
       emit(TagsStateFetched(tags: response));

@@ -3,9 +3,11 @@ part of 'tags_cubit.dart';
 abstract class TagsState extends Equatable {
   const TagsState({
     required this.tags,
+    this.status = LocationSelectionStatus.general,
   });
 
   final List<Tag> tags;
+  final LocationSelectionStatus status;
 
   List<Tag> get locations {
     return tags.where((element) => element.type == TagType.LOCATION).toList();
@@ -17,6 +19,13 @@ abstract class TagsState extends Equatable {
 
   Tag get selectedLocation {
     return const Tag.empty();
+  }
+
+  List<Map<String, String>> get hardcodedCities {
+    return [
+      {"cityName": "Jacksonville", "stateName": "Florida, USA"},
+      {"cityName": "Tulsa", "stateName": "Oklahoma, USA"},
+    ];
   }
 
   @override
@@ -34,6 +43,8 @@ class TagsStateFetching extends TagsState {
 class TagsStateFetched extends TagsState {
   const TagsStateFetched({
     required super.tags,
+    super.status,
+    this.selectedCity = '',
     Tag selectedLocation = const Tag.empty(),
   }) : _selectedLocation = selectedLocation;
 
@@ -41,17 +52,21 @@ class TagsStateFetched extends TagsState {
   Tag get selectedLocation => _selectedLocation;
 
   final Tag _selectedLocation;
+  final String selectedCity;
 
   @override
-  List<Object> get props => [tags, selectedLocation];
+  List<Object> get props => [tags, selectedLocation, selectedCity, status];
 
   static TagsStateFetched empty() {
     return const TagsStateFetched(
-      tags: [],
-      selectedLocation: Tag.empty(),
-    );
+        tags: [],
+        selectedLocation: Tag.empty(),
+        selectedCity: '',
+        status: LocationSelectionStatus.general);
   }
 }
+
+enum LocationSelectionStatus { general, city }
 
 class TagsStateError extends TagsState {
   const TagsStateError({
