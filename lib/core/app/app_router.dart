@@ -150,6 +150,7 @@ class AppRouter {
             return BlocProvider(
               create: (context) => InterestsCubit(
                 location: tagsState.selectedLocation,
+                cityName: tagsState.selectedCity,
                 interests: tagsState.interests,
               ),
               child: const InterestsSelectionScreen(),
@@ -167,6 +168,7 @@ class AppRouter {
                 getIt(),
               )..getRecommendedOrganisations(
                   location: interestsState.location,
+                  cityName: interestsState.cityName,
                   interests: interestsState.selectedInterests,
                   fakeComputingExtraDelay: const Duration(seconds: 1),
                 ),

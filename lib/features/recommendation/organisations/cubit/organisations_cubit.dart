@@ -55,6 +55,7 @@ class OrganisationsCubit extends Cubit<OrganisationsState> {
   Future<void> getRecommendedOrganisations({
     required Tag location,
     required List<Tag> interests,
+    String? cityName,
     Duration fakeComputingExtraDelay = Duration.zero,
     int pageSize = 3,
     bool filterInterests = true,
@@ -75,6 +76,7 @@ class OrganisationsCubit extends Cubit<OrganisationsState> {
       final response =
           await _organisationsRepository.getRecommendedOrganisations(
         location: location,
+        cityName: cityName ?? '',
         interests: interests,
         pageSize: pageSize,
         filterInterests: filterInterests,
