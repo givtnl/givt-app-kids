@@ -27,12 +27,10 @@ jobs:
             echo "Running on the main branch, deploying to production."
             echo "PACKAGE_NAME=net.givtapp.kids" >> $GITHUB_ENV
             echo "FLAVOR=production" >> $GITHUB_ENV
-            echo "TRACK=production" >> $GITHUB_ENV
           else
             echo "Running on a different branch, deploying to test."
             echo "PACKAGE_NAME=net.givtapp.kids.test" >> $GITHUB_ENV
             echo "FLAVOR=development" >> $GITHUB_ENV
-            echo "TRACK=internal" >> $GITHUB_ENV
           fi
 
       - name: Checkout
@@ -54,10 +52,11 @@ jobs:
           channel: 'stable'
           flutter-version: ${{ inputs.flutter-version }}
 
-      - name: Run Fastlane
+      - name: Run Fastlane - Development version
+        if: ${{ github.ref != 'refs/heads/main' }}
         uses: maierj/fastlane-action@v2.3.0
         with:
-          lane: android build_and_deploy
+          lane: android development
           subdirectory: android
         env:
           GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
@@ -65,4 +64,16 @@ jobs:
           LOGIT_API_KEY: ${{ secrets.LOGIT_API_KEY }}
           PACKAGE_NAME: ${{ env.PACKAGE_NAME }}
           FLAVOR: ${{ env.FLAVOR }}
-          TRACK: ${{ env.TRACK }}
+
+      - name: Run Fastlane - Production version
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: maierj/fastlane-action@v2.3.0
+        with:
+          lane: android production
+          subdirectory: android
+        env:
+          GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          LOGIT_API_KEY: ${{ secrets.LOGIT_API_KEY }}
+          PACKAGE_NAME: ${{ env.PACKAGE_NAME }}
+          FLAVOR: ${{ env.FLAVOR }}
