@@ -18,7 +18,16 @@ extension DateTimeExtension on DateTime {
     }
 
     final formatter = DateFormat('MM/dd');
+    return formatter.format(this);
+  }
 
+  String get formattedFullUSDate {
+    final formatter = DateFormat('MM/dd/yyyy');
+    return formatter.format(this);
+  }
+
+  String get formattedFullEuDate {
+    final formatter = DateFormat('dd/MM/yyyy');
     return formatter.format(this);
   }
 }

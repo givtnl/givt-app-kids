@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/datetime_extension.dart';
 
 class GoalCompletedWidget extends StatelessWidget {
   const GoalCompletedWidget({super.key});
@@ -19,6 +21,16 @@ class GoalCompletedWidget extends StatelessWidget {
           onPressed: () {
             goalCubit.dismissCompletedGoal(
                 context.read<ProfilesCubit>().state.activeProfile.id);
+            AnalyticsHelper.logEvent(
+              eventName: AmplitudeEvent.goalDismissed,
+              eventProperties: {
+                AnalyticsHelper.goalKey: currentGoal.orgName,
+                AnalyticsHelper.amountKey: currentGoal.goalAmount.toString(),
+                AnalyticsHelper.dateEUKey:
+                    DateTime.parse((currentGoal.dateCreated))
+                        .formattedFullEuDate,
+              },
+            );
           },
           icon: Icon(
             FontAwesomeIcons.xmark,

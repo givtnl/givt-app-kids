@@ -4,6 +4,7 @@ import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cu
 import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/widgets/goal_active_tracker.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/widgets/goal_completed_widget.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 
 class FamilyGoalTracker extends StatelessWidget {
@@ -24,15 +25,23 @@ class FamilyGoalTracker extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state.currentGoal.status == FamilyGoalStatus.inProgress) {
-            return const GoalActiveWidget();
-          }
-          if (state.currentGoal.status == FamilyGoalStatus.completed) {
-            return const GoalCompletedWidget();
-          }
-          return const SizedBox();
+          return GestureDetector(
+            onTap: () {
+              AnalyticsHelper.logEvent(
+                  eventName: AmplitudeEvent.goalTrackerTapped);
+            },
+            child: _buildGoalWidget(context, state),
+          );
         },
       ),
     );
+  }
+
+  Widget _buildGoalWidget(BuildContext context, GoalTrackerState state) {
+    if (state.currentGoal.status == FamilyGoalStatus.completed) {
+      return const GoalCompletedWidget();
+    } else {
+      return const GoalActiveWidget();
+    }
   }
 }
