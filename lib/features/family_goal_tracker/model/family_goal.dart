@@ -23,7 +23,7 @@ class FamilyGoal extends Equatable {
   factory FamilyGoal.fromMap(Map<String, dynamic> map) {
     return FamilyGoal(
       goalAmount: map['goal'] as int,
-      amount: (map['amount'] as num).toDouble(),
+      amount: (map['amount'] as int).toDouble(),
       mediumId: map['mediumId'] as String,
       status: FamilyGoalStatus.fromString(map['status'] as String),
       dateCreated: map['dtCreated'] as String,
@@ -47,7 +47,7 @@ class FamilyGoal extends Equatable {
     return '''
     {
       "goal": $goalAmount,
-      "amount": $amount,
+      "amount": ${amount.toInt()},
       "mediumId": "$mediumId",
       "status": "${status.value}",
       "dtCreated": "$dateCreated",
