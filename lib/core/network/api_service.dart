@@ -271,4 +271,19 @@ class APIService {
       );
     }
   }
+
+  Future<List<dynamic>> fetchFamilyGoal() async {
+    // TODO: UPDATE URL
+    final url = Uri.https(_apiURL, '/givtservice/v1/goal/family');
+    final response = await client.get(url);
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    }
+    final decodedBody = jsonDecode(response.body);
+    final itemMap = decodedBody['items']! as List<dynamic>;
+    return itemMap;
+  }
 }

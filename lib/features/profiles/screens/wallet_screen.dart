@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/family_goal_tracker/widgets/family_goal_tracker.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
@@ -119,6 +120,7 @@ class _WalletScreenState extends State<WalletScreen>
                         hasDonations: hasDonations,
                         avatarUrl: state.activeProfile.pictureURL,
                       ),
+                      const FamilyGoalTracker(),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
                         child: Row(
