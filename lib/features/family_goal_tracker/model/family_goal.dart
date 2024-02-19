@@ -23,7 +23,7 @@ class FamilyGoal extends Equatable {
   factory FamilyGoal.fromMap(Map<String, dynamic> map) {
     return FamilyGoal(
       goalAmount: map['goal'] as int,
-      amount: (map['amount'] as int).toDouble(),
+      amount: (map['amount'] as num).toDouble(),
       mediumId: map['mediumId'] as String,
       status: FamilyGoalStatus.fromString(map['status'] as String),
       dateCreated: map['dtCreated'] as String,
@@ -42,6 +42,19 @@ class FamilyGoal extends Equatable {
   @override
   List<Object?> get props =>
       [goalAmount, amount, mediumId, status, dateCreated, orgName];
+
+  String toJson() {
+    return '''
+    {
+      "goal": $goalAmount,
+      "amount": $amount,
+      "mediumId": "$mediumId",
+      "status": "${status.value}",
+      "dtCreated": "$dateCreated",
+      "orgName": "$orgName"
+    }
+    ''';
+  }
 }
 
 enum FamilyGoalStatus {

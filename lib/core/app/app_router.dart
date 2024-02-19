@@ -81,7 +81,8 @@ class AppRouter {
           path: Pages.wallet.path,
           name: Pages.wallet.name,
           builder: (context, state) => BlocProvider(
-            create: (context) => GoalTrackerCubit(getIt())..getGoal(),
+            create: (context) => GoalTrackerCubit(getIt())
+              ..getGoal(context.read<ProfilesCubit>().state.activeProfile.id),
             child: const WalletScreen(),
           ),
         ),
