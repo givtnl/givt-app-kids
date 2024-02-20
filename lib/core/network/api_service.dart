@@ -282,7 +282,7 @@ class APIService {
       );
     }
     final decodedBody = jsonDecode(response.body);
-    final item = decodedBody['item']! as Map<String, dynamic>;
+    final item = decodedBody['item'] ?? {};
     return item;
   }
 }
