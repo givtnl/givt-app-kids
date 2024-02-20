@@ -31,7 +31,7 @@ class _GradientProgressBarState extends State<GradientProgressBar> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final availableWidth = constraints.maxWidth;
-        final widtthToApply = availableWidth * _progress;
+        final widthToApply = availableWidth * _progress;
         const barHeight = 12.0;
         return Container(
           height: barHeight,
@@ -47,7 +47,7 @@ class _GradientProgressBarState extends State<GradientProgressBar> {
               AnimatedContainer(
                 curve: Curves.easeInOut,
                 duration: const Duration(seconds: 1),
-                width: widtthToApply,
+                width: widthToApply,
                 height: barHeight,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),

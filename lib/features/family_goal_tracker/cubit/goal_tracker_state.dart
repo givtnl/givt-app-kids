@@ -14,7 +14,6 @@ class GoalTrackerState extends Equatable {
 
   GoalTrackerState copyWith({
     String? error,
-    List<FamilyGoal>? goals,
     FamilyGoal? currentGoal,
   }) {
     return GoalTrackerState(
