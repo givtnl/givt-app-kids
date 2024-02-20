@@ -17,68 +17,27 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
     return '$childId-dissmissedGoalKey';
   }
 
+  bool get hasActiveGoal =>
+      state.currentGoal != const FamilyGoal.empty() &&
+      state.currentGoal.status == FamilyGoalStatus.inProgress;
+
   Future<void> getGoal(String childId) async {
     try {
-      final goals = await _goalTrackerRepository.fetchFamilyGoal();
+      final goal = await _goalTrackerRepository.fetchFamilyGoal();
 
-      // No goals ever set
-      if (goals.isEmpty) {
+      // No goal
+      if (goal == const FamilyGoal.empty()) {
+        return;
+      }
+      // Goal is completed and dismissed by this child
+      if (goal.status == FamilyGoalStatus.completed &&
+          isGoalDismissed(childId)) {
         return;
       }
 
-      // Sort goals by date created, latest first
-      goals.sort((a, b) => b.dateCreated.compareTo(a.dateCreated));
-
-      // Find the first goal that is not completed
-      final current = goals.firstWhere(
-        (element) => element.status == FamilyGoalStatus.inProgress,
-        orElse: FamilyGoal.empty,
-      );
-
-      // There is an active goal
-      if (current != const FamilyGoal.empty()) {
-        emit(
-          state.copyWith(
-            currentGoal: current,
-            goals: goals,
-          ),
-        );
-        return;
-      }
-
-      // No active goals, find the latest completed goal
-      final latestCompleted = goals.firstWhere(
-        (element) => element.status == FamilyGoalStatus.completed,
-        orElse: FamilyGoal.empty,
-      );
-
-      if (isGoalDismissed(childId)) {
-        // There is a completed goal, but it has been dismissed
-        emit(
-          state.copyWith(
-            currentGoal: const FamilyGoal.empty(),
-            goals: goals,
-          ),
-        );
-        return;
-      }
-
-      // There is a completed goal, show it in UI
-      if (latestCompleted != const FamilyGoal.empty()) {
-        emit(
-          state.copyWith(
-            currentGoal: latestCompleted,
-            goals: goals,
-          ),
-        );
-        return;
-      }
-
-      // There are no active or completed goals, but goals list is not empty
-      // In this case we still show no goal set in UI
       emit(
         state.copyWith(
-          error: 'Something went wrong, we cannot find your goal',
+          currentGoal: goal,
         ),
       );
     } catch (e) {
@@ -110,8 +69,8 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
     }
     final lastDismissedGoal = FamilyGoal.fromMap(
         jsonDecode(lastDismissedGoalString) as Map<String, dynamic>);
-    if (lastDismissedGoal.mediumId == state.currentGoal.mediumId &&
-        lastDismissedGoal.dateCreated == state.currentGoal.dateCreated) {
+
+    if (lastDismissedGoal.goalId == state.currentGoal.goalId) {
       return true;
     }
     return false;

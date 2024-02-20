@@ -8,6 +8,7 @@ class FamilyGoal extends Equatable {
     required this.status,
     required this.dateCreated,
     required this.orgName,
+    required this.goalId,
   });
 
   const FamilyGoal.empty()
@@ -18,6 +19,7 @@ class FamilyGoal extends Equatable {
           status: FamilyGoalStatus.init,
           dateCreated: '2024-01-01T10:00:00Z',
           orgName: '',
+          goalId: '',
         );
 
   factory FamilyGoal.fromMap(Map<String, dynamic> map) {
@@ -26,9 +28,9 @@ class FamilyGoal extends Equatable {
       amount: (map['amount'] as int).toDouble(),
       mediumId: map['mediumId'] as String,
       status: FamilyGoalStatus.fromString(map['status'] as String),
-      dateCreated: map['dtCreated'] as String,
-      // TODO: Change when endpoint is updated
-      orgName: map['orgName'] as String,
+      dateCreated: map['creationDate'] as String,
+      orgName: map['collectGroupName'] as String,
+      goalId: map['id'] as String,
     );
   }
 
@@ -38,10 +40,11 @@ class FamilyGoal extends Equatable {
   final FamilyGoalStatus status;
   final String dateCreated;
   final String orgName;
+  final String goalId;
 
   @override
   List<Object?> get props =>
-      [goalAmount, amount, mediumId, status, dateCreated, orgName];
+      [goalAmount, amount, mediumId, status, dateCreated, orgName, goalId];
 
   String toJson() {
     return '''
@@ -50,8 +53,9 @@ class FamilyGoal extends Equatable {
       "amount": ${amount.toInt()},
       "mediumId": "$mediumId",
       "status": "${status.value}",
-      "dtCreated": "$dateCreated",
-      "orgName": "$orgName"
+      "creationDate": "$dateCreated",
+      "collectGroupName": "$orgName"
+      "id": "$goalId"
     }
     ''';
   }
