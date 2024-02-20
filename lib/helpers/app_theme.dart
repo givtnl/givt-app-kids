@@ -39,6 +39,13 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const interestCardRadio = Color(0xFF7AAA35);
   static const primary60 = Color(0xFF15A569);
 
+  // gradient bar colors
+  static const highlight90 = Color(0xFFFAE366);
+  static const progressGradient1 = Color(0xFFC6D96D);
+  static const progressGradient2 = Color(0xFF9DD273);
+  static const progressGradient3 = Color(0xFF74CA79);
+  static const primary70 = Color(0xFF40C181);
+
 //functionally used on screen
   static const givt4KidsBlue = Color(0xFF54A1EE);
   static const offWhite = Color(0xFFEEEDE4);
@@ -49,6 +56,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static final historyAllowanceColor =
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
   static const downloadAppBackground = Color.fromARGB(255, 46, 41, 87);
+  static const primary20 = Color(0xFF003920);
 // FOR TESTING
   static const testingTextStyleLabelMedium = TextStyle(fontSize: 20);
   Scheme _schemeLight() {
@@ -95,6 +103,11 @@ class AppTheme extends ThemeExtension<AppTheme> {
         color: colorScheme.onPrimaryContainer,
         fontSize: 26,
       ),
+      titleSmall: const TextStyle(
+        color: AppTheme.primary20,
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+      ),
       headlineMedium: TextStyle(
         color: colorScheme.primary,
         fontSize: 28,
@@ -106,6 +119,11 @@ class AppTheme extends ThemeExtension<AppTheme> {
       labelMedium: TextStyle(
         color: colorScheme.onPrimaryContainer,
         fontSize: 20,
+      ),
+      bodySmall: TextStyle(
+        color: colorScheme.primary,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
       ),
     );
 

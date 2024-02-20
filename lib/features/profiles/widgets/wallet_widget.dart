@@ -91,7 +91,7 @@ class _WalletWidgetState extends State<WalletWidget> {
                           },
                           child: SvgPicture.network(
                             widget.avatarUrl,
-                            width: 120,
+                            width: 100,
                           ),
                         ),
                       ),
