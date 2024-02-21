@@ -71,9 +71,6 @@ class GiveBottomSheet extends StatelessWidget {
                       borderColor: AppTheme.highlight80,
                       textColor: AppTheme.highlight40,
                       onTap: () {
-                        if (kDebugMode) {
-                          return;
-                        }
                         context.pop();
                         context.pushNamed(Pages.scanNFC.name);
                         context.read<FlowsCubit>().startInAppCoinFlow();
