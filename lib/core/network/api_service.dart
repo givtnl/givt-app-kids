@@ -5,7 +5,7 @@ import 'package:givt_app_kids/core/exceptions/givt_server_exception.dart';
 import 'package:givt_app_kids/core/network/network.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
 import 'package:http/http.dart';
-import 'package:http_interceptor/http/http.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
 
 class APIService {
   APIService(
