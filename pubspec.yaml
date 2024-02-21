@@ -86,8 +86,12 @@ flutter:
           weight: 400
     - family: Rouna
       fonts:
-        - asset: assets/fonts/Rouna-Bold.otf
+        - asset: assets/fonts/Rouna/rouna-bold-webfont.ttf
           weight: 700
-
+        - asset: assets/fonts/Rouna/rouna-medium-webfont.ttf
+          weight: 500
+        - asset: assets/fonts/Rouna/rouna-regular-webfont.ttf
+          weight: 400
+          
 dependency_overrides:
   intl: ^0.18.0

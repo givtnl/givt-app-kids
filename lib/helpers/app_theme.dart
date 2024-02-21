@@ -57,6 +57,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
   static const downloadAppBackground = Color.fromARGB(255, 46, 41, 87);
   static const primary20 = Color(0xFF003920);
+  static const primary80 = Color(0xFF60DD9B);
+  static const primary95 = Color(0xFFC0FFD6);
+  static const primary98 = Color(0xFFE9FFED);
 // FOR TESTING
   static const testingTextStyleLabelMedium = TextStyle(fontSize: 20);
   Scheme _schemeLight() {
@@ -100,8 +103,14 @@ class AppTheme extends ThemeExtension<AppTheme> {
   ThemeData _base(final ColorScheme colorScheme) {
     final textTheme = TextTheme(
       titleLarge: TextStyle(
+        color: colorScheme.onPrimaryContainer,
+        fontSize: 28,
+        fontWeight: FontWeight.w700,
+      ),
+      titleMedium: TextStyle(
         color: colorScheme.primary,
         fontSize: 26,
+        fontWeight: FontWeight.w700,
       ),
       titleSmall: const TextStyle(
         color: AppTheme.primary20,
@@ -111,18 +120,26 @@ class AppTheme extends ThemeExtension<AppTheme> {
       headlineMedium: TextStyle(
         color: colorScheme.primary,
         fontSize: 30,
+        fontWeight: FontWeight.w700,
       ),
       labelSmall: TextStyle(
         color: colorScheme.onPrimaryContainer,
         fontSize: 16,
+        fontWeight: FontWeight.w700,
       ),
       labelMedium: TextStyle(
         color: colorScheme.onPrimaryContainer,
         fontSize: 20,
+        fontWeight: FontWeight.w700,
       ),
       bodySmall: TextStyle(
         color: colorScheme.primary,
         fontSize: 15,
+        fontWeight: FontWeight.w500,
+      ),
+      bodyMedium: TextStyle(
+        color: colorScheme.primary,
+        fontSize: 20,
         fontWeight: FontWeight.w500,
       ),
     );

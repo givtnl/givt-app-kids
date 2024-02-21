@@ -13,8 +13,9 @@ class ActionTile extends StatefulWidget {
     required this.backgroundColor,
     required this.textColor,
     required this.onTap,
-    this.fontSize = 20,
+    this.fontSize = 22,
     this.imageSize = 140,
+    this.subtitle = '',
   });
   final String text;
   final String iconPath;
@@ -25,6 +26,7 @@ class ActionTile extends StatefulWidget {
   final Color textColor;
   final double fontSize;
   final double imageSize;
+  final String subtitle;
 
   @override
   _ActionTileState createState() => _ActionTileState();
@@ -33,6 +35,7 @@ class ActionTile extends StatefulWidget {
 class _ActionTileState extends State<ActionTile> {
   double bottomBorderWidth = 6;
   double widgetHeight = 218;
+  double extraHeight = 0;
   Color? backgroundColor;
   Color? borderColor;
 
@@ -40,6 +43,7 @@ class _ActionTileState extends State<ActionTile> {
   Widget build(BuildContext context) {
     backgroundColor = widget.backgroundColor;
     borderColor = widget.borderColor;
+    extraHeight = widget.subtitle.isNotEmpty ? 20 : 0;
     if (widget.isDisabled) {
       backgroundColor = AppTheme.disabledTileBackground;
       borderColor = AppTheme.disabledTileBorder;
@@ -94,7 +98,7 @@ class _ActionTileState extends State<ActionTile> {
               Radius.circular(10),
             ),
           ),
-          height: widgetHeight,
+          height: widgetHeight + extraHeight,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Container(
@@ -120,9 +124,21 @@ class _ActionTileState extends State<ActionTile> {
                           ? AppTheme.disabledTileBorder
                           : widget.textColor,
                       fontSize: widget.fontSize,
+                      fontWeight: FontWeight.w700,
                       height: 0,
                     ),
                   ),
+                  widget.subtitle.isNotEmpty
+                      ? Text(
+                          widget.subtitle,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall
+                              ?.copyWith(
+                                  color: widget.textColor.withAlpha(200)),
+                        )
+                      : const SizedBox(),
                   const SizedBox(height: 16),
                 ],
               ),

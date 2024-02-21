@@ -31,6 +31,10 @@ class FlowsCubit extends Cubit<FlowsState> {
     emit(const FlowsState(flowType: FlowType.exhibition));
   }
 
+  void startFamilyGoalFlow() {
+    emit(const FlowsState(flowType: FlowType.familyGoal));
+  }
+
   void resetFlow() {
     emit(const FlowsState(flowType: FlowType.none));
     getIt<SharedPreferences>().setBool('isInAppCoinFlow', false);
