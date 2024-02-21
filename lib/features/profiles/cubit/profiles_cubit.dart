@@ -72,8 +72,8 @@ class ProfilesCubit extends HydratedCubit<ProfilesState> {
     }
   }
 
-  Future<void> fetchActiveProfile() async {
-    return fetchProfile(state.activeProfile.id);
+  Future<void> fetchActiveProfile([bool forceLoading = false]) async {
+    return fetchProfile(state.activeProfile.id, forceLoading);
   }
 
   Future<void> fetchProfile(String id, [bool forceLoading = false]) async {

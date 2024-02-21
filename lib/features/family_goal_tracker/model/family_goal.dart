@@ -48,7 +48,7 @@ class FamilyGoal extends Equatable {
 
   @override
   List<Object?> get props =>
-      [goalAmount, amount, mediumId, status, dateCreated, orgName, goalId];
+      [goalAmount, amount, totalAmount, mediumId, status, dateCreated, orgName, goalId];
 
   bool get isActive => status == FamilyGoalStatus.inProgress;
 

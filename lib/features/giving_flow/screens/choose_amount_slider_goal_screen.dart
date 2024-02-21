@@ -28,6 +28,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
     final organisationDetailsState =
         context.watch<OrganisationDetailsCubit>().state;
     final profilesCubit = context.read<ProfilesCubit>();
+    final goalTrackerCubit = context.read<GoalTrackerCubit>();
     final organisation = organisationDetailsState.organisation;
     final mediumId = organisationDetailsState.mediumId;
     final amountLeftToGoal = familyGoal.goalAmount - familyGoal.amount;
@@ -43,9 +44,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
           // Execute tasks in parallel
           await Future.wait([
             profilesCubit.fetchActiveProfile(),
-            context
-                .read<GoalTrackerCubit>()
-                .getGoal(profilesCubit.state.activeProfile.id)
+            goalTrackerCubit.getGoal(profilesCubit.state.activeProfile.id)
           ]);
 
           if (!context.mounted) {

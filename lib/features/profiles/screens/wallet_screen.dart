@@ -58,7 +58,7 @@ class _WalletScreenState extends State<WalletScreen>
 
     // Execute tasks in parallel
     await Future.wait([
-      context.read<ProfilesCubit>().fetchActiveProfile(),
+      context.read<ProfilesCubit>().fetchActiveProfile(true),
       context.read<GoalTrackerCubit>().getGoal(activeProfile.id)
     ]);
   }
