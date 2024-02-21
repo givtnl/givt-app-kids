@@ -107,9 +107,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
         fontSize: 28,
         fontWeight: FontWeight.w700,
       ),
-      titleMedium: const TextStyle(
-        color: AppTheme.primary20,
-        fontSize: 24,
+      titleMedium: TextStyle(
+        color: colorScheme.primary,
+        fontSize: 26,
         fontWeight: FontWeight.w700,
       ),
       titleSmall: const TextStyle(
@@ -119,7 +119,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       ),
       headlineMedium: TextStyle(
         color: colorScheme.primary,
-        fontSize: 28,
+        fontSize: 30,
         fontWeight: FontWeight.w700,
       ),
       labelSmall: TextStyle(
