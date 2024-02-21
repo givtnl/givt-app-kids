@@ -34,7 +34,11 @@ enum Pages {
 
   //design alignment
   designAlignmentScreen(
-      path: '/design-alignment-screen', name: 'DESIGN_ALIGNMENT_SCREEN');
+      path: '/design-alignment-screen', name: 'DESIGN_ALIGNMENT_SCREEN'),
+
+  chooseAmountSliderGoal(
+      path: '/choose-amount-slider-goal', name: 'CHOOSE_AMOUNT_SLIDER_GOAL'),
+  ;
 
   final String path;
   final String name;

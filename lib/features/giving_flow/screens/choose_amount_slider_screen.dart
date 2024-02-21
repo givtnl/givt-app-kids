@@ -57,11 +57,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
             toolbarHeight: flow.isQRCode || flow.isRecommendation ? 85 : null,
             automaticallyImplyLeading: false,
             leading: const GivtBackButton(),
-            actions: [
-              flow.isQRCode || flow.isRecommendation
-                  ? const Wallet()
-                  : const CoinWidget(),
-            ],
+            actions: [_getAppBarAction(flow)],
           ),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -238,5 +234,15 @@ class ChooseAmountSliderScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _getAppBarAction(FlowsState flow) {
+    if (flow.isQRCode || flow.isRecommendation) {
+      return const Wallet();
+    }
+    if (flow.isCoin) {
+      return const CoinWidget();
+    }
+    return const SizedBox();
   }
 }

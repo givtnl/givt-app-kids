@@ -1,16 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:go_router/go_router.dart';
 
 class GiveBottomSheet extends StatelessWidget {
-  const GiveBottomSheet({required this.isiPad, super.key});
+  const GiveBottomSheet(
+      {required this.isiPad, required this.familyGoal, super.key});
   final bool isiPad;
+  final FamilyGoal familyGoal;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -19,6 +24,39 @@ class GiveBottomSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          familyGoal.isActive
+              ? Flex(
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ActionTile(
+                      isDisabled: false,
+                      text: "Family Goal",
+                      subtitle: familyGoal.orgName,
+                      iconPath: 'assets/images/goal_tile.svg',
+                      borderColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      backgroundColor: AppTheme.primary98,
+                      textColor: Theme.of(context).colorScheme.inversePrimary,
+                      onTap: () {
+                        context.pop();
+                        context.read<FlowsCubit>().startFamilyGoalFlow();
+                        context
+                            .read<OrganisationDetailsCubit>()
+                            .getOrganisationDetails(familyGoal.mediumId);
+                        context.pushNamed(
+                          Pages.chooseAmountSliderGoal.name,
+                          extra: familyGoal,
+                        );
+                        AnalyticsHelper.logEvent(
+                          eventName: AmplitudeEvent.choseGiveToFamilyGoal,
+                        );
+                      },
+                    ),
+                  ],
+                )
+              : const SizedBox(),
+          const SizedBox(height: 16),
           Flex(
             direction: Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,6 +71,9 @@ class GiveBottomSheet extends StatelessWidget {
                       borderColor: AppTheme.highlight80,
                       textColor: AppTheme.highlight40,
                       onTap: () {
+                        if (kDebugMode) {
+                          return;
+                        }
                         context.pop();
                         context.pushNamed(Pages.scanNFC.name);
                         context.read<FlowsCubit>().startInAppCoinFlow();

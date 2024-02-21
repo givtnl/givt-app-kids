@@ -46,6 +46,8 @@ class FamilyGoal extends Equatable {
   List<Object?> get props =>
       [goalAmount, amount, mediumId, status, dateCreated, orgName, goalId];
 
+  bool get isActive => status == FamilyGoalStatus.inProgress;
+
   String toJson() {
     return '''
     {

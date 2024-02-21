@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/widgets/family_goal_tracker.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -14,6 +15,7 @@ import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
@@ -74,6 +76,7 @@ class _WalletScreenState extends State<WalletScreen>
     return BlocBuilder<ProfilesCubit, ProfilesState>(builder: (context, state) {
       final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
       final hasDonations = state.activeProfile.hasDonations;
+      final goalCubit = context.read<GoalTrackerCubit>();
 
       var countdownAmount = 0.0;
       if (state is ProfilesCountdownState) {
@@ -148,11 +151,15 @@ class _WalletScreenState extends State<WalletScreen>
                                     });
                                 showModalBottomSheet<void>(
                                   context: context,
+                                  isScrollControlled: true,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  builder: (context) =>
-                                      GiveBottomSheet(isiPad: isiPad),
+                                  backgroundColor: Colors.white,
+                                  builder: (context) => GiveBottomSheet(
+                                    familyGoal: goalCubit.state.currentGoal,
+                                    isiPad: isiPad,
+                                  ),
                                 );
                               },
                             ),
@@ -161,8 +168,7 @@ class _WalletScreenState extends State<WalletScreen>
                               isDisabled: false,
                               text: "Find Charity",
                               iconPath: 'assets/images/find_tile.svg',
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.onPrimary,
+                              backgroundColor: AppTheme.primary98,
                               borderColor: Theme.of(context)
                                   .colorScheme
                                   .primaryContainer,

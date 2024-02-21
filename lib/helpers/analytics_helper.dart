@@ -40,7 +40,10 @@ enum AmplitudeEvent {
   saveAvatarClicked('save_avatar_clicked'),
   rewardAchieved('reward_achieved'),
   goalTrackerTapped('goal_tracker_tapped'),
-  goalDismissed('goal_dismissed');
+  goalDismissed('goal_dismissed'),
+  donateToThisFamilyGoalPressed('donate_to_this_family_goal_pressed'),
+  choseGiveToFamilyGoal('chose_give_to_family_goal'),
+  ;
 
   final String value;
 
