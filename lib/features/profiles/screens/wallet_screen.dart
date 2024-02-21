@@ -54,7 +54,13 @@ class _WalletScreenState extends State<WalletScreen>
   }
 
   Future<void> refresh() async {
-    await context.read<ProfilesCubit>().fetchActiveProfile();
+    final activeProfile = context.read<ProfilesCubit>().state.activeProfile;
+
+    // Execute tasks in parallel
+    await Future.wait([
+      context.read<ProfilesCubit>().fetchActiveProfile(),
+      context.read<GoalTrackerCubit>().getGoal(activeProfile.id)
+    ]);
   }
 
   Future<bool> isIpadCheck() async {
