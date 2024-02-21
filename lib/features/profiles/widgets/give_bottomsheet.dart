@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,9 +43,10 @@ class GiveBottomSheet extends StatelessWidget {
                       onTap: () {
                         context.pop();
                         context.read<FlowsCubit>().startFamilyGoalFlow();
+                        String generatedMediumId = base64.encode(familyGoal.mediumId.codeUnits);
                         context
                             .read<OrganisationDetailsCubit>()
-                            .getOrganisationDetails(familyGoal.mediumId);
+                            .getOrganisationDetails(generatedMediumId);
                         context.pushNamed(
                           Pages.chooseAmountSliderGoal.name,
                           extra: familyGoal,
