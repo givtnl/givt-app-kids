@@ -82,7 +82,9 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                           children: [
                             Text(
                               familyGoal.orgName,
-                              style: Theme.of(context).textTheme.titleMedium,
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: AppTheme.primary20
+                                ),
                             ),
                             Text(
                               'Family goal: \$${familyGoal.goalAmount}',
@@ -101,13 +103,15 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
-                  SizedBox(height: size.height * 0.05),
+                  const SizedBox(height: 38),
                   Container(
                     margin: EdgeInsets.only(top: size.height * 0.035),
                     alignment: Alignment.center,
                     child: Text(
                       "\$${state.amount.round()}",
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            color: AppTheme.primary20,
+                          ),
                     ),
                   ),
                   Padding(
@@ -175,28 +179,38 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                     width: 24,
                   ),
                   const SizedBox(width: 8),
-                  Text.rich(
-                    TextSpan(
-                      text: '\$$amountLeftWithDonation',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppTheme.primary20,
-                            fontWeight: FontWeight.w700,
+                  if (amountLeftWithDonation > 0)
+                    Text.rich(
+                      TextSpan(
+                        text: '\$$amountLeftWithDonation',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AppTheme.primary20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                        children: [
+                          TextSpan(
+                            text: ' to complete the Family Goal',
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: AppTheme.primary20,
+                                    ),
                           ),
-                      children: [
-                        TextSpan(
-                          text: ' to complete the Family Goal',
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AppTheme.primary20,
-                                  ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
+                  if (amountLeftWithDonation <= 0)
+                    Text.rich(
+                      TextSpan(
+                        text: 'This donation will complete the\nFamily Goal',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AppTheme.primary20,
+                            ),
+                      ),
+                    ),
                   const SizedBox(width: 8),
                 ],
               ),
-              SizedBox(height: size.height * 0.01),
+              SizedBox(height: 20),
               GivtElevatedButton(
                 isDisabled: state.amount == 0 ? true : false,
                 text: 'Donate',
