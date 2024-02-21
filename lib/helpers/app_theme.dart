@@ -100,7 +100,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   ThemeData _base(final ColorScheme colorScheme) {
     final textTheme = TextTheme(
       titleLarge: TextStyle(
-        color: colorScheme.onPrimaryContainer,
+        color: colorScheme.primary,
         fontSize: 26,
       ),
       titleSmall: const TextStyle(
@@ -110,7 +110,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       ),
       headlineMedium: TextStyle(
         color: colorScheme.primary,
-        fontSize: 28,
+        fontSize: 30,
       ),
       labelSmall: TextStyle(
         color: colorScheme.onPrimaryContainer,

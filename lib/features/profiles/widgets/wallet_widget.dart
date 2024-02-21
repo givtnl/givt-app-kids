@@ -55,7 +55,6 @@ class _WalletWidgetState extends State<WalletWidget> {
               builder: (context, state) {
                 return Column(
                   children: [
-                    const SizedBox(height: 10),
                     Center(
                       child: Material(
                         color: Colors.transparent,
@@ -96,7 +95,7 @@ class _WalletWidgetState extends State<WalletWidget> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 12),
                     state is ProfilesLoadingState
                         ? const Center(
                             child: CircularProgressIndicator.adaptive(),
@@ -106,41 +105,40 @@ class _WalletWidgetState extends State<WalletWidget> {
                             end: widget.balance,
                             duration: const Duration(seconds: 3),
                             separator: '.',
-                            prefix: '\$ ',
+                            prefix: '\$',
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                     widget.hasDonations
-                        ? Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: TextButton(
-                              onPressed: () {
-                                context.pushNamed(Pages.history.name);
-                                AnalyticsHelper.logEvent(
-                                  eventName:
-                                      AmplitudeEvent.seeDonationHistoryPressed,
-                                );
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'All givts',
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
+                        ? TextButton(
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.all(0),
+                                alignment: Alignment.topCenter),
+                            onPressed: () {
+                              context.pushNamed(Pages.history.name);
+                              AnalyticsHelper.logEvent(
+                                eventName:
+                                    AmplitudeEvent.seeDonationHistoryPressed,
+                              );
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'All givts',
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 4),
+                                  child: Icon(
+                                    FontAwesomeIcons.arrowRight,
+                                    size: 20,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 4),
-                                    child: Icon(
-                                      FontAwesomeIcons.arrowRight,
-                                      size: 24,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           )
                         : const SizedBox(),

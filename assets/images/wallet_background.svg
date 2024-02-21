@@ -1,7 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 205">
-<g id="background">
-<rect id="rect" width="375" height="205" style="fill:#f5fef4; stroke-width:0px;"/>
-<path id="ellipse" d="M375,125.12c-56.2-28.84-119.95-45.12-187.5-45.12S56.2,96.28,0,125.12v79.88h375v-79.88Z" style="fill:#e0fee3; stroke-width:0px;"/>
+<svg width="375" height="192" viewBox="0 0 375 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<clipPath id="clip0_11264_741">
+<rect width="375" height="192" fill="white"/>
+</clipPath>
+</defs>
+<g clip-path="url(#clip0_11264_741)">
+<rect width="375" height="192" fill="#F5FFF5"/>
+<g style="mix-blend-mode:multiply">
+<ellipse cx="187.5" cy="459.5" rx="410.5" ry="409.5" fill="#E9FFED"/>
+</g>
 </g>
 </svg>
