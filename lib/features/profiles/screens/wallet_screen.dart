@@ -95,7 +95,10 @@ class _WalletScreenState extends State<WalletScreen>
           ),
           actions: [
             IconButton(
-              icon: const FaIcon(FontAwesomeIcons.solidPenToSquare),
+              icon: FaIcon(
+                FontAwesomeIcons.solidPenToSquare,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               onPressed: () {
                 SystemSound.play(SystemSoundType.click);
                 context.pushNamed(Pages.avatarSelection.name);
