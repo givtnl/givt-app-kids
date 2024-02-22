@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
@@ -31,7 +31,7 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
       }
       // Goal is completed and dismissed by this child
       if (goal.status == FamilyGoalStatus.completed &&
-          isGoalDismissed(childId)) {
+          isGoalDismissed(childId, goal.goalId)) {
         return;
       }
 
@@ -50,27 +50,26 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
   }
 
   void dismissCompletedGoal(String childId) {
+    // remember dismissed goal for future sessions
+    getIt<SharedPreferences>()
+        .setString(dissmissedGoalKey(childId), state.currentGoal.goalId);
     // dismiss goal from current UI
     emit(
       state.copyWith(
         currentGoal: const FamilyGoal.empty(),
       ),
     );
-    // remember dismissed goal for future sessions
-    getIt<SharedPreferences>()
-        .setString(dissmissedGoalKey(childId), state.currentGoal.toJson());
   }
 
-  bool isGoalDismissed(String childId) {
-    final lastDismissedGoalString =
+  bool isGoalDismissed(String childId, String currentGoalId) {
+    final lastDismissedGoalId =
         getIt<SharedPreferences>().getString(dissmissedGoalKey(childId));
-    if (lastDismissedGoalString == null) {
+    log(lastDismissedGoalId.toString());
+    if (lastDismissedGoalId == null) {
       return false;
     }
-    final lastDismissedGoal = FamilyGoal.fromMap(
-        jsonDecode(lastDismissedGoalString) as Map<String, dynamic>);
 
-    if (lastDismissedGoal.goalId == state.currentGoal.goalId) {
+    if (lastDismissedGoalId == currentGoalId) {
       return true;
     }
     return false;
