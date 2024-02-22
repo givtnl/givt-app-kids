@@ -41,7 +41,7 @@ class RecommendationGivyBubble extends StatelessWidget {
                   text,
                   textAlign: TextAlign.left,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: AppTheme.defaultTextColor,
                         fontWeight: FontWeight.w600,
                         height: 1.4,

@@ -54,16 +54,15 @@ class CityCard extends StatelessWidget {
             Text(
               cities[index]['cityName'].toString(),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
                     fontFamily: "Raleway",
                   ),
             ),
             Text(
               cities[index]['stateName'].toString(),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                     fontFamily: "Raleway",

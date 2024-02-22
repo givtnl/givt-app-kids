@@ -104,12 +104,12 @@ class AppTheme extends ThemeExtension<AppTheme> {
     final textTheme = TextTheme(
       titleLarge: TextStyle(
         color: colorScheme.onPrimaryContainer,
-        fontSize: 28,
+        fontSize: 26,
         fontWeight: FontWeight.w700,
       ),
       titleMedium: TextStyle(
         color: colorScheme.primary,
-        fontSize: 26,
+       fontSize: 22,
         fontWeight: FontWeight.w700,
       ),
       titleSmall: const TextStyle(

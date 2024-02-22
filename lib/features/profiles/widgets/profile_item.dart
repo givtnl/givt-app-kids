@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class ProfileItem extends StatelessWidget {
   const ProfileItem({
@@ -14,7 +15,7 @@ class ProfileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Width - 2*24 (side padding) - 2*20 (item padding) / 3 (items in a row)
-    var imgSize = (MediaQuery.of(context).size.width - 24*2 - 20*2) / 3;
+    var imgSize = (MediaQuery.of(context).size.width - 24 * 2 - 20 * 2) / 3;
 
     return Container(
       alignment: Alignment.center,
@@ -29,10 +30,12 @@ class ProfileItem extends StatelessWidget {
           Text(
             name,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 15,
-              color: Color(0xFF3B3240),
-            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(color: AppTheme.defaultTextColor),
           ),
         ],
       ),
