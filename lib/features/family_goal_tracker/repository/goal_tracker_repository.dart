@@ -16,10 +16,10 @@ class GoalTrackerRepositoryImpl with GoalTrackerRepository {
   Future<FamilyGoal> fetchFamilyGoal() async {
     final response = await _apiService.fetchFamilyGoal();
     if (response == null) {
-      return const FamilyGoal.empty();
+      return FamilyGoal.empty();
     }
 
-    final FamilyGoal goal = FamilyGoal.fromMap(response);
+    final FamilyGoal goal = FamilyGoal.fromJson(response);
 
     return goal;
   }

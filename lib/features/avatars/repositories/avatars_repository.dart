@@ -19,7 +19,7 @@ class AvatarsRepositoryImpl with AvatarsRepository {
     final result = <Avatar>[];
 
     for (final avatarMap in response) {
-      result.add(Avatar.fromMap(avatarMap));
+      result.add(Avatar.fromJson(avatarMap));
     }
     return result;
   }

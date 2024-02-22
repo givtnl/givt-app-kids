@@ -11,17 +11,17 @@ class GoalActiveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.read<GoalTrackerCubit>().state;
     final currentGoal = state.currentGoal;
-    final progress = currentGoal.amount / currentGoal.goalAmount.toDouble();
-    final totalProgress = currentGoal.totalAmount / currentGoal.goalAmount.toDouble();
+    final progress = currentGoal.amount / currentGoal.goal.toDouble();
+    final totalProgress = currentGoal.totalAmount / currentGoal.goal.toDouble();
     return Padding(
       padding: const EdgeInsets.only(left: 56, right: 56, top: 24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(currentGoal.orgName,
+          Text(currentGoal.collectGroupName,
               style: Theme.of(context).textTheme.titleSmall),
-          Text('Family Goal: \$${currentGoal.goalAmount}',
+          Text('Family Goal: \$${currentGoal.goal}',
               style: Theme.of(context).textTheme.bodySmall),
           Padding(
             padding: const EdgeInsets.only(top: 16, bottom: 8),

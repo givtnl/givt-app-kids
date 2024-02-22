@@ -46,3 +46,7 @@ app.*.map.json
 
 # temporary token
 secrets.dart
+
+# Freezed generated files
+*.freezed.dart
+*.g.dart 

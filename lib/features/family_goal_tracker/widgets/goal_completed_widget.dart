@@ -24,10 +24,10 @@ class GoalCompletedWidget extends StatelessWidget {
             AnalyticsHelper.logEvent(
               eventName: AmplitudeEvent.goalDismissed,
               eventProperties: {
-                AnalyticsHelper.goalKey: currentGoal.orgName,
-                AnalyticsHelper.amountKey: currentGoal.goalAmount.toString(),
+                AnalyticsHelper.goalKey: currentGoal.collectGroupName,
+                AnalyticsHelper.amountKey: currentGoal.goal.toString(),
                 AnalyticsHelper.dateEUKey:
-                    DateTime.parse((currentGoal.dateCreated))
+                    DateTime.parse((currentGoal.creationDate))
                         .formattedFullEuDate,
               },
             );
@@ -52,7 +52,7 @@ class GoalCompletedWidget extends StatelessWidget {
                 height: 24,
               ),
               const SizedBox(height: 4),
-              Text(currentGoal.orgName,
+              Text(currentGoal.collectGroupName,
                   style: Theme.of(context).textTheme.titleSmall),
               const SizedBox(height: 4),
               Text('Family Goal completed. Great job!',

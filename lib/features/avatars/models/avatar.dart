@@ -1,21 +1,14 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
+part 'avatar.freezed.dart';
+part 'avatar.g.dart';
 
-class Avatar extends Equatable {
-  const Avatar({
-    required this.fileName,
-    required this.pictureURL,
-  });
+@freezed
+class Avatar with _$Avatar {
+  const factory Avatar({
+    required String fileName,
+    required String pictureURL,
+  }) = _Avatar;
 
-  factory Avatar.fromMap(Map<String, dynamic> map) {
-    return Avatar(
-      fileName: (map['fileName'] ?? '').toString(),
-      pictureURL: (map['pictureURL'] ?? '').toString(),
-    );
-  }
-
-  final String fileName;
-  final String pictureURL;
-
-  @override
-  List<Object?> get props => [fileName, pictureURL];
+  factory Avatar.fromJson(Map<String, Object?> json) => _$AvatarFromJson(json);
 }

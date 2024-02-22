@@ -11,14 +11,14 @@ part 'goal_tracker_state.dart';
 class GoalTrackerCubit extends Cubit<GoalTrackerState> {
   GoalTrackerCubit(
     this._goalTrackerRepository,
-  ) : super(const GoalTrackerState());
+  ) : super(GoalTrackerState(currentGoal: FamilyGoal.empty()));
   final GoalTrackerRepository _goalTrackerRepository;
   String dissmissedGoalKey(String childId) {
     return '$childId-dissmissedGoalKey';
   }
 
   bool get hasActiveGoal =>
-      state.currentGoal != const FamilyGoal.empty() &&
+      state.currentGoal != FamilyGoal.empty() &&
       state.currentGoal.status == FamilyGoalStatus.inProgress;
 
   Future<void> getGoal(String childId) async {
@@ -26,12 +26,12 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
       final goal = await _goalTrackerRepository.fetchFamilyGoal();
 
       // No goal
-      if (goal == const FamilyGoal.empty()) {
+      if (goal == FamilyGoal.empty()) {
         return;
       }
       // Goal is completed and dismissed by this child
       if (goal.status == FamilyGoalStatus.completed &&
-          isGoalDismissed(childId, goal.goalId)) {
+          isGoalDismissed(childId, goal.id)) {
         return;
       }
 
@@ -52,11 +52,11 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
   void dismissCompletedGoal(String childId) {
     // remember dismissed goal for future sessions
     getIt<SharedPreferences>()
-        .setString(dissmissedGoalKey(childId), state.currentGoal.goalId);
+        .setString(dissmissedGoalKey(childId), state.currentGoal.id);
     // dismiss goal from current UI
     emit(
       state.copyWith(
-        currentGoal: const FamilyGoal.empty(),
+        currentGoal: FamilyGoal.empty(),
       ),
     );
   }

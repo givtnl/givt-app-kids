@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "preLaunchTask": "build_runner",
             "name": "Launch development",
             "request": "launch",
             "type": "dart",
@@ -17,6 +18,7 @@
             ]
           },
           {
+            "preLaunchTask": "build_runner",
             "name": "Launch production",
             "request": "launch",
             "type": "dart",

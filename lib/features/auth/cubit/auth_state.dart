@@ -89,11 +89,9 @@ class ExternalErrorState extends AuthState {
 }
 
 class LoggedInState extends AuthState {
-  const LoggedInState({
-    this.session = const Session.empty(),
-  });
+  LoggedInState({this.session});
 
-  final Session session;
+  Session? session;
 
   factory LoggedInState.fromJson(Map<String, dynamic> json) {
     return LoggedInState(
@@ -103,7 +101,7 @@ class LoggedInState extends AuthState {
 
   @override
   Map<String, dynamic> toJson() {
-    return session.toJson();
+    return session!.toJson();
   }
 }
 

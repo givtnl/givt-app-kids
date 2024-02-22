@@ -61,7 +61,7 @@ class AuthRepositoryImpl with AuthRepository {
   Future<Session> refreshToken() async {
     final currentSession = _prefs.getString(Session.tag);
     if (currentSession == null) {
-      return const Session.empty();
+      return Session.empty();
     }
     final session = Session.fromJson(
       jsonDecode(currentSession) as Map<String, dynamic>,

@@ -50,7 +50,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
         emit(errorState);
       }
     } catch (error, stackTrace) {
-      LoggingInfo.instance.error("Login failed: $error", methodName: stackTrace.toString());
+      LoggingInfo.instance
+          .error("Login failed: $error", methodName: stackTrace.toString());
       emit(ExternalErrorState(errorMessage: error.toString()));
     }
   }
@@ -68,7 +69,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
 
       emit(LoggedInState(session: response));
     } catch (error, stackTrace) {
-      LoggingInfo.instance.warning("Login by voucher code failed: $error", methodName: stackTrace.toString());
+      LoggingInfo.instance.warning("Login by voucher code failed: $error",
+          methodName: stackTrace.toString());
       emit(ExternalErrorState(errorMessage: error.toString()));
     }
   }
@@ -145,7 +147,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
     final instanceType = json['instanceType'];
     final instance = jsonDecode(json['instance']);
 
-    if (instanceType == const LoggedInState().runtimeType.toString()) {
+    if (instanceType == LoggedInState().runtimeType.toString()) {
       return LoggedInState.fromJson(instance);
     } else if (instanceType ==
         const ExternalErrorState().runtimeType.toString()) {

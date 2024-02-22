@@ -114,7 +114,7 @@ class LoggingInfo implements ILoggingInfo {
     final user = userExt != null
         ? Session.fromJson(jsonDecode(userExt) as Map<String, dynamic>)
         : null;
-    return user?.userGUID;
+    return user?.userId;
   }
 
   @override

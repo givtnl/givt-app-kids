@@ -3,7 +3,7 @@ part of 'goal_tracker_cubit.dart';
 class GoalTrackerState extends Equatable {
   const GoalTrackerState({
     this.error = '',
-    this.currentGoal = const FamilyGoal.empty(),
+    required this.currentGoal,
   });
 
   final String error;

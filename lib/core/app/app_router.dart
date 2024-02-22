@@ -111,7 +111,7 @@ class AppRouter {
             path: Pages.chooseAmountSliderGoal.path,
             name: Pages.chooseAmountSliderGoal.name,
             builder: (context, state) {
-              final extra = state.extra ?? const FamilyGoal.empty();
+              final extra = state.extra ?? FamilyGoal.empty();
               final familyGoal = (extra as FamilyGoal);
               return BlocProvider(
                 create: (BuildContext context) => CreateTransactionCubit(

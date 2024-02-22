@@ -31,7 +31,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
     final goalTrackerCubit = context.read<GoalTrackerCubit>();
     final organisation = organisationDetailsState.organisation;
     final mediumId = organisationDetailsState.mediumId;
-    final amountLeftToGoal = familyGoal.goalAmount - familyGoal.amount;
+    final amountLeftToGoal = familyGoal.goal - familyGoal.amount;
 
     return BlocConsumer<CreateTransactionCubit, CreateTransactionState>(
       listener: (context, state) async {
@@ -92,14 +92,14 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              familyGoal.orgName,
+                              familyGoal.collectGroupName,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
                                   ?.copyWith(color: AppTheme.primary20),
                             ),
                             Text(
-                              'Family goal: \$${familyGoal.goalAmount}',
+                              'Family goal: \$${familyGoal.goal}',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ],
@@ -223,7 +223,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                   const SizedBox(width: 8),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               GivtElevatedButton(
                 isDisabled: state.amount == 0 ? true : false,
                 text: 'Donate',
@@ -238,7 +238,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                           userId: profilesCubit.state.activeProfile.id,
                           mediumId: mediumId,
                           amount: state.amount,
-                          goalId: familyGoal.goalId,
+                          goalId: familyGoal.id,
                         );
 
                         context
