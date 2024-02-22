@@ -25,22 +25,12 @@ class StartRecommendationScreen extends StatelessWidget {
         children: [
           Text(
             'Hi there!',
-            // style: AppTheme.lightTheme.textTheme.displayLarge?.copyWith(
-            //   fontSize: 32,
-            //   fontWeight: FontWeight.bold,
-            //   color: AppTheme.defaultTextColor,
-            //   height: 0,
-            // ),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 6),
           Text(
             "Let's find charities that you like",
-            // style: AppTheme.textTheme.displayLarge?.copyWith(
-            //   fontSize: 18,
-            //   color: AppTheme.defaultTextColor,
-            //   fontWeight: FontWeight.w500,
-            //   height: 0,
-            // ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           const Spacer(),
           Center(
