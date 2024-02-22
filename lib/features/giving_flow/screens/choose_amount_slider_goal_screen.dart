@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -27,19 +28,29 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
     final organisationDetailsState =
         context.watch<OrganisationDetailsCubit>().state;
     final profilesCubit = context.read<ProfilesCubit>();
+    final goalTrackerCubit = context.read<GoalTrackerCubit>();
     final organisation = organisationDetailsState.organisation;
     final mediumId = organisationDetailsState.mediumId;
     final amountLeftToGoal = familyGoal.goalAmount - familyGoal.amount;
 
     return BlocConsumer<CreateTransactionCubit, CreateTransactionState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is CreateTransactionErrorState) {
           log(state.errorMessage);
           SnackBarHelper.showMessage(context,
               text: 'Cannot create transaction. Please try again later.',
               isError: true);
         } else if (state is CreateTransactionSuccessState) {
-          profilesCubit.fetchActiveProfile();
+          // Execute tasks in parallel
+          await Future.wait([
+            profilesCubit.fetchActiveProfile(),
+            goalTrackerCubit.getGoal(profilesCubit.state.activeProfile.id)
+          ]);
+
+          if (!context.mounted) {
+            return;
+          }
+
           context.pushReplacementNamed(Pages.successCoin.name,
               extra: familyGoal.isActive);
         }
@@ -82,9 +93,10 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                           children: [
                             Text(
                               familyGoal.orgName,
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AppTheme.primary20
-                                ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(color: AppTheme.primary20),
                             ),
                             Text(
                               'Family goal: \$${familyGoal.goalAmount}',
@@ -109,9 +121,10 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       "\$${state.amount.round()}",
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: AppTheme.primary20,
-                          ),
+                      style:
+                          Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: AppTheme.primary20,
+                              ),
                     ),
                   ),
                   Padding(

@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/widgets/goal_active_widget.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/widgets/goal_completed_widget.dart';
+import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
+import 'package:go_router/go_router.dart';
 
 class FamilyGoalTracker extends StatelessWidget {
   const FamilyGoalTracker({super.key});
@@ -29,6 +35,19 @@ class FamilyGoalTracker extends StatelessWidget {
             onTap: () {
               AnalyticsHelper.logEvent(
                   eventName: AmplitudeEvent.goalTrackerTapped);
+
+              String generatedMediumId =
+                  base64.encode(state.currentGoal.mediumId.codeUnits);
+              context
+                  .read<OrganisationDetailsCubit>()
+                  .getOrganisationDetails(generatedMediumId);
+
+              context.read<FlowsCubit>().startFamilyGoalFlow();
+
+              context.pushNamed(
+                Pages.chooseAmountSliderGoal.name,
+                extra: state.currentGoal,
+              );
             },
             child: _buildGoalWidget(context, state),
           );
