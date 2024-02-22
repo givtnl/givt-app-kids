@@ -55,17 +55,15 @@ class _GradientProgressBarState extends State<GradientProgressBar> {
                 duration: const Duration(seconds: 1),
                 width: totalWidthToApply,
                 height: barHeight,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    constraints: const BoxConstraints.tightFor(
-                      width: double.infinity,
-                      height: 12,
-                    ),
-                    decoration: _gradientProgressBarDecoration(
-                      widget.colors.map((e) => e.withOpacity(0.3)).toList(),
-                      _totalProgress,
-                    ),
+                child: Container(
+                  constraints: const BoxConstraints.tightFor(
+                    width: double.infinity,
+                    height: 12,
+                  ),
+                  decoration: _gradientProgressBarDecoration(
+                    widget.colors.map((e) => e.withOpacity(0.4)).toList(),
+                    _totalProgress,
+                    false
                   ),
                 ),
               ),
@@ -74,17 +72,15 @@ class _GradientProgressBarState extends State<GradientProgressBar> {
                 duration: const Duration(seconds: 1),
                 width: widthToApply < 12 ? 12 : widthToApply,
                 height: barHeight,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    constraints: const BoxConstraints.tightFor(
-                      width: double.infinity,
-                      height: 12,
-                    ),
-                    decoration: _gradientProgressBarDecoration(
-                      widget.colors,
-                      _progress,
-                    ),
+                child: Container(
+                  constraints: const BoxConstraints.tightFor(
+                    width: double.infinity,
+                    height: 12,
+                  ),
+                  decoration: _gradientProgressBarDecoration(
+                    widget.colors,
+                    _progress,
+                    true
                   ),
                 ),
               ),
@@ -98,14 +94,21 @@ class _GradientProgressBarState extends State<GradientProgressBar> {
   BoxDecoration _gradientProgressBarDecoration(
     List<Color> colors,
     double progress,
+    bool whiteShadow
   ) {
     final colorsCount = (colors.length * progress).round();
     final colorsToApply = colors.sublist(0, colorsCount);
     if (colorsToApply.isEmpty) {
-      return BoxDecoration(color: colors[0]);
+      return BoxDecoration(
+        border: Border.all(color: Colors.white, strokeAlign: BorderSide.strokeAlignOutside),
+        borderRadius: BorderRadius.circular(5) ,
+        color: colors[0],
+      );
     }
     if (colorsToApply.length < 2) colorsToApply.add(colors[0]);
     return BoxDecoration(
+ borderRadius: BorderRadius.circular(5) ,
+ border: whiteShadow ?  Border.all(color: Colors.white, strokeAlign: BorderSide.strokeAlignOutside) :null,
       gradient: LinearGradient(
         colors: colorsToApply,
       ),
