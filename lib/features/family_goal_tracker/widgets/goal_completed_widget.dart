@@ -55,7 +55,7 @@ class GoalCompletedWidget extends StatelessWidget {
               Text(currentGoal.orgName,
                   style: Theme.of(context).textTheme.titleSmall),
               const SizedBox(height: 4),
-              Text('Family Goal: \$${currentGoal.goalAmount}',
+              Text('Family Goal completed. Great job!',
                   style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
