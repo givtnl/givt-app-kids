@@ -272,7 +272,7 @@ class APIService {
     }
   }
 
-  Future<Map<String, dynamic>> fetchFamilyGoal() async {
+  Future<Map<String, dynamic>?> fetchFamilyGoal() async {
     final url = Uri.https(_apiURL, '/givt4kidsservice/v1/goal/family/latest');
     final response = await client.get(url);
     if (response.statusCode >= 400) {
@@ -282,7 +282,7 @@ class APIService {
       );
     }
     final decodedBody = jsonDecode(response.body);
-    final item = decodedBody['item'] ?? {};
+    final item = decodedBody['item'];
     return item;
   }
 }
