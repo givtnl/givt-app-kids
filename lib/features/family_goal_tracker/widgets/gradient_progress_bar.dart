@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class GradientProgressBar extends StatefulWidget {
   const GradientProgressBar({
@@ -64,7 +63,7 @@ class _GradientProgressBarState extends State<GradientProgressBar> {
                       height: 12,
                     ),
                     decoration: _gradientProgressBarDecoration(
-                      widget.colors.map((e) => e.withOpacity(0.5)).toList(),
+                      widget.colors.map((e) => e.withOpacity(0.3)).toList(),
                       _totalProgress,
                     ),
                   ),
@@ -73,7 +72,7 @@ class _GradientProgressBarState extends State<GradientProgressBar> {
               AnimatedContainer(
                 curve: Curves.easeInOut,
                 duration: const Duration(seconds: 1),
-                width: widthToApply,
+                width: widthToApply < 12 ? 12 : widthToApply,
                 height: barHeight,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),

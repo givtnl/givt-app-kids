@@ -36,18 +36,20 @@ class FamilyGoalTracker extends StatelessWidget {
               AnalyticsHelper.logEvent(
                   eventName: AmplitudeEvent.goalTrackerTapped);
 
-              String generatedMediumId =
-                  base64.encode(state.currentGoal.mediumId.codeUnits);
-              context
-                  .read<OrganisationDetailsCubit>()
-                  .getOrganisationDetails(generatedMediumId);
+              if (state.currentGoal.isActive) {
+                String generatedMediumId =
+                    base64.encode(state.currentGoal.mediumId.codeUnits);
+                context
+                    .read<OrganisationDetailsCubit>()
+                    .getOrganisationDetails(generatedMediumId);
 
-              context.read<FlowsCubit>().startFamilyGoalFlow();
+                context.read<FlowsCubit>().startFamilyGoalFlow();
 
-              context.pushNamed(
-                Pages.chooseAmountSliderGoal.name,
-                extra: state.currentGoal,
-              );
+                context.pushNamed(
+                  Pages.chooseAmountSliderGoal.name,
+                  extra: state.currentGoal,
+                );
+              }
             },
             child: _buildGoalWidget(context, state),
           );
