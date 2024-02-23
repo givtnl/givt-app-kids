@@ -1,12 +1,10 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -28,7 +26,6 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
     final organisationDetailsState =
         context.watch<OrganisationDetailsCubit>().state;
     final profilesCubit = context.read<ProfilesCubit>();
-    final goalTrackerCubit = context.read<GoalTrackerCubit>();
     final organisation = organisationDetailsState.organisation;
     final mediumId = organisationDetailsState.mediumId;
     final amountLeftToGoal = familyGoal.goalAmount - familyGoal.amount;
@@ -41,12 +38,6 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
               text: 'Cannot create transaction. Please try again later.',
               isError: true);
         } else if (state is CreateTransactionSuccessState) {
-          // Execute tasks in parallel
-          await Future.wait([
-            profilesCubit.fetchActiveProfile(),
-            goalTrackerCubit.getGoal(profilesCubit.state.activeProfile.id)
-          ]);
-
           if (!context.mounted) {
             return;
           }

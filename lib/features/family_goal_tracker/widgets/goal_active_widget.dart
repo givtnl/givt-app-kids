@@ -12,7 +12,8 @@ class GoalActiveWidget extends StatelessWidget {
     final state = context.read<GoalTrackerCubit>().state;
     final currentGoal = state.currentGoal;
     final progress = currentGoal.amount / currentGoal.goalAmount.toDouble();
-    final totalProgress = currentGoal.totalAmount / currentGoal.goalAmount.toDouble();
+    final totalProgress =
+        currentGoal.totalAmount / currentGoal.goalAmount.toDouble();
     return Padding(
       padding: const EdgeInsets.only(left: 56, right: 56, top: 24),
       child: Column(
