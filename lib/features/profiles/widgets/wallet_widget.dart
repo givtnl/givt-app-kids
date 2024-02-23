@@ -106,12 +106,15 @@ class _WalletWidgetState extends State<WalletWidget> {
                             duration: const Duration(seconds: 3),
                             separator: '.',
                             prefix: '\$',
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                )),
                     widget.hasDonations
                         ? TextButton(
                             style: TextButton.styleFrom(
-                                padding: EdgeInsets.all(0),
                                 alignment: Alignment.topCenter),
                             onPressed: () {
                               context.pushNamed(Pages.history.name);

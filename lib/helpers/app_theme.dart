@@ -51,7 +51,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const offWhite = Color(0xFFEEEDE4);
   static const backButtonColor = Color(0xFFBFDBFC);
   static const successBackgroundLightBlue = Color(0xFFB9D7FF);
-  static const defaultTextColor = Color(0xFF3B3240);
+  static const defaultTextColor = AppTheme.primary20;
   static const givyBubbleBackground = Color(0xFFEAEFFD);
   static final historyAllowanceColor =
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
