@@ -19,12 +19,19 @@ class GoalActiveWidget extends StatelessWidget {
           padding: const EdgeInsets.only(left: 56, right: 56, top: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(currentGoal.orgName,
-                  style: Theme.of(context).textTheme.titleSmall),
-              Text('Family Goal: \$${currentGoal.goalAmount}',
-                  style: Theme.of(context).textTheme.bodySmall),
+              Text(
+                currentGoal.orgName,
+                style: Theme.of(context).textTheme.titleSmall,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                'Family Goal: \$${currentGoal.goalAmount}',
+                style: Theme.of(context).textTheme.bodySmall,
+                textAlign: TextAlign.center,
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 16, bottom: 8),
                 child: GradientProgressBar(
