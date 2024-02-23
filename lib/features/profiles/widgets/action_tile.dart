@@ -43,7 +43,7 @@ class _ActionTileState extends State<ActionTile> {
   Widget build(BuildContext context) {
     backgroundColor = widget.backgroundColor;
     borderColor = widget.borderColor;
-    extraHeight = widget.subtitle.isNotEmpty ? 20 : 0;
+    extraHeight = widget.subtitle.isNotEmpty ? 34 : 0;
     if (widget.isDisabled) {
       backgroundColor = AppTheme.disabledTileBackground;
       borderColor = AppTheme.disabledTileBorder;
