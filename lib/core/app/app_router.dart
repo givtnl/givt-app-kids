@@ -62,7 +62,6 @@ class AppRouter {
             final profiles = context.read<ProfilesCubit>().state;
             if (auth is LoggedInState) {
               if (profiles.isProfileSelected) {
-                context.read<ProfilesCubit>().fetchActiveProfile();
                 return Pages.wallet.path;
               }
               context.read<ProfilesCubit>().fetchAllProfiles();
@@ -82,14 +81,16 @@ class AppRouter {
           builder: (context, state) => const ProfileSelectionScreen(),
         ),
         GoRoute(
-          path: Pages.wallet.path,
-          name: Pages.wallet.name,
-          builder: (context, state) => BlocProvider(
-            create: (context) => GoalTrackerCubit(getIt())
-              ..getGoal(context.read<ProfilesCubit>().state.activeProfile.id),
-            child: const WalletScreen(),
-          ),
-        ),
+            path: Pages.wallet.path,
+            name: Pages.wallet.name,
+            builder: (context, state) {
+              final profiles = context.read<ProfilesCubit>().state;
+              context.read<ProfilesCubit>().fetchActiveProfile();
+              context
+                  .read<GoalTrackerCubit>()
+                  .getGoal(profiles.activeProfile.id);
+              return const WalletScreen();
+            }),
         GoRoute(
           path: Pages.camera.path,
           name: Pages.camera.name,

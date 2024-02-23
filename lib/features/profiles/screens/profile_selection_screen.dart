@@ -36,7 +36,6 @@ class ProfileSelectionScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               context.read<ProfilesCubit>().fetchProfile(profiles[i].id, true);
-
               AnalyticsHelper.logEvent(
                 eventName: AmplitudeEvent.profilePressed,
                 eventProperties: {

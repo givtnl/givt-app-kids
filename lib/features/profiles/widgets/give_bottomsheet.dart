@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -43,7 +42,8 @@ class GiveBottomSheet extends StatelessWidget {
                       onTap: () {
                         context.pop();
                         context.read<FlowsCubit>().startFamilyGoalFlow();
-                        String generatedMediumId = base64.encode(familyGoal.mediumId.codeUnits);
+                        String generatedMediumId =
+                            base64.encode(familyGoal.mediumId.codeUnits);
                         context
                             .read<OrganisationDetailsCubit>()
                             .getOrganisationDetails(generatedMediumId);
