@@ -39,6 +39,10 @@ enum AmplitudeEvent {
   editProfilePictureClicked('edit_profile_picture_clicked'),
   saveAvatarClicked('save_avatar_clicked'),
   rewardAchieved('reward_achieved'),
+  goalTrackerTapped('goal_tracker_tapped'),
+  goalDismissed('goal_dismissed'),
+  donateToThisFamilyGoalPressed('donate_to_this_family_goal_pressed'),
+  choseGiveToFamilyGoal('chose_give_to_family_goal'),
   ;
 
   final String value;
@@ -58,6 +62,7 @@ class AnalyticsHelper {
   static const String avatarImageKey = 'avatar_image_selected';
   static const String rewardKey = 'reward';
   static const String cityKey = 'city';
+  static const String dateEUKey = 'start_date_eu_format';
   static Amplitude? _amplitude;
 
   static Future<void> init(String key) async {

@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Ask your parent(s) to sign in\nwith their Givt account',
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                              Theme.of(context).textTheme.titleSmall?.copyWith(
                                     color: AppTheme.defaultTextColor,
                                   ),
                         ),
@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         "Email",
                         style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                            Theme.of(context).textTheme.titleSmall?.copyWith(
                                   color: (state is InputFieldErrorState &&
                                           state.emailErrorMessage.isNotEmpty)
                                       ? Theme.of(context).colorScheme.error
@@ -178,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         "Password",
                         style: Theme.of(context)
                             .textTheme
-                            .titleMedium
+                            .titleSmall
                             ?.copyWith(
                               color: (state is InputFieldErrorState &&
                                           state.passwordErrorMessage

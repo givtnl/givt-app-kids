@@ -5,7 +5,7 @@ import 'package:givt_app_kids/core/exceptions/givt_server_exception.dart';
 import 'package:givt_app_kids/core/network/network.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
 import 'package:http/http.dart';
-import 'package:http_interceptor/http/http.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
 
 class APIService {
   APIService(
@@ -270,5 +270,19 @@ class APIService {
             : null,
       );
     }
+  }
+
+  Future<Map<String, dynamic>?> fetchFamilyGoal() async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/goal/family/latest');
+    final response = await client.get(url);
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    }
+    final decodedBody = jsonDecode(response.body);
+    final item = decodedBody['item'];
+    return item;
   }
 }

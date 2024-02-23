@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
@@ -12,9 +14,12 @@ import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dar
 import 'package:givt_app_kids/features/design_alignment_screen/design_alignment_screen.dart';
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
+import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
+import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_goal_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
@@ -57,7 +62,6 @@ class AppRouter {
             final profiles = context.read<ProfilesCubit>().state;
             if (auth is LoggedInState) {
               if (profiles.isProfileSelected) {
-                context.read<ProfilesCubit>().fetchActiveProfile();
                 return Pages.wallet.path;
               }
               context.read<ProfilesCubit>().fetchAllProfiles();
@@ -77,10 +81,16 @@ class AppRouter {
           builder: (context, state) => const ProfileSelectionScreen(),
         ),
         GoRoute(
-          path: Pages.wallet.path,
-          name: Pages.wallet.name,
-          builder: (context, state) => const WalletScreen(),
-        ),
+            path: Pages.wallet.path,
+            name: Pages.wallet.name,
+            builder: (context, state) {
+              final profiles = context.read<ProfilesCubit>().state;
+              context.read<ProfilesCubit>().fetchActiveProfile();
+              context
+                  .read<GoalTrackerCubit>()
+                  .getGoal(profiles.activeProfile.id);
+              return const WalletScreen();
+            }),
         GoRoute(
           path: Pages.camera.path,
           name: Pages.camera.name,
@@ -98,6 +108,20 @@ class AppRouter {
             child: const ChooseAmountSliderScreen(),
           ),
         ),
+        GoRoute(
+            path: Pages.chooseAmountSliderGoal.path,
+            name: Pages.chooseAmountSliderGoal.name,
+            builder: (context, state) {
+              final extra = state.extra ?? const FamilyGoal.empty();
+              final familyGoal = (extra as FamilyGoal);
+              return BlocProvider(
+                create: (BuildContext context) => CreateTransactionCubit(
+                    context.read<ProfilesCubit>(), getIt()),
+                child: ChooseAmountSliderGoalScreen(
+                  familyGoal: familyGoal,
+                ),
+              );
+            }),
         GoRoute(
           path: Pages.success.path,
           name: Pages.success.name,
@@ -245,7 +269,12 @@ class AppRouter {
         GoRoute(
           path: Pages.successCoin.path,
           name: Pages.successCoin.name,
-          builder: (context, state) => const SuccessCoinScreen(),
+          builder: (context, state) {
+            final extra = state.extra ?? false;
+            final isGoal = (extra as bool);
+            log('isGoal: $isGoal');
+            return SuccessCoinScreen(isGoal: isGoal);
+          },
         ),
         GoRoute(
           path: Pages.voucherCodeScreen.path,

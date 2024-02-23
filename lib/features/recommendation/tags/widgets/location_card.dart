@@ -45,7 +45,7 @@ class LocationCard extends StatelessWidget {
             Text(
               location.displayText,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: AppTheme.recommendationItemText,
                   fontWeight: FontWeight.w600,
                   height: 0),

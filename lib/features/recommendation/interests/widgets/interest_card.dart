@@ -67,12 +67,7 @@ class InterestCard extends StatelessWidget {
                         interest.displayText,
                         textAlign: TextAlign.center,
                         style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AppTheme.recommendationItemText,
-                                  fontWeight: FontWeight.w600,
-                                  height: 0,
-                                  fontSize: 16,
-                                ),
+                            Theme.of(context).textTheme.titleSmall
                       ),
                     ),
                   ),
