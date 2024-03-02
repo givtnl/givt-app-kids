@@ -44,7 +44,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Post slack message for new release
-
       - name: Slack Notification
         # if: ${{ github.ref == 'refs/heads/main' }}
         uses: slackapi/slack-github-action@v1.25.0
@@ -56,7 +55,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "TEST New release of the G4K app :tada:",
+                    "text": "New release of the G4K app :g4kcoin::tada:",
                     "emoji": true
                   }
                 },
@@ -66,24 +65,17 @@ jobs:
                     {
                       "type": "mrkdwn",
                       "text": "*Version:*\n${{ steps.yq.outputs.result }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Release Date:*\n$(date +'%Y-%m-%d')"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Release Notes:*\nhttps://github.com/givtnl/givt-app-kids/releases/tag/v${{ steps.yq.outputs.result }}"
                     }
                   ]
                 },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "View changelog",
-                        "emoji": true
-                      },
-                      "value": "changelog",
-                      "url": "https://github.com/givtnl/givt-app-kids/releases/tag/v${{ steps.yq.outputs.result }}"
-                    }
-                  ]
-                }
               ]
             }
         env:
