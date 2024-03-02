@@ -44,13 +44,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Set current date as env variable"
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           echo "builddate=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
         id: version  # this is used on variable path
   
       # Post slack message for new release
       - name: Slack Notification
-        # if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: slackapi/slack-github-action@v1.25.0
         with:
           payload: |
@@ -77,11 +78,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Created by:*\n${{ github.event.pull_request.user.name }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Approved by:*\n${{ github.actor }}"
+                      "text": "*Made by:*\n${{ github.actor }}"
                     }
                   ]
                 },
