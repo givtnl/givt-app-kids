@@ -86,7 +86,7 @@ jobs:
                         "emoji": true
                       },
                       "style": "primary",
-                      "url": "https://github.com/givtnl/givt-app-kids/releases/tag/v${{ steps.yq.outputs.result }}",
+                      "url": "https://github.com/givtnl/givt-app-kids/releases/tag/v${{ steps.yq.outputs.result }}"
                     }
                   ]
                 }
