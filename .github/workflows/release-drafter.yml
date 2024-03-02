@@ -77,7 +77,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Created by:*\n${{ github.triggering_actor }}"
+                      "text": "*Created by:*\n${{ github.event.pull_request.user.name }}"
                     },
                     {
                       "type": "mrkdwn",
