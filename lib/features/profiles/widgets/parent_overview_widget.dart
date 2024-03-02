@@ -1,3 +1,4 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
@@ -16,6 +17,16 @@ class ParentOverviewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // Example of using Firebase Remote Config
+        // Will only show if the feature is enabled in the Firebase console,
+        // by default it's disabled
+        if (FirebaseRemoteConfig.instance.getBool('example_feature_enabled'))
+          Text(
+            'Firebase config works and is enabled 🎉',
+            style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                  fontSize: 12,
+                ),
+          ),
         SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
         Text(
           'Parents',
