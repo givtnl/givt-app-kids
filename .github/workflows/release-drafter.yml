@@ -77,6 +77,10 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
+                      "text": "*Created by:*\n${{ github.triggering_actor }}"
+                    },
+                    {
+                      "type": "mrkdwn",
                       "text": "*Approved by:*\n${{ github.actor }}"
                     }
                   ]
