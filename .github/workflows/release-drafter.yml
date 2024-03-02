@@ -68,11 +68,25 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Release Date:*\n${{ github.event.head_commit.timestamp }}"
-                    },
+                      "text": "*Release Date:*\n$(date +'%Y-%m-%d')"
+                    }
+                  ]
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type": "actions",
+                  "elements": [
                     {
-                      "type": "mrkdwn",
-                      "text": "*Release Notes:*\nhttps://github.com/givtnl/givt-app-kids/releases/tag/v${{ steps.yq.outputs.result }}"
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View changelog :memo:",
+                        "emoji": true
+                      },
+                      "style": "primary",
+                      "url": "https://github.com/givtnl/givt-app-kids/releases/tag/v${{ steps.yq.outputs.result }}",
                     }
                   ]
                 }
