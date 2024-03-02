@@ -21,7 +21,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final (name, options) = await _firebaseOptions;
-  Firebase.initializeApp(
+  await Firebase.initializeApp(
     name: name,
     options: options,
   );
