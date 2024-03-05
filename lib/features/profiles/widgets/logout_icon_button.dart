@@ -6,16 +6,15 @@ import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:go_router/go_router.dart';
 
-class LogoutButton extends StatelessWidget {
-  const LogoutButton({super.key});
+class LogoutIconButton extends StatelessWidget {
+  const LogoutIconButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GivtFloatingActionButton(
-      onTap: () {
+    return IconButton(
+      onPressed: () {
         AnalyticsHelper.logEvent(
           eventName: AmplitudeEvent.logOutPressed,
         );
@@ -25,8 +24,7 @@ class LogoutButton extends StatelessWidget {
 
         context.goNamed(Pages.login.name);
       },
-      text: 'Log out',
-      leftIcon: FontAwesomeIcons.arrowLeft,
+      icon: FaIcon(FontAwesomeIcons.rightFromBracket, color: Theme.of(context).colorScheme.onPrimaryContainer),
     );
   }
 }
