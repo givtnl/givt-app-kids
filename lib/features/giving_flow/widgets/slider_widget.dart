@@ -77,43 +77,13 @@ class SliderWidgetThumb extends SliderComponentShape {
     required double textScaleFactor,
     required Size sizeWithOverflow,
   }) {
-    // final Canvas canvas = context.canvas;
-    // int sides = 4;
-    // double innerPolygonRadius = thumbRadius * 1.2;
-    // double outerPolygonRadius = thumbRadius * 1.4;
-    // double angle = (pi * 2) / sides;
-
-    // final outerPathColor = Paint()
-    //   ..color = Colors.pink.shade800
-    //   ..style = PaintingStyle.fill;
-
-    // var outerPath = Path();
-
-    // Offset startPoint2 = Offset(
-    //   outerPolygonRadius * cos(0.0),
-    //   outerPolygonRadius * sin(0.0),
-    // );
-
-    // outerPath.moveTo(
-    //   startPoint2.dx + center.dx,
-    //   startPoint2.dy + center.dy,
-    // );
-
-    // for (int i = 1; i <= sides; i++) {
-    //   double x = outerPolygonRadius * cos(angle * i) + center.dx;
-    //   double y = outerPolygonRadius * sin(angle * i) + center.dy;
-    //   outerPath.lineTo(x, y);
-    // }
-
-    // outerPath.close();
-
     // Draw circle
     final Paint circleBluePaint = Paint()
       ..color = sliderTheme.thumbColor!
       ..style = PaintingStyle.fill;
 
     final Paint circleDarkPaint = Paint()
-      ..color = Colors.black
+      ..color = AppTheme.secondary30
       ..style = PaintingStyle.fill;
 
     // Draw shadow
