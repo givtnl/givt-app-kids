@@ -7,7 +7,7 @@ import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
-import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
+import 'package:givt_app_kids/shared/widgets/coin_widget.dart';
 import 'package:givt_app_kids/features/profiles/widgets/logout_icon_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/parent_overview_widget.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_item.dart';

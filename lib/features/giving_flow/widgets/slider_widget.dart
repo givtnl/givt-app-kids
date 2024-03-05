@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,34 +13,66 @@ class SliderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliderTheme(
-      data: SliderTheme.of(context).copyWith(
-        trackHeight: 7.0,
-        activeTrackColor: Theme.of(context).colorScheme.onInverseSurface,
-        thumbShape: const SliderWidgetThumb(thumbRadius: 17),
-        inactiveTrackColor: Theme.of(context).colorScheme.surfaceVariant,
-        activeTickMarkColor: Theme.of(context).colorScheme.onInverseSurface,
-        inactiveTickMarkColor: Theme.of(context).colorScheme.surfaceVariant,
-        valueIndicatorColor: Colors.white,
-        thumbColor: Theme.of(context).colorScheme.onInverseSurface,
-        disabledThumbColor: AppTheme.secondary30,
-      ),
-      child: Slider(
-        value: currentAmount,
-        min: 0,
-        max: maxAmount,
-        divisions: maxAmount.round(),
-        onChanged: (value) {
-          HapticFeedback.lightImpact();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            child: Text("\$${currentAmount.round()}",
+                style: Theme.of(context).textTheme.headlineMedium),
+          ),
+          SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              trackHeight: 7.0,
+              activeTrackColor: Theme.of(context).colorScheme.onInverseSurface,
+              thumbShape: const SliderWidgetThumb(thumbRadius: 17),
+              inactiveTrackColor: Theme.of(context).colorScheme.surfaceVariant,
+              activeTickMarkColor:
+                  Theme.of(context).colorScheme.onInverseSurface,
+              inactiveTickMarkColor:
+                  Theme.of(context).colorScheme.surfaceVariant,
+              valueIndicatorColor: Colors.white,
+              thumbColor: Theme.of(context).colorScheme.onInverseSurface,
+              disabledThumbColor: AppTheme.secondary30,
+            ),
+            child: Slider(
+              value: currentAmount,
+              min: 0,
+              max: maxAmount,
+              divisions: maxAmount.round(),
+              onChanged: (value) {
+                HapticFeedback.lightImpact();
 
-          context.read<CreateTransactionCubit>().changeAmount(value);
-        },
-        onChangeEnd: (value) {
-          AnalyticsHelper.logEvent(
-            eventName: AmplitudeEvent.amountPressed,
-            eventProperties: {AnalyticsHelper.amountKey: value.roundToDouble()},
-          );
-        },
+                context.read<CreateTransactionCubit>().changeAmount(value);
+              },
+              onChangeEnd: (value) {
+                AnalyticsHelper.logEvent(
+                  eventName: AmplitudeEvent.amountPressed,
+                  eventProperties: {
+                    AnalyticsHelper.amountKey: value.roundToDouble()
+                  },
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            child: Row(
+              children: [
+                Text(
+                  "\$0",
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                const Spacer(),
+                Text(
+                  "\$${maxAmount.round()}",
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

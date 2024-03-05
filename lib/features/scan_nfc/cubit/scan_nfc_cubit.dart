@@ -3,9 +3,11 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
+import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
@@ -40,6 +42,20 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
+
+    // When the device is not a physical device, we can't scan NFC
+    // so we simulate a successful scan
+    if (Platform.isIOS) {
+      var iosInfo = await DeviceInfoPlugin().iosInfo;
+      if (!iosInfo.isPhysicalDevice) {
+        emit(state.copyWith(
+            mediumId: OrganisationDetailsCubit.defaultMediumId,
+            readData: '',
+            scanNFCStatus: ScanNFCStatus.scanned,
+            coinAnimationStatus: CoinAnimationStatus.stopped));
+        return;
+      }
+    }
 
     try {
       NfcManager.instance.startSession(
