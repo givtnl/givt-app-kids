@@ -60,6 +60,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const primary80 = Color(0xFF60DD9B);
   static const primary95 = Color(0xFFC0FFD6);
   static const primary98 = Color(0xFFE9FFED);
+  static const secondary30 = Color(0xFF004F50);
+
 // FOR TESTING
   static const testingTextStyleLabelMedium = TextStyle(fontSize: 20);
   Scheme _schemeLight() {
