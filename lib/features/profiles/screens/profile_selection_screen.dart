@@ -98,7 +98,9 @@ class ProfileSelectionScreen extends StatelessWidget {
             ),
             actions: [
               if (flow.isCoin) const CoinWidget(),
-              const LogoutIconButton(),
+              if (flow.flowType == FlowType.none &&
+                  state is! ProfilesLoadingState)
+                const LogoutIconButton(),
             ],
           ),
           body: state is ProfilesLoadingState
