@@ -1,19 +1,17 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
+import 'package:givt_app_kids/features/giving_flow/widgets/organisation_widget.dart';
 import 'package:givt_app_kids/features/giving_flow/widgets/slider_widget.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
-import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
+import 'package:givt_app_kids/shared/widgets/coin_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
@@ -25,13 +23,12 @@ class ChooseAmountSliderScreen extends StatelessWidget {
   const ChooseAmountSliderScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    final flow = context.read<FlowsCubit>().state;
     final organisationDetailsState =
         context.watch<OrganisationDetailsCubit>().state;
-    final profilesCubit = context.read<ProfilesCubit>();
     final organisation = organisationDetailsState.organisation;
+    final profilesCubit = context.read<ProfilesCubit>();
     final mediumId = organisationDetailsState.mediumId;
-
-    final flow = context.read<FlowsCubit>().state;
 
     return BlocConsumer<CreateTransactionCubit, CreateTransactionState>(
       listener: (context, state) {
@@ -51,7 +48,6 @@ class ChooseAmountSliderScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final size = MediaQuery.sizeOf(context);
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: flow.isQRCode || flow.isRecommendation ? 85 : null,
@@ -60,117 +56,22 @@ class ChooseAmountSliderScreen extends StatelessWidget {
             actions: [_getAppBarAction(flow)],
           ),
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 75),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        if (flow.isCoin)
-                          SvgPicture.asset('assets/images/church.svg'),
-                        if (flow.isCoin) const SizedBox(width: 25),
-                        if ((flow.isRecommendation || flow.isExhibition) &&
-                            organisation.logoLink != null)
-                          Container(
-                            width: size.width * .22,
-                            height: size.width * .22,
-                            padding: const EdgeInsets.only(right: 12),
-                            child: Image.network(
-                              organisation.logoLink!,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        BlocBuilder<OrganisationDetailsCubit,
-                            OrganisationDetailsState>(
-                          builder: (context, state) {
-                            if (state is OrganisationDetailsLoadingState) {
-                              return const SizedBox(
-                                height: 30,
-                                width: 30,
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              return Expanded(
-                                child: Text(
-                                  organisation.name,
-                                  style: const TextStyle(
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppTheme.defaultTextColor,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ],
-                    ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      OrganisationWidget(organisation),
+                      const Spacer(),
+                      Text("How much would you like to give?",
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(height: 32),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: size.height * 0.03),
-                    child: const Text(
-                      'How much would you like to give?',
-                      style: TextStyle(
-                        color: AppTheme.givt4KidsBlue,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: size.height * 0.05),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "\$${state.amount.round()}",
-                      style: const TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.givt4KidsBlue,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Column(
-                      children: [
-                        SliderWidget(state.amount, state.maxAmount),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              const Text(
-                                "\$0",
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  color: AppTheme.defaultTextColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                "\$${state.maxAmount.round()}",
-                                style: const TextStyle(
-                                  fontSize: 22,
-                                  color: AppTheme.defaultTextColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 120,
-                  ),
-                ],
-              ),
+                ),
+                SliderWidget(state.amount, state.maxAmount),
+                const Spacer(),
+              ],
             ),
           ),
           floatingActionButtonLocation:

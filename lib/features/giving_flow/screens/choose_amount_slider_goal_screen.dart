@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
@@ -9,6 +8,7 @@ import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dar
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
+import 'package:givt_app_kids/features/giving_flow/widgets/family_goal_widget.dart';
 import 'package:givt_app_kids/features/giving_flow/widgets/slider_widget.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -48,7 +48,6 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final size = MediaQuery.sizeOf(context);
         final amountLeftWithDonation =
             amountLeftToGoal - state.amount.round() > 0
                 ? (amountLeftToGoal - state.amount.round()).toInt()
@@ -59,92 +58,22 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
             leading: const GivtBackButton(),
           ),
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: size.height * 0.05),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Column(
                     children: [
-                      if (organisation.logoLink != null)
-                        Container(
-                          width: size.width * .22,
-                          height: size.width * .22,
-                          padding: EdgeInsets.only(right: size.width * .03),
-                          child: Image.network(
-                            organisation.logoLink!,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      SizedBox(
-                        width: size.width * .68,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              familyGoal.orgName,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(color: AppTheme.primary20),
-                            ),
-                            Text(
-                              'Family goal: \$${familyGoal.goalAmount}',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
-                        ),
-                      ),
+                      FamilyGoalWidget(familyGoal, organisation),
+                      const Spacer(),
+                      Text("How much would you like to give?",
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(height: 32),
                     ],
                   ),
-                  SizedBox(height: size.height * 0.03),
-                  Padding(
-                    padding: EdgeInsets.only(top: size.height * 0.03),
-                    child: Text(
-                      'How much would you like to give?',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ),
-                  const SizedBox(height: 38),
-                  Container(
-                    margin: EdgeInsets.only(top: size.height * 0.035),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "\$${state.amount.round()}",
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                color: AppTheme.primary20,
-                              ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Column(
-                      children: [
-                        SliderWidget(state.amount, state.maxAmount),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              Text(
-                                "\$0",
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              const Spacer(),
-                              Text(
-                                "\$${state.maxAmount.round()}",
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                SliderWidget(state.amount, state.maxAmount),
+                const Spacer(),
+              ],
             ),
           ),
           floatingActionButtonLocation:
@@ -191,7 +120,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                   const SizedBox(width: 8),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               GivtElevatedButton(
                 isDisabled: state.amount == 0 ? true : false,
                 text: 'Donate',
