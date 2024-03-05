@@ -8,7 +8,7 @@ import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/models/profile.dart';
 import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
-import 'package:givt_app_kids/features/profiles/widgets/logout_button.dart';
+import 'package:givt_app_kids/features/profiles/widgets/logout_icon_button.dart';
 import 'package:givt_app_kids/features/profiles/widgets/parent_overview_widget.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profile_item.dart';
 import 'package:givt_app_kids/features/profiles/widgets/profiles_empty_state_widget.dart';
@@ -98,6 +98,9 @@ class ProfileSelectionScreen extends StatelessWidget {
             ),
             actions: [
               if (flow.isCoin) const CoinWidget(),
+              if (flow.flowType == FlowType.none &&
+                  state is! ProfilesLoadingState)
+                const LogoutIconButton(),
             ],
           ),
           body: state is ProfilesLoadingState
@@ -146,11 +149,6 @@ class ProfileSelectionScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-          floatingActionButton:
-              (flow.flowType == FlowType.none && state is! ProfilesLoadingState)
-                  ? const LogoutButton()
-                  : null,
         );
       },
     );
