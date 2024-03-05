@@ -23,7 +23,7 @@ class AuthRequest {
 
   const AuthRequest.family({
     required this.familyName,
-  })  : type = LoginType.family,
+  })  : type = LoginType.event,
         email = '',
         password = '',
         voucherCode = '';
@@ -38,5 +38,5 @@ class AuthRequest {
 enum LoginType {
   email,
   voucher,
-  family,
+  event,
 }

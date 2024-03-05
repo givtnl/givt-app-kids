@@ -41,7 +41,7 @@ class AuthRepositoryImpl with AuthRepository {
           },
         );
         break;
-      case LoginType.family:
+      case LoginType.event:
         response = await _apiService.loginByFamilyName(
           {
             'familyName': authRequest.familyName,
