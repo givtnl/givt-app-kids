@@ -9,6 +9,7 @@ import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
+import 'package:givt_app_kids/features/giving_flow/widgets/slider_widget.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -137,29 +138,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
                       children: [
-                        Slider(
-                          value: state.amount,
-                          min: 0,
-                          max: state.maxAmount,
-                          activeColor: AppTheme.givt4KidsBlue,
-                          inactiveColor: AppTheme.givt4KidsBlue.withAlpha(100),
-                          divisions: state.maxAmount.round(),
-                          onChanged: (value) {
-                            HapticFeedback.lightImpact();
-
-                            context
-                                .read<CreateTransactionCubit>()
-                                .changeAmount(value);
-                          },
-                          onChangeEnd: (value) {
-                            AnalyticsHelper.logEvent(
-                              eventName: AmplitudeEvent.amountPressed,
-                              eventProperties: {
-                                AnalyticsHelper.amountKey: value.roundToDouble()
-                              },
-                            );
-                          },
-                        ),
+                        SliderWidget(state.amount, state.maxAmount),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Row(

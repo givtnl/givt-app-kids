@@ -9,6 +9,7 @@ import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dar
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
+import 'package:givt_app_kids/features/giving_flow/widgets/slider_widget.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
@@ -122,31 +123,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
                       children: [
-                        Slider(
-                          value: state.amount,
-                          min: 0,
-                          max: state.maxAmount,
-                          activeColor:
-                              Theme.of(context).colorScheme.onInverseSurface,
-                          inactiveColor:
-                              Theme.of(context).colorScheme.surfaceVariant,
-                          divisions: state.maxAmount.round(),
-                          onChanged: (value) {
-                            HapticFeedback.lightImpact();
-
-                            context
-                                .read<CreateTransactionCubit>()
-                                .changeAmount(value);
-                          },
-                          onChangeEnd: (value) {
-                            AnalyticsHelper.logEvent(
-                              eventName: AmplitudeEvent.amountPressed,
-                              eventProperties: {
-                                AnalyticsHelper.amountKey: value.roundToDouble()
-                              },
-                            );
-                          },
-                        ),
+                        SliderWidget(state.amount, state.maxAmount),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Row(
