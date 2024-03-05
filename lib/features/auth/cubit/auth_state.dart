@@ -89,21 +89,36 @@ class ExternalErrorState extends AuthState {
 }
 
 class LoggedInState extends AuthState {
+  static const int _currentVersion = 1;
+  static const String _versionKey = '_versionKey';
+
   const LoggedInState({
-    this.session = const Session.empty(),
+    this.schoolEventMode = false,
   });
 
-  final Session session;
+  final bool schoolEventMode;
+
+  bool get isSchoolEvenMode {
+    return schoolEventMode;
+  }
 
   factory LoggedInState.fromJson(Map<String, dynamic> json) {
-    return LoggedInState(
-      session: Session.fromJson(json),
-    );
+    //versioning to prevent user logout when app be updated
+    final version = getIt<SharedPreferences>().getInt(_versionKey);
+    switch (version) {
+      case _currentVersion:
+        return LoggedInState(schoolEventMode: json['schoolEventMode']);
+      default:
+        return const LoggedInState();
+    }
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return session.toJson();
+    getIt<SharedPreferences>().setInt(_versionKey, _currentVersion);
+    return {
+      'schoolEventMode': schoolEventMode,
+    };
   }
 }
 

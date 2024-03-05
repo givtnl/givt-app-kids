@@ -1,30 +1,42 @@
 class AuthRequest {
-  AuthRequest({
+  const AuthRequest({
     required this.email,
     required this.password,
     required this.type,
     required this.voucherCode,
+    required this.familyName,
   });
 
-  AuthRequest.email({
+  const AuthRequest.email({
     required this.email,
     required this.password,
   })  : type = LoginType.email,
-        voucherCode = '';
+        voucherCode = '',
+        familyName = '';
 
-  AuthRequest.voucher({
+  const AuthRequest.voucher({
     required this.voucherCode,
   })  : type = LoginType.voucher,
         email = '',
-        password = '';
+        password = '',
+        familyName = '';
+
+  const AuthRequest.family({
+    required this.familyName,
+  })  : type = LoginType.family,
+        email = '',
+        password = '',
+        voucherCode = '';
 
   final String email;
   final String password;
   final LoginType type;
   final String voucherCode;
+  final String familyName;
 }
 
 enum LoginType {
   email,
   voucher,
+  family,
 }

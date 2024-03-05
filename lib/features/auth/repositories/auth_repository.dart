@@ -41,6 +41,13 @@ class AuthRepositoryImpl with AuthRepository {
           },
         );
         break;
+      case LoginType.family:
+        response = await _apiService.loginByFamilyName(
+          {
+            'familyName': authRequest.familyName,
+          },
+        );
+        break;
     }
 
     final sessionJson = response['item'];

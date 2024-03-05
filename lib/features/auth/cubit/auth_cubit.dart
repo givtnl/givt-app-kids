@@ -1,21 +1,22 @@
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/core/exceptions/givt_server_exception.dart';
+import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/auth/cubit/givt_inner_error_type.dart';
 import 'package:givt_app_kids/features/auth/models/auth_request.dart';
-import 'package:givt_app_kids/features/auth/models/session.dart';
 import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends HydratedCubit<AuthState> {
   static const int voucherCodeLength = 6;
+  static const int familyNameMinLength = 2;
 
   AuthCubit(this._authRepositoy) : super(const LoggedOutState()) {
-    hydrate();
     _handleLockedAccount();
   }
 
@@ -34,10 +35,10 @@ class AuthCubit extends HydratedCubit<AuthState> {
 
     emit(const LoadingState());
     try {
-      final response = await _authRepositoy.login(
+      await _authRepositoy.login(
         AuthRequest.email(email: email, password: password),
       );
-      emit(LoggedInState(session: response));
+      emit(const LoggedInState());
     } on GivtServerException catch (error) {
       final errorState = ExternalErrorState.fromJson(error.body!);
       if (errorState.innerErrorType == GivtInnerErrorType.wrongPasswordLocked) {
@@ -50,7 +51,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
         emit(errorState);
       }
     } catch (error, stackTrace) {
-      LoggingInfo.instance.error("Login failed: $error", methodName: stackTrace.toString());
+      LoggingInfo.instance
+          .error("Login failed: $error", methodName: stackTrace.toString());
       emit(ExternalErrorState(errorMessage: error.toString()));
     }
   }
@@ -62,13 +64,33 @@ class AuthCubit extends HydratedCubit<AuthState> {
 
     emit(const LoadingState());
     try {
-      final response = await _authRepositoy.login(
+      await _authRepositoy.login(
         AuthRequest.voucher(voucherCode: voucherCode),
       );
 
-      emit(LoggedInState(session: response));
+      emit(const LoggedInState());
     } catch (error, stackTrace) {
-      LoggingInfo.instance.warning("Login by voucher code failed: $error", methodName: stackTrace.toString());
+      LoggingInfo.instance.warning("Login by voucher code failed: $error",
+          methodName: stackTrace.toString());
+      emit(ExternalErrorState(errorMessage: error.toString()));
+    }
+  }
+
+  Future<void> loginByFamilyName(String familyName) async {
+    if (!_isFamilyNameValid(familyName)) {
+      return;
+    }
+
+    emit(const LoadingState());
+    try {
+      await _authRepositoy.login(
+        AuthRequest.family(familyName: familyName),
+      );
+
+      emit(const LoggedInState(schoolEventMode: true));
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.warning("Login by family name failed: $error",
+          methodName: stackTrace.toString());
       emit(ExternalErrorState(errorMessage: error.toString()));
     }
   }
@@ -118,6 +140,10 @@ class AuthCubit extends HydratedCubit<AuthState> {
 
   bool _isPasswordValid(String passwordText) {
     return _getPasswordErrorMessage(passwordText) == null;
+  }
+
+  bool _isFamilyNameValid(String familyName) {
+    return familyName.length >= familyNameMinLength;
   }
 
   String? _getPasswordErrorMessage(String passwordText) {

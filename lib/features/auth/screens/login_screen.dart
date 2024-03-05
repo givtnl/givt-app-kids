@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
@@ -104,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         GestureDetector(
                           onDoubleTap: () {
                             context.read<FlowsCubit>().startExhibitionFlow();
-                            context.pushNamed(Pages.voucherCodeScreen.name);
+                            context.pushNamed(Pages.voucherCode.name);
                           },
                           child: Text(
                             'Welcome',
@@ -135,14 +136,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         "Email",
-                        style:
-                            Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  color: (state is InputFieldErrorState &&
-                                          state.emailErrorMessage.isNotEmpty)
-                                      ? Theme.of(context).colorScheme.error
-                                      : AppTheme.defaultTextColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: (state is InputFieldErrorState &&
+                                      state.emailErrorMessage.isNotEmpty)
+                                  ? Theme.of(context).colorScheme.error
+                                  : AppTheme.defaultTextColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       const SizedBox(height: 5),
                       TextField(
@@ -176,10 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 15),
                       Text(
                         "Password",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               color: (state is InputFieldErrorState &&
                                           state.passwordErrorMessage
                                               .isNotEmpty ||
@@ -259,6 +256,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   const SizedBox(height: 24),
+                  //TODO: replace with specific toggle later on
+                  if (FirebaseRemoteConfig.instance
+                      .getBool('example_feature_enabled'))
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 24),
+                      child: GivtElevatedButton(
+                        text: 'School event flow',
+                        onTap: () {
+                          context.goNamed(Pages.familyNameLogin.name);
+                        },
+                      ),
+                    ),
+
                   GivtElevatedButton(
                     text: 'Sign in',
                     isLoading: state is LoadingState,
