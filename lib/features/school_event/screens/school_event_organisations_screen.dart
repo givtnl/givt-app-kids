@@ -4,10 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/exhibition_flow/widgets/organisation_item.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
-import 'package:givt_app_kids/features/profiles/widgets/coin_widget.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
+import 'package:givt_app_kids/shared/widgets/coin_widget.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
