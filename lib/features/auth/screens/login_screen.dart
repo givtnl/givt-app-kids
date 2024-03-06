@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
@@ -13,8 +12,10 @@ import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/helpers/remote_config_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_secondary_button.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -65,6 +66,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
+    final isSchoolEventFlowEnabled = RemoteConfigHelper.isFeatureEnabled(
+        RemoteConfigFeatures.schoolEventFlow);
+
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         log('auth state changed on $state');
@@ -103,10 +107,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         GestureDetector(
-                          onDoubleTap: () {
-                            context.read<FlowsCubit>().startExhibitionFlow();
-                            context.pushNamed(Pages.voucherCode.name);
-                          },
+                          //let's hide exhibition flow for now
+                          // onDoubleTap: () {
+                          //   context.read<FlowsCubit>().startExhibitionFlow();
+                          //   context.pushNamed(Pages.voucherCode.name);
+                          // },
                           child: Text(
                             'Welcome',
                             style: Theme.of(context)
@@ -256,37 +261,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  //TODO: replace with specific toggle later on
-                  if (FirebaseRemoteConfig.instance
-                      .getBool('example_feature_enabled'))
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 24),
-                      child: GivtElevatedButton(
-                        text: 'School event flow',
-                        onTap: () {
-                          context.goNamed(Pages.familyNameLogin.name);
-                        },
-                      ),
-                    ),
-
                   GivtElevatedButton(
                     text: 'Sign in',
                     isLoading: state is LoadingState,
-                    onTap: _isInputNotEmpty()
-                        ? () {
-                            if (state is LoadingState) {
-                              return;
-                            }
+                    isDisabled: !_isInputNotEmpty(),
+                    onTap: () {
+                      if (state is LoadingState) {
+                        return;
+                      }
 
-                            _login();
-                          }
-                        : null,
+                      _login();
+                    },
                   ),
                   const SizedBox(height: 24),
-                  Column(children: [
-                    DownloadGivtAppWidget(),
-                    const SizedBox(height: 24),
-                  ]),
+                  if (isSchoolEventFlowEnabled)
+                    GivtElevatedSecondaryButton(
+                      text: "I'm at WCA",
+                      onTap: () => context.goNamed(Pages.familyNameLogin.name),
+                    ),
+                  if (!isSchoolEventFlowEnabled) DownloadGivtAppWidget(),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),
