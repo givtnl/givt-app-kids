@@ -10,6 +10,8 @@ mixin OrganisationsRepository {
     required bool filterInterests,
     required String cityName,
   });
+
+  Future<List<Organisation>> getSchoolEventOrganisations();
 }
 
 class OrganisationsRepositoryImpl with OrganisationsRepository {
@@ -44,6 +46,18 @@ class OrganisationsRepositoryImpl with OrganisationsRepository {
             !interests.contains(tag) && tag.type == TagType.INTERESTS ||
             location.key != tag.key && tag.type == TagType.LOCATION);
       }
+      result.add(organisation);
+    }
+    return result;
+  }
+
+  @override
+  Future<List<Organisation>> getSchoolEventOrganisations() async {
+    final response = await _apiService.getSchoolEventOrganisations();
+
+    List<Organisation> result = [];
+    for (final organisationMap in response) {
+      final organisation = Organisation.fromMap(organisationMap);
       result.add(organisation);
     }
     return result;

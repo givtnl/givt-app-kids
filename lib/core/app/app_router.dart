@@ -38,6 +38,9 @@ import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart
 import 'package:givt_app_kids/features/recommendation/tags/screens/location_selection_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
+import 'package:givt_app_kids/features/school_event/screens/family_name_login_screen.dart';
+import 'package:givt_app_kids/features/school_event/screens/school_event_info_screen.dart';
+import 'package:givt_app_kids/features/school_event/screens/school_event_organisations_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -277,8 +280,8 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: Pages.voucherCodeScreen.path,
-          name: Pages.voucherCodeScreen.name,
+          path: Pages.voucherCode.path,
+          name: Pages.voucherCode.name,
           builder: (context, state) => const VoucherCodeScreen(),
         ),
         GoRoute(
@@ -303,6 +306,36 @@ class AppRouter {
           name: Pages.successExhibitionCoin.name,
           builder: (context, state) =>
               const exhibition_flow.SuccessCoinScreen(),
+        ),
+        GoRoute(
+          path: Pages.familyNameLogin.path,
+          name: Pages.familyNameLogin.name,
+          builder: (context, state) => const FamilyNameLoginScreen(),
+        ),
+        GoRoute(
+          path: Pages.schoolEventInfo.path,
+          name: Pages.schoolEventInfo.name,
+          builder: (context, state) => const SchoolEventInfoScreen(),
+        ),
+        GoRoute(
+          path: Pages.schoolEventOrganisations.path,
+          name: Pages.schoolEventOrganisations.name,
+          builder: (context, state) {
+            return BlocProvider(
+              create: (context) => OrganisationsCubit(
+                getIt(),
+              )
+                //TODO: replace with proper method when endpoint be ready
+                // ..getSchoolEventOrganisations(),
+                ..getRecommendedOrganisations(
+                  location: OrganisationsCubit.exhibitionLocation,
+                  interests: OrganisationsCubit.exhibitionInterests,
+                  pageSize: 6,
+                  filterInterests: false,
+                ),
+              child: const SchoolEventOrganisationsScreen(),
+            );
+          },
         ),
         GoRoute(
           path: Pages.avatarSelection.path,
@@ -330,8 +363,8 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: Pages.designAlignmentScreen.path,
-          name: Pages.designAlignmentScreen.name,
+          path: Pages.designAlignment.path,
+          name: Pages.designAlignment.name,
           builder: (context, state) => const DesignAlignmentScreen(),
         ),
       ]);

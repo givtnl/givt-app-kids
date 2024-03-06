@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -47,7 +48,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
             children: [
               Positioned.fill(
                 child: Lottie.asset(
-                  "assets/lotties/coin_success_2.json",
+                  'assets/lotties/coin_success_2.json',
                   fit: BoxFit.fitWidth,
                   alignment: Alignment.bottomCenter,
                   width: double.infinity,
@@ -62,13 +63,14 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
   }
 
   Widget _buildSuccessText() {
+    final authState = context.read<AuthCubit>().state as LoggedInState;
     return Positioned.fill(
       child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 70),
         child: Column(
           children: [
             Text(
-              widget.isGoal ? "Well done!" : "Activated!",
+              widget.isGoal ? 'Well done!' : 'Activated!',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: AppTheme.defaultTextColor,
@@ -79,8 +81,10 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
             ),
             Text(
               widget.isGoal
-                  ? "You helped towards your family goal!"
-                  : "Drop your coin wherever your\nchurch collects money.",
+                  ? 'You helped towards your family goal!'
+                  : authState.isSchoolEvenMode
+                      ? 'Drop your coin in\nthe groups giving box.'
+                      : 'Drop your coin wherever your\nchurch collects money.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppTheme.defaultTextColor,
@@ -95,7 +99,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
   Widget _buildFAB(bool isOnlyChild) {
     if (widget.isGoal) {
       return GivtElevatedButton(
-        text: "Done",
+        text: 'Done',
         onTap: () {
           context.goNamed(Pages.wallet.name);
           context.read<FlowsCubit>().resetFlow();

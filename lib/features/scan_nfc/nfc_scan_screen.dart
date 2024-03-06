@@ -27,6 +27,7 @@ class NFCScanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final flow = context.read<FlowsCubit>().state;
     final user = context.read<ProfilesCubit>().state.activeProfile;
+    final auth = context.read<AuthCubit>().state as LoggedInState;
     return BlocConsumer<ScanNfcCubit, ScanNfcState>(
       listener: (context, state) {
         final scanNfcCubit = context.read<ScanNfcCubit>();
@@ -56,7 +57,10 @@ class NFCScanPage extends StatelessWidget {
                                   .read<OrganisationDetailsCubit>()
                                   .state is OrganisationDetailsLoadingState,
                               onPressed: () {
-                                if (flow.isExhibition) {
+                                if (auth.isSchoolEvenMode) {
+                                  context.pushReplacementNamed(
+                                      Pages.schoolEventOrganisations.name);
+                                } else if (flow.isExhibition) {
                                   context.pushReplacementNamed(
                                       Pages.exhibitionOrganisations.name);
                                 } else {
@@ -82,7 +86,9 @@ class NFCScanPage extends StatelessWidget {
               .read<OrganisationDetailsCubit>()
               .getOrganisationDetails(state.mediumId);
           Future.delayed(ScanNfcCubit.foundDelay, () {
-            if (flow.isExhibition) {
+            if (auth.isSchoolEvenMode) {
+              context.pushReplacementNamed(Pages.schoolEventOrganisations.name);
+            } else if (flow.isExhibition) {
               context.pushReplacementNamed(Pages.exhibitionOrganisations.name);
             } else {
               context.pushReplacementNamed(Pages.chooseAmountSlider.name);
