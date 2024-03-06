@@ -105,8 +105,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
                   mediumId = uri.queryParameters['code'] ?? mediumId;
                   readData = decoded;
                 }
+                await NfcManager.instance.stopSession(alertMessage: ' ');
                 if (Platform.isIOS) {
-                  await NfcManager.instance.stopSession(alertMessage: ' ');
                   await Future.delayed(_closeIOSScanningScheetDelay);
                 }
 
