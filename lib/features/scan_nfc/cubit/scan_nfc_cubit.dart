@@ -65,7 +65,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     if (Platform.isAndroid) {
       var androidInfo = await DeviceInfoPlugin().androidInfo;
       if (!androidInfo.isPhysicalDevice) {
-        Future.delayed(debuggingSucscessDelay, () {
+        Future.delayed(debuggingSuccessDelay, () {
           emit(state.copyWith(
             mediumId: OrganisationDetailsCubit.defaultMediumId,
             readData: '',

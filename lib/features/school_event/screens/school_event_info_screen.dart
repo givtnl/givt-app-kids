@@ -20,20 +20,20 @@ class SchoolEventInfoScreen extends StatelessWidget {
     final activeProfile = context.watch<ProfilesCubit>().state.activeProfile;
 
     return BlocConsumer<ProfilesCubit, ProfilesState>(
-      listener: (context, propfilesState) {
-        if (propfilesState is ProfilesExternalErrorState) {
+      listener: (context, profilesState) {
+        if (profilesState is ProfilesExternalErrorState) {
           SnackBarHelper.showMessage(
             context,
             text:
-                'Cannot load profile. Please try again later. ${propfilesState.errorMessage}',
+                'Cannot load profile. Please try again later. ${profilesState.errorMessage}',
             isError: true,
           );
         }
       },
-      builder: (context, propfilesState) {
+      builder: (context, profilesState) {
         return Scaffold(
           appBar: AppBar(
-            leading: propfilesState is ProfilesLoadingState
+            leading: profilesState is ProfilesLoadingState
                 ? const SizedBox()
                 : GivtBackButton(
                     onPressedExt: () {
@@ -44,7 +44,7 @@ class SchoolEventInfoScreen extends StatelessWidget {
             //default width (56) + left padding (24)
             leadingWidth: 56 + 24,
           ),
-          body: propfilesState is ProfilesLoadingState
+          body: profilesState is ProfilesLoadingState
               ? const Center(child: CircularProgressIndicator())
               : SafeArea(
                   child: SingleChildScrollView(
@@ -110,7 +110,7 @@ class SchoolEventInfoScreen extends StatelessWidget {
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: GivtElevatedButton(
             text: 'Continue',
-            isDisabled: propfilesState is ProfilesLoadingState,
+            isDisabled: profilesState is ProfilesLoadingState,
             onTap: () {
               AnalyticsHelper.logEvent(
                 eventName: AmplitudeEvent.schoolEventFlowConfirmButtonClicked,

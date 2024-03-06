@@ -42,23 +42,23 @@ class _FamilyNameLoginScreenState extends State<FamilyNameLoginScreen> {
       },
       builder: (context, authState) {
         return BlocConsumer<ProfilesCubit, ProfilesState>(
-          listener: (context, propfilesState) {
-            if (propfilesState is ProfilesExternalErrorState) {
+          listener: (context, profilesState) {
+            if (profilesState is ProfilesExternalErrorState) {
               _showErrorMessage();
-            } else if (propfilesState is ProfilesUpdatedState &&
-                propfilesState.activeProfile == Profile.empty()) {
+            } else if (profilesState is ProfilesUpdatedState &&
+                profilesState.activeProfile == Profile.empty()) {
               context
                   .read<ProfilesCubit>()
-                  .fetchProfile(propfilesState.children[0].id);
+                  .fetchProfile(profilesState.children[0].id);
 
               context.pushNamed(Pages.schoolEventInfo.name);
             }
           },
-          builder: (context, propfilesState) {
+          builder: (context, profilesState) {
             return Scaffold(
               appBar: AppBar(
                 leading: authState is LoadingState ||
-                        propfilesState is ProfilesLoadingState
+                        profilesState is ProfilesLoadingState
                     ? const SizedBox()
                     : GivtBackButton(
                         onPressedForced: () =>
@@ -68,7 +68,7 @@ class _FamilyNameLoginScreenState extends State<FamilyNameLoginScreen> {
                 leadingWidth: 56 + 24,
               ),
               body: authState is LoadingState ||
-                      propfilesState is ProfilesLoadingState
+                      profilesState is ProfilesLoadingState
                   ? const Center(child: CircularProgressIndicator())
                   : SafeArea(
                       child: SingleChildScrollView(
@@ -127,7 +127,7 @@ class _FamilyNameLoginScreenState extends State<FamilyNameLoginScreen> {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
               floatingActionButton: authState is! LoadingState &&
-                      propfilesState is! ProfilesLoadingState
+                      profilesState is! ProfilesLoadingState
                   ? GivtElevatedButton(
                       text: 'Continue',
                       isDisabled:
