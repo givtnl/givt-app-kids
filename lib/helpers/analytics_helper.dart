@@ -43,6 +43,7 @@ enum AmplitudeEvent {
   goalDismissed('goal_dismissed'),
   donateToThisFamilyGoalPressed('donate_to_this_family_goal_pressed'),
   choseGiveToFamilyGoal('chose_give_to_family_goal'),
+  startSchoolEventFlowButtonClicked('start_school_event_flow_button_clicked'),
   ;
 
   final String value;
