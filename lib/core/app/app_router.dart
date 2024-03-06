@@ -262,11 +262,8 @@ class AppRouter {
           path: Pages.scanNFC.path,
           name: Pages.scanNFC.name,
           builder: (context, state) {
-            return BlocProvider(
-              create: (context) => ScanNfcCubit()
-                ..readTag(prescanningDelay: ScanNfcCubit.startDelay),
-              child: const NFCScanPage(),
-            );
+            context.read<ScanNfcCubit>().resetScanNFCStatus();
+            return const NFCScanPage();
           },
         ),
         GoRoute(
