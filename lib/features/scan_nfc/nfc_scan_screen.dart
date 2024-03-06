@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_found_bottomsheet.dart';
@@ -132,9 +131,7 @@ class NFCScanPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         )),
                   ),
-                  if (flow.isExhibition &&
-                      state.coinAnimationStatus !=
-                          CoinAnimationStatus.animating)
+                  if (flow.isExhibition)
                     Text(
                       '\$${user.wallet.balance.toStringAsFixed(0)}',
                       textAlign: TextAlign.center,

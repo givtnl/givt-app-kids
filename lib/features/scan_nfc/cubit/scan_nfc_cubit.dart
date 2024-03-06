@@ -6,7 +6,6 @@ import 'package:bloc/bloc.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/core/logging/logging.dart';
-import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:nfc_manager/nfc_manager.dart';
@@ -16,23 +15,29 @@ part 'scan_nfc_state.dart';
 class ScanNfcCubit extends Cubit<ScanNfcState> {
   ScanNfcCubit()
       : super(const ScanNfcState(
-            coinAnimationStatus: CoinAnimationStatus.initial,
-            scanNFCStatus: ScanNFCStatus.ready));
+          scanNFCStatus: ScanNFCStatus.ready,
+        ));
 
-  static const foundDelay = Duration(milliseconds: 1600);
+  static const foundDelay = Duration(milliseconds: 2000);
 
   static const _closeIOSScanningScheetDelay = Duration(milliseconds: 2900);
+
+  static const debuggingSuccessDelay = Duration(milliseconds: 3000);
 
   void cancelScanning() {
     NfcManager.instance.stopSession();
     emit(state.copyWith(scanNFCStatus: ScanNFCStatus.ready));
   }
 
-  void startAnimation() {
-    emit(state.copyWith(
-      coinAnimationStatus: CoinAnimationStatus.animating,
-      scanNFCStatus: ScanNFCStatus.ready,
-    ));
+  void stopScanningSession() {
+    // for android we try to close session
+    if (!Platform.isIOS) {
+      NfcManager.instance.stopSession();
+    }
+  }
+
+  void resetScanNFCStatus() {
+    emit(state.copyWith(scanNFCStatus: ScanNFCStatus.ready));
   }
 
   void readTag({Duration prescanningDelay = Duration.zero}) async {
@@ -47,23 +52,25 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     if (Platform.isIOS) {
       var iosInfo = await DeviceInfoPlugin().iosInfo;
       if (!iosInfo.isPhysicalDevice) {
-        emit(state.copyWith(
+        Future.delayed(debuggingSuccessDelay, () {
+          emit(state.copyWith(
             mediumId: OrganisationDetailsCubit.defaultMediumId,
             readData: '',
             scanNFCStatus: ScanNFCStatus.scanned,
-            coinAnimationStatus: CoinAnimationStatus.stopped));
+          ));
+        });
         return;
       }
     }
     if (Platform.isAndroid) {
       var androidInfo = await DeviceInfoPlugin().androidInfo;
       if (!androidInfo.isPhysicalDevice) {
-        Future.delayed(const Duration(milliseconds: 3000), () {
+        Future.delayed(debuggingSucscessDelay, () {
           emit(state.copyWith(
-              mediumId: OrganisationDetailsCubit.defaultMediumId,
-              readData: '',
-              scanNFCStatus: ScanNFCStatus.scanned,
-              coinAnimationStatus: CoinAnimationStatus.stopped));
+            mediumId: OrganisationDetailsCubit.defaultMediumId,
+            readData: '',
+            scanNFCStatus: ScanNFCStatus.scanned,
+          ));
         });
         return;
       }
@@ -105,16 +112,18 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
                   mediumId = uri.queryParameters['code'] ?? mediumId;
                   readData = decoded;
                 }
-                await NfcManager.instance.stopSession(alertMessage: ' ');
+                // on Android we intentionally keep session open
+                // until user triggers stop scanning on another screen
                 if (Platform.isIOS) {
+                  await NfcManager.instance.stopSession(alertMessage: ' ');
                   await Future.delayed(_closeIOSScanningScheetDelay);
                 }
 
                 emit(state.copyWith(
-                    mediumId: mediumId,
-                    readData: readData,
-                    scanNFCStatus: ScanNFCStatus.scanned,
-                    coinAnimationStatus: CoinAnimationStatus.stopped));
+                  mediumId: mediumId,
+                  readData: readData,
+                  scanNFCStatus: ScanNFCStatus.scanned,
+                ));
               }
             }
           });
@@ -123,8 +132,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
           methodName: stackTrace.toString());
 
       emit(state.copyWith(
-          scanNFCStatus: ScanNFCStatus.error,
-          coinAnimationStatus: CoinAnimationStatus.stopped));
+        scanNFCStatus: ScanNFCStatus.error,
+      ));
       NfcManager.instance.stopSession();
       AnalyticsHelper.logEvent(eventName: AmplitudeEvent.coinScannedError);
     }

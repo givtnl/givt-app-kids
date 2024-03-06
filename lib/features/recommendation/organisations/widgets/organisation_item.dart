@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_detail_bottomsheet.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
+import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 
@@ -42,6 +42,7 @@ class OrganisationItem extends StatelessWidget {
               AnalyticsHelper.charityNameKey: organisation.name,
             },
           );
+          context.read<ScanNfcCubit>().stopScanningSession();
 
           showModalBottomSheet<void>(
             context: context,
