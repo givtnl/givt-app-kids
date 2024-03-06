@@ -51,24 +51,12 @@ class SchoolEventOrganisationsScreen extends StatelessWidget {
           body: SafeArea(
             child: CustomScrollView(
               slivers: [
-                SliverAppBar(
+                const SliverAppBar(
                   backgroundColor: Colors.transparent,
                   automaticallyImplyLeading: false,
-                  leading: const GivtBackButton(),
+                  leading: GivtBackButton(),
                   actions: [
-                    Row(
-                      children: [
-                        Text(
-                          '\$${user.wallet.balance.toStringAsFixed(0)}',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 22,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.w900),
-                        ),
-                        const CoinWidget(),
-                      ],
-                    ),
+                    CoinWidget(),
                   ],
                 ),
                 SliverPadding(
