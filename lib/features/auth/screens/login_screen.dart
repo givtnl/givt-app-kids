@@ -11,6 +11,7 @@ import 'package:givt_app_kids/features/auth/widgets/download_givt_app_widget.dar
 import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/remote_config_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
@@ -277,7 +278,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (isSchoolEventFlowEnabled)
                     GivtElevatedSecondaryButton(
                       text: "I'm at WCA",
-                      onTap: () => context.goNamed(Pages.familyNameLogin.name),
+                      onTap: () {
+                        AnalyticsHelper.logEvent(
+                          eventName:
+                              AmplitudeEvent.startSchoolEventFlowButtonClicked,
+                        );
+                        context.goNamed(Pages.familyNameLogin.name);
+                      },
                     ),
                   if (!isSchoolEventFlowEnabled) DownloadGivtAppWidget(),
                   const SizedBox(height: 24),
