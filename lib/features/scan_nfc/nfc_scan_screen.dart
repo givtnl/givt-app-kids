@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
-import 'package:givt_app_kids/features/coin_flow/widgets/coin_found.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_found_bottomsheet.dart';
@@ -125,14 +124,10 @@ class NFCScanPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Text(
-                        state.coinAnimationStatus ==
-                                CoinAnimationStatus.animating
-                            ? 'Ready to make a difference?'
-                            : 'Found it!',
-                        style: const TextStyle(
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Text('Ready to make a difference?',
+                        style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         )),
@@ -148,18 +143,11 @@ class NFCScanPage extends StatelessWidget {
                         fontSize: 32,
                       ),
                     ),
-                  Text(
-                      state.coinAnimationStatus == CoinAnimationStatus.animating
-                          ? 'Grab your coin and \nlet\'s begin!'
-                          : flow.isExhibition
-                              ? 'to give away'
-                              : 'Let\'s continue...',
-                      style: const TextStyle(fontSize: 20),
+                  const Text('Grab your coin and \nlet\'s begin!',
+                      style: TextStyle(fontSize: 20),
                       textAlign: TextAlign.center),
                   const Spacer(flex: 2),
-                  state.coinAnimationStatus == CoinAnimationStatus.animating
-                      ? const SearchCoinAnimatedWidget()
-                      : const CoinFound(),
+                  const SearchCoinAnimatedWidget(),
                   const SizedBox(height: 20),
                   state.scanNFCStatus == ScanNFCStatus.error
                       ? const Text('Error scanning the coin')
