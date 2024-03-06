@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
+import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 
@@ -43,7 +44,7 @@ class SliderWidget extends StatelessWidget {
               divisions: maxAmount.round(),
               onChanged: (value) {
                 HapticFeedback.lightImpact();
-
+                context.read<ScanNfcCubit>().stopScanningSession();
                 context.read<CreateTransactionCubit>().changeAmount(value);
               },
               onChangeEnd: (value) {

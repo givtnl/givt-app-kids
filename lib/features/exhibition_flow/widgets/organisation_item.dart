@@ -6,6 +6,7 @@ import 'package:givt_app_kids/features/exhibition_flow/widgets/organisation_deta
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
+import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 
@@ -35,7 +36,7 @@ class OrganisationItem extends StatelessWidget {
           context
               .read<OrganisationDetailsCubit>()
               .getOrganisationDetails(generatedMediumId);
-
+          context.read<ScanNfcCubit>().stopScanningSession();
           AnalyticsHelper.logEvent(
             eventName: AmplitudeEvent.charityCardPressed,
             eventProperties: {
