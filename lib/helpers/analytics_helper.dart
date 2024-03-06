@@ -44,6 +44,7 @@ enum AmplitudeEvent {
   donateToThisFamilyGoalPressed('donate_to_this_family_goal_pressed'),
   choseGiveToFamilyGoal('chose_give_to_family_goal'),
   startSchoolEventFlowButtonClicked('start_school_event_flow_button_clicked'),
+  schoolEventFlowLoginButtonClicked('school_event_flow_login_button_clicked'),
   ;
 
   final String value;
@@ -64,6 +65,8 @@ class AnalyticsHelper {
   static const String rewardKey = 'reward';
   static const String cityKey = 'city';
   static const String dateEUKey = 'start_date_eu_format';
+  static const String familyNameKey = 'family_name';
+
   static Amplitude? _amplitude;
 
   static Future<void> init(String key) async {
