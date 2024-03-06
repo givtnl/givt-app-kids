@@ -125,14 +125,10 @@ class NFCScanPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Text(
-                        state.coinAnimationStatus ==
-                                CoinAnimationStatus.animating
-                            ? 'Ready to make a difference?'
-                            : 'Found it!',
-                        style: const TextStyle(
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Text('Ready to make a difference?',
+                        style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         )),
@@ -148,18 +144,11 @@ class NFCScanPage extends StatelessWidget {
                         fontSize: 32,
                       ),
                     ),
-                  Text(
-                      state.coinAnimationStatus == CoinAnimationStatus.animating
-                          ? 'Grab your coin and \nlet\'s begin!'
-                          : flow.isExhibition
-                              ? 'to give away'
-                              : 'Let\'s continue...',
-                      style: const TextStyle(fontSize: 20),
+                  const Text('Grab your coin and \nlet\'s begin!',
+                      style: TextStyle(fontSize: 20),
                       textAlign: TextAlign.center),
                   const Spacer(flex: 2),
-                  state.coinAnimationStatus == CoinAnimationStatus.animating
-                      ? const SearchCoinAnimatedWidget()
-                      : const CoinFound(),
+                  const SearchCoinAnimatedWidget(),
                   const SizedBox(height: 20),
                   state.scanNFCStatus == ScanNFCStatus.error
                       ? const Text('Error scanning the coin')

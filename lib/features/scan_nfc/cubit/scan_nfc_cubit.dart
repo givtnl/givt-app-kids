@@ -19,8 +19,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
             coinAnimationStatus: CoinAnimationStatus.initial,
             scanNFCStatus: ScanNFCStatus.ready));
 
-  static const startDelay = Duration(milliseconds: 2500);
-  static const foundDelay = Duration(milliseconds: 1600);
+  static const foundDelay = Duration(milliseconds: 2000);
 
   static const _closeIOSScanningScheetDelay = Duration(milliseconds: 2900);
 
@@ -29,15 +28,15 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     emit(state.copyWith(scanNFCStatus: ScanNFCStatus.ready));
   }
 
-  Future<void> readTag({Duration prescanningDelay = Duration.zero}) async {
+  void startAnimation() {
     emit(state.copyWith(
       coinAnimationStatus: CoinAnimationStatus.animating,
-      scanNFCStatus: ScanNFCStatus.prescanning,
+      scanNFCStatus: ScanNFCStatus.ready,
     ));
+  }
 
+  Future<void> readTag({Duration prescanningDelay = Duration.zero}) async {
     AnalyticsHelper.logEvent(eventName: AmplitudeEvent.startScanningCoin);
-
-    await Future.delayed(prescanningDelay);
 
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
@@ -53,6 +52,19 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
             readData: '',
             scanNFCStatus: ScanNFCStatus.scanned,
             coinAnimationStatus: CoinAnimationStatus.stopped));
+        return;
+      }
+    }
+    if (Platform.isAndroid) {
+      var androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (!androidInfo.isPhysicalDevice) {
+        Future.delayed(const Duration(milliseconds: 3000), () {
+          emit(state.copyWith(
+              mediumId: OrganisationDetailsCubit.defaultMediumId,
+              readData: '',
+              scanNFCStatus: ScanNFCStatus.scanned,
+              coinAnimationStatus: CoinAnimationStatus.stopped));
+        });
         return;
       }
     }
