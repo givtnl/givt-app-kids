@@ -49,25 +49,25 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
       },
       builder: (context, authState) {
         return BlocConsumer<ProfilesCubit, ProfilesState>(
-          listener: (context, propfilesState) {
-            if (propfilesState is ProfilesExternalErrorState) {
+          listener: (context, profilesState) {
+            if (profilesState is ProfilesExternalErrorState) {
               _showErrorMessage();
-            } else if (propfilesState is ProfilesUpdatedState &&
-                propfilesState.activeProfile == Profile.empty()) {
+            } else if (profilesState is ProfilesUpdatedState &&
+                profilesState.activeProfile == Profile.empty()) {
               context
                   .read<ProfilesCubit>()
-                  .fetchProfile(propfilesState.profiles[0].id);
+                  .fetchProfile(profilesState.profiles[0].id);
 
               context.pushNamed(Pages.scanNFC.name);
             }
           },
-          builder: (context, propfilesState) {
+          builder: (context, profilesState) {
             return Scaffold(
               appBar: AppBar(
                 leading: const GivtBackButton(),
               ),
               body: authState is LoadingState ||
-                      propfilesState is ProfilesLoadingState
+                      profilesState is ProfilesLoadingState
                   ? const Center(child: CircularProgressIndicator())
                   : SafeArea(
                       child: SizedBox.expand(
@@ -106,7 +106,7 @@ class _VoucherCodeScreenState extends State<VoucherCodeScreen> {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
               floatingActionButton: authState is! LoadingState &&
-                      propfilesState is! ProfilesLoadingState
+                      profilesState is! ProfilesLoadingState
                   ? GivtElevatedButton(
                       text: 'Start',
                       isDisabled:

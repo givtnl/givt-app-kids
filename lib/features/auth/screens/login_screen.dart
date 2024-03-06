@@ -281,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {
                         AnalyticsHelper.logEvent(
                           eventName:
-                              AmplitudeEvent.startSchoolEventFlowButtonClicked,
+                              AmplitudeEvent.schoolEventFlowStartButtonClicked,
                         );
                         context.goNamed(Pages.familyNameLogin.name);
                       },

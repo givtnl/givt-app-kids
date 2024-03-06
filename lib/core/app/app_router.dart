@@ -321,15 +321,7 @@ class AppRouter {
             return BlocProvider(
               create: (context) => OrganisationsCubit(
                 getIt(),
-              )
-                //TODO: replace with proper method when endpoint be ready
-                // ..getSchoolEventOrganisations(),
-                ..getRecommendedOrganisations(
-                  location: OrganisationsCubit.exhibitionLocation,
-                  interests: OrganisationsCubit.exhibitionInterests,
-                  pageSize: 6,
-                  filterInterests: false,
-                ),
+              )..getSchoolEventOrganisations(),
               child: const SchoolEventOrganisationsScreen(),
             );
           },

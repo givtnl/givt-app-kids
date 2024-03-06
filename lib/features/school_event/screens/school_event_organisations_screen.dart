@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/exhibition_flow/widgets/organisation_item.dart';
-import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
@@ -16,8 +15,6 @@ class SchoolEventOrganisationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.read<ProfilesCubit>().state.activeProfile;
-
     return BlocConsumer<OrganisationsCubit, OrganisationsState>(
       listener: (context, state) {
         if (state is OrganisationsExternalErrorState) {
@@ -79,7 +76,7 @@ class SchoolEventOrganisationsScreen extends StatelessWidget {
                             ? 'Loading...'
                             : state.organisations.isEmpty
                                 ? 'Oops, something went wrong...'
-                                : 'Which organisation would you\nlike to give to?',
+                                : 'Which Impact Group would you like to give to?',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.w700,
