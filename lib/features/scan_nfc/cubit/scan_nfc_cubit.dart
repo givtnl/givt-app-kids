@@ -22,7 +22,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
 
   static const _closeIOSScanningScheetDelay = Duration(milliseconds: 2900);
 
-  static const debuggingSucscessDelay = Duration(milliseconds: 3000);
+  static const debuggingSuccessDelay = Duration(milliseconds: 3000);
 
   void cancelScanning() {
     NfcManager.instance.stopSession();
@@ -52,7 +52,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     if (Platform.isIOS) {
       var iosInfo = await DeviceInfoPlugin().iosInfo;
       if (!iosInfo.isPhysicalDevice) {
-        Future.delayed(debuggingSucscessDelay, () {
+        Future.delayed(debuggingSuccessDelay, () {
           emit(state.copyWith(
             mediumId: OrganisationDetailsCubit.defaultMediumId,
             readData: '',
