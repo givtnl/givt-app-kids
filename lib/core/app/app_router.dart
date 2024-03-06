@@ -103,23 +103,14 @@ class AppRouter {
           ),
         ),
         GoRoute(
-            path: Pages.chooseAmountSlider.path,
-            name: Pages.chooseAmountSlider.name,
-            builder: (context, state) {
-              final nfcCubit = state.extra == null
-                  ? ScanNfcCubit()
-                  : state.extra as ScanNfcCubit;
-              return MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (context) => CreateTransactionCubit(
-                        context.read<ProfilesCubit>(), getIt()),
-                  ),
-                  BlocProvider.value(value: nfcCubit),
-                ],
-                child: const ChooseAmountSliderScreen(),
-              );
-            }),
+          path: Pages.chooseAmountSlider.path,
+          name: Pages.chooseAmountSlider.name,
+          builder: (context, state) => BlocProvider(
+            create: (BuildContext context) =>
+                CreateTransactionCubit(context.read<ProfilesCubit>(), getIt()),
+            child: const ChooseAmountSliderScreen(),
+          ),
+        ),
         GoRoute(
             path: Pages.chooseAmountSliderGoal.path,
             name: Pages.chooseAmountSliderGoal.name,

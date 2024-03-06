@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -20,7 +19,6 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
             coinAnimationStatus: CoinAnimationStatus.initial,
             scanNFCStatus: ScanNFCStatus.ready));
 
-  static const startDelay = Duration(milliseconds: 2500);
   static const foundDelay = Duration(milliseconds: 1600);
 
   static const _closeIOSScanningScheetDelay = Duration(milliseconds: 2900);
@@ -30,25 +28,15 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     emit(state.copyWith(scanNFCStatus: ScanNFCStatus.ready));
   }
 
-  void discardNFCScanner() {
-    if (Platform.isAndroid) {
-      if (kDebugMode) {
-        print('HOI!');
-        return;
-      }
-      NfcManager.instance.stopSession();
-    }
-  }
-
   void startAnimation() {
     emit(state.copyWith(
       coinAnimationStatus: CoinAnimationStatus.animating,
-      scanNFCStatus: ScanNFCStatus.prescanning,
+      scanNFCStatus: ScanNFCStatus.ready,
     ));
+  }
 
+  void readTag({Duration prescanningDelay = Duration.zero}) async {
     AnalyticsHelper.logEvent(eventName: AmplitudeEvent.startScanningCoin);
-
-    await Future.delayed(prescanningDelay);
 
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
@@ -64,6 +52,19 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
             readData: '',
             scanNFCStatus: ScanNFCStatus.scanned,
             coinAnimationStatus: CoinAnimationStatus.stopped));
+        return;
+      }
+    }
+    if (Platform.isAndroid) {
+      var androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (!androidInfo.isPhysicalDevice) {
+        Future.delayed(const Duration(milliseconds: 3000), () {
+          emit(state.copyWith(
+              mediumId: OrganisationDetailsCubit.defaultMediumId,
+              readData: '',
+              scanNFCStatus: ScanNFCStatus.scanned,
+              coinAnimationStatus: CoinAnimationStatus.stopped));
+        });
         return;
       }
     }
