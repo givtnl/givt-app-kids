@@ -26,6 +26,10 @@ abstract class ProfilesState extends Equatable {
     }
   }
 
+  List<Profile> get children {
+    return profiles.where((p) => p.type.contains('Child')).toList();
+  }
+
   bool get isOnlyChild {
     if (profiles.isEmpty) return false;
     return profiles.where((element) => element.type.contains('Child')).length ==

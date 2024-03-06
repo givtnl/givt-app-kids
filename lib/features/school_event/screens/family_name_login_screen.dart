@@ -49,9 +49,9 @@ class _FamilyNameLoginScreenState extends State<FamilyNameLoginScreen> {
                 propfilesState.activeProfile == Profile.empty()) {
               context
                   .read<ProfilesCubit>()
-                  .fetchProfile(propfilesState.profiles[0].id);
+                  .fetchProfile(propfilesState.children[0].id);
 
-              context.goNamed(Pages.schoolEventInfo.name);
+              context.pushNamed(Pages.schoolEventInfo.name);
             }
           },
           builder: (context, propfilesState) {
