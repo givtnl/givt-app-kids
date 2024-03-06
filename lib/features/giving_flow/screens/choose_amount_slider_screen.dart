@@ -10,6 +10,7 @@ import 'package:givt_app_kids/features/giving_flow/create_transaction/models/tra
 import 'package:givt_app_kids/features/giving_flow/widgets/organisation_widget.dart';
 import 'package:givt_app_kids/features/giving_flow/widgets/slider_widget.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/shared/widgets/coin_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
@@ -90,6 +91,7 @@ class ChooseAmountSliderScreen extends StatelessWidget {
                     if (state is CreateTransactionUploadingState) {
                       return;
                     }
+                    context.read<ScanNfcCubit>().discardNFCScanner();
                     var transaction = Transaction(
                       userId: profilesCubit.state.activeProfile.id,
                       mediumId: mediumId,

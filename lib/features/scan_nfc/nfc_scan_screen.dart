@@ -93,6 +93,9 @@ class NFCScanPage extends StatelessWidget {
               context.pushReplacementNamed(Pages.chooseAmountSlider.name);
             }
           });
+          // Future.delayed(ScanNfcCubit.foundDelay * 2, () {
+          //   context.read<ScanNfcCubit>().discardNFCScanner();
+          // });
           AnalyticsHelper.logEvent(
             eventName: AmplitudeEvent.inAppCoinScannedSuccessfully,
             eventProperties: {
