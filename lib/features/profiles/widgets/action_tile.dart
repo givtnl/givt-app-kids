@@ -89,7 +89,9 @@ class _ActionTileState extends State<ActionTile> {
           decoration: BoxDecoration(
             color: borderColor!,
             border: Border(
-              bottom: BorderSide(color: borderColor!, width: bottomBorderWidth),
+              bottom: BorderSide(
+                  color: borderColor!,
+                  width: widget.isDisabled ? 2 : bottomBorderWidth),
               right: BorderSide(color: borderColor!, width: 2),
               left: BorderSide(color: borderColor!, width: 2),
               top: BorderSide(color: borderColor!, width: 2),
@@ -98,7 +100,9 @@ class _ActionTileState extends State<ActionTile> {
               Radius.circular(10),
             ),
           ),
-          height: widgetHeight + extraHeight,
+          height: widget.isDisabled
+              ? widgetHeight + extraHeight - 4
+              : widgetHeight + extraHeight,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Container(

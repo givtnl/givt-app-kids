@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -63,7 +62,6 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
   }
 
   Widget _buildSuccessText() {
-    final authState = context.read<AuthCubit>().state as LoggedInState;
     return Positioned.fill(
       child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 70),
@@ -82,9 +80,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
             Text(
               widget.isGoal
                   ? 'You helped towards your family goal!'
-                  : authState.isSchoolEvenMode
-                      ? 'Drop your coin in\nthe groups giving box.'
-                      : 'Drop your coin wherever your\nchurch collects money.',
+                  : 'Drop your coin in\nthe giving box.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppTheme.defaultTextColor,
