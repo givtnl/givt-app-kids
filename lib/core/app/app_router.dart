@@ -67,7 +67,7 @@ class AppRouter {
             final profiles = context.read<ProfilesCubit>().state;
             if (auth is LoggedInState) {
               final isSchoolEventUserLoggedOut =
-                  RemoteConfigHelper.logoutHelper(context);
+                  RemoteConfigHelper.logoutSchoolEventUsers(context);
               if (isSchoolEventUserLoggedOut) {
                 return Pages.login.path;
               }
@@ -95,7 +95,7 @@ class AppRouter {
             name: Pages.wallet.name,
             redirect: (context, state) {
               final isSchoolEventUserLoggedOut =
-                  RemoteConfigHelper.logoutHelper(context);
+                  RemoteConfigHelper.logoutSchoolEventUsers(context);
               if (isSchoolEventUserLoggedOut) {
                 return Pages.login.path;
               }

@@ -11,7 +11,7 @@ class RemoteConfigHelper {
     return FirebaseRemoteConfig.instance.getBool(feature.value);
   }
 
-  static bool logoutHelper(BuildContext context) {
+  static bool logoutSchoolEventUsers(BuildContext context) {
     final isSchoolEventFlowEnabled = RemoteConfigHelper.isFeatureEnabled(
         RemoteConfigFeatures.schoolEventFlow);
     final auth = context.read<AuthCubit>().state;
