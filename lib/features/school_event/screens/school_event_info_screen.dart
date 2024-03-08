@@ -72,7 +72,7 @@ class SchoolEventInfoScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
-                                  'Thanks to the generous support of the Bank of Oklahoma to Mark & Debbie Plaster & Dr. Presley and Associates, we are delighted to give you:',
+                                  'Thanks to the generous support of Mark & Debbie Plaster & Dr. Presley and Associates, we are delighted to give you:',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme
