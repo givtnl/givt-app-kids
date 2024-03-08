@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/features/exhibition_flow/widgets/organisation_item.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/cubit/organisations_cubit.dart';
+import 'package:givt_app_kids/features/school_event/widgets/school_event_organisation_item.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/coin_widget.dart';
@@ -25,13 +26,13 @@ class SchoolEventOrganisationsScreen extends StatelessWidget {
             isError: true,
           );
         } else if (state is OrganisationsFetchedState) {
-          // AnalyticsHelper.logEvent(
-          //   eventName: AmplitudeEvent.charitiesShown,
-          //   eventProperties: {
-          //     AnalyticsHelper.recommendedCharitiesKey:
-          //         state.organisations.map((e) => e.name).toList().toString(),
-          //   },
-          // );
+          AnalyticsHelper.logEvent(
+            eventName: AmplitudeEvent.charitiesShown,
+            eventProperties: {
+              AnalyticsHelper.recommendedCharitiesKey:
+                  state.organisations.map((e) => e.name).toList().toString(),
+            },
+          );
         }
       },
       builder: (context, state) {
@@ -76,13 +77,11 @@ class SchoolEventOrganisationsScreen extends StatelessWidget {
                             ? 'Loading...'
                             : state.organisations.isEmpty
                                 ? 'Oops, something went wrong...'
-                                : 'Which Impact Group would you like to give to?',
+                                : 'Which Impact Group would\nyou like to give to?',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Raleway',
-                              fontSize: 18,
-                            ),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.primary20),
                       ),
                     ),
                   ),
@@ -105,7 +104,7 @@ class SchoolEventOrganisationsScreen extends StatelessWidget {
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        return OrganisationItem(
+                        return SchoolEventOrganisationItem(
                             organisation: state.organisations[index]);
                       },
                       childCount: state.organisations.length,
