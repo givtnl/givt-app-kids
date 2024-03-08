@@ -39,7 +39,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     if (kDebugMode) {
       print('Remote config updated!');
     }
-
+    // Good place to logout users in theory
+    // but it is outside all cubits
     await remoteConfig.activate();
   });
 

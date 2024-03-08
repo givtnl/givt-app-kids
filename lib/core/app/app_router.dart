@@ -41,6 +41,7 @@ import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/family_name_login_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/school_event_info_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/school_event_organisations_screen.dart';
+import 'package:givt_app_kids/helpers/remote_config_helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -63,7 +64,16 @@ class AppRouter {
           redirect: (context, state) {
             final auth = context.read<AuthCubit>().state;
             final profiles = context.read<ProfilesCubit>().state;
+            final isSchoolEventFlowEnabled =
+                RemoteConfigHelper.isFeatureEnabled(
+                    RemoteConfigFeatures.schoolEventFlow);
             if (auth is LoggedInState) {
+              if (!isSchoolEventFlowEnabled) {
+                context.read<AuthCubit>().logout();
+                context.read<ProfilesCubit>().clearProfiles();
+                context.read<FlowsCubit>().resetFlow();
+                return Pages.login.path;
+              }
               if (profiles.isProfileSelected) {
                 return Pages.wallet.path;
               }
@@ -86,6 +96,18 @@ class AppRouter {
         GoRoute(
             path: Pages.wallet.path,
             name: Pages.wallet.name,
+            redirect: (context, state) {
+              final isSchoolEventFlowEnabled =
+                  RemoteConfigHelper.isFeatureEnabled(
+                      RemoteConfigFeatures.schoolEventFlow);
+              if (!isSchoolEventFlowEnabled) {
+                context.read<AuthCubit>().logout();
+                context.read<ProfilesCubit>().clearProfiles();
+                context.read<FlowsCubit>().resetFlow();
+                return Pages.login.path;
+              }
+              return null;
+            },
             builder: (context, state) {
               final profiles = context.read<ProfilesCubit>().state;
               context.read<ProfilesCubit>().fetchActiveProfile();
