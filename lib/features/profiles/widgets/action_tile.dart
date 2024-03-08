@@ -100,9 +100,7 @@ class _ActionTileState extends State<ActionTile> {
               Radius.circular(10),
             ),
           ),
-          height: widget.isDisabled
-              ? widgetHeight + extraHeight - 4
-              : widgetHeight + extraHeight,
+          height: widgetHeight + extraHeight,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Container(
