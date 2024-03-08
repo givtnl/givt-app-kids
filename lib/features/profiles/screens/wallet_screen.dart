@@ -17,7 +17,7 @@ import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
-import 'package:givt_app_kids/helpers/remote_config_helper.dart';
+import 'package:givt_app_kids/helpers/school_event_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
@@ -59,7 +59,7 @@ class _WalletScreenState extends State<WalletScreen>
     final activeProfile = context.read<ProfilesCubit>().state.activeProfile;
     // Check user should be logged out
     final isSchoolEventUserLoggedOut =
-        RemoteConfigHelper.logoutSchoolEventUsers(context);
+        SchoolEventHelper.logoutSchoolEventUsers(context);
     if (isSchoolEventUserLoggedOut) {
       context.pushReplacementNamed(Pages.login.name);
       return;

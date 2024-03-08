@@ -41,7 +41,7 @@ import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/family_name_login_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/school_event_info_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/school_event_organisations_screen.dart';
-import 'package:givt_app_kids/helpers/remote_config_helper.dart';
+import 'package:givt_app_kids/helpers/school_event_helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,7 +67,7 @@ class AppRouter {
             final profiles = context.read<ProfilesCubit>().state;
             if (auth is LoggedInState) {
               final isSchoolEventUserLoggedOut =
-                  RemoteConfigHelper.logoutSchoolEventUsers(context);
+                  SchoolEventHelper.logoutSchoolEventUsers(context);
               if (isSchoolEventUserLoggedOut) {
                 return Pages.login.path;
               }
@@ -95,7 +95,7 @@ class AppRouter {
             name: Pages.wallet.name,
             redirect: (context, state) {
               final isSchoolEventUserLoggedOut =
-                  RemoteConfigHelper.logoutSchoolEventUsers(context);
+                  SchoolEventHelper.logoutSchoolEventUsers(context);
               if (isSchoolEventUserLoggedOut) {
                 return Pages.login.path;
               }
