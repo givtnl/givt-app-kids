@@ -14,9 +14,11 @@ class RemoteConfigHelper {
   static bool logoutHelper(BuildContext context) {
     final isSchoolEventFlowEnabled = RemoteConfigHelper.isFeatureEnabled(
         RemoteConfigFeatures.schoolEventFlow);
-    final auth = context.read<AuthCubit>().state as LoggedInState;
+    final auth = context.read<AuthCubit>().state;
 
-    if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
+    if (!isSchoolEventFlowEnabled &&
+        auth is LoggedInState &&
+        auth.isSchoolEvenMode) {
       context.read<AuthCubit>().logout();
       context.read<ProfilesCubit>().clearProfiles();
       context.read<FlowsCubit>().resetFlow();
