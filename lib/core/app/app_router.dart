@@ -41,6 +41,7 @@ import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/family_name_login_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/school_event_info_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/school_event_organisations_screen.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/remote_config_helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -72,6 +73,9 @@ class AppRouter {
                 context.read<AuthCubit>().logout();
                 context.read<ProfilesCubit>().clearProfiles();
                 context.read<FlowsCubit>().resetFlow();
+                AnalyticsHelper.logEvent(
+                  eventName: AmplitudeEvent.schoolEventLogOutTriggered,
+                );
                 return Pages.login.path;
               }
               if (profiles.isProfileSelected) {
@@ -105,6 +109,9 @@ class AppRouter {
                 context.read<AuthCubit>().logout();
                 context.read<ProfilesCubit>().clearProfiles();
                 context.read<FlowsCubit>().resetFlow();
+                AnalyticsHelper.logEvent(
+                  eventName: AmplitudeEvent.schoolEventLogOutTriggered,
+                );
                 return Pages.login.path;
               }
               return null;
