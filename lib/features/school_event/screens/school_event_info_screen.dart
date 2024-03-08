@@ -69,6 +69,7 @@ class SchoolEventInfoScreen extends StatelessWidget {
                                         color: AppTheme.primary20,
                                         fontWeight: FontWeight.bold,
                                       ),
+                                  textAlign: TextAlign.center,
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
