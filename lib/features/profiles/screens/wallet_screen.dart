@@ -57,12 +57,9 @@ class _WalletScreenState extends State<WalletScreen>
 
   Future<void> refresh() async {
     final activeProfile = context.read<ProfilesCubit>().state.activeProfile;
-    // Check if school event flow is enabled
-    final isSchoolEventFlowEnabled = RemoteConfigHelper.isFeatureEnabled(
-        RemoteConfigFeatures.schoolEventFlow);
-    final auth = context.read<AuthCubit>().state as LoggedInState;
-    if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
-      RemoteConfigHelper.logoutHelper(context);
+    // Check user should be logged out
+    final isSchoolEventUserLoggedOut = RemoteConfigHelper.logoutHelper(context);
+    if (isSchoolEventUserLoggedOut) {
       context.pushReplacementNamed(Pages.login.name);
       return;
     }

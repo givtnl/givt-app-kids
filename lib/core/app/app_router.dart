@@ -65,12 +65,10 @@ class AppRouter {
           redirect: (context, state) {
             final auth = context.read<AuthCubit>().state;
             final profiles = context.read<ProfilesCubit>().state;
-            final isSchoolEventFlowEnabled =
-                RemoteConfigHelper.isFeatureEnabled(
-                    RemoteConfigFeatures.schoolEventFlow);
             if (auth is LoggedInState) {
-              if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
-                RemoteConfigHelper.logoutHelper(context);
+              final isSchoolEventUserLoggedOut =
+                  RemoteConfigHelper.logoutHelper(context);
+              if (isSchoolEventUserLoggedOut) {
                 return Pages.login.path;
               }
               if (profiles.isProfileSelected) {
@@ -96,12 +94,9 @@ class AppRouter {
             path: Pages.wallet.path,
             name: Pages.wallet.name,
             redirect: (context, state) {
-              final isSchoolEventFlowEnabled =
-                  RemoteConfigHelper.isFeatureEnabled(
-                      RemoteConfigFeatures.schoolEventFlow);
-              final auth = context.read<AuthCubit>().state as LoggedInState;
-              if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
-                RemoteConfigHelper.logoutHelper(context);
+              final isSchoolEventUserLoggedOut =
+                  RemoteConfigHelper.logoutHelper(context);
+              if (isSchoolEventUserLoggedOut) {
                 return Pages.login.path;
               }
               return null;

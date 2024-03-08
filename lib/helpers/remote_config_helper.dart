@@ -11,13 +11,21 @@ class RemoteConfigHelper {
     return FirebaseRemoteConfig.instance.getBool(feature.value);
   }
 
-  static void logoutHelper(BuildContext context) {
-    context.read<AuthCubit>().logout();
-    context.read<ProfilesCubit>().clearProfiles();
-    context.read<FlowsCubit>().resetFlow();
-    AnalyticsHelper.logEvent(
-      eventName: AmplitudeEvent.schoolEventLogOutTriggered,
-    );
+  static bool logoutHelper(BuildContext context) {
+    final isSchoolEventFlowEnabled = RemoteConfigHelper.isFeatureEnabled(
+        RemoteConfigFeatures.schoolEventFlow);
+    final auth = context.read<AuthCubit>().state as LoggedInState;
+
+    if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
+      context.read<AuthCubit>().logout();
+      context.read<ProfilesCubit>().clearProfiles();
+      context.read<FlowsCubit>().resetFlow();
+      AnalyticsHelper.logEvent(
+        eventName: AmplitudeEvent.schoolEventLogOutTriggered,
+      );
+      return true;
+    }
+    return false;
   }
 }
 
