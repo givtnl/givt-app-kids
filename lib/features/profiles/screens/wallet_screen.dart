@@ -17,6 +17,7 @@ import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/helpers/remote_config_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
@@ -56,7 +57,15 @@ class _WalletScreenState extends State<WalletScreen>
 
   Future<void> refresh() async {
     final activeProfile = context.read<ProfilesCubit>().state.activeProfile;
-
+    // Check if school event flow is enabled
+    final isSchoolEventFlowEnabled = RemoteConfigHelper.isFeatureEnabled(
+        RemoteConfigFeatures.schoolEventFlow);
+    final auth = context.read<AuthCubit>().state as LoggedInState;
+    if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
+      RemoteConfigHelper.logoutHelper(context);
+      context.pushReplacementNamed(Pages.login.name);
+      return;
+    }
     // Execute tasks in parallel
     await Future.wait([
       context.read<ProfilesCubit>().fetchActiveProfile(true),

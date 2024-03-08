@@ -41,7 +41,6 @@ import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/family_name_login_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/school_event_info_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/school_event_organisations_screen.dart';
-import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/remote_config_helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,15 +54,6 @@ class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
   static GoRouter get router => _router;
-  static String logoutForSchoolEvent(BuildContext context) {
-    context.read<AuthCubit>().logout();
-    context.read<ProfilesCubit>().clearProfiles();
-    context.read<FlowsCubit>().resetFlow();
-    AnalyticsHelper.logEvent(
-      eventName: AmplitudeEvent.schoolEventLogOutTriggered,
-    );
-    return Pages.login.path;
-  }
 
   static final GoRouter _router = GoRouter(
       debugLogDiagnostics: true,
@@ -80,7 +70,8 @@ class AppRouter {
                     RemoteConfigFeatures.schoolEventFlow);
             if (auth is LoggedInState) {
               if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
-                return logoutForSchoolEvent(context);
+                RemoteConfigHelper.logoutHelper(context);
+                return Pages.login.path;
               }
               if (profiles.isProfileSelected) {
                 return Pages.wallet.path;
@@ -110,7 +101,8 @@ class AppRouter {
                       RemoteConfigFeatures.schoolEventFlow);
               final auth = context.read<AuthCubit>().state as LoggedInState;
               if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
-                return logoutForSchoolEvent(context);
+                RemoteConfigHelper.logoutHelper(context);
+                return Pages.login.path;
               }
               return null;
             },
