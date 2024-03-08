@@ -47,6 +47,7 @@ enum AmplitudeEvent {
   schoolEventFlowLoginButtonClicked('school_event_flow_login_button_clicked'),
   schoolEventFlowConfirmButtonClicked(
       'school_event_flow_confirm_button_clicked'),
+  schoolEventLogOutTriggered('school_event_log_out_triggered'),
   ;
 
   final String value;
