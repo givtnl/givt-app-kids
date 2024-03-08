@@ -11,9 +11,12 @@ import 'package:givt_app_kids/features/auth/widgets/download_givt_app_widget.dar
 import 'package:givt_app_kids/features/flows/cubit/flow_type.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/helpers/remote_config_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
+import 'package:givt_app_kids/shared/widgets/givt_elevated_secondary_button.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -64,6 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
+    final isSchoolEventFlowEnabled = RemoteConfigHelper.isFeatureEnabled(
+        RemoteConfigFeatures.schoolEventFlow);
+
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         log('auth state changed on $state');
@@ -90,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 45),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
                   Container(
@@ -102,10 +108,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         GestureDetector(
-                          onDoubleTap: () {
-                            context.read<FlowsCubit>().startExhibitionFlow();
-                            context.pushNamed(Pages.voucherCodeScreen.name);
-                          },
+                          //let's hide exhibition flow for now
+                          // onDoubleTap: () {
+                          //   context.read<FlowsCubit>().startExhibitionFlow();
+                          //   context.pushNamed(Pages.voucherCode.name);
+                          // },
                           child: Text(
                             'Welcome',
                             style: Theme.of(context)
@@ -135,14 +142,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         "Email",
-                        style:
-                            Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  color: (state is InputFieldErrorState &&
-                                          state.emailErrorMessage.isNotEmpty)
-                                      ? Theme.of(context).colorScheme.error
-                                      : AppTheme.defaultTextColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: (state is InputFieldErrorState &&
+                                      state.emailErrorMessage.isNotEmpty)
+                                  ? Theme.of(context).colorScheme.error
+                                  : AppTheme.defaultTextColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       const SizedBox(height: 5),
                       TextField(
@@ -176,10 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 15),
                       Text(
                         "Password",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               color: (state is InputFieldErrorState &&
                                           state.passwordErrorMessage
                                               .isNotEmpty ||
@@ -262,21 +265,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   GivtElevatedButton(
                     text: 'Sign in',
                     isLoading: state is LoadingState,
-                    onTap: _isInputNotEmpty()
-                        ? () {
-                            if (state is LoadingState) {
-                              return;
-                            }
+                    isDisabled: !_isInputNotEmpty(),
+                    onTap: () {
+                      if (state is LoadingState) {
+                        return;
+                      }
 
-                            _login();
-                          }
-                        : null,
+                      _login();
+                    },
                   ),
                   const SizedBox(height: 24),
-                  Column(children: [
-                    DownloadGivtAppWidget(),
-                    const SizedBox(height: 24),
-                  ]),
+                  if (isSchoolEventFlowEnabled)
+                    GivtElevatedSecondaryButton(
+                      text: "I'm at WCA",
+                      onTap: () {
+                        AnalyticsHelper.logEvent(
+                          eventName:
+                              AmplitudeEvent.schoolEventFlowStartButtonClicked,
+                        );
+                        context.goNamed(Pages.familyNameLogin.name);
+                      },
+                    ),
+                  if (!isSchoolEventFlowEnabled) DownloadGivtAppWidget(),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),

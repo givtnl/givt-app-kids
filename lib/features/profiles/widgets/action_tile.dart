@@ -89,7 +89,9 @@ class _ActionTileState extends State<ActionTile> {
           decoration: BoxDecoration(
             color: borderColor!,
             border: Border(
-              bottom: BorderSide(color: borderColor!, width: bottomBorderWidth),
+              bottom: BorderSide(
+                  color: borderColor!,
+                  width: widget.isDisabled ? 2 : bottomBorderWidth),
               right: BorderSide(color: borderColor!, width: 2),
               left: BorderSide(color: borderColor!, width: 2),
               top: BorderSide(color: borderColor!, width: 2),

@@ -99,8 +99,7 @@ class Profile extends Equatable {
       hasDonations: map['hasDonations'] ?? false,
       wallet: walletMap,
       lastDonationItem: donationMap,
-      pictureURL: pictureMap['pictureURL'] ??
-          "https://givtstoragedebug.blob.core.windows.net/public/monster1.svg",
+      pictureURL: pictureMap['pictureURL'] ?? "",
     );
   }
 

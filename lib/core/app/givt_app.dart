@@ -9,6 +9,7 @@ import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cu
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
+import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
@@ -45,6 +46,9 @@ class GivtApp extends StatelessWidget {
         BlocProvider<GoalTrackerCubit>(
           create: (BuildContext context) => GoalTrackerCubit(getIt()),
           lazy: true,
+        ),
+        BlocProvider(
+          create: (context) => ScanNfcCubit(),
         ),
       ],
       child: BlocBuilder<AuthCubit, AuthState>(builder: (context, authState) {

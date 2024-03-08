@@ -26,18 +26,23 @@ enum Pages {
   redirectPopPage(path: '/redirect-pop-page', name: 'REDIRECT_POP_PAGE'),
 
   //exhibition flow
-  voucherCodeScreen(path: '/voucher-code-screen', name: 'VOUCHER_CODE_SCREEN'),
+  voucherCode(path: '/voucher-code', name: 'VOUCHER_CODE'),
   exhibitionOrganisations(
       path: '/exhibition-organisations', name: 'EXHIBITION_ORGANISATIONS'),
   successExhibitionCoin(
       path: '/success-exhibition-coin', name: 'SUCCESS_EXHIBITION_COIN'),
 
   //design alignment
-  designAlignmentScreen(
-      path: '/design-alignment-screen', name: 'DESIGN_ALIGNMENT_SCREEN'),
+  designAlignment(path: '/design-alignment', name: 'DESIGN_ALIGNMENT'),
 
   chooseAmountSliderGoal(
       path: '/choose-amount-slider-goal', name: 'CHOOSE_AMOUNT_SLIDER_GOAL'),
+
+//school event mode
+  familyNameLogin(path: '/family-name-login', name: 'FAMILY_NAME_LOGIN'),
+  schoolEventInfo(path: '/school-event-info', name: 'SCHOOL_EVENT_INFO'),
+  schoolEventOrganisations(
+      path: '/school-event-organisations', name: 'SCHOOL_EVENT_ORGANISATIONS'),
   ;
 
   final String path;

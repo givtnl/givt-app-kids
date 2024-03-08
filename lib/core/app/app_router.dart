@@ -38,6 +38,10 @@ import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart
 import 'package:givt_app_kids/features/recommendation/tags/screens/location_selection_screen.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
+import 'package:givt_app_kids/features/school_event/screens/family_name_login_screen.dart';
+import 'package:givt_app_kids/features/school_event/screens/school_event_info_screen.dart';
+import 'package:givt_app_kids/features/school_event/screens/school_event_organisations_screen.dart';
+import 'package:givt_app_kids/helpers/school_event_helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,6 +54,7 @@ class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
   static GoRouter get router => _router;
+
   static final GoRouter _router = GoRouter(
       debugLogDiagnostics: true,
       navigatorKey: _rootNavigatorKey,
@@ -61,6 +66,11 @@ class AppRouter {
             final auth = context.read<AuthCubit>().state;
             final profiles = context.read<ProfilesCubit>().state;
             if (auth is LoggedInState) {
+              final isSchoolEventUserLoggedOut =
+                  SchoolEventHelper.logoutSchoolEventUsers(context);
+              if (isSchoolEventUserLoggedOut) {
+                return Pages.login.path;
+              }
               if (profiles.isProfileSelected) {
                 return Pages.wallet.path;
               }
@@ -83,6 +93,14 @@ class AppRouter {
         GoRoute(
             path: Pages.wallet.path,
             name: Pages.wallet.name,
+            redirect: (context, state) {
+              final isSchoolEventUserLoggedOut =
+                  SchoolEventHelper.logoutSchoolEventUsers(context);
+              if (isSchoolEventUserLoggedOut) {
+                return Pages.login.path;
+              }
+              return null;
+            },
             builder: (context, state) {
               final profiles = context.read<ProfilesCubit>().state;
               context.read<ProfilesCubit>().fetchActiveProfile();
@@ -259,11 +277,8 @@ class AppRouter {
           path: Pages.scanNFC.path,
           name: Pages.scanNFC.name,
           builder: (context, state) {
-            return BlocProvider(
-              create: (context) => ScanNfcCubit()
-                ..readTag(prescanningDelay: ScanNfcCubit.startDelay),
-              child: const NFCScanPage(),
-            );
+            context.read<ScanNfcCubit>().resetScanNFCStatus();
+            return const NFCScanPage();
           },
         ),
         GoRoute(
@@ -277,8 +292,8 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: Pages.voucherCodeScreen.path,
-          name: Pages.voucherCodeScreen.name,
+          path: Pages.voucherCode.path,
+          name: Pages.voucherCode.name,
           builder: (context, state) => const VoucherCodeScreen(),
         ),
         GoRoute(
@@ -303,6 +318,28 @@ class AppRouter {
           name: Pages.successExhibitionCoin.name,
           builder: (context, state) =>
               const exhibition_flow.SuccessCoinScreen(),
+        ),
+        GoRoute(
+          path: Pages.familyNameLogin.path,
+          name: Pages.familyNameLogin.name,
+          builder: (context, state) => const FamilyNameLoginScreen(),
+        ),
+        GoRoute(
+          path: Pages.schoolEventInfo.path,
+          name: Pages.schoolEventInfo.name,
+          builder: (context, state) => const SchoolEventInfoScreen(),
+        ),
+        GoRoute(
+          path: Pages.schoolEventOrganisations.path,
+          name: Pages.schoolEventOrganisations.name,
+          builder: (context, state) {
+            return BlocProvider(
+              create: (context) => OrganisationsCubit(
+                getIt(),
+              )..getSchoolEventOrganisations(),
+              child: const SchoolEventOrganisationsScreen(),
+            );
+          },
         ),
         GoRoute(
           path: Pages.avatarSelection.path,
@@ -330,8 +367,8 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: Pages.designAlignmentScreen.path,
-          name: Pages.designAlignmentScreen.name,
+          path: Pages.designAlignment.path,
+          name: Pages.designAlignment.name,
           builder: (context, state) => const DesignAlignmentScreen(),
         ),
       ]);

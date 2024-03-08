@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "504779877388",
+    "project_id": "givt4kids-test",
+    "storage_bucket": "givt4kids-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504779877388:android:ab9367412175f1d1445229",
+        "android_client_info": {
+          "package_name": "net.givtapp.kids.test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjX63vQ1CfRXwAidWIWfN0GuVQ9uGU9uc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

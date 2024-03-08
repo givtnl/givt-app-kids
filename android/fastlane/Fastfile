@@ -74,21 +74,29 @@ platform :android do
                     match_secret: ENV['MATCH_PASSWORD'],
                     override_keystore: false)
 
-    upload_to_play_store(
-                        package_name: ENV['PACKAGE_NAME'],
-                        json_key_data: ENV['GOOGLE_PLAY_JSON_KEY'], 
-                        aab: signed_aab_path,
-                        release_status: "completed",
-                        track: 'internal')
+                    
+    # upload_to_play_store(
+    #                     package_name: ENV['PACKAGE_NAME'],
+    #                     json_key_data: ENV['GOOGLE_PLAY_JSON_KEY'], 
+    #                     aab: signed_aab_path,
+    #                     release_status: "completed",
+    #                     track: 'internal')
 
-    # Promote release to production
-    version_codes = google_play_track_version_codes(track: "internal")
-    version_code = version_codes.first
+    # # Promote release to production
+    # version_codes = google_play_track_version_codes(track: "internal")
+    # version_code = version_codes.first
+
+    # upload_to_play_store(
+    #   json_key_data: ENV['GOOGLE_PLAY_JSON_KEY'], 
+    #   track: "internal",
+    #   track_promote_to: "production",
+    #   version_code: version_code)
 
     upload_to_play_store(
+      package_name: ENV['PACKAGE_NAME'],
       json_key_data: ENV['GOOGLE_PLAY_JSON_KEY'], 
-      track: "internal",
-      track_promote_to: "production",
-      version_code: version_code)
+      aab: signed_aab_path,
+      release_status: "completed",
+      track: 'production')
   end
 end

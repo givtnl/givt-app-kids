@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/coin_flow/cubit/search_coin_cubit.dart';
-import 'package:givt_app_kids/features/coin_flow/widgets/coin_found.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_found_bottomsheet.dart';
@@ -27,6 +25,7 @@ class NFCScanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final flow = context.read<FlowsCubit>().state;
     final user = context.read<ProfilesCubit>().state.activeProfile;
+    final auth = context.read<AuthCubit>().state as LoggedInState;
     return BlocConsumer<ScanNfcCubit, ScanNfcState>(
       listener: (context, state) {
         final scanNfcCubit = context.read<ScanNfcCubit>();
@@ -56,7 +55,10 @@ class NFCScanPage extends StatelessWidget {
                                   .read<OrganisationDetailsCubit>()
                                   .state is OrganisationDetailsLoadingState,
                               onPressed: () {
-                                if (flow.isExhibition) {
+                                if (auth.isSchoolEvenMode) {
+                                  context.pushReplacementNamed(
+                                      Pages.schoolEventOrganisations.name);
+                                } else if (flow.isExhibition) {
                                   context.pushReplacementNamed(
                                       Pages.exhibitionOrganisations.name);
                                 } else {
@@ -82,7 +84,9 @@ class NFCScanPage extends StatelessWidget {
               .read<OrganisationDetailsCubit>()
               .getOrganisationDetails(state.mediumId);
           Future.delayed(ScanNfcCubit.foundDelay, () {
-            if (flow.isExhibition) {
+            if (auth.isSchoolEvenMode) {
+              context.pushReplacementNamed(Pages.schoolEventOrganisations.name);
+            } else if (flow.isExhibition) {
               context.pushReplacementNamed(Pages.exhibitionOrganisations.name);
             } else {
               context.pushReplacementNamed(Pages.chooseAmountSlider.name);
@@ -119,21 +123,15 @@ class NFCScanPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Text(
-                        state.coinAnimationStatus ==
-                                CoinAnimationStatus.animating
-                            ? 'Ready to make a difference?'
-                            : 'Found it!',
-                        style: const TextStyle(
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Text('Ready to make a difference?',
+                        style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         )),
                   ),
-                  if (flow.isExhibition &&
-                      state.coinAnimationStatus !=
-                          CoinAnimationStatus.animating)
+                  if (flow.isExhibition)
                     Text(
                       '\$${user.wallet.balance.toStringAsFixed(0)}',
                       textAlign: TextAlign.center,
@@ -142,18 +140,11 @@ class NFCScanPage extends StatelessWidget {
                         fontSize: 32,
                       ),
                     ),
-                  Text(
-                      state.coinAnimationStatus == CoinAnimationStatus.animating
-                          ? 'Grab your coin and \nlet\'s begin!'
-                          : flow.isExhibition
-                              ? 'to give away'
-                              : 'Let\'s continue...',
-                      style: const TextStyle(fontSize: 20),
+                  const Text('Grab your coin and \nlet\'s begin!',
+                      style: TextStyle(fontSize: 20),
                       textAlign: TextAlign.center),
                   const Spacer(flex: 2),
-                  state.coinAnimationStatus == CoinAnimationStatus.animating
-                      ? const SearchCoinAnimatedWidget()
-                      : const CoinFound(),
+                  const SearchCoinAnimatedWidget(),
                   const SizedBox(height: 20),
                   state.scanNFCStatus == ScanNFCStatus.error
                       ? const Text('Error scanning the coin')

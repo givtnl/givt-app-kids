@@ -47,7 +47,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
             children: [
               Positioned.fill(
                 child: Lottie.asset(
-                  "assets/lotties/coin_success_2.json",
+                  'assets/lotties/coin_success_2.json',
                   fit: BoxFit.fitWidth,
                   alignment: Alignment.bottomCenter,
                   width: double.infinity,
@@ -68,7 +68,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
         child: Column(
           children: [
             Text(
-              widget.isGoal ? "Well done!" : "Activated!",
+              widget.isGoal ? 'Well done!' : 'Activated!',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: AppTheme.defaultTextColor,
@@ -79,8 +79,8 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
             ),
             Text(
               widget.isGoal
-                  ? "You helped towards your family goal!"
-                  : "Drop your coin wherever your\nchurch collects money.",
+                  ? 'You helped towards your family goal!'
+                  : 'Drop your coin in\nthe giving box.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppTheme.defaultTextColor,
@@ -95,7 +95,7 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
   Widget _buildFAB(bool isOnlyChild) {
     if (widget.isGoal) {
       return GivtElevatedButton(
-        text: "Done",
+        text: 'Done',
         onTap: () {
           context.goNamed(Pages.wallet.name);
           context.read<FlowsCubit>().resetFlow();

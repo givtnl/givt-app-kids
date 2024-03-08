@@ -67,6 +67,26 @@ class APIService {
     }
   }
 
+  Future<Map<String, dynamic>> loginByFamilyName(
+      Map<String, dynamic> body) async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/Authentication/event');
+
+    var response = await client.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } else {
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    }
+  }
+
   Future<List<dynamic>> fetchAllProfiles() async {
     final url = Uri.https(_apiURL, '/givt4kidsservice/v1/profiles');
 
@@ -216,6 +236,23 @@ class APIService {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(body),
     );
+
+    if (response.statusCode >= 400) {
+      throw GivtServerException(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } else {
+      var decodedBody = json.decode(response.body);
+      var itemsList = decodedBody['items'] as List<dynamic>;
+      return itemsList;
+    }
+  }
+
+  Future<List<dynamic>> getSchoolEventOrganisations() async {
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/organisation/event');
+
+    var response = await client.get(url);
 
     if (response.statusCode >= 400) {
       throw GivtServerException(

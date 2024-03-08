@@ -34,9 +34,11 @@ class _GivtBackButtonState extends State<GivtBackButton> {
   @override
   Widget build(BuildContext context) {
     final flow = context.read<FlowsCubit>().state;
+    //TODO: kids-576 Let's refactor it and make the button simple: either pop or not (and move navigation to the 'screen' level)
     final isDeepLink = (!context.canPop() &&
         (flow.isCoin || flow.isRecommendation || flow.isQRCode));
-    final isVisible = context.canPop() || isDeepLink;
+    final isVisible =
+        context.canPop() || isDeepLink || widget.onPressedForced != null;
     if (isPressed == true) {
       dropShadowHeight = 2;
       paddingtop = 4;
@@ -53,19 +55,21 @@ class _GivtBackButtonState extends State<GivtBackButton> {
           child: Padding(
             padding: EdgeInsets.only(top: paddingtop),
             child: GestureDetector(
-              onTap: widget.onPressedForced == null
-                  ? () {
-                      widget.onPressedExt?.call();
+              onTap: () {
+                // log amplitude in any case
+                AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.backButtonPressed);
 
-                      AnalyticsHelper.logEvent(
-                          eventName: AmplitudeEvent.backButtonPressed);
-                      if (isDeepLink) {
-                        context.goNamed(Pages.wallet.name);
-                        return;
-                      }
-                      context.pop();
-                    }
-                  : widget.onPressedForced!,
+                if (widget.onPressedForced != null) {
+                  widget.onPressedForced!();
+                } else if (isDeepLink) {
+                  //TODO: kids-576 Let's refactor it and make the button simple: either pop or not (and move navigation to the 'screen' level)
+                  context.goNamed(Pages.wallet.name);
+                } else {
+                  widget.onPressedExt?.call();
+                  context.pop();
+                }
+              },
               onTapDown: (details) {
                 SystemSound.play(SystemSoundType.click);
                 setState(() {

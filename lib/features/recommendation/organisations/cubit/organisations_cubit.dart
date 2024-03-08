@@ -91,4 +91,21 @@ class OrganisationsCubit extends Cubit<OrganisationsState> {
       emit(OrganisationsExternalErrorState(errorMessage: error.toString()));
     }
   }
+
+  Future<void> getSchoolEventOrganisations() async {
+    emit(const OrganisationsFetchingState());
+
+    try {
+      final response =
+          await _organisationsRepository.getSchoolEventOrganisations();
+
+      emit(OrganisationsFetchedState(organisations: response));
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error(
+        'Error while fetching school event organisations: $error',
+        methodName: stackTrace.toString(),
+      );
+      emit(OrganisationsExternalErrorState(errorMessage: error.toString()));
+    }
+  }
 }

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/widgets/family_goal_tracker.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:givt_app_kids/features/profiles/widgets/give_bottomsheet.dart';
 import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/helpers/school_event_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
@@ -55,7 +57,13 @@ class _WalletScreenState extends State<WalletScreen>
 
   Future<void> refresh() async {
     final activeProfile = context.read<ProfilesCubit>().state.activeProfile;
-
+    // Check user should be logged out
+    final isSchoolEventUserLoggedOut =
+        SchoolEventHelper.logoutSchoolEventUsers(context);
+    if (isSchoolEventUserLoggedOut) {
+      context.pushReplacementNamed(Pages.login.name);
+      return;
+    }
     // Execute tasks in parallel
     await Future.wait([
       context.read<ProfilesCubit>().fetchActiveProfile(true),
@@ -83,7 +91,7 @@ class _WalletScreenState extends State<WalletScreen>
       final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
       final hasDonations = state.activeProfile.hasDonations;
       final goalCubit = context.read<GoalTrackerCubit>();
-
+      final authState = context.read<AuthCubit>().state as LoggedInState;
       var countdownAmount = 0.0;
       if (state is ProfilesCountdownState) {
         countdownAmount = state.amount;
@@ -174,7 +182,7 @@ class _WalletScreenState extends State<WalletScreen>
                             ),
                             const SizedBox(width: 16),
                             ActionTile(
-                              isDisabled: false,
+                              isDisabled: authState.isSchoolEvenMode,
                               text: "Find Charity",
                               iconPath: 'assets/images/find_tile.svg',
                               backgroundColor: AppTheme.primary98,

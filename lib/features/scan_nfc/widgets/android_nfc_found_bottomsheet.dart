@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
@@ -15,22 +16,21 @@ class FoundNfcAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.3,
+      width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Text('Found it!',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               )),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: SvgPicture.asset('assets/images/mobile_found.svg'),
+          Container(
+            height: 160,
+            padding: const EdgeInsets.only(top: 16, bottom: 32),
+            child: SvgPicture.asset('assets/images/coin_found.svg'),
           ),
-          const Text('Now let\'s select the amount',
-              style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
-          const SizedBox(height: 20),
           const Visibility(
             visible: false,
             maintainSize: true,

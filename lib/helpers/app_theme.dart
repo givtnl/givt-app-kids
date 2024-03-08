@@ -60,6 +60,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const primary80 = Color(0xFF60DD9B);
   static const primary95 = Color(0xFFC0FFD6);
   static const primary98 = Color(0xFFE9FFED);
+  static const secondary30 = Color(0xFF004F50);
+
 // FOR TESTING
   static const testingTextStyleLabelMedium = TextStyle(fontSize: 20);
   Scheme _schemeLight() {
@@ -106,41 +108,49 @@ class AppTheme extends ThemeExtension<AppTheme> {
         color: AppTheme.defaultTextColor,
         fontSize: 26,
         fontWeight: FontWeight.w700,
+        letterSpacing: 0
       ),
       titleMedium: TextStyle(
         color: AppTheme.defaultTextColor,
         fontSize: 22,
         fontWeight: FontWeight.w700,
+        letterSpacing: 0
       ),
       titleSmall: TextStyle(
         color: AppTheme.defaultTextColor,
         fontSize: 18,
         fontWeight: FontWeight.w700,
+        letterSpacing: 0
       ),
       headlineMedium: TextStyle(
         color: AppTheme.defaultTextColor,
         fontSize: 30,
         fontWeight: FontWeight.w700,
+        letterSpacing: 0
       ),
       labelSmall: TextStyle(
         color: AppTheme.defaultTextColor,
         fontSize: 16,
         fontWeight: FontWeight.w700,
+        letterSpacing: 0
       ),
       labelMedium: TextStyle(
         color: AppTheme.defaultTextColor,
         fontSize: 20,
         fontWeight: FontWeight.w700,
+        letterSpacing: 0
       ),
       bodySmall: TextStyle(
         color: AppTheme.defaultTextColor,
         fontSize: 15,
         fontWeight: FontWeight.w500,
+        letterSpacing: 0
       ),
       bodyMedium: TextStyle(
         color: AppTheme.defaultTextColor,
         fontSize: 20,
         fontWeight: FontWeight.w500,
+        letterSpacing: 0
       ),
     );
 

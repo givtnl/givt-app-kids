@@ -2,22 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>293069483242-pdci40bs0kliikhijit8cq9p10kukt73.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.293069483242-pdci40bs0kliikhijit8cq9p10kukt73</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBzyArGsBfONtD9GQbTPg6hLEcemsa2WfQ</string>
+	<string>AIzaSyBm4ndzJ_u0WWquzj40_n2f4R2PhBwukZE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>293069483242</string>
+	<string>504779877388</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>net.givtapp.kids</string>
+	<string>net.givtapp.kids.test</string>
 	<key>PROJECT_ID</key>
-	<string>gift-kids-app</string>
+	<string>givt4kids-test</string>
 	<key>STORAGE_BUCKET</key>
-	<string>gift-kids-app.appspot.com</string>
+	<string>givt4kids-test.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:293069483242:ios:48c661f449d5e10af27b93</string>
+	<string>1:504779877388:ios:64004f9351a781c8445229</string>
 </dict>
 </plist>

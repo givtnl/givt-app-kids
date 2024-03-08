@@ -17,7 +17,7 @@ jobs:
           GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           LOGIT_API_KEY: ${{ secrets.LOGIT_API_KEY }}
-    
+          GOOGLE_SERVICES_JSON_G4K: ${{ secrets.GOOGLE_SERVICES_JSON_G4K }}
     ios:
          uses: ./.github/workflows/ios.yml
          with:
@@ -28,3 +28,4 @@ jobs:
           APPSTORECONNECT_PRIVATE_KEY: ${{ secrets.APPSTORECONNECT_PRIVATE_KEY }}
           GITHUB_API_TOKEN: ${{ secrets.PERSONAL_ACCESS_KEY }}
           LOGIT_API_KEY: ${{ secrets.LOGIT_API_KEY }}
+          GOOGLE_SERVICES_PLIST_G4K: ${{ secrets.GOOGLE_SERVICES_PLIST_G4K }}
