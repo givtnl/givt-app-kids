@@ -55,6 +55,16 @@ class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
   static GoRouter get router => _router;
+  static String logoutForSchoolEvent(BuildContext context) {
+    context.read<AuthCubit>().logout();
+    context.read<ProfilesCubit>().clearProfiles();
+    context.read<FlowsCubit>().resetFlow();
+    AnalyticsHelper.logEvent(
+      eventName: AmplitudeEvent.schoolEventLogOutTriggered,
+    );
+    return Pages.login.path;
+  }
+
   static final GoRouter _router = GoRouter(
       debugLogDiagnostics: true,
       navigatorKey: _rootNavigatorKey,
@@ -70,13 +80,7 @@ class AppRouter {
                     RemoteConfigFeatures.schoolEventFlow);
             if (auth is LoggedInState) {
               if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
-                context.read<AuthCubit>().logout();
-                context.read<ProfilesCubit>().clearProfiles();
-                context.read<FlowsCubit>().resetFlow();
-                AnalyticsHelper.logEvent(
-                  eventName: AmplitudeEvent.schoolEventLogOutTriggered,
-                );
-                return Pages.login.path;
+                return logoutForSchoolEvent(context);
               }
               if (profiles.isProfileSelected) {
                 return Pages.wallet.path;
@@ -106,13 +110,7 @@ class AppRouter {
                       RemoteConfigFeatures.schoolEventFlow);
               final auth = context.read<AuthCubit>().state as LoggedInState;
               if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
-                context.read<AuthCubit>().logout();
-                context.read<ProfilesCubit>().clearProfiles();
-                context.read<FlowsCubit>().resetFlow();
-                AnalyticsHelper.logEvent(
-                  eventName: AmplitudeEvent.schoolEventLogOutTriggered,
-                );
-                return Pages.login.path;
+                return logoutForSchoolEvent(context);
               }
               return null;
             },
