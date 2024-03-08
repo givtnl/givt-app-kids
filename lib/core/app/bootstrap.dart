@@ -34,7 +34,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       minimumFetchInterval: const Duration(hours: 1),
     ),
   );
-
+  await remoteConfig.fetchAndActivate();
   remoteConfig.onConfigUpdated.listen((event) async {
     if (kDebugMode) {
       print('Remote config updated!');
