@@ -68,7 +68,7 @@ class AppRouter {
                 RemoteConfigHelper.isFeatureEnabled(
                     RemoteConfigFeatures.schoolEventFlow);
             if (auth is LoggedInState) {
-              if (!isSchoolEventFlowEnabled) {
+              if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
                 context.read<AuthCubit>().logout();
                 context.read<ProfilesCubit>().clearProfiles();
                 context.read<FlowsCubit>().resetFlow();
@@ -100,7 +100,8 @@ class AppRouter {
               final isSchoolEventFlowEnabled =
                   RemoteConfigHelper.isFeatureEnabled(
                       RemoteConfigFeatures.schoolEventFlow);
-              if (!isSchoolEventFlowEnabled) {
+              final auth = context.read<AuthCubit>().state as LoggedInState;
+              if (!isSchoolEventFlowEnabled && auth.isSchoolEvenMode) {
                 context.read<AuthCubit>().logout();
                 context.read<ProfilesCubit>().clearProfiles();
                 context.read<FlowsCubit>().resetFlow();
