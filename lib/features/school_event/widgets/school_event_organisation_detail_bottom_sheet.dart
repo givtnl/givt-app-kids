@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/shared/widgets/givt_close_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,17 +26,14 @@ class SchoolEventOrganisationDetailBottomSheet extends StatelessWidget {
         child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
+            toolbarHeight: 70,
             forceMaterialTransparency: true,
             automaticallyImplyLeading: false,
             actions: [
-              IconButton(
-                onPressed: () => context.pop(),
+              Container(
                 padding: const EdgeInsets.only(right: 16),
-                icon: SvgPicture.asset(
-                  'assets/images/close_icon.svg',
-                  alignment: Alignment.centerRight,
-                ),
-              )
+                child: const GivtCloseButton(),
+              ),
             ],
           ),
           body: Scrollable(
