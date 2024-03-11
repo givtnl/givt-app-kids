@@ -62,19 +62,17 @@ class _ActionContainerState extends State<ActionContainer> {
                 SystemSound.play(SystemSoundType.click);
                 _setManualPressed(true);
               },
-              onTapCancel: () async {
-                await _actionDelay();
-                HapticFeedback.lightImpact();
-                _setManualPressed(false);
-              },
-              onTapUp: (details) async {
-                await _actionDelay();
-                HapticFeedback.lightImpact();
-                _setManualPressed(false);
-              },
+              onTapCancel: _unpress,
+              onTapUp: (details) => _unpress(),
               child: _buildContainer(widget.child),
             ),
     );
+  }
+
+  Future<void> _unpress() async {
+    await _actionDelay();
+    HapticFeedback.lightImpact();
+    _setManualPressed(false);
   }
 
   EdgeInsets? _getOpositeMarginByBase(ActionContainerBase base) {
@@ -82,64 +80,30 @@ class _ActionContainerState extends State<ActionContainer> {
       return null;
     }
     final opositeMargin = widget.baseBorderSize - widget.borderSize;
-    switch (base) {
-      case ActionContainerBase.left:
-        return EdgeInsets.only(right: opositeMargin);
-      case ActionContainerBase.top:
-        return EdgeInsets.only(bottom: opositeMargin);
-      case ActionContainerBase.right:
-        return EdgeInsets.only(left: opositeMargin);
-      case ActionContainerBase.bottom:
-        return EdgeInsets.only(top: opositeMargin);
-      case ActionContainerBase.leftTop:
-        return EdgeInsets.only(
-          right: opositeMargin,
-          bottom: opositeMargin,
-        );
-      case ActionContainerBase.rightTop:
-        return EdgeInsets.only(
-          left: opositeMargin,
-          bottom: opositeMargin,
-        );
-      case ActionContainerBase.rightBottom:
-        return EdgeInsets.only(
-          left: opositeMargin,
-          top: opositeMargin,
-        );
-      case ActionContainerBase.leftBottom:
-        return EdgeInsets.only(
-          right: opositeMargin,
-          top: opositeMargin,
-        );
-    }
+    var margin = EdgeInsets.zero;
+    if (base.isLeft) margin += EdgeInsets.only(right: opositeMargin);
+    if (base.isTop) margin += EdgeInsets.only(bottom: opositeMargin);
+    if (base.isRight) margin += EdgeInsets.only(left: opositeMargin);
+    if (base.isBottom) margin += EdgeInsets.only(top: opositeMargin);
+    return margin;
+  }
+
+  BorderSide _getBorderSize({
+    required bool isBaseSide,
+  }) {
+    return BorderSide(
+      color: borderColor!,
+      width:
+          isBaseSide && !_isPressed ? widget.baseBorderSize : widget.borderSize,
+    );
   }
 
   Border _getBorderByBase(ActionContainerBase base) {
     return Border(
-      bottom: BorderSide(
-        color: borderColor!,
-        width: _isPressed || base.isNotBottom
-            ? widget.borderSize
-            : widget.baseBorderSize,
-      ),
-      right: BorderSide(
-        color: borderColor!,
-        width: _isPressed || base.isNotRight
-            ? widget.borderSize
-            : widget.baseBorderSize,
-      ),
-      left: BorderSide(
-        color: borderColor!,
-        width: _isPressed || base.isNotLeft
-            ? widget.borderSize
-            : widget.baseBorderSize,
-      ),
-      top: BorderSide(
-        color: borderColor!,
-        width: _isPressed || base.isNotTop
-            ? widget.borderSize
-            : widget.baseBorderSize,
-      ),
+      bottom: _getBorderSize(isBaseSide: base.isBottom),
+      right: _getBorderSize(isBaseSide: base.isRight),
+      left: _getBorderSize(isBaseSide: base.isLeft),
+      top: _getBorderSize(isBaseSide: base.isTop),
     );
   }
 
@@ -174,35 +138,12 @@ enum ActionContainerBase {
   rightBottom,
   leftBottom;
 
-  bool get isLeft {
-    return this == left || this == leftTop || this == leftBottom;
-  }
+  bool get isLeft => this == left || this == leftTop || this == leftBottom;
 
-  bool get isNotLeft {
-    return !isLeft;
-  }
+  bool get isRight => this == right || this == rightTop || this == rightBottom;
 
-  bool get isRight {
-    return this == right || this == rightTop || this == rightBottom;
-  }
+  bool get isTop => this == top || this == leftTop || this == rightTop;
 
-  bool get isNotRight {
-    return !isRight;
-  }
-
-  bool get isTop {
-    return this == top || this == leftTop || this == rightTop;
-  }
-
-  bool get isNotTop {
-    return !isTop;
-  }
-
-  bool get isBottom {
-    return this == bottom || this == leftBottom || this == rightBottom;
-  }
-
-  bool get isNotBottom {
-    return !isBottom;
-  }
+  bool get isBottom =>
+      this == bottom || this == leftBottom || this == rightBottom;
 }
