@@ -286,7 +286,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         context.goNamed(Pages.familyNameLogin.name);
                       },
                     ),
-                  if (!isSchoolEventFlowEnabled) DownloadGivtAppWidget(),
+                  //if (!isSchoolEventFlowEnabled)
+                  DownloadGivtAppWidget(),
                   const SizedBox(height: 24),
                 ],
               ),
