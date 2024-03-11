@@ -5,6 +5,8 @@ PODS:
     - Amplitude (= 8.16.1)
     - Flutter
   - AnalyticsConnector (1.0.3)
+  - appcheck (1.0.3):
+    - Flutter
   - device_info_plus (0.0.1):
     - Flutter
   - Firebase/CoreOnly (10.20.0):
@@ -119,6 +121,7 @@ PODS:
 
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
+  - appcheck (from `.symlinks/plugins/appcheck/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
@@ -159,6 +162,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   amplitude_flutter:
     :path: ".symlinks/plugins/amplitude_flutter/ios"
+  appcheck:
+    :path: ".symlinks/plugins/appcheck/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   firebase_core:
@@ -186,6 +191,7 @@ SPEC CHECKSUMS:
   Amplitude: fe18b3bbd880f2d9174b8109b79a77cd67687e2d
   amplitude_flutter: 6216e64320d2dbe4e5be2764381d93280499211f
   AnalyticsConnector: a53214d38ae22734c6266106c0492b37832633a9
+  appcheck: e1ab9d4e03736f03e0401554a134d1ed502d7629
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
   firebase_core: c8628c7ce80f79439149549052bff22f6784fbf5
