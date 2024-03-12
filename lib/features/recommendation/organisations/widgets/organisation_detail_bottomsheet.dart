@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
@@ -18,6 +20,9 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
   final Organisation organisation;
   @override
   Widget build(BuildContext context) {
+    final isDonateButtonActive =
+        context.read<ProfilesCubit>().state.activeProfile.wallet.balance > 0;
+
     return FractionallySizedBox(
       heightFactor: 0.9,
       child: ClipRRect(
@@ -95,7 +100,7 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 12),
             child: GivtElevatedButton(
               text: "Donate",
-              isDisabled: false,
+              isDisabled: !isDonateButtonActive,
               onTap: () {
                 AnalyticsHelper.logEvent(
                   eventName: AmplitudeEvent.donateToRecommendedCharityPressed,
