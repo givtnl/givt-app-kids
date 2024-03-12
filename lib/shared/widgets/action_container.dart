@@ -50,23 +50,21 @@ class _ActionContainerState extends State<ActionContainer> {
   Widget build(BuildContext context) {
     borderColor =
         widget.isDisabled ? AppTheme.disabledTileBorder : widget.borderColor;
-    return Expanded(
-      child: widget.isDisabled
-          ? _buildContainer(widget.child)
-          : GestureDetector(
-              onTap: () async {
-                await _actionDelay();
-                widget.onTap();
-              },
-              onTapDown: (details) {
-                SystemSound.play(SystemSoundType.click);
-                _setManualPressed(true);
-              },
-              onTapCancel: _unpress,
-              onTapUp: (details) => _unpress(),
-              child: _buildContainer(widget.child),
-            ),
-    );
+    return widget.isDisabled
+        ? _buildContainer(widget.child)
+        : GestureDetector(
+            onTap: () async {
+              await _actionDelay();
+              widget.onTap();
+            },
+            onTapDown: (details) {
+              SystemSound.play(SystemSoundType.click);
+              _setManualPressed(true);
+            },
+            onTapCancel: _unpress,
+            onTapUp: (details) => _unpress(),
+            child: _buildContainer(widget.child),
+          );
   }
 
   Future<void> _unpress() async {
