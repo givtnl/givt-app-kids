@@ -28,11 +28,13 @@ class DonationItemWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: donation.medium == DonationMediumType.nfc
+                width: donation.medium == DonationMediumType.nfc ||
+                        donation.isToGoal
                     ? size.width * 0.55
                     : size.width * 0.72,
                 child: Text(
-                  donation.organizationName,
+                  '${donation.isToGoal ? 'Family Goal: ' : ''}'
+                  '${donation.organizationName}',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
@@ -56,13 +58,17 @@ class DonationItemWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          donation.medium == DonationMediumType.nfc
+          donation.medium == DonationMediumType.nfc || donation.isToGoal
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 15),
                   child: Opacity(
-                      opacity:
-                          donation.state == DonationState.pending ? 0.6 : 1,
-                      child: SvgPicture.asset('assets/images/coin.svg')),
+                    opacity: donation.state == DonationState.pending ? 0.6 : 1,
+                    child: SvgPicture.asset(
+                      donation.isToGoal
+                          ? 'assets/images/goal_flag.svg'
+                          : 'assets/images/coin.svg',
+                    ),
+                  ),
                 )
               : const SizedBox(),
         ],
