@@ -9,10 +9,16 @@ class Donation extends HistoryItem {
     required this.state,
     required this.medium,
     required super.type,
+    required this.goalId,
   });
   final String organizationName;
   final DonationState state;
   final DonationMediumType medium;
+  final String goalId;
+
+  bool get isToGoal {
+    return goalId.isNotEmpty;
+  }
 
   @override
   List<Object?> get props => [
@@ -21,6 +27,7 @@ class Donation extends HistoryItem {
         organizationName,
         state,
         medium,
+        goalId,
       ];
 
   Donation.empty()
@@ -31,6 +38,7 @@ class Donation extends HistoryItem {
           state: DonationState.pending,
           medium: DonationMediumType.qr,
           type: HistoryTypes.donation,
+          goalId: '',
         );
 
   factory Donation.fromMap(Map<String, dynamic> map) {
@@ -46,6 +54,7 @@ class Donation extends HistoryItem {
         (element) => element.value == map['donationType'],
         orElse: () => HistoryTypes.donation,
       ),
+      goalId: map['goalId'] ?? '',
     );
   }
   Map<String, dynamic> toJson() {
@@ -56,6 +65,7 @@ class Donation extends HistoryItem {
       'status': DonationState.getDonationStateString(state),
       'mediumType': medium.type,
       'donationType': type.value,
+      'goalId': goalId,
     };
   }
 }
