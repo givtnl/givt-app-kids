@@ -58,7 +58,7 @@ class OrganisationsScreen extends StatelessWidget {
                 SliverAppBar(
                   backgroundColor: Colors.transparent,
                   automaticallyImplyLeading: false,
-                  leading: GivtBackButton(),
+                  leading: const GivtBackButton(),
                   actions: [
                     Row(
                       children: [

@@ -12,7 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:givt_app_kids/helpers/vibrator.dart';
 
 class SuccessScreen extends StatefulWidget {
-  const SuccessScreen({Key? key}) : super(key: key);
+  const SuccessScreen({super.key});
 
   @override
   State<SuccessScreen> createState() => _SuccessScreenState();
@@ -81,17 +81,16 @@ class _SuccessScreenState extends State<SuccessScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:
-          profilesState.isOnlyChild
-              ? const BackHomeButton()
-              : const Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    BackHomeButton(),
-                    SizedBox(height: 12),
-                    SwitchProfileSuccessButton(),
-                  ],
-                ),
+      floatingActionButton: profilesState.isOnlyChild
+          ? const BackHomeButton()
+          : const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BackHomeButton(),
+                SizedBox(height: 12),
+                SwitchProfileSuccessButton(),
+              ],
+            ),
     );
   }
 }

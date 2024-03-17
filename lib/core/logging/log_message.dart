@@ -61,6 +61,7 @@ class LogMessage extends Equatable {
     String? model,
     String? platformID,
     String? tag,
+    String? deviceUTCTimestamp,
     String? timestamp,
     String? versionOS,
     String? appVersion,

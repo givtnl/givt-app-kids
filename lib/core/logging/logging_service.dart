@@ -57,7 +57,8 @@ class LoggingInfo implements ILoggingInfo {
       final model = androidInfo.model;
       final os = 'Android $release (SDK $sdkInt)';
       final device = '$manufacturer $model';
-      final tag = isDebug ? 'GivtAppKids.Droid.Debug' : 'GivtAppKids.Droid.Production';
+      final tag =
+          isDebug ? 'GivtAppKids.Droid.Debug' : 'GivtAppKids.Droid.Production';
       final deviceId = await _getDeviceGuid();
       lm = lm.copyWith(
         platformID: '2',
@@ -77,7 +78,8 @@ class LoggingInfo implements ILoggingInfo {
       final model = iosInfo.model;
       final os = 'iOS $systemName $version';
       final device = '$name $model';
-      final tag = isDebug ? 'GivtAppKids.iOS.Debug' : 'GivtAppKids.iOS.Production';
+      final tag =
+          isDebug ? 'GivtAppKids.iOS.Debug' : 'GivtAppKids.iOS.Production';
       final deviceId = iosInfo.identifierForVendor;
       lm = lm.copyWith(
         platformID: '1',

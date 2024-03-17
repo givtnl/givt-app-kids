@@ -82,10 +82,10 @@ class _WalletWidgetState extends State<WalletWidget> {
                           splashColor: Theme.of(context).primaryColor,
                           onDoubleTap: () async {
                             final appInfoString = await _getAppIDAndVersion();
-                            if (mounted) {
-                              SnackBarHelper.showMessage(context,
-                                  text: appInfoString);
-                            }
+
+                            if (!context.mounted) return;
+                            SnackBarHelper.showMessage(context,
+                                text: appInfoString);
                           },
                           child: SvgPicture.network(
                             widget.avatarUrl,

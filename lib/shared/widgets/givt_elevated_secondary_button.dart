@@ -24,7 +24,7 @@ class GivtElevatedSecondaryButton extends StatefulWidget {
   final double widthMultiplier;
 
   @override
-  _GivtElevatedSecondaryButtonState createState() =>
+  State<GivtElevatedSecondaryButton> createState() =>
       _GivtElevatedSecondaryButtonState();
 }
 
