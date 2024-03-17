@@ -11,7 +11,7 @@ import 'package:logging/logging.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import 'package:ios_utsname_ext/extension.dart' as extensionIOS;
+import 'package:ios_utsname_ext/extension.dart' as extension_ios;
 
 mixin ILoggingInfo {
   Future<void> debug(String message);
