@@ -36,7 +36,6 @@ import 'package:givt_app_kids/features/recommendation/organisations/screens/orga
 import 'package:givt_app_kids/features/recommendation/start_recommendation/start_recommendation_screen.dart';
 import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/tags/screens/location_selection_screen.dart';
-import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/nfc_scan_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/family_name_login_screen.dart';
 import 'package:givt_app_kids/features/school_event/screens/school_event_info_screen.dart';
@@ -277,7 +276,6 @@ class AppRouter {
           path: Pages.scanNFC.path,
           name: Pages.scanNFC.name,
           builder: (context, state) {
-            context.read<ScanNfcCubit>().resetScanNFCStatus();
             return const NFCScanPage();
           },
         ),

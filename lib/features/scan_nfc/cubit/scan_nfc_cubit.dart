@@ -36,10 +36,6 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     }
   }
 
-  void resetScanNFCStatus() {
-    emit(state.copyWith(scanNFCStatus: ScanNFCStatus.ready));
-  }
-
   void readTag({Duration prescanningDelay = Duration.zero}) async {
     AnalyticsHelper.logEvent(eventName: AmplitudeEvent.startScanningCoin);
 
