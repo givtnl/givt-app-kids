@@ -52,7 +52,6 @@ class _CameraScreenState extends State<CameraScreen> {
                   });
               context.pushReplacementNamed(Pages.chooseAmountSlider.name);
             }
-            ;
           },
           builder: (context, orgState) {
             return CameraScreenFrame(
@@ -63,13 +62,9 @@ class _CameraScreenState extends State<CameraScreen> {
                 children: [
                   MobileScanner(
                     controller: _cameraController,
-                    onDetect: (barcode, args) async {
-                      if (state is CameraScanned) {
-                        return;
-                      }
-                      await context
-                          .read<CameraCubit>()
-                          .scanQrCode(barcode.rawValue);
+                    onDetect: (barcode) async {
+                      if (state is CameraScanned) return;
+                      await context.read<CameraCubit>().scanQrCode(barcode);
                     },
                   ),
                   Positioned.fill(

@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 
 class Wallet extends StatelessWidget {
-  const Wallet({Key? key}) : super(key: key);
+  const Wallet({super.key});
 
   @override
   Widget build(BuildContext context) {

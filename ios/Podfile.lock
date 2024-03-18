@@ -1,8 +1,8 @@
 PODS:
-  - Amplitude (8.16.1):
+  - Amplitude (8.18.0):
     - AnalyticsConnector (~> 1.0.0)
   - amplitude_flutter (0.0.1):
-    - Amplitude (= 8.16.1)
+    - Amplitude (= 8.18.0)
     - Flutter
   - AnalyticsConnector (1.0.3)
   - device_info_plus (0.0.1):
@@ -188,8 +188,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/vibration/ios"
 
 SPEC CHECKSUMS:
-  Amplitude: fe18b3bbd880f2d9174b8109b79a77cd67687e2d
-  amplitude_flutter: 6216e64320d2dbe4e5be2764381d93280499211f
+  Amplitude: 184def4f87aa26f94a93a7faa334e06b1cae704d
+  amplitude_flutter: 0f617f89d62b10c40a0ab14849e660a7c12e4e46
   AnalyticsConnector: a53214d38ae22734c6266106c0492b37832633a9
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
@@ -216,10 +216,10 @@ SPEC CHECKSUMS:
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   nfc_manager: d7da7cb781f7744b94df5fe9dbca904ac4a0939e
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   Protobuf: 8e9074797a13c484a79959fdb819ef4ae6da7dbe
-  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
+  shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2
   vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
 

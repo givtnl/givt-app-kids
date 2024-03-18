@@ -21,7 +21,7 @@ import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileSelectionScreen extends StatelessWidget {
-  const ProfileSelectionScreen({Key? key}) : super(key: key);
+  const ProfileSelectionScreen({super.key});
 
   static const int maxVivibleProfiles = 6;
 

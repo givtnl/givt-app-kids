@@ -4,10 +4,10 @@ import 'package:flutter_svg/svg.dart';
 
 class QrCodeTarget extends StatelessWidget {
   const QrCodeTarget({
-    Key? key,
+    super.key,
     this.targetCornerSize = 80,
     this.targetColor = const Color(0xFF3B3240),
-  }) : super(key: key);
+  });
 
   final double targetCornerSize;
   final Color targetColor;
@@ -20,41 +20,41 @@ class QrCodeTarget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SvgPicture.asset(
                 "assets/images/target_left_top.svg",
                 width: targetCornerSize,
                 height: targetCornerSize,
-                color: targetColor,
+                colorFilter: ColorFilter.mode(targetColor, BlendMode.srcIn),
               ),
               SizedBox(width: targetCornerSize),
               SvgPicture.asset(
                 "assets/images/target_right_top.svg",
                 width: targetCornerSize,
                 height: targetCornerSize,
-                color: targetColor,
+                colorFilter: ColorFilter.mode(targetColor, BlendMode.srcIn),
               ),
             ],
           ),
           SizedBox(height: targetCornerSize),
           Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SvgPicture.asset(
                 "assets/images/target_left_bottom.svg",
                 width: targetCornerSize,
                 height: targetCornerSize,
-                color: targetColor,
+                colorFilter: ColorFilter.mode(targetColor, BlendMode.srcIn),
               ),
               SizedBox(width: targetCornerSize),
               SvgPicture.asset(
                 "assets/images/target_right_bottom.svg",
                 width: targetCornerSize,
                 height: targetCornerSize,
-                color: targetColor,
+                colorFilter: ColorFilter.mode(targetColor, BlendMode.srcIn),
               ),
             ],
           ),

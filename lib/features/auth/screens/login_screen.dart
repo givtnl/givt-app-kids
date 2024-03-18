@@ -20,7 +20,7 @@ import 'package:givt_app_kids/shared/widgets/givt_elevated_secondary_button.dart
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -286,7 +286,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         context.goNamed(Pages.familyNameLogin.name);
                       },
                     ),
-                  if (!isSchoolEventFlowEnabled) DownloadGivtAppWidget(),
+                  if (!isSchoolEventFlowEnabled) const DownloadGivtAppWidget(),
                   const SizedBox(height: 24),
                 ],
               ),

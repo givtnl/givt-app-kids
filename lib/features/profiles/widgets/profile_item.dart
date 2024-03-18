@@ -4,10 +4,10 @@ import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class ProfileItem extends StatelessWidget {
   const ProfileItem({
-    Key? key,
+    super.key,
     required this.name,
     required this.imageUrl,
-  }) : super(key: key);
+  });
 
   final String name;
   final String imageUrl;

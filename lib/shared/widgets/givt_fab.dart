@@ -18,7 +18,7 @@ class GivtFloatingActionButton extends StatefulWidget {
   final IconData? rightIcon;
 
   @override
-  _GivtFloatingActionButtonState createState() =>
+  State<GivtFloatingActionButton> createState() =>
       _GivtFloatingActionButtonState();
 }
 
