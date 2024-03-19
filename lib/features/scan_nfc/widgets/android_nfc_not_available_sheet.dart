@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_secondary_button.dart';
 import 'package:go_router/go_router.dart';
@@ -17,13 +18,10 @@ class NfcNotAvailableSheet extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 20),
-        const Text(
+        Text(
           'Oh wait, we can\'t scan the coin',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         Container(
           // hardcoded size from design file
@@ -36,13 +34,12 @@ class NfcNotAvailableSheet extends StatelessWidget {
             width: double.infinity,
           ),
         ),
-        const Text(
+        Text(
           'Could you turn on NFC so we are\nable to find it?',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
         ),
         const SizedBox(height: 16),
         Padding(

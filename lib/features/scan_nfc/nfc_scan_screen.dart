@@ -120,7 +120,7 @@ class _NFCScanPageState extends State<NFCScanPage> {
           context
               .read<OrganisationDetailsCubit>()
               .getOrganisationDetails(state.mediumId);
-          Future.delayed(ScanNfcCubit.foundDelay, () {
+          Future.delayed(ScanNfcCubit.oneAnimationLoopTimeDelay, () {
             if (auth.isSchoolEvenMode) {
               context.pushReplacementNamed(Pages.schoolEventOrganisations.name);
             } else if (flow.isExhibition) {

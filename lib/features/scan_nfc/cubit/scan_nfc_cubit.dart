@@ -18,7 +18,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
           scanNFCStatus: ScanNFCStatus.ready,
         ));
 
-  static const foundDelay = Duration(milliseconds: 2000);
+  static const oneAnimationLoopTimeDelay = Duration(milliseconds: 3000);
 
   static const _closeIOSScanningScheetDelay = Duration(milliseconds: 2900);
 
@@ -46,7 +46,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     // Check NFC availability
     bool isAvailable = await NfcManager.instance.isAvailable();
     if (!isAvailable && Platform.isAndroid) {
-      await Future.delayed(const Duration(milliseconds: 3000));
+      await Future.delayed(oneAnimationLoopTimeDelay);
       emit(state.copyWith(
         scanNFCStatus: ScanNFCStatus.nfcNotAvailable,
       ));
