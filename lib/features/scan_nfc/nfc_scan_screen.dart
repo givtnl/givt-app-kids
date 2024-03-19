@@ -18,8 +18,19 @@ import 'package:go_router/go_router.dart';
 
 import '../profiles/cubit/profiles_cubit.dart';
 
-class NFCScanPage extends StatelessWidget {
+class NFCScanPage extends StatefulWidget {
   const NFCScanPage({super.key});
+
+  @override
+  State<NFCScanPage> createState() => _NFCScanPageState();
+}
+
+class _NFCScanPageState extends State<NFCScanPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ScanNfcCubit>().readTag();
+  }
 
   @override
   Widget build(BuildContext context) {
