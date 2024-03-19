@@ -37,12 +37,21 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
   }
 
   void readTag({Duration prescanningDelay = Duration.zero}) async {
+    await Future.delayed(prescanningDelay);
     AnalyticsHelper.logEvent(eventName: AmplitudeEvent.startScanningCoin);
 
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
-
+    // Check NFC availability
+    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (!isAvailable && Platform.isAndroid) {
+      await Future.delayed(const Duration(milliseconds: 3000));
+      emit(state.copyWith(
+        scanNFCStatus: ScanNFCStatus.nfcNotAvailable,
+      ));
+      return;
+    }
     // When the device is not a physical device, we can't scan NFC
     // so we simulate a successful scan
     if (Platform.isIOS) {
