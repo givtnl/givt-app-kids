@@ -28,8 +28,8 @@ class NFCScanPage extends StatefulWidget {
 class _NFCScanPageState extends State<NFCScanPage> {
   @override
   void initState() {
-    context.read<ScanNfcCubit>().readTag();
     super.initState();
+    context.read<ScanNfcCubit>().readTag();
   }
 
   @override
