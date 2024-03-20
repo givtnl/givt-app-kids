@@ -30,6 +30,7 @@ class _NFCScanPageState extends State<NFCScanPage> {
   @override
   void initState() {
     super.initState();
+    // Prescanning delay is to improve the UI animation (not be jarring)
     context
         .read<ScanNfcCubit>()
         .readTag(prescanningDelay: const Duration(milliseconds: 100));

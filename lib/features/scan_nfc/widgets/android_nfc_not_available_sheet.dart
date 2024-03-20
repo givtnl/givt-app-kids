@@ -44,8 +44,7 @@ class NfcNotAvailableSheet extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 16),
           child: GivtElevatedButton(
             onTap: () {
-              context.pop();
-              scanNfcCubit.cancelScanning();
+              cancelScanning(context);
               AppSettings.openAppSettings(type: AppSettingsType.nfc);
             },
             text: 'Go to Settings',
@@ -54,14 +53,16 @@ class NfcNotAvailableSheet extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 32),
           child: GivtElevatedSecondaryButton(
-            onTap: () {
-              context.pop();
-              scanNfcCubit.cancelScanning();
-            },
+            onTap: () => cancelScanning(context),
             text: 'Cancel',
           ),
         )
       ],
     );
+  }
+
+  void cancelScanning(BuildContext context) {
+    context.pop();
+    scanNfcCubit.cancelScanning();
   }
 }
