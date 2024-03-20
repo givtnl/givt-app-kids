@@ -5,6 +5,7 @@ enum ScanNFCStatus {
   prescanning,
   scanning,
   scanned,
+  nfcNotAvailable,
   error,
 }
 

@@ -1,15 +1,12 @@
 import 'dart:convert';
 
-// import 'package:givt_app/app/injection/injection.dart';
-// import 'package:givt_app/core/logging/logging.dart';
-// import 'package:givt_app/features/auth/repositories/auth_repository.dart';
-import 'package:flutter_guid/flutter_guid.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/core/logging/logging.dart';
 import 'package:givt_app_kids/features/auth/models/session.dart';
 import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 class TokenInterceptor implements InterceptorContract {
   @override
@@ -17,7 +14,7 @@ class TokenInterceptor implements InterceptorContract {
     try {
       final prefs = await SharedPreferences.getInstance();
       final sessionString = prefs.getString(Session.tag);
-      final correlationId = Guid.newGuid;
+      final correlationId = const Uuid().v4();
       if (!request.headers.containsKey('Content-Type')) {
         request.headers['Content-Type'] = 'application/json';
       }
@@ -65,7 +62,7 @@ class TokenInterceptor implements InterceptorContract {
 /// to retry requests that failed due to an expired token.
 class ExpiredTokenRetryPolicy extends RetryPolicy {
   @override
-  int maxRetryAttempts = 2;
+  int get maxRetryAttempts => 2;
 
   @override
   Future<bool> shouldAttemptRetryOnResponse(BaseResponse response) async {

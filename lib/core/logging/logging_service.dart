@@ -11,7 +11,7 @@ import 'package:logging/logging.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import 'package:ios_utsname_ext/extension.dart' as extensionIOS;
+import 'package:ios_utsname_ext/extension.dart' as extension_ios;
 
 mixin ILoggingInfo {
   Future<void> debug(String message);
@@ -57,7 +57,8 @@ class LoggingInfo implements ILoggingInfo {
       final model = androidInfo.model;
       final os = 'Android $release (SDK $sdkInt)';
       final device = '$manufacturer $model';
-      final tag = isDebug ? 'GivtAppKids.Droid.Debug' : 'GivtAppKids.Droid.Production';
+      final tag =
+          isDebug ? 'GivtAppKids.Droid.Debug' : 'GivtAppKids.Droid.Production';
       final deviceId = await _getDeviceGuid();
       lm = lm.copyWith(
         platformID: '2',
@@ -77,7 +78,8 @@ class LoggingInfo implements ILoggingInfo {
       final model = iosInfo.model;
       final os = 'iOS $systemName $version';
       final device = '$name $model';
-      final tag = isDebug ? 'GivtAppKids.iOS.Debug' : 'GivtAppKids.iOS.Production';
+      final tag =
+          isDebug ? 'GivtAppKids.iOS.Debug' : 'GivtAppKids.iOS.Production';
       final deviceId = iosInfo.identifierForVendor;
       lm = lm.copyWith(
         platformID: '1',

@@ -11,7 +11,7 @@ class CoinErrorPage extends StatelessWidget {
     return SafeArea(
       child: Center(
         child: Padding(
-          padding: EdgeInsets.all(50),
+          padding: const EdgeInsets.all(50),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

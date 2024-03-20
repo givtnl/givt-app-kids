@@ -12,7 +12,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
 class SuccessCoinScreen extends StatefulWidget {
-  const SuccessCoinScreen({Key? key}) : super(key: key);
+  const SuccessCoinScreen({super.key});
 
   @override
   State<SuccessCoinScreen> createState() => _SuccessCoinScreenState();

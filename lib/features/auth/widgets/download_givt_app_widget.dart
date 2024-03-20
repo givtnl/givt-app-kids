@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class DownloadGivtAppWidget extends StatelessWidget {
+  const DownloadGivtAppWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -24,8 +24,9 @@ class GivtElevatedButton extends StatefulWidget {
   final IconData? rightIcon;
   final Widget? leadingImage;
   final double widthMultiplier;
+
   @override
-  _GivtElevatedButtonState createState() => _GivtElevatedButtonState();
+  State<GivtElevatedButton> createState() => _GivtElevatedButtonState();
 }
 
 class _GivtElevatedButtonState extends State<GivtElevatedButton> {

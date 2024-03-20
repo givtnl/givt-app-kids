@@ -14,7 +14,7 @@ class StartRecommendationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: GivtBackButton(),
+        leading: const GivtBackButton(),
         backgroundColor: AppTheme.offWhite,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: AppTheme.offWhite,
