@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_found_bottomsheet.dart';
+import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_not_available_sheet.dart';
 import 'package:givt_app_kids/features/scan_nfc/widgets/android_nfc_scanning_bottomsheet.dart';
 import 'package:givt_app_kids/features/coin_flow/widgets/search_coin_animated_widget.dart';
 import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
@@ -29,7 +30,10 @@ class _NFCScanPageState extends State<NFCScanPage> {
   @override
   void initState() {
     super.initState();
-    context.read<ScanNfcCubit>().readTag();
+    // Prescanning delay is to improve the UI animation (not be jarring)
+    context
+        .read<ScanNfcCubit>()
+        .readTag(prescanningDelay: const Duration(milliseconds: 100));
   }
 
   @override
@@ -90,11 +94,34 @@ class _NFCScanPageState extends State<NFCScanPage> {
             },
           );
         }
+        if (state.scanNFCStatus == ScanNFCStatus.nfcNotAvailable &&
+            Platform.isAndroid) {
+          context.pop();
+          showModalBottomSheet<void>(
+            context: context,
+            isDismissible: false,
+            isScrollControlled: true,
+            enableDrag: false,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            builder: (BuildContext context) {
+              return BlocProvider.value(
+                value: scanNfcCubit,
+                child: BlocBuilder<ScanNfcCubit, ScanNfcState>(
+                  builder: (context, state) {
+                    return NfcNotAvailableSheet(scanNfcCubit: scanNfcCubit);
+                  },
+                ),
+              );
+            },
+          );
+        }
         if (state.scanNFCStatus == ScanNFCStatus.scanned) {
           context
               .read<OrganisationDetailsCubit>()
               .getOrganisationDetails(state.mediumId);
-          Future.delayed(ScanNfcCubit.foundDelay, () {
+          Future.delayed(ScanNfcCubit.oneAnimationLoopTimeDelay, () {
             if (auth.isSchoolEvenMode) {
               context.pushReplacementNamed(Pages.schoolEventOrganisations.name);
             } else if (flow.isExhibition) {

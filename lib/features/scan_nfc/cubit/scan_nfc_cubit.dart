@@ -18,7 +18,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
           scanNFCStatus: ScanNFCStatus.ready,
         ));
 
-  static const foundDelay = Duration(milliseconds: 2000);
+  static const oneAnimationLoopTimeDelay = Duration(milliseconds: 3000);
 
   static const _closeIOSScanningScheetDelay = Duration(milliseconds: 2900);
 
@@ -37,12 +37,22 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
   }
 
   void readTag({Duration prescanningDelay = Duration.zero}) async {
+    // Prescanning delay is to improve the UI animation (not be jarring)
+    await Future.delayed(prescanningDelay);
     AnalyticsHelper.logEvent(eventName: AmplitudeEvent.startScanningCoin);
 
     emit(state.copyWith(
       scanNFCStatus: ScanNFCStatus.scanning,
     ));
-
+    // Check NFC availability
+    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (!isAvailable && Platform.isAndroid) {
+      await Future.delayed(oneAnimationLoopTimeDelay);
+      emit(state.copyWith(
+        scanNFCStatus: ScanNFCStatus.nfcNotAvailable,
+      ));
+      return;
+    }
     // When the device is not a physical device, we can't scan NFC
     // so we simulate a successful scan
     if (Platform.isIOS) {
