@@ -6,6 +6,7 @@ import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_
 import 'package:givt_app_kids/features/recommendation/interests/widgets/interest_card.dart';
 import 'package:givt_app_kids/features/recommendation/interests/widgets/interests_tally.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/charity_finder_app_bar.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/svg_manager.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 
@@ -29,7 +30,8 @@ class InterestsSelectionScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 16),
                   sliver: SliverAppBar(
                     pinned: true,
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: Colors.white,
+                    surfaceTintColor: AppTheme.primary90,
                     automaticallyImplyLeading: false,
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -60,6 +60,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const primary20 = Color(0xFF003920);
   static const primary80 = Color(0xFF60DD9B);
   static const primary95 = Color(0xFFC0FFD6);
+  static const primary90 = Color(0xFF6BFCAB);
   static const primary98 = Color(0xFFE9FFED);
   static const secondary30 = Color(0xFF004F50);
   static const info40 = Color(0xFF914C00);
