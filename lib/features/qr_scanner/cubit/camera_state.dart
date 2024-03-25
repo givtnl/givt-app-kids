@@ -2,7 +2,6 @@ part of 'camera_cubit.dart';
 
 enum CameraStatus {
   initial,
-  permissionCheck,
   requestPermission,
   permissionPermanentlyDeclined,
   permissionGranted,

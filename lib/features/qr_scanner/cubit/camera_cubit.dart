@@ -10,7 +10,6 @@ class CameraCubit extends Cubit<CameraState> {
   static const Duration _permissionDialogDelay = Duration(milliseconds: 300);
 
   void checkPermission() async {
-    emit(state.copyWith(status: CameraStatus.permissionCheck));
     final status = await Permission.camera.status;
     //delay is from design
     Future.delayed(_permissionDialogDelay);

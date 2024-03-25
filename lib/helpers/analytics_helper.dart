@@ -48,6 +48,9 @@ enum AmplitudeEvent {
   schoolEventFlowConfirmButtonClicked(
       'school_event_flow_confirm_button_clicked'),
   schoolEventLogOutTriggered('school_event_log_out_triggered'),
+  openAppPermissionsSettings('open_app_permissions_settings'),
+  openCameraPermissionDialog('open_camera_permission_dialog'),
+  closePermissionsDialog('close_permissions_dialog'),
   ;
 
   final String value;

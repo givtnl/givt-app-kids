@@ -128,15 +128,23 @@ class _CameraScreenState extends State<CameraScreen> {
                 isSettings
                     ? GivtElevatedButton(
                         onTap: () {
-                          context.pop();
+                          AnalyticsHelper.logEvent(
+                            eventName:
+                                AmplitudeEvent.openAppPermissionsSettings,
+                          );
                           openAppSettings();
+                          context.pop();
                         },
                         text: 'Go to Settings',
                       )
                     : GivtElevatedButton(
                         onTap: () {
-                          context.pop();
+                          AnalyticsHelper.logEvent(
+                            eventName:
+                                AmplitudeEvent.openCameraPermissionDialog,
+                          );
                           context.read<CameraCubit>().grantAccess();
+                          context.pop();
                         },
                         text: 'Next',
                       ),
@@ -150,6 +158,9 @@ class _CameraScreenState extends State<CameraScreen> {
               icon: const FaIcon(FontAwesomeIcons.xmark),
               onPressed: () {
                 SystemSound.play(SystemSoundType.click);
+                AnalyticsHelper.logEvent(
+                  eventName: AmplitudeEvent.closePermissionsDialog,
+                );
                 context.pop();
               },
             ),
