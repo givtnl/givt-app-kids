@@ -117,7 +117,10 @@ class ChooseAmountSliderScreen extends StatelessWidget {
 
   Widget _getAppBarAction(FlowsState flow) {
     if (flow.isQRCode || flow.isRecommendation) {
-      return const Wallet();
+      return const Padding(
+        padding: EdgeInsets.only(right: 16),
+        child: Wallet(),
+      );
     }
     if (flow.isCoin) {
       return const CoinWidget();
