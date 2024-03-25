@@ -20,7 +20,7 @@ class CameraCubit extends Cubit<CameraState> {
     Future.delayed(permisionDialogDelay);
 
     // iOS returns denied status in case
-    // it is the first time a user is asked permissions or
+    // the user was not asked for permissions yet or
     // it was permanently denied
     if (status.isDenied && Platform.isIOS) {
       final iOSCameraPermissionAsked =
