@@ -22,6 +22,38 @@ class CameraInitial extends CameraState {
   });
 }
 
+class CameraPermissionCheck extends CameraState {
+  const CameraPermissionCheck({
+    super.isLoading = false,
+    super.qrValue = '',
+    super.feedback = 'No QR code scanned yet.',
+  });
+}
+
+class CameraPermissionRequest extends CameraState {
+  const CameraPermissionRequest({
+    super.isLoading = false,
+    super.qrValue = '',
+    super.feedback = 'No QR code scanned yet.',
+  });
+}
+
+class CameraPermissionPermanentlyDeclined extends CameraState {
+  const CameraPermissionPermanentlyDeclined({
+    super.isLoading = false,
+    super.qrValue = '',
+    super.feedback = 'No QR code scanned yet.',
+  });
+}
+
+class CameraPermissionGranted extends CameraState {
+  const CameraPermissionGranted({
+    super.isLoading = false,
+    super.qrValue = '',
+    super.feedback = 'No QR code scanned yet.',
+  });
+}
+
 class CameraScanned extends CameraState {
   const CameraScanned({
     required super.qrValue,

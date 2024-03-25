@@ -49,6 +49,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
 //functionally used on screen
   static const givt4KidsBlue = Color(0xFF54A1EE);
   static const offWhite = Color(0xFFEEEDE4);
+  static const disabledCameraGrey = Color(0xFFD8D8D8);
   static const backButtonColor = Color(0xFFBFDBFC);
   static const successBackgroundLightBlue = Color(0xFFB9D7FF);
   static const defaultTextColor = AppTheme.primary20;
@@ -105,53 +106,45 @@ class AppTheme extends ThemeExtension<AppTheme> {
   ThemeData _base(final ColorScheme colorScheme) {
     const textTheme = TextTheme(
       titleLarge: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 26,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 26,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       titleMedium: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 22,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       titleSmall: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 18,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       headlineMedium: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 30,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 30,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       labelSmall: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       labelMedium: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 20,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       bodySmall: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 15,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0),
       bodyMedium: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 20,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0),
     );
 
     return ThemeData(
