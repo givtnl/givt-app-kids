@@ -49,8 +49,8 @@ class InterestsSelectionScreen extends StatelessWidget {
                     automaticallyImplyLeading: false,
                     leading: GivtBackButton(),
                   ),
-                  SliverPadding(
-                    padding: const EdgeInsets.only(top: 16),
+                  const SliverPadding(
+                    padding: EdgeInsets.only(top: 16),
                     sliver: SliverAppBar(
                       pinned: true,
                       backgroundColor: Colors.transparent,
@@ -59,9 +59,27 @@ class InterestsSelectionScreen extends StatelessWidget {
                       title: RecommendationGivyBubble(
                         text: 'I want to help people...',
                         secondaryText: 'Select your top 3 choices',
-                        extraChild: InterestsTally(
-                          tally: state.selectedInterests.length,
-                        ),
+                      ),
+                    ),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.only(top: 16),
+                    sliver: SliverAppBar(
+                      pinned: true,
+                      backgroundColor: Colors.transparent,
+                      automaticallyImplyLeading: false,
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Select your top 3 choices',
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          const SizedBox(width: 8),
+                          InterestsTally(
+                            tally: state.selectedInterests.length,
+                          ),
+                        ],
                       ),
                     ),
                   ),
