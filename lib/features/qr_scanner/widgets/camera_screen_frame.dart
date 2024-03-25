@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
+import 'package:givt_app_kids/shared/widgets/givt_back_button_flat.dart';
 
 class CameraScreenFrame extends StatelessWidget {
   const CameraScreenFrame(
@@ -24,13 +23,7 @@ class CameraScreenFrame extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const FaIcon(FontAwesomeIcons.arrowLeft),
-          onPressed: () {
-            SystemSound.play(SystemSoundType.click);
-            context.pop();
-          },
-        ),
+        leading: const GivtBackButtonFlat(),
       ),
       body: SafeArea(
         child: Column(
