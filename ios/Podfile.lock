@@ -5,6 +5,8 @@ PODS:
     - Amplitude (= 8.18.0)
     - Flutter
   - AnalyticsConnector (1.0.3)
+  - app_settings (5.1.1):
+    - Flutter
   - device_info_plus (0.0.1):
     - Flutter
   - Firebase/CoreOnly (10.22.0):
@@ -110,6 +112,8 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - permission_handler_apple (9.3.0):
+    - Flutter
   - PromisesObjC (2.4.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
@@ -121,6 +125,7 @@ PODS:
 
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
+  - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
@@ -129,6 +134,7 @@ DEPENDENCIES:
   - nfc_manager (from `.symlinks/plugins/nfc_manager/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - smart_auth (from `.symlinks/plugins/smart_auth/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
@@ -160,6 +166,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   amplitude_flutter:
     :path: ".symlinks/plugins/amplitude_flutter/ios"
+  app_settings:
+    :path: ".symlinks/plugins/app_settings/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   firebase_core:
@@ -176,6 +184,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   smart_auth:
@@ -187,6 +197,7 @@ SPEC CHECKSUMS:
   Amplitude: 184def4f87aa26f94a93a7faa334e06b1cae704d
   amplitude_flutter: 0f617f89d62b10c40a0ab14849e660a7c12e4e46
   AnalyticsConnector: a53214d38ae22734c6266106c0492b37832633a9
+  app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
   firebase_core: 100945864b4aedce3cfef0c62ab864858bf013cf
@@ -213,11 +224,12 @@ SPEC CHECKSUMS:
   nfc_manager: d7da7cb781f7744b94df5fe9dbca904ac4a0939e
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2
   vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
 
-PODFILE CHECKSUM: c4c93c5f6502fe2754f48404d3594bf779584011
+PODFILE CHECKSUM: 198ad38442da4e86765a2bf1981802ff55710005
 
 COCOAPODS: 1.15.2
