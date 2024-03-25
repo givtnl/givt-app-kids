@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -99,21 +100,35 @@ class _WalletWidgetState extends State<WalletWidget> {
                         ? const Center(
                             child: CircularProgressIndicator.adaptive(),
                           )
-                        : Countup(
-                            begin: widget.balance + widget.countdownAmount,
-                            end: widget.balance,
-                            duration: const Duration(seconds: 3),
-                            separator: '.',
-                            prefix: '\$',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium
-                                ?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                )),
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                FontAwesomeIcons.wallet,
+                                color: AppTheme.info40,
+                                size: 20,
+                              ),
+                              Countup(
+                                  begin:
+                                      widget.balance + widget.countdownAmount,
+                                  end: widget.balance,
+                                  duration: const Duration(seconds: 3),
+                                  separator: '.',
+                                  prefix: ' \$',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      )),
+                            ],
+                          ),
                     widget.hasDonations
                         ? TextButton(
                             style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
                                 alignment: Alignment.topCenter),
                             onPressed: () {
                               context.pushNamed(Pages.history.name);
