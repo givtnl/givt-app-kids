@@ -81,11 +81,11 @@ class _CameraScreenState extends State<CameraScreen> {
               child: Stack(
                 children: [
                   state is CameraPermissionGranted || state is CameraScanned
-                      ? _buildMobileScanner(size, context.read<CameraCubit>())
-                      : _buildDisabledCameraBox(size),
+                      ? _buildMobileScanner(context.read<CameraCubit>())
+                      : _buildDisabledCameraBox(),
                   Positioned.fill(
                     child: state is CameraScanned
-                        ? _builCenterLoader(size)
+                        ? _builCenterLoader()
                         : _buildQRCodeTarget(size),
                   ),
                 ],
@@ -104,11 +104,10 @@ class _CameraScreenState extends State<CameraScreen> {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 20),
                 SvgPicture.asset(
                   "assets/images/camera_dutone.svg",
                 ),
@@ -140,7 +139,6 @@ class _CameraScreenState extends State<CameraScreen> {
                         },
                         text: 'Next',
                       ),
-                const SizedBox(height: 24),
               ],
             ),
           ),
@@ -160,7 +158,7 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  Widget _buildMobileScanner(Size size, CameraCubit cameraCubit) {
+  Widget _buildMobileScanner(CameraCubit cameraCubit) {
     return MobileScanner(
       controller: _cameraController,
       onDetect: (barcode) async {
@@ -170,10 +168,10 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  Widget _buildDisabledCameraBox(Size size) {
+  Widget _buildDisabledCameraBox() {
     return Container(
-      width: size.width,
-      height: size.height,
+      width: double.infinity,
+      height: double.infinity,
       color: AppTheme.disabledCameraGrey,
     );
   }
@@ -188,9 +186,9 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  Widget _builCenterLoader(Size size) {
+  Widget _builCenterLoader() {
     return const Center(
-      child: CircularProgressIndicator.adaptive(),
+      child: CircularProgressIndicator(),
     );
   }
 }
