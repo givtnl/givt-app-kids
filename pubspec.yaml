@@ -47,6 +47,7 @@ dependencies:
   responsive_sizer: ^3.3.0+1
   uuid: ^3.0.7
   app_settings: ^5.1.1
+  permission_handler: ^11.3.0
 
 dev_dependencies:
   flutter_test:

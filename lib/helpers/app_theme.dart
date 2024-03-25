@@ -49,6 +49,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
 //functionally used on screen
   static const givt4KidsBlue = Color(0xFF54A1EE);
   static const offWhite = Color(0xFFEEEDE4);
+  static const disabledCameraGrey = Color(0xFFD8D8D8);
   static const backButtonColor = Color(0xFFBFDBFC);
   static const successBackgroundLightBlue = Color(0xFFB9D7FF);
   static const defaultTextColor = AppTheme.primary20;

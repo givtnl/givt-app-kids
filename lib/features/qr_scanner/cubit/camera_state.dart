@@ -1,39 +1,49 @@
 part of 'camera_cubit.dart';
 
-abstract class CameraState extends Equatable {
+enum CameraStatus {
+  initial,
+  requestPermission,
+  permissionPermanentlyDeclined,
+  permissionGranted,
+  scanned,
+  error
+}
+
+class CameraState extends Equatable {
   const CameraState({
     required this.isLoading,
     required this.qrValue,
     required this.feedback,
+    required this.status,
   });
   final bool isLoading;
   final String qrValue;
   final String feedback;
+  final CameraStatus status;
 
   @override
-  List<Object> get props => [isLoading, qrValue, feedback];
-}
+  List<Object> get props => [isLoading, qrValue, feedback, status];
 
-class CameraInitial extends CameraState {
-  const CameraInitial({
-    super.isLoading = false,
-    super.qrValue = '',
-    super.feedback = 'No QR code scanned yet.',
-  });
-}
+  CameraState copyWith({
+    bool? isLoading,
+    String? qrValue,
+    String? feedback,
+    CameraStatus? status,
+  }) {
+    return CameraState(
+      isLoading: isLoading ?? this.isLoading,
+      qrValue: qrValue ?? this.qrValue,
+      feedback: feedback ?? this.feedback,
+      status: status ?? this.status,
+    );
+  }
 
-class CameraScanned extends CameraState {
-  const CameraScanned({
-    required super.qrValue,
-    super.isLoading = false,
-    super.feedback = 'QR code scanned successfully!\nLoading data...',
-  });
-}
-
-class CameraError extends CameraState {
-  const CameraError({
-    required super.feedback,
-    super.isLoading = false,
-    super.qrValue = '',
-  });
+  static CameraState empty() {
+    return const CameraState(
+      isLoading: false,
+      qrValue: '',
+      feedback: 'No QR code scanned yet.',
+      status: CameraStatus.initial,
+    );
+  }
 }

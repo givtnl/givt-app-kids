@@ -112,7 +112,7 @@ class AppRouter {
           path: Pages.camera.path,
           name: Pages.camera.name,
           builder: (context, state) => BlocProvider(
-            create: (context) => CameraCubit(),
+            create: (context) => CameraCubit()..checkPermission(),
             child: const CameraScreen(),
           ),
         ),
