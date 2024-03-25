@@ -45,8 +45,7 @@ class OrganisationsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 16),
                   sliver: SliverAppBar(
                     elevation: 4,
-                    pinned: true,
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: Colors.white,
                     forceMaterialTransparency: true,
                     automaticallyImplyLeading: false,
                     toolbarHeight: 80,
