@@ -38,20 +38,20 @@ class _CameraScreenState extends State<CameraScreen> {
     return BlocConsumer<CameraCubit, CameraState>(
       listener: (context, state) {
         log('camera state changed to $state');
-        if (state is CameraScanned) {
+        if (state.status == CameraStatus.scanned) {
           log("QR code scanned: ${state.qrValue} \n Getting organisation details");
           context
               .read<OrganisationDetailsCubit>()
               .getOrganisationDetails(state.qrValue);
         }
-        if (state is CameraPermissionPermanentlyDeclined) {
+        if (state.status == CameraStatus.permissionPermanentlyDeclined) {
           showDialog(
               context: context,
               builder: (_) {
                 return _buildPermissionDialog(isSettings: true);
               });
         }
-        if (state is CameraPermissionRequest) {
+        if (state.status == CameraStatus.requestPermission) {
           showDialog(
               context: context,
               builder: (_) {
@@ -80,11 +80,12 @@ class _CameraScreenState extends State<CameraScreen> {
                   : state.feedback,
               child: Stack(
                 children: [
-                  state is CameraPermissionGranted || state is CameraScanned
+                  state.status == CameraStatus.permissionGranted ||
+                          state.status == CameraStatus.scanned
                       ? _buildMobileScanner(context.read<CameraCubit>())
                       : _buildDisabledCameraBox(),
                   Positioned.fill(
-                    child: state is CameraScanned
+                    child: state.status == CameraStatus.scanned
                         ? _builCenterLoader()
                         : _buildQRCodeTarget(size),
                   ),
@@ -162,7 +163,7 @@ class _CameraScreenState extends State<CameraScreen> {
     return MobileScanner(
       controller: _cameraController,
       onDetect: (barcode) async {
-        if (cameraCubit.state is CameraScanned) return;
+        if (cameraCubit.state.status == CameraStatus.scanned) return;
         await cameraCubit.scanQrCode(barcode);
       },
     );
