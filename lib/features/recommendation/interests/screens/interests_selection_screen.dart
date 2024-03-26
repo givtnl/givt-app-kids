@@ -34,13 +34,12 @@ class InterestsSelectionScreen extends StatelessWidget {
                     surfaceTintColor: AppTheme.primary90,
                     automaticallyImplyLeading: false,
                     title: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Select your top 3 choices',
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
-                        const SizedBox(width: 8),
                         InterestsTally(
                           tally: state.selectedInterests.length,
                         ),
