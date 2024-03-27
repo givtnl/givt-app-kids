@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,6 +10,7 @@ import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DesignAlignmentScreen extends StatefulWidget {
   const DesignAlignmentScreen({super.key});
@@ -86,7 +89,15 @@ class _DesignAlignmentScreenState extends State<DesignAlignmentScreen> {
               ),
               const SizedBox(height: 24),
               GivtElevatedButton(
-                onTap: () {},
+                onTap: () async {
+                  log('design button tapped');
+
+                  final Uri _url = Uri.parse(
+                      'givt://?mediumid=61f7ed014e4c0321c003.c00000000001');
+                  if (!await launchUrl(_url)) {
+                    throw Exception('Could not launch $_url');
+                  }
+                },
                 text: 'Back to Home',
                 leftIcon: FontAwesomeIcons.house,
               ),
