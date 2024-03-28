@@ -74,10 +74,9 @@ class _ActionTileState extends State<ActionTile> {
                         ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
                   child: Column(
                     children: [
-                      const SizedBox(height: 4),
                       widget.titleBig.isNotEmpty
                           ? Text(
                               widget.titleBig,
@@ -117,7 +116,6 @@ class _ActionTileState extends State<ActionTile> {
                                       color: widget.textColor.withAlpha(200)),
                             )
                           : const SizedBox(),
-                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
