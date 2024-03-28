@@ -26,7 +26,7 @@ class GivtCloseButton extends StatelessWidget {
         color: isDisabled ? AppTheme.disabledTileBorder : Colors.white,
         child: Icon(
           FontAwesomeIcons.xmark,
-          size: 24,
+          size: 20,
           color: Theme.of(context)
               .colorScheme
               .onPrimaryContainer

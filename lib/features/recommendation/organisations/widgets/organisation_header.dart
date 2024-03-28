@@ -27,7 +27,7 @@ class OrganisationHeader extends StatelessWidget {
                     (tag) => Container(
                       margin: const EdgeInsets.symmetric(vertical: 3),
                       decoration: BoxDecoration(
-                        color: tag.area.backgroundColor,
+                        color: tag.area.accentColor,
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(25),
                           bottomRight: Radius.circular(25),
@@ -40,11 +40,11 @@ class OrganisationHeader extends StatelessWidget {
                         ),
                         child: Text(
                           tag.displayText,
-                          style: TextStyle(
-                            color: tag.area.textColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.labelSmall?.copyWith(
+                                    color: tag.area.textColor,
+                                    fontSize: 13,
+                                  ),
                         ),
                       ),
                     ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/shared/widgets/givt_close_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -33,15 +33,11 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
           appBar: AppBar(
             forceMaterialTransparency: true,
             automaticallyImplyLeading: false,
-            actions: [
-              IconButton(
-                onPressed: () => context.pop(),
-                padding: const EdgeInsets.only(right: 16),
-                icon: SvgPicture.asset(
-                  'assets/images/close_icon.svg',
-                  alignment: Alignment.centerRight,
-                ),
-              )
+            actions: const [
+              Padding(
+                padding: EdgeInsets.only(right: 12, top: 8),
+                child: GivtCloseButton(),
+              ),
             ],
           ),
           body: Scrollable(
@@ -68,26 +64,17 @@ class OrganisationDetailBottomSheet extends StatelessWidget {
                       Text(
                         organisation.name,
                         textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 12),
                       Text(organisation.shortDescription,
                           textAlign: TextAlign.start,
                           style: Theme.of(context).textTheme.labelSmall),
                       const SizedBox(height: 12),
-                      Text(
-                        organisation.longDescription,
-                        textAlign: TextAlign.start,
-                      ),
+                      Text(organisation.longDescription,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.bodySmall),
                       const SizedBox(height: 12),
-                      Text(
-                        "Even \$1 helps!",
-                        textAlign: TextAlign.start,
-                        style:
-                            Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  color: AppTheme.givt4KidsBlue,
-                                ),
-                      ),
                     ],
                   ),
                 ),

@@ -26,7 +26,7 @@ class CityCard extends StatelessWidget {
       iconPath: 'assets/images/city_arrow.svg',
       onTap: onPressed ?? () {},
       isSelected: isSelected,
-      borderColor: Areas.primary.accentColor,
+      borderColor: Areas.primary.borderColor,
       backgroundColor: Areas.primary.backgroundColor,
       textColor: Areas.primary.textColor,
     );
