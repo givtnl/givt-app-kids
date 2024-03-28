@@ -22,7 +22,7 @@ class InterestCard extends StatelessWidget {
       iconPath: interest.pictureUrl,
       onTap: onPressed,
       isSelected: isSelected,
-      borderColor: interest.area.accentColor,
+      borderColor: interest.area.borderColor,
       backgroundColor: interest.area.backgroundColor,
       textColor: interest.area.textColor,
     );

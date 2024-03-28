@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button_flat.dart';
+import 'package:givt_app_kids/shared/widgets/wallet.dart';
 
 class CharityFinderAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  const CharityFinderAppBar({super.key});
-
+  const CharityFinderAppBar({this.showWallet = false, super.key});
+  final bool showWallet;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -24,6 +25,13 @@ class CharityFinderAppBar extends StatelessWidget
               color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
       ),
+      actions: [
+        if (showWallet)
+          const Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: Wallet(),
+          ),
+      ],
     );
   }
 

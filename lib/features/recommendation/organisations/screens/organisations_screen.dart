@@ -7,8 +7,8 @@ import 'package:givt_app_kids/features/recommendation/organisations/cubit/organi
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_item.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/charity_finder_app_bar.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class OrganisationsScreen extends StatelessWidget {
   const OrganisationsScreen({super.key});
@@ -37,7 +37,7 @@ class OrganisationsScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          appBar: const CharityFinderAppBar(),
+          appBar: const CharityFinderAppBar(showWallet: true),
           body: SafeArea(
             child: CustomScrollView(
               slivers: [
@@ -48,32 +48,30 @@ class OrganisationsScreen extends StatelessWidget {
                     backgroundColor: Colors.white,
                     forceMaterialTransparency: true,
                     automaticallyImplyLeading: false,
-                    toolbarHeight: 80,
-                    title: Text(
-                      state is OrganisationsFetchingState
-                          ? 'Loading...'
-                          : state.organisations.isEmpty
-                              ? 'Oops, something went wrong...'
-                              : 'Which organisation would you\nlike to give to?',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
+                    title: state is OrganisationsFetchingState
+                        ? const SizedBox()
+                        : Text(
+                            state.organisations.isEmpty
+                                ? 'Oops, something went wrong...'
+                                : 'Which organisation would you\nlike to give to?',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
                   ),
                 ),
                 if (state is OrganisationsFetchingState)
                   SliverFillViewport(delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.sizeOf(context).width * .3),
-                      child: LoadingAnimationWidget.waveDots(
-                          color: const Color(0xFF54A1EE), size: 100),
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppTheme.primary70,
+                      ),
                     );
                   })),
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
-                    vertical: 32,
+                    vertical: 12,
                   ),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(

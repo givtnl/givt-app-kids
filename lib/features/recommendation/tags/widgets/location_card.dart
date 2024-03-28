@@ -22,7 +22,7 @@ class LocationCard extends StatelessWidget {
       iconPath: location.pictureUrl,
       onTap: onPressed ?? () {},
       isSelected: isSelected,
-      borderColor: location.area.accentColor,
+      borderColor: location.area.borderColor,
       backgroundColor: location.area.backgroundColor,
       textColor: location.area.textColor,
     );
