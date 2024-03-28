@@ -46,7 +46,7 @@ class LocationSelectionScreen extends StatelessWidget {
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,
-                      vertical: 32,
+                      vertical: 16,
                     ),
                     sliver: isCitySelection
                         ? SliverGrid(

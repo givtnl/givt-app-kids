@@ -56,7 +56,6 @@ class _ActionTileState extends State<ActionTile> {
           Container(
             color: backgroundColor,
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,43 +73,54 @@ class _ActionTileState extends State<ActionTile> {
                           height: 140,
                         ),
                 ),
-                const SizedBox(height: 8),
-                widget.titleBig.isNotEmpty
-                    ? Text(
-                        widget.titleBig,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: widget.isDisabled
-                              ? AppTheme.disabledTileBorder
-                              : widget.textColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
-                      )
-                    : const SizedBox(),
-                widget.titleSmall.isNotEmpty
-                    ? Text(
-                        widget.titleSmall,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: widget.isDisabled
-                                  ? AppTheme.disabledTileBorder
-                                  : widget.textColor,
-                            ),
-                      )
-                    : const SizedBox(),
-                widget.subtitle.isNotEmpty
-                    ? Text(
-                        widget.subtitle,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelSmall
-                            ?.copyWith(color: widget.textColor.withAlpha(200)),
-                      )
-                    : const SizedBox(),
-                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      widget.titleBig.isNotEmpty
+                          ? Text(
+                              widget.titleBig,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: widget.isDisabled
+                                    ? AppTheme.disabledTileBorder
+                                    : widget.textColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ),
+                            )
+                          : const SizedBox(),
+                      widget.titleSmall.isNotEmpty
+                          ? Text(
+                              widget.titleSmall,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.copyWith(
+                                    color: widget.isDisabled
+                                        ? AppTheme.disabledTileBorder
+                                        : widget.textColor,
+                                  ),
+                            )
+                          : const SizedBox(),
+                      widget.subtitle.isNotEmpty
+                          ? Text(
+                              widget.subtitle,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.copyWith(
+                                      color: widget.textColor.withAlpha(200)),
+                            )
+                          : const SizedBox(),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
