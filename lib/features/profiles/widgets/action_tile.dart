@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/shared/widgets/action_container.dart';
 
 class ActionTile extends StatefulWidget {
   const ActionTile({
     super.key,
-    required this.isDisabled,
-    required this.text,
-    required this.iconPath,
+    required this.onTap,
     required this.borderColor,
     required this.backgroundColor,
     required this.textColor,
-    required this.onTap,
-    this.fontSize = 22,
-    this.imageSize = 140,
+    required this.iconPath,
+    required this.isDisabled,
+    this.isSelected = false,
+    this.titleBig = '',
+    this.titleSmall = '',
     this.subtitle = '',
   });
-  final String text;
-  final String iconPath;
   final VoidCallback onTap;
-  final bool isDisabled;
   final Color borderColor;
   final Color backgroundColor;
   final Color textColor;
-  final double fontSize;
-  final double imageSize;
+  final String iconPath;
+  final bool isDisabled;
+  final bool isSelected;
+  final String titleBig;
+  final String titleSmall;
   final String subtitle;
 
   @override
@@ -33,120 +33,108 @@ class ActionTile extends StatefulWidget {
 }
 
 class _ActionTileState extends State<ActionTile> {
-  double bottomBorderWidth = 6;
-  double widgetHeight = 218;
-  double extraHeight = 0;
-  Color? backgroundColor;
-  Color? borderColor;
+  late Color backgroundColor;
+  late Color borderColor;
 
   @override
   Widget build(BuildContext context) {
     backgroundColor = widget.backgroundColor;
     borderColor = widget.borderColor;
-    extraHeight = widget.subtitle.isNotEmpty ? 34 : 0;
+    final bool isOnlineIcon = widget.iconPath.contains('http');
+
     if (widget.isDisabled) {
       backgroundColor = AppTheme.disabledTileBackground;
       borderColor = AppTheme.disabledTileBorder;
     }
-    return Expanded(
-      child: GestureDetector(
-        onTap: widget.isDisabled
-            ? null
-            : () async {
-                await Future.delayed(const Duration(milliseconds: 30));
-                widget.onTap();
-              },
-        onTapDown: widget.isDisabled
-            ? null
-            : (details) {
-                SystemSound.play(SystemSoundType.click);
-                setState(() {
-                  bottomBorderWidth = 2;
-                  widgetHeight = 214;
-                });
-              },
-        onTapCancel: widget.isDisabled
-            ? null
-            : () async {
-                await Future.delayed(const Duration(milliseconds: 30));
-                HapticFeedback.lightImpact();
-                setState(() {
-                  bottomBorderWidth = 6;
-                  widgetHeight = 218;
-                });
-              },
-        onTapUp: widget.isDisabled
-            ? null
-            : (details) async {
-                await Future.delayed(const Duration(milliseconds: 30));
-                HapticFeedback.lightImpact();
-                setState(() {
-                  bottomBorderWidth = 6;
-                  widgetHeight = 218;
-                });
-              },
-        child: Container(
-          decoration: BoxDecoration(
-            color: borderColor!,
-            border: Border(
-              bottom: BorderSide(
-                  color: borderColor!,
-                  width: widget.isDisabled ? 2 : bottomBorderWidth),
-              right: BorderSide(color: borderColor!, width: 2),
-              left: BorderSide(color: borderColor!, width: 2),
-              top: BorderSide(color: borderColor!, width: 2),
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
+    return ActionContainer(
+      isDisabled: widget.isDisabled,
+      isSelected: widget.isSelected,
+      borderColor: borderColor,
+      onTap: widget.isDisabled ? () {} : () => widget.onTap(),
+      child: Stack(
+        children: [
+          Container(
+            color: backgroundColor,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 16),
+                Opacity(
+                  opacity: widget.isDisabled ? 0.5 : 1,
+                  child: isOnlineIcon
+                      ? SvgPicture.network(
+                          widget.iconPath,
+                          height: 140,
+                        )
+                      : SvgPicture.asset(
+                          widget.iconPath,
+                          height: 140,
+                        ),
+                ),
+                const SizedBox(height: 8),
+                widget.titleBig.isNotEmpty
+                    ? Text(
+                        widget.titleBig,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: widget.isDisabled
+                              ? AppTheme.disabledTileBorder
+                              : widget.textColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
+                      )
+                    : const SizedBox(),
+                widget.titleSmall.isNotEmpty
+                    ? Text(
+                        widget.titleSmall,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: widget.isDisabled
+                                  ? AppTheme.disabledTileBorder
+                                  : widget.textColor,
+                            ),
+                      )
+                    : const SizedBox(),
+                widget.subtitle.isNotEmpty
+                    ? Text(
+                        widget.subtitle,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelSmall
+                            ?.copyWith(color: widget.textColor.withAlpha(200)),
+                      )
+                    : const SizedBox(),
+                const SizedBox(height: 16),
+              ],
             ),
           ),
-          height: widgetHeight + extraHeight,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Container(
-              color: backgroundColor,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 16),
-                  Opacity(
-                    opacity: widget.isDisabled ? 0.5 : 1,
-                    child: SvgPicture.asset(
-                      widget.iconPath,
-                      height: 140,
-                    ),
+          if (widget.isSelected)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(
+                  color: AppTheme.primary70,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(8),
+                    bottomLeft: Radius.circular(4),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: widget.isDisabled
-                          ? AppTheme.disabledTileBorder
-                          : widget.textColor,
-                      fontSize: widget.fontSize,
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                    ),
-                  ),
-                  widget.subtitle.isNotEmpty
-                      ? Text(
-                          widget.subtitle,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(
-                                  color: widget.textColor.withAlpha(200)),
-                        )
-                      : const SizedBox(),
-                  const SizedBox(height: 16),
-                ],
+                ),
+                child: Icon(
+                  Icons.check,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  size: 20,
+                ),
               ),
             ),
-          ),
-        ),
+        ],
       ),
     );
   }

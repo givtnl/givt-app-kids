@@ -92,8 +92,10 @@ class LocationSelectionScreen extends StatelessWidget {
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              crossAxisSpacing: 20.0,
-                              mainAxisSpacing: 20.0,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              // ratio based on figma w/h
+                              childAspectRatio: 150 / 220,
                             ),
                           ),
                   )

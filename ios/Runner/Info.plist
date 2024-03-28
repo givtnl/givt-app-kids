@@ -90,7 +90,7 @@
     <key>CFBundleURLSchemes</key>
     <array>
 	<string>https</string>
-    <string>appscheme</string>
+    <string>givtkids</string>
     </array>
     </dict>
 </array>

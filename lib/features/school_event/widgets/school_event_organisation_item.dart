@@ -29,8 +29,8 @@ class SchoolEventOrganisationItem extends StatelessWidget {
     precacheImage(image.image, context);
 
     return ActionContainer(
-      marging: const EdgeInsets.symmetric(vertical: 8),
-      borderColor: AppTheme.primary80,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      borderColor: Theme.of(context).colorScheme.primaryContainer,
       onTap: () {
         String generatedMediumId =
             base64.encode(organisation.namespace.codeUnits);

@@ -2,8 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
@@ -147,61 +149,65 @@ class _WalletScreenState extends State<WalletScreen>
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ActionTile(
-                              isDisabled: !isGiveButtonActive,
-                              text: "Give",
-                              iconPath: 'assets/images/give_tile.svg',
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.onSecondary,
-                              borderColor: Theme.of(context)
-                                  .colorScheme
-                                  .onInverseSurface,
-                              textColor:
-                                  Theme.of(context).colorScheme.secondary,
-                              onTap: () {
-                                AnalyticsHelper.logEvent(
-                                    eventName:
-                                        AmplitudeEvent.iWantToGivePressed,
-                                    eventProperties: {
-                                      AnalyticsHelper.walletAmountKey:
-                                          state.activeProfile.wallet.balance,
-                                    });
-                                showModalBottomSheet<void>(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                  builder: (context) => GiveBottomSheet(
-                                    familyGoal: goalCubit.state.currentGoal,
-                                    isiPad: isiPad,
-                                  ),
-                                );
-                              },
+                            Expanded(
+                              child: ActionTile(
+                                isDisabled: !isGiveButtonActive,
+                                titleBig: "Give",
+                                iconPath: 'assets/images/give_tile.svg',
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.onSecondary,
+                                borderColor: Theme.of(context)
+                                    .colorScheme
+                                    .onInverseSurface,
+                                textColor:
+                                    Theme.of(context).colorScheme.secondary,
+                                onTap: () {
+                                  AnalyticsHelper.logEvent(
+                                      eventName:
+                                          AmplitudeEvent.iWantToGivePressed,
+                                      eventProperties: {
+                                        AnalyticsHelper.walletAmountKey:
+                                            state.activeProfile.wallet.balance,
+                                      });
+                                  showModalBottomSheet<void>(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    backgroundColor: Colors.white,
+                                    builder: (context) => GiveBottomSheet(
+                                      familyGoal: goalCubit.state.currentGoal,
+                                      isiPad: isiPad,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                             const SizedBox(width: 16),
-                            ActionTile(
-                              isDisabled: authState.isSchoolEvenMode,
-                              text: "Find Charity",
-                              iconPath: 'assets/images/find_tile.svg',
-                              backgroundColor: AppTheme.primary98,
-                              borderColor: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              textColor: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                              onTap: () {
-                                context
-                                    .read<FlowsCubit>()
-                                    .startRecommendationFlow();
-                                context
-                                    .pushNamed(Pages.recommendationStart.name);
-                                AnalyticsHelper.logEvent(
-                                    eventName: AmplitudeEvent
-                                        .helpMeFindCharityPressed);
-                              },
+                            Expanded(
+                              child: ActionTile(
+                                isDisabled: authState.isSchoolEvenMode,
+                                titleBig: "Find Charity",
+                                iconPath: 'assets/images/find_tile.svg',
+                                backgroundColor: AppTheme.primary98,
+                                borderColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                textColor: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer,
+                                onTap: () {
+                                  context
+                                      .read<FlowsCubit>()
+                                      .startRecommendationFlow();
+                                  context.pushNamed(
+                                      Pages.recommendationStart.name);
+                                  AnalyticsHelper.logEvent(
+                                      eventName: AmplitudeEvent
+                                          .helpMeFindCharityPressed);
+                                },
+                              ),
                             ),
                           ],
                         ),
