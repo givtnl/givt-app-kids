@@ -25,11 +25,12 @@ class CharityFinderAppBar extends StatelessWidget
               color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
       ),
-      actions: const [
-        Padding(
-          padding: EdgeInsets.only(right: 16),
-          child: Wallet(),
-        ),
+      actions: [
+        if (showWallet)
+          const Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: Wallet(),
+          ),
       ],
     );
   }
