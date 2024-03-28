@@ -16,19 +16,15 @@ class LocationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ActionTile(
-          isDisabled: false,
-          titleSmall: location.displayText,
-          iconPath: location.pictureUrl,
-          onTap: onPressed ?? () {},
-          isSelected: isSelected,
-          borderColor: location.area.accentColor,
-          backgroundColor: location.area.backgroundColor,
-          textColor: location.area.textColor,
-        ),
-      ],
+    return ActionTile(
+      isDisabled: false,
+      titleSmall: location.displayText,
+      iconPath: location.pictureUrl,
+      onTap: onPressed ?? () {},
+      isSelected: isSelected,
+      borderColor: location.area.accentColor,
+      backgroundColor: location.area.backgroundColor,
+      textColor: location.area.textColor,
     );
   }
 }

@@ -16,19 +16,15 @@ class InterestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ActionTile(
-          isDisabled: false,
-          titleSmall: interest.displayText,
-          iconPath: interest.pictureUrl,
-          onTap: onPressed,
-          isSelected: isSelected,
-          borderColor: interest.area.accentColor,
-          backgroundColor: interest.area.backgroundColor,
-          textColor: interest.area.textColor,
-        ),
-      ],
+    return ActionTile(
+      isDisabled: false,
+      titleSmall: interest.displayText,
+      iconPath: interest.pictureUrl,
+      onTap: onPressed,
+      isSelected: isSelected,
+      borderColor: interest.area.accentColor,
+      backgroundColor: interest.area.backgroundColor,
+      textColor: interest.area.textColor,
     );
   }
 }

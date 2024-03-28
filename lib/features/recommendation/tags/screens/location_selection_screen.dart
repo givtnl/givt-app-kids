@@ -71,7 +71,7 @@ class LocationSelectionScreen extends StatelessWidget {
                               crossAxisSpacing: 16,
                               mainAxisSpacing: 16,
                               // ratio based on figma w/h
-                              childAspectRatio: 150 / 220,
+                              childAspectRatio: 150 / 200,
                             ),
                           )
                         : SliverGrid(
@@ -97,7 +97,7 @@ class LocationSelectionScreen extends StatelessWidget {
                               crossAxisSpacing: 16,
                               mainAxisSpacing: 16,
                               // ratio based on figma w/h
-                              childAspectRatio: 150 / 220,
+                              childAspectRatio: 150 / 200,
                             ),
                           ),
                   )

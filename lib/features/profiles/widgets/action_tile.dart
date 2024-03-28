@@ -60,7 +60,7 @@ class _ActionTileState extends State<ActionTile> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 16),
+                const SizedBox(height: 10),
                 Opacity(
                   opacity: widget.isDisabled ? 0.5 : 1,
                   child: isOnlineIcon
@@ -77,7 +77,7 @@ class _ActionTileState extends State<ActionTile> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 4),
                       widget.titleBig.isNotEmpty
                           ? Text(
                               widget.titleBig,
@@ -117,7 +117,7 @@ class _ActionTileState extends State<ActionTile> {
                                       color: widget.textColor.withAlpha(200)),
                             )
                           : const SizedBox(),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),

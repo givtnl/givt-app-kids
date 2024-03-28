@@ -19,20 +19,16 @@ class CityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cities = context.read<TagsCubit>().state.hardcodedCities;
-    return Column(
-      children: [
-        ActionTile(
-          isDisabled: false,
-          titleSmall: cities[index]['cityName'].toString(),
-          subtitle: cities[index]['stateName'].toString(),
-          iconPath: 'assets/images/city_arrow.svg',
-          onTap: onPressed ?? () {},
-          isSelected: isSelected,
-          borderColor: Areas.primary.accentColor,
-          backgroundColor: Areas.primary.backgroundColor,
-          textColor: Areas.primary.textColor,
-        ),
-      ],
+    return ActionTile(
+      isDisabled: false,
+      titleSmall: cities[index]['cityName'].toString(),
+      subtitle: cities[index]['stateName'].toString(),
+      iconPath: 'assets/images/city_arrow.svg',
+      onTap: onPressed ?? () {},
+      isSelected: isSelected,
+      borderColor: Areas.primary.accentColor,
+      backgroundColor: Areas.primary.backgroundColor,
+      textColor: Areas.primary.textColor,
     );
   }
 }

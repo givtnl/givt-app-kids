@@ -70,7 +70,7 @@ class InterestsSelectionScreen extends StatelessWidget {
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
                       // ratio based on figma w/h
-                      childAspectRatio: 150 / 198,
+                      childAspectRatio: 155 / 185,
                     ),
                   ),
                 ),
