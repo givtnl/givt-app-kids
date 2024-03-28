@@ -35,11 +35,10 @@ class Tag extends Equatable {
         );
 
   factory Tag.fromMap(Map<String, dynamic> map) {
-    final String displayText = map['displayText'] ?? '';
     return Tag(
       key: map['key'] ?? '',
       area: Areas.fromMap(map),
-      displayText: displayText.replaceAll('#', '\n'),
+      displayText: map['displayText'] ?? '',
       pictureUrl: map['pictureUrl'] ?? '',
       type: TagType.values.firstWhere(
         (element) => element.name == map['type'],

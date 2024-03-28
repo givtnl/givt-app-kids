@@ -221,7 +221,6 @@ class APIService {
       );
     } else {
       var decodedBody = json.decode(response.body);
-      log(response.body.toString());
       var itemsList = decodedBody['items'];
       return itemsList;
     }
