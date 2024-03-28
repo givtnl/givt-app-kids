@@ -46,7 +46,7 @@ class LocationSelectionScreen extends StatelessWidget {
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,
-                      vertical: 32,
+                      vertical: 16,
                     ),
                     sliver: isCitySelection
                         ? SliverGrid(
@@ -68,8 +68,10 @@ class LocationSelectionScreen extends StatelessWidget {
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              crossAxisSpacing: 20.0,
-                              mainAxisSpacing: 20.0,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              // ratio based on figma w/h
+                              childAspectRatio: 150 / 200,
                             ),
                           )
                         : SliverGrid(
@@ -92,8 +94,10 @@ class LocationSelectionScreen extends StatelessWidget {
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              crossAxisSpacing: 20.0,
-                              mainAxisSpacing: 20.0,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              // ratio based on figma w/h
+                              childAspectRatio: 150 / 200,
                             ),
                           ),
                   )

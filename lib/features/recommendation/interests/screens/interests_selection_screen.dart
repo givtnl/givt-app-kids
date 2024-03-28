@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/interests/widgets/interest_card.dart';
 import 'package:givt_app_kids/features/recommendation/interests/widgets/interests_tally.dart';
 import 'package:givt_app_kids/features/recommendation/widgets/charity_finder_app_bar.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
-import 'package:givt_app_kids/helpers/svg_manager.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 
 import 'package:go_router/go_router.dart';
@@ -19,8 +17,6 @@ class InterestsSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<InterestsCubit, InterestsState>(
       builder: (context, state) {
-        final svgManager = getIt<SvgAssetLoaderManager>();
-
         return Scaffold(
           appBar: const CharityFinderAppBar(),
           body: SafeArea(
@@ -50,15 +46,13 @@ class InterestsSelectionScreen extends StatelessWidget {
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
-                    vertical: 32,
+                    vertical: 16,
                   ),
                   sliver: SliverGrid(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         return InterestCard(
                           interest: state.interests[index],
-                          picture: svgManager.buildSvgPicture(
-                              state.interests[index].pictureUrl),
                           isSelected: state.selectedInterests
                               .contains(state.interests[index]),
                           onPressed: () {
@@ -73,8 +67,10 @@ class InterestsSelectionScreen extends StatelessWidget {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 20.0,
-                      mainAxisSpacing: 20.0,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      // ratio based on figma w/h
+                      childAspectRatio: 155 / 185,
                     ),
                   ),
                 ),

@@ -15,7 +15,7 @@ class GivtCloseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionContainer(
-      borderColor: AppTheme.primary80,
+      borderColor: Theme.of(context).colorScheme.primaryContainer,
       baseBorderSize: 4,
       base: ActionContainerBase.bottom,
       isDisabled: isDisabled,

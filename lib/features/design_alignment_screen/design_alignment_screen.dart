@@ -60,9 +60,8 @@ class _DesignAlignmentScreenState extends State<DesignAlignmentScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ActionTile(
-                        fontSize: 20,
                         isDisabled: false,
-                        text: "Coin",
+                        titleBig: "Coin",
                         iconPath: 'assets/images/give_with_coin.svg',
                         backgroundColor: AppTheme.highlight98,
                         borderColor: AppTheme.highlight80,
@@ -70,9 +69,8 @@ class _DesignAlignmentScreenState extends State<DesignAlignmentScreen> {
                         onTap: () {}),
                     const SizedBox(width: 16),
                     ActionTile(
-                      fontSize: 20,
                       isDisabled: false,
-                      text: "Find Charity",
+                      titleBig: "Find Charity",
                       iconPath: 'assets/images/find_tile.svg',
                       backgroundColor: Theme.of(context).colorScheme.onPrimary,
                       borderColor:
@@ -86,7 +84,15 @@ class _DesignAlignmentScreenState extends State<DesignAlignmentScreen> {
               ),
               const SizedBox(height: 24),
               GivtElevatedButton(
-                onTap: () {},
+                onTap: () {
+                  // log('design button tapped');
+
+                  // final Uri url = Uri.parse(
+                  //     'givt://?mediumid=61f7ed014e4c0321c003.c00000000001&from=givtkids:///wallet');
+                  // if (!await launchUrl(url)) {
+                  //   throw Exception('Could not launch $url');
+                  // }
+                },
                 text: 'Back to Home',
                 leftIcon: FontAwesomeIcons.house,
               ),
