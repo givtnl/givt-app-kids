@@ -5,7 +5,6 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/models/organisation.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/widgets/organisation_header.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/givt_close_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';

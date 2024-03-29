@@ -34,10 +34,8 @@ class OrganisationHeader extends StatelessWidget {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 4,
-                          horizontal: 20,
-                        ),
+                        padding: const EdgeInsets.only(
+                            top: 4, bottom: 4, left: 16, right: 8),
                         child: Text(
                           tag.displayText,
                           style:
