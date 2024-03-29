@@ -28,9 +28,9 @@ class TagsCubit extends Cubit<TagsState> {
     ));
   }
 
-  void selectCity(int index) {
+  void selectCity(Map<String, String> city) {
     final previousCity = (state as TagsStateFetched).selectedCity;
-    final currentTapCity = state.hardcodedCities[index]['cityName'].toString();
+    final currentTapCity = city['cityName'].toString();
 
     if (previousCity != currentTapCity) {
       AnalyticsHelper.logEvent(
