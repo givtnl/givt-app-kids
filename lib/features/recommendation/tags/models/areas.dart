@@ -1,18 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 
 enum Areas {
-  environment(color: Color(0xFF00845A)),
-  health(color: Color(0xFF7AAA35)),
-  education(color: Color(0xFF54A1EE)),
-  basic(color: Color(0xFFFAB63E)),
-  disaster(color: Color(0xFFF99370)),
-  location(color: Color(0xFF285C92)),
+  environment(
+    borderColor: AppTheme.primary70,
+    backgroundColor: AppTheme.primary98,
+    accentColor: AppTheme.primary95,
+    textColor: AppTheme.primary40,
+  ),
+  education(
+    borderColor: AppTheme.secondary80,
+    backgroundColor: AppTheme.secondary98,
+    accentColor: AppTheme.secondary95,
+    textColor: AppTheme.secondary40,
+  ),
+  basic(
+    borderColor: AppTheme.highlight80,
+    backgroundColor: AppTheme.highlight98,
+    accentColor: AppTheme.highlight95,
+    textColor: AppTheme.highlight40,
+  ),
+  health(
+    borderColor: AppTheme.tertiary80,
+    backgroundColor: AppTheme.tertiary98,
+    accentColor: AppTheme.tertiary95,
+    textColor: AppTheme.tertiary40,
+  ),
+  location(
+    borderColor: AppTheme.tertiary80,
+    backgroundColor: AppTheme.tertiary98,
+    accentColor: AppTheme.tertiary95,
+    textColor: AppTheme.tertiary40,
+  ),
+  disaster(
+    borderColor: AppTheme.highlight80,
+    backgroundColor: AppTheme.highlight98,
+    accentColor: AppTheme.highlight95,
+    textColor: AppTheme.highlight40,
+  ),
+  primary(
+    borderColor: AppTheme.primary70,
+    backgroundColor: AppTheme.primary98,
+    accentColor: AppTheme.primary95,
+    textColor: AppTheme.primary40,
+  ),
+  secondary(
+    borderColor: AppTheme.secondary80,
+    backgroundColor: AppTheme.secondary98,
+    accentColor: AppTheme.secondary95,
+    textColor: AppTheme.secondary40,
+  ),
+  highlight(
+    borderColor: AppTheme.highlight80,
+    backgroundColor: AppTheme.highlight98,
+    accentColor: AppTheme.highlight95,
+    textColor: AppTheme.highlight40,
+  ),
+  tertiary(
+    borderColor: AppTheme.tertiary80,
+    backgroundColor: AppTheme.tertiary98,
+    accentColor: AppTheme.tertiary95,
+    textColor: AppTheme.tertiary40,
+  ),
   ;
 
-  final Color color;
+  final Color backgroundColor;
+  final Color textColor;
+  final Color accentColor;
+  final Color borderColor;
 
   const Areas({
-    required this.color,
+    required this.backgroundColor,
+    required this.textColor,
+    required this.accentColor,
+    required this.borderColor,
   });
 
   factory Areas.fromMap(Map<String, dynamic> map) {

@@ -15,16 +15,38 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color secondaryColor;
   final Color tertiaryColor;
 
-//Colors of the tiles of wallet screen
-  static const highlight98 = Color(0xFFFFF9EB);
-  static const highlight80 = Color(0xFFDCC74D);
+// extra colors within pallette
+  static const primary20 = Color(0xFF003920);
+  static const primary40 = Color(0xFF006D42);
+  static const primary60 = Color(0xFF15A569);
+  static const primary70 = Color(0xFF40C181);
+  static const primary95 = Color(0xFFC0FFD6);
+  static const primary90 = Color(0xFF6BFCAB);
+  static const primary98 = Color(0xFFE9FFED);
+
+  static const secondary30 = Color(0xFF004F50);
+  static const secondary40 = Color(0xFF00696A);
+  static const secondary80 = Color(0xFF4CDADB);
+  static const secondary95 = Color(0xFFAEFFFF);
+  static const secondary98 = Color(0xFFE2FFFE);
+
+  static const tertiary40 = Color(0xFF744AA5);
+  static const tertiary80 = Color(0xFFDAB9FF);
+  static const tertiary95 = Color(0xFFEEDBFF);
+  static const tertiary98 = Color(0xFFFFF7FF);
+
+  static const info40 = Color(0xFF914C00);
+  static const info20 = Color(0xFF4E2600);
+
+  static const highlight30 = Color(0xFF514700);
   static const highlight40 = Color(0xFF6C5E00);
+  static const highlight80 = Color(0xFFDCC74D);
+  static const highlight90 = Color(0xFFFAE366);
+  static const highlight95 = Color(0xFFFFF1B2);
+  static const highlight98 = Color(0xFFFFF9EB);
+
   static const disabledTileBackground = Color(0xFFF5F4F5);
   static const disabledTileBorder = Color(0xFFC8C6C9);
-
-//reward banner colors
-  static const highlight30 = Color(0xFF514700);
-  static const highlight95 = Color(0xFFFFF1B2);
 
 //colors of tiles in the give bottomsheet
   static const lightPurple = Color(0xFFF9F6FD);
@@ -37,18 +59,16 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const recommendationItemText = Color(0xFF405A66);
   static const interestsTallyText = Color(0xFFFBFCFF);
   static const interestCardRadio = Color(0xFF7AAA35);
-  static const primary60 = Color(0xFF15A569);
 
   // gradient bar colors
-  static const highlight90 = Color(0xFFFAE366);
   static const progressGradient1 = Color(0xFFC6D96D);
   static const progressGradient2 = Color(0xFF9DD273);
   static const progressGradient3 = Color(0xFF74CA79);
-  static const primary70 = Color(0xFF40C181);
 
 //functionally used on screen
   static const givt4KidsBlue = Color(0xFF54A1EE);
   static const offWhite = Color(0xFFEEEDE4);
+  static const disabledCameraGrey = Color(0xFFD8D8D8);
   static const backButtonColor = Color(0xFFBFDBFC);
   static const successBackgroundLightBlue = Color(0xFFB9D7FF);
   static const defaultTextColor = AppTheme.primary20;
@@ -56,11 +76,6 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static final historyAllowanceColor =
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
   static const downloadAppBackground = Color.fromARGB(255, 46, 41, 87);
-  static const primary20 = Color(0xFF003920);
-  static const primary80 = Color(0xFF60DD9B);
-  static const primary95 = Color(0xFFC0FFD6);
-  static const primary98 = Color(0xFFE9FFED);
-  static const secondary30 = Color(0xFF004F50);
 
 // FOR TESTING
   static const testingTextStyleLabelMedium = TextStyle(fontSize: 20);
@@ -105,53 +120,46 @@ class AppTheme extends ThemeExtension<AppTheme> {
   ThemeData _base(final ColorScheme colorScheme) {
     const textTheme = TextTheme(
       titleLarge: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 26,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 26,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       titleMedium: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 22,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       titleSmall: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 18,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       headlineMedium: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 30,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 30,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       labelSmall: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0,
+          height: 1.0),
       labelMedium: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 20,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0),
       bodySmall: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 15,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0),
       bodyMedium: TextStyle(
-        color: AppTheme.defaultTextColor,
-        fontSize: 20,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0
-      ),
+          color: AppTheme.defaultTextColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0),
     );
 
     return ThemeData(

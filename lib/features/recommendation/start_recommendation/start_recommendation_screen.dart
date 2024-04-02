@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/helpers/app_theme.dart';
-import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
+import 'package:givt_app_kids/features/recommendation/widgets/charity_finder_app_bar.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,43 +11,44 @@ class StartRecommendationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const GivtBackButton(),
-        backgroundColor: AppTheme.offWhite,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppTheme.offWhite,
-        ),
-      ),
-      backgroundColor: AppTheme.offWhite,
-      body: Column(
-        children: [
-          Text(
-            'Hi there!',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 6),
-          Text(
-            "Let's find charities that you like",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const Spacer(),
-          Center(
-            child: SvgPicture.asset(
-              'assets/images/givy_bubble_grey.svg',
-              alignment: Alignment.centerLeft,
-              width: MediaQuery.sizeOf(context).width * .7,
+      appBar: const CharityFinderAppBar(),
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 44),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: Theme.of(context).textTheme.bodyMedium,
+                children: [
+                  TextSpan(
+                    text: 'Hi there!\n',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const TextSpan(
+                    text: "Let's find charities that you like",
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Spacer(
-            flex: 2,
-          )
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: GivtElevatedButton(
-        isDisabled: false,
-        text: "Start",
-        onTap: () => context.pushReplacementNamed(Pages.locationSelection.name),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: SvgPicture.asset(
+                'assets/images/charity_finder_superhero.svg',
+                alignment: Alignment.centerLeft,
+                width: MediaQuery.sizeOf(context).width * .7,
+              ),
+            ),
+            GivtElevatedButton(
+              isDisabled: false,
+              text: "Start",
+              onTap: () =>
+                  context.pushReplacementNamed(Pages.locationSelection.name),
+            ),
+          ],
+        ),
       ),
     );
   }

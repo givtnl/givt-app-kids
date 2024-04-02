@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/tags/models/tag.dart';
 import 'package:givt_app_kids/features/recommendation/tags/widgets/city_card.dart';
 import 'package:givt_app_kids/features/recommendation/tags/widgets/location_card.dart';
-import 'package:givt_app_kids/features/recommendation/widgets/recommendation_givy_bubble.dart';
+import 'package:givt_app_kids/features/recommendation/widgets/charity_finder_app_bar.dart';
 import 'package:givt_app_kids/helpers/svg_manager.dart';
-import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,116 +22,90 @@ class LocationSelectionScreen extends StatelessWidget {
         final svgManager = getIt<SvgAssetLoaderManager>();
         final isCitySelection = state.status == LocationSelectionStatus.city;
         return Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            toolbarHeight: 0,
-            backgroundColor: Colors.transparent,
-            systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-              statusBarIconBrightness: Brightness.light,
-            ),
-          ),
-          body: Container(
-              width: double.maxFinite,
-              height: double.maxFinite,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/gradient.jpg'),
-                  fit: BoxFit.cover,
+          appBar: const CharityFinderAppBar(),
+          body: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.only(top: 16),
+                  sliver: SliverAppBar(
+                    backgroundColor: Colors.transparent,
+                    forceMaterialTransparency: true,
+                    automaticallyImplyLeading: false,
+                    title: Text(
+                      state is TagsStateFetching
+                          ? 'Give me a moment to think'
+                          : isCitySelection
+                              ? 'Which City?'
+                              : 'Where do you want to help?',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ),
                 ),
-              ),
-              child: SafeArea(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      backgroundColor: Colors.transparent,
-                      automaticallyImplyLeading: false,
-                      leading: GivtBackButton(
-                        onPressedForced: isCitySelection
-                            ? () {
-                                context.read<TagsCubit>().clearCitySelection();
-                                return;
-                              }
-                            : null,
-                      ),
+                if (state is TagsStateFetched)
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 16,
                     ),
-                    SliverPadding(
-                      padding: const EdgeInsets.only(top: 16),
-                      sliver: SliverAppBar(
-                        pinned: true,
-                        backgroundColor: Colors.transparent,
-                        forceMaterialTransparency: true,
-                        automaticallyImplyLeading: false,
-                        toolbarHeight: 80,
-                        title: RecommendationGivyBubble(
-                          text: state is TagsStateFetching
-                              ? 'Give me a moment to think'
-                              : isCitySelection
-                                  ? 'Which City?'
-                                  : 'Where do you want to help?',
-                        ),
-                      ),
-                    ),
-                    if (state is TagsStateFetched)
-                      SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 32,
-                        ),
-                        sliver: isCitySelection
-                            ? SliverGrid(
-                                delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index) {
-                                    var items = state.hardcodedCities;
-                                    return CityCard(
-                                        index: index,
-                                        isSelected: items[index]['cityName'] ==
-                                            state.selectedCity,
-                                        onPressed: () {
-                                          context
-                                              .read<TagsCubit>()
-                                              .selectCity(index);
-                                        });
-                                  },
-                                  childCount: state.hardcodedCities.length,
-                                ),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 20.0,
-                                  mainAxisSpacing: 20.0,
-                                ),
-                              )
-                            : SliverGrid(
-                                delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index) {
-                                    var items =
-                                        state.locations.reversed.toList();
-                                    return LocationCard(
-                                      location: items[index],
-                                      isSelected: items[index] ==
-                                          state.selectedLocation,
+                    sliver: isCitySelection
+                        ? SliverToBoxAdapter(
+                            child: LayoutGrid(
+                              // set some flexible track sizes based on the crossAxisCount
+                              columnSizes: [1.fr, 1.fr],
+                              // set all the row sizes to auto (self-sizing height)
+                              rowSizes: const [auto, auto],
+                              columnGap: 16,
+                              rowGap: 16,
+                              children: state.hardcodedCities
+                                  .map(
+                                    (city) => CityCard(
+                                      cityName: city['cityName']!,
+                                      stateName: city['stateName']!,
+                                      isSelected: city['cityName'] ==
+                                          state.selectedCity,
                                       onPressed: () {
                                         context
                                             .read<TagsCubit>()
-                                            .selectLocation(
-                                                location: items[index]);
+                                            .selectCity(city);
                                       },
-                                    );
-                                  },
-                                  childCount: state.locations.length,
-                                ),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 20.0,
-                                  mainAxisSpacing: 20.0,
-                                ),
-                              ),
-                      )
-                  ],
-                ),
-              )),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          )
+                        : SliverToBoxAdapter(
+                            child: LayoutGrid(
+                              // set some flexible track sizes based on the crossAxisCount
+                              columnSizes: [1.fr, 1.fr],
+                              // set all the row sizes to auto (self-sizing height)
+                              rowSizes: [
+                                for (int i = 0; i < (state.locations.length / 2).ceil(); i++)
+                                  auto
+                              ],
+                              columnGap: 16,
+                              rowGap: 16,
+                              children: state.locations.reversed
+                                  .map(
+                                    (location) => LocationCard(
+                                      location: location,
+                                      isSelected:
+                                          location == state.selectedLocation,
+                                      onPressed: () {
+                                        context
+                                            .read<TagsCubit>()
+                                            .selectLocation(location: location);
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                  ),
+              ],
+            ),
+          ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: state is! TagsStateFetching

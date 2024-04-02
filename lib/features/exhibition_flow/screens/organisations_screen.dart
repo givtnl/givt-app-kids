@@ -12,7 +12,6 @@ import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class OrganisationsScreen extends StatelessWidget {
   const OrganisationsScreen({super.key});
@@ -90,30 +89,30 @@ class OrganisationsScreen extends StatelessWidget {
                         color: Colors.white.withOpacity(0.85),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Text(
-                        state is OrganisationsFetchingState
-                            ? 'Loading...'
-                            : state.organisations.isEmpty
-                                ? 'Oops, something went wrong...'
-                                : 'Which organisation would you\nlike to give to?',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Raleway',
-                              fontSize: 18,
+                      child: state is OrganisationsFetchingState
+                          ? const SizedBox()
+                          : Text(
+                              state.organisations.isEmpty
+                                  ? 'Oops, something went wrong...'
+                                  : 'Which organisation would you\nlike to give to?',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'Raleway',
+                                    fontSize: 18,
+                                  ),
                             ),
-                      ),
                     ),
                   ),
                 ),
                 if (state is OrganisationsFetchingState)
                   SliverFillViewport(delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.sizeOf(context).width * .3),
-                      child: LoadingAnimationWidget.waveDots(
-                          color: AppTheme.givt4KidsBlue, size: 100),
+                    return const CircularProgressIndicator(
+                      color: AppTheme.primary70,
                     );
                   })),
                 SliverPadding(

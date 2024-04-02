@@ -1,13 +1,42 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 part 'camera_state.dart';
 
 class CameraCubit extends Cubit<CameraState> {
-  CameraCubit() : super(const CameraInitial());
+  CameraCubit() : super(CameraState.empty());
+
+  static const Duration _permissionDialogDelay = Duration(milliseconds: 300);
+
+  void checkPermission() async {
+    final status = await Permission.camera.status;
+    //delay is from design
+    Future.delayed(_permissionDialogDelay);
+
+    if (status.isDenied) {
+      emit(state.copyWith(status: CameraStatus.requestPermission));
+      return;
+    }
+
+    if (status.isPermanentlyDenied) {
+      emit(state.copyWith(status: CameraStatus.permissionPermanentlyDeclined));
+      return;
+    }
+    emit(state.copyWith(status: CameraStatus.permissionGranted));
+  }
+
+  void grantAccess() async {
+    emit(state.copyWith(status: CameraStatus.permissionGranted));
+  }
+
   Future<void> scanQrCode(BarcodeCapture barcode) async {
     if (barcode.barcodes.isEmpty) {
-      emit(const CameraInitial());
+      emit(
+        state.copyWith(
+            status: CameraStatus.initial, feedback: 'No QR code scanned yet.'),
+      );
+
       return;
     }
 
@@ -17,11 +46,16 @@ class CameraCubit extends Cubit<CameraState> {
 
       if (barcodeUri.queryParameters['code'] == null) continue;
       final mediumId = barcodeUri.queryParameters['code']!;
-
-      emit(CameraScanned(qrValue: mediumId));
+      emit(
+        state.copyWith(
+            status: CameraStatus.scanned,
+            qrValue: mediumId,
+            feedback: 'QR code scanned successfully!\nLoading data...'),
+      );
       return;
     }
-
-    emit(const CameraError(feedback: 'Invalid QR Code'));
+    emit(
+      state.copyWith(status: CameraStatus.error, feedback: 'Invalid QR Code'),
+    );
   }
 }

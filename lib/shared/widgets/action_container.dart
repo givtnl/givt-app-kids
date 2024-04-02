@@ -6,20 +6,22 @@ class ActionContainer extends StatefulWidget {
   const ActionContainer({
     super.key,
     this.isDisabled = false,
+    this.isSelected = false,
     required this.borderColor,
     required this.onTap,
     required this.child,
     this.base = ActionContainerBase.bottom,
-    this.marging,
+    this.margin,
     this.borderSize = 2,
     this.baseBorderSize = 6,
   });
   final VoidCallback onTap;
   final bool isDisabled;
+  final bool isSelected;
   final Color borderColor;
   final ActionContainerBase base;
   final Widget child;
-  final EdgeInsets? marging;
+  final EdgeInsets? margin;
   final double borderSize;
   final double baseBorderSize;
 
@@ -37,7 +39,7 @@ class _ActionContainerState extends State<ActionContainer> {
   bool _isManualPressed = false;
 
   bool get _isPressed {
-    return _isManualPressed || widget.isDisabled;
+    return _isManualPressed || widget.isDisabled || widget.isSelected;
   }
 
   void _setManualPressed(bool value) {
@@ -107,7 +109,7 @@ class _ActionContainerState extends State<ActionContainer> {
 
   Widget _buildContainer(Widget child) {
     return Container(
-      margin: widget.marging,
+      margin: widget.margin,
       child: Container(
         margin: _getOpositeMarginByBase(widget.base),
         decoration: BoxDecoration(

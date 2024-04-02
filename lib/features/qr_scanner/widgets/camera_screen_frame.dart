@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
-import 'package:givt_app_kids/shared/widgets/heading_2.dart';
-import 'package:givt_app_kids/shared/widgets/heading_3.dart';
+import 'package:flutter/services.dart';
+import 'package:givt_app_kids/shared/widgets/givt_back_button_flat.dart';
 
 class CameraScreenFrame extends StatelessWidget {
   const CameraScreenFrame(
@@ -12,20 +11,34 @@ class CameraScreenFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Heading2(
-          text: "Scan the Givt\nQR code",
-          alignment: TextAlign.center,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Theme.of(context).colorScheme.onPrimary,
+          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+          statusBarBrightness: Brightness.light, // For iOS (dark icons)
         ),
+        title: Text(
+          "Scan the QR code",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         automaticallyImplyLeading: false,
-        leading: const GivtBackButton(),
+        leading: const GivtBackButtonFlat(),
       ),
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
             Expanded(flex: 6, child: child),
-            Expanded(
-              child: Header3(name: feedback),
+            Container(
+              height: 80,
+              color: Theme.of(context).colorScheme.onPrimary,
+              child: Center(
+                child: Text(
+                  feedback,
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
             )
           ],
         ),

@@ -27,24 +27,22 @@ class OrganisationHeader extends StatelessWidget {
                     (tag) => Container(
                       margin: const EdgeInsets.symmetric(vertical: 3),
                       decoration: BoxDecoration(
-                        color: tag.area.color,
+                        color: tag.area.accentColor,
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(25),
                           bottomRight: Radius.circular(25),
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 4,
-                          horizontal: 20,
-                        ),
+                        padding: const EdgeInsets.only(
+                            top: 4, bottom: 4, left: 16, right: 8),
                         child: Text(
                           tag.displayText,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.labelSmall?.copyWith(
+                                    color: tag.area.textColor,
+                                    fontSize: 13,
+                                  ),
                         ),
                       ),
                     ),
