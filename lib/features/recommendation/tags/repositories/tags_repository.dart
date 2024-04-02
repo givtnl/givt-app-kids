@@ -15,12 +15,6 @@ class TagsRepositoryImpl with TagsRepository {
   @override
   Future<List<Tag>> fetchTags() async {
     final response = await _apiService.fetchTags();
-
-    List<Tag> result = [];
-    for (final tagMap in response) {
-      var tag = Tag.fromMap(tagMap);
-      result.add(tag);
-    }
-    return result;
+    return response.map((e) => Tag.fromMap(e)).toList();
   }
 }

@@ -143,7 +143,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
           color: AppTheme.defaultTextColor,
           fontSize: 16,
           fontWeight: FontWeight.w700,
-          letterSpacing: 0),
+          letterSpacing: 0,
+          height: 1.0),
       labelMedium: TextStyle(
           color: AppTheme.defaultTextColor,
           fontSize: 20,
