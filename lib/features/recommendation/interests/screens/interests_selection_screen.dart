@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_cubit.dart';
 import 'package:givt_app_kids/features/recommendation/interests/widgets/interest_card.dart';
@@ -48,30 +49,32 @@ class InterestsSelectionScreen extends StatelessWidget {
                     horizontal: 24,
                     vertical: 16,
                   ),
-                  sliver: SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return InterestCard(
-                          interest: state.interests[index],
-                          isSelected: state.selectedInterests
-                              .contains(state.interests[index]),
-                          onPressed: () {
-                            context
-                                .read<InterestsCubit>()
-                                .selectInterest(state.interests[index]);
-                          },
-                        );
-                      },
-                      childCount: state.interests.length,
-                    ),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      // ratio based on figma w/h
-                      childAspectRatio: 155 / 185,
-                    ),
+                  sliver: SliverToBoxAdapter(
+                    child: LayoutGrid(
+                        // set some flexible track sizes based on the crossAxisCount
+                        columnSizes: [1.fr, 1.fr],
+                        // set all the row sizes to auto (self-sizing height)
+                        rowSizes: [
+                          for (int i = 0;
+                              i < (state.interests.length / 2).ceil();
+                              i++)
+                            auto
+                        ],
+                        columnGap: 16,
+                        rowGap: 16,
+                        children: [
+                          for (int i = 0; i < state.interests.length; i++)
+                            InterestCard(
+                              interest: state.interests[i],
+                              isSelected: state.selectedInterests
+                                  .contains(state.interests[i]),
+                              onPressed: () {
+                                context
+                                    .read<InterestsCubit>()
+                                    .selectInterest(state.interests[i]);
+                              },
+                            ),
+                        ]),
                   ),
                 ),
               ],

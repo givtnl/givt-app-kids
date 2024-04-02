@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/recommendation/tags/cubit/tags_cubit.dart';
@@ -49,58 +50,59 @@ class LocationSelectionScreen extends StatelessWidget {
                       vertical: 16,
                     ),
                     sliver: isCitySelection
-                        ? SliverGrid(
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                var items = state.hardcodedCities;
-                                return CityCard(
-                                    index: index,
-                                    isSelected: items[index]['cityName'] ==
-                                        state.selectedCity,
-                                    onPressed: () {
-                                      context
-                                          .read<TagsCubit>()
-                                          .selectCity(index);
-                                    });
-                              },
-                              childCount: state.hardcodedCities.length,
-                            ),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 16,
-                              mainAxisSpacing: 16,
-                              // ratio based on figma w/h
-                              childAspectRatio: 150 / 200,
+                        ? SliverToBoxAdapter(
+                            child: LayoutGrid(
+                              // set some flexible track sizes based on the crossAxisCount
+                              columnSizes: [1.fr, 1.fr],
+                              // set all the row sizes to auto (self-sizing height)
+                              rowSizes: const [auto, auto],
+                              columnGap: 16,
+                              rowGap: 16,
+                              children: state.hardcodedCities
+                                  .map(
+                                    (city) => CityCard(
+                                      cityName: city['cityName']!,
+                                      stateName: city['stateName']!,
+                                      isSelected: city['cityName'] ==
+                                          state.selectedCity,
+                                      onPressed: () {
+                                        context
+                                            .read<TagsCubit>()
+                                            .selectCity(city);
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
                             ),
                           )
-                        : SliverGrid(
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                var items = state.locations.reversed.toList();
-                                return LocationCard(
-                                  location: items[index],
-                                  isSelected:
-                                      items[index] == state.selectedLocation,
-                                  onPressed: () {
-                                    context
-                                        .read<TagsCubit>()
-                                        .selectLocation(location: items[index]);
-                                  },
-                                );
-                              },
-                              childCount: state.locations.length,
-                            ),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 16,
-                              mainAxisSpacing: 16,
-                              // ratio based on figma w/h
-                              childAspectRatio: 150 / 200,
+                        : SliverToBoxAdapter(
+                            child: LayoutGrid(
+                              // set some flexible track sizes based on the crossAxisCount
+                              columnSizes: [1.fr, 1.fr],
+                              // set all the row sizes to auto (self-sizing height)
+                              rowSizes: [
+                                for (int i = 0; i < (state.locations.length / 2).ceil(); i++)
+                                  auto
+                              ],
+                              columnGap: 16,
+                              rowGap: 16,
+                              children: state.locations.reversed
+                                  .map(
+                                    (location) => LocationCard(
+                                      location: location,
+                                      isSelected:
+                                          location == state.selectedLocation,
+                                      onPressed: () {
+                                        context
+                                            .read<TagsCubit>()
+                                            .selectLocation(location: location);
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
                             ),
                           ),
-                  )
+                  ),
               ],
             ),
           ),

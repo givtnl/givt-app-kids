@@ -67,29 +67,29 @@ class _ActionTileState extends State<ActionTile> {
                       ? SvgPicture.network(
                           widget.iconPath,
                           height: 140,
+                          width: 140,
                         )
                       : SvgPicture.asset(
                           widget.iconPath,
                           height: 140,
+                          width: 140,
                         ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
+                  padding: const EdgeInsets.fromLTRB(10, 8, 10, 16),
                   child: Column(
                     children: [
                       widget.titleBig.isNotEmpty
-                          ? Text(
-                              widget.titleBig,
+                          ? Text(widget.titleBig,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: widget.isDisabled
-                                    ? AppTheme.disabledTileBorder
-                                    : widget.textColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                height: 0,
-                              ),
-                            )
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.copyWith(
+                                    color: widget.isDisabled
+                                        ? AppTheme.disabledTileBorder
+                                        : widget.textColor,
+                                  ))
                           : const SizedBox(),
                       widget.titleSmall.isNotEmpty
                           ? Text(
@@ -105,6 +105,7 @@ class _ActionTileState extends State<ActionTile> {
                                   ),
                             )
                           : const SizedBox(),
+                      SizedBox(height: widget.subtitle.isNotEmpty ? 8 : 0),
                       widget.subtitle.isNotEmpty
                           ? Text(
                               widget.subtitle,
