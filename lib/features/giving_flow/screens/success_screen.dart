@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
@@ -35,49 +36,58 @@ class _SuccessScreenState extends State<SuccessScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
-        backgroundColor: AppTheme.successBackgroundLightBlue,
+        backgroundColor: AppTheme.secondary98,
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppTheme.successBackgroundLightBlue,
+          statusBarColor: AppTheme.secondary98,
         ),
       ),
-      backgroundColor: AppTheme.successBackgroundLightBlue,
+      backgroundColor: AppTheme.secondary98,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
+        bottom: false,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Lottie.asset(
+                'assets/lotties/rays.json',
+                fit: BoxFit.fill,
+                alignment: Alignment.bottomCenter,
                 width: double.infinity,
-                padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
-                child: Text(
-                  organisation.thankYou ?? "Thank you!",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    color: AppTheme.defaultTextColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
               ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
-                child: Text(
-                  "Your parents can now approve \n your donation suggestion to \n ${organisation.name}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: AppTheme.defaultTextColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Lottie.asset(
-                "assets/lotties/donation.json",
+            ),
+            Positioned.fill(
+              child: SvgPicture.asset(
+                'assets/images/box_success.svg',
                 fit: BoxFit.fitWidth,
+                alignment: Alignment.bottomCenter,
                 width: double.infinity,
               ),
-            ],
-          ),
+            ),
+            Positioned.fill(
+              child: Lottie.asset(
+                'assets/lotties/coin_drop_b.json',
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.bottomCenter,
+                width: double.infinity,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(40),
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Text(
+                    organisation.thankYou ?? "Awesome!",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(
+                    "Thank you for your donation \n to ${organisation.name}",
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
