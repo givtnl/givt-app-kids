@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -36,18 +37,35 @@ class _SuccessCoinScreenState extends State<SuccessCoinScreen> {
         appBar: AppBar(
           toolbarHeight: 0,
           systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: AppTheme.successBackgroundLightBlue,
+            statusBarColor: AppTheme.secondary98,
             statusBarIconBrightness: Brightness.dark,
           ),
+          backgroundColor: AppTheme.secondary98,
         ),
-        backgroundColor: AppTheme.successBackgroundLightBlue,
+        backgroundColor: AppTheme.secondary98,
         body: SafeArea(
           bottom: false,
           child: Stack(
             children: [
               Positioned.fill(
                 child: Lottie.asset(
-                  'assets/lotties/coin_success_2.json',
+                  'assets/lotties/rays.json',
+                  fit: BoxFit.fill,
+                  alignment: Alignment.bottomCenter,
+                  width: double.infinity,
+                ),
+              ),
+              Positioned.fill(
+                child: SvgPicture.asset(
+                  'assets/images/box_success.svg',
+                  fit: BoxFit.fitWidth,
+                  alignment: Alignment.bottomCenter,
+                  width: double.infinity,
+                ),
+              ),
+              Positioned.fill(
+                child: Lottie.asset(
+                  'assets/lotties/coin_drop_b.json',
                   fit: BoxFit.fitWidth,
                   alignment: Alignment.bottomCenter,
                   width: double.infinity,
