@@ -87,16 +87,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     return true;
   };
 
-  await runZonedGuarded(
-    () async => runApp(givtApp),
-    (error, stackTrace) async {
-      log(error.toString(), stackTrace: stackTrace);
-      await LoggingInfo.instance.error(
-        error.toString(),
-        methodName: stackTrace.toString(),
-      );
-    },
-  );
+  runApp(givtApp);
 }
 
 /// Returns the firebase options
