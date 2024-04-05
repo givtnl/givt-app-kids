@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,19 +78,16 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   );
 
   FlutterError.onError = (details) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(details);
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  await runZonedGuarded(
-    () async => runApp(givtApp),
-    (error, stackTrace) async {
-      log(error.toString(), stackTrace: stackTrace);
-      await LoggingInfo.instance.error(
-        error.toString(),
-        methodName: stackTrace.toString(),
-      );
-    },
-  );
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
+  runApp(givtApp);
 }
 
 /// Returns the firebase options
