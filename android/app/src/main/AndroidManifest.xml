@@ -29,8 +29,16 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            
+
             <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+            
+             <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="givtkids" />
+            </intent-filter>
+
             <intent-filter android:autoVerify="true">
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
@@ -45,7 +53,6 @@
     <intent-filter android:label="testDeepLink" 
                    android:autoVerify="true">
         <action android:name="android.intent.action.VIEW"/>
-
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE"/>
 
@@ -58,7 +65,9 @@
     <intent-filter android:label="testDeepLinkNFC"
                    android:autoVerify="true">
         <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+        <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="https"
               android:host="www.givt.app"
               android:pathPrefix="/search-for-coin" />
