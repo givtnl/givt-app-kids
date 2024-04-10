@@ -16,7 +16,7 @@ class GoalActiveWidget extends StatelessWidget {
         final totalProgress =
             currentGoal.totalAmount / currentGoal.goalAmount.toDouble();
         return Padding(
-          padding: const EdgeInsets.only(left: 56, right: 56, top: 24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

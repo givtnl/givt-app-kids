@@ -131,10 +131,15 @@ class _WalletWidgetState extends State<WalletWidget> {
                                 padding: EdgeInsets.zero,
                                 alignment: Alignment.topCenter),
                             onPressed: () {
-                              context.pushNamed(Pages.history.name);
+                              // context.pushNamed(Pages.history.name);
+                              // AnalyticsHelper.logEvent(
+                              //   eventName:
+                              //       AmplitudeEvent.seeDonationHistoryPressed,
+                              // );
+                              SystemSound.play(SystemSoundType.click);
+                              context.pushNamed(Pages.avatarSelection.name);
                               AnalyticsHelper.logEvent(
-                                eventName:
-                                    AmplitudeEvent.seeDonationHistoryPressed,
+                                eventName: AmplitudeEvent.editAvatarIconClicked,
                               );
                             },
                             child: Row(
@@ -142,7 +147,7 @@ class _WalletWidgetState extends State<WalletWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'All givts',
+                                  'My profile',
                                   style: Theme.of(context).textTheme.labelSmall,
                                 ),
                                 Padding(

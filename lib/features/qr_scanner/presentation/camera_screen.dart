@@ -120,7 +120,9 @@ class _CameraScreenState extends State<CameraScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'To scan the QR Code we need to turn on the camera. Go to Settings to allow that.',
+                  isSettings
+                      ? 'To scan the QR Code we need to turn on the camera. Go to Settings to allow that.'
+                      : 'To scan the QR Code we need to turn on the camera in the app. Press OK in the next screen to allow that.',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),

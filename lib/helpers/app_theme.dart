@@ -29,6 +29,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const secondary80 = Color(0xFF4CDADB);
   static const secondary95 = Color(0xFFAEFFFF);
   static const secondary98 = Color(0xFFE2FFFE);
+  static const secondary99 = Color(0xFFF1FFFE);
 
   static const tertiary40 = Color(0xFF744AA5);
   static const tertiary80 = Color(0xFFDAB9FF);
@@ -44,6 +45,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const highlight90 = Color(0xFFFAE366);
   static const highlight95 = Color(0xFFFFF1B2);
   static const highlight98 = Color(0xFFFFF9EB);
+  static const highlight99 = Color(0xFFFFFDF7);
+
+  static const neutralVariant95 = Color(0xFFEEF2E4);
 
   static const disabledTileBackground = Color(0xFFF5F4F5);
   static const disabledTileBorder = Color(0xFFC8C6C9);

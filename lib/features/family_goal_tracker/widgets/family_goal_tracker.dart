@@ -10,6 +10,7 @@ import 'package:givt_app_kids/features/family_goal_tracker/widgets/goal_complete
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,8 +19,17 @@ class FamilyGoalTracker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppTheme.highlight99,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppTheme.neutralVariant95,
+          width: 2,
+        ),
+      ),
+      margin: const EdgeInsets.all(16),
       child: BlocConsumer<GoalTrackerCubit, GoalTrackerState>(
         listener: (context, state) {
           if (state.error.isNotEmpty) {
