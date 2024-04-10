@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/features/family_goal_tracker/widgets/goal_screen.dart';
 import 'package:givt_app_kids/features/history/history_screen.dart';
@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/home_screen/cubit/navigation_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_screen.dart';
 import 'package:givt_app_kids/features/home_screen/widgets/custom_navigation_bar.dart';
 import 'package:givt_app_kids/features/home_screen/widgets/home_screen_app_bar.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,9 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
-            log('currentPageIndex = $currentPageIndex');
-            context.read<NavigationCubit>().changePage(index);
           });
+          SystemSound.play(SystemSoundType.click);
+          HapticFeedback.selectionClick();
+          context.read<NavigationCubit>().changePage(index);
+          AnalyticsHelper.logEvent(
+              eventName: AmplitudeEvent.navigationBarPressed,
+              eventProperties: {
+                'destination': NavigationDestinationData.values[index].name
+              });
         },
       ),
       body: BlocBuilder<NavigationCubit, NavigationState>(
@@ -37,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
             duration: const Duration(milliseconds: 300),
             child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
+                switchInCurve: Curves.easeInOutQuart,
+                switchOutCurve: Curves.easeInOutQuart,
                 transitionBuilder: (child, animation) {
                   return SlideTransition(
                     position: Tween<Offset>(

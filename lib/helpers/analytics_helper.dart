@@ -51,6 +51,7 @@ enum AmplitudeEvent {
   openAppPermissionsSettings('open_app_permissions_settings'),
   openCameraPermissionDialog('open_camera_permission_dialog'),
   closePermissionsDialog('close_permissions_dialog'),
+  navigationBarPressed('navigation_bar_pressed'),
   ;
 
   final String value;
