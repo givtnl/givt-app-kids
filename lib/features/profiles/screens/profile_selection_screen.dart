@@ -90,7 +90,10 @@ class ProfileSelectionScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            leading: const GivtBackButton(),
+            leading: (flow.flowType == FlowType.none &&
+                    state is! ProfilesLoadingState)
+                ? const LogoutIconButton()
+                : const GivtBackButton(),
             title: Text(
               'My Family',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -98,9 +101,6 @@ class ProfileSelectionScreen extends StatelessWidget {
             ),
             actions: [
               if (flow.isCoin) const CoinWidget(),
-              if (flow.flowType == FlowType.none &&
-                  state is! ProfilesLoadingState)
-                const LogoutIconButton(),
             ],
           ),
           body: state is ProfilesLoadingState
