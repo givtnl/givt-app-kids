@@ -3,15 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/widgets/goal_active_widget.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/widgets/goal_completed_widget.dart';
+import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
+import 'package:givt_app_kids/features/goals/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/widgets/goal_active_widget.dart';
+import 'package:givt_app_kids/features/goals/widgets/goal_completed_widget.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
-import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:go_router/go_router.dart';
 
 class FamilyGoalTracker extends StatelessWidget {
@@ -30,16 +29,7 @@ class FamilyGoalTracker extends StatelessWidget {
         ),
       ),
       margin: const EdgeInsets.all(16),
-      child: BlocConsumer<GoalTrackerCubit, GoalTrackerState>(
-        listener: (context, state) {
-          if (state.error.isNotEmpty) {
-            SnackBarHelper.showMessage(
-              context,
-              text: state.error,
-              isError: true,
-            );
-          }
-        },
+      child: BlocBuilder<GoalTrackerCubit, GoalTrackerState>(
         builder: (context, state) {
           return GestureDetector(
             onTap: () {

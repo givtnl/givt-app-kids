@@ -14,8 +14,8 @@ import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dar
 import 'package:givt_app_kids/features/design_alignment_screen/design_alignment_screen.dart';
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
+import 'package:givt_app_kids/features/goals/model/family_goal.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';

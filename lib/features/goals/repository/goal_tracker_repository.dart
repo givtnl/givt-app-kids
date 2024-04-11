@@ -1,5 +1,5 @@
 import 'package:givt_app_kids/core/network/api_service.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/model/family_goal.dart';
 
 mixin GoalTrackerRepository {
   Future<FamilyGoal> fetchFamilyGoal();

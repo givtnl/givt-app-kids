@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
+import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
@@ -52,7 +52,6 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   Future<void> refresh() async {
-    final activeProfile = context.read<ProfilesCubit>().state.activeProfile;
     // Check user should be logged out
     final isSchoolEventUserLoggedOut =
         SchoolEventHelper.logoutSchoolEventUsers(context);
@@ -63,7 +62,6 @@ class _ProfileScreenState extends State<ProfileScreen>
     // Execute tasks in parallel
     await Future.wait([
       context.read<ProfilesCubit>().fetchActiveProfile(true),
-      context.read<GoalTrackerCubit>().getGoal(activeProfile.id)
     ]);
   }
 

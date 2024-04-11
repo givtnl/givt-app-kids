@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/widgets/gradient_progress_bar.dart';
+import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
+import 'package:givt_app_kids/features/goals/widgets/gradient_progress_bar.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 
 class GoalActiveWidget extends StatelessWidget {

@@ -7,6 +7,7 @@ import 'package:givt_app_kids/features/history/models/donation.dart';
 import 'package:givt_app_kids/features/history/models/history_item.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/shared/widgets/allowance_item_widget.dart';
+import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 import 'package:givt_app_kids/shared/widgets/donation_item_widget.dart';
 
 class HistoryScreen extends StatelessWidget {
@@ -29,9 +30,8 @@ class HistoryScreen extends StatelessWidget {
     });
     return BlocBuilder<HistoryCubit, HistoryState>(
       builder: (context, state) {
-        if (state.status == HistroryStatus.loading &&
-            historyCubit.state.pageNr < 2) {
-          return const Center(child: CircularProgressIndicator());
+        if (state.status == HistroryStatus.loading && state.history.isEmpty) {
+          return const CustomCircularProgressIndicator();
         }
         if (state.status == HistroryStatus.error) {
           return Center(
@@ -42,28 +42,36 @@ class HistoryScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.white,
           body: SafeArea(
-            child: ListView.separated(
-              padding: const EdgeInsets.all(0),
-              controller: scrollController,
-              itemCount: state.history.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (state.history[index].type == HistoryTypes.allowance) {
-                  return AllowanceItemWidget(
-                      allowance: state.history[index] as Allowance);
-                }
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                  child: DonationItemWidget(
-                      donation: state.history[index] as Donation),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(
-                thickness: 1,
-                height: 1,
-                endIndent: 20,
-                indent: 20,
-              ),
+            child: Stack(
+              children: [
+                ListView.separated(
+                  padding: const EdgeInsets.all(0),
+                  controller: scrollController,
+                  itemCount: state.history.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (state.history[index].type == HistoryTypes.allowance) {
+                      return AllowanceItemWidget(
+                          allowance: state.history[index] as Allowance);
+                    }
+                    return Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                      child: DonationItemWidget(
+                          donation: state.history[index] as Donation),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(
+                    thickness: 1,
+                    height: 1,
+                    endIndent: 20,
+                    indent: 20,
+                  ),
+                ),
+                if (state.status == HistroryStatus.loading &&
+                    state.history.isNotEmpty)
+                  const CustomCircularProgressIndicator(),
+              ],
             ),
           ),
         );
