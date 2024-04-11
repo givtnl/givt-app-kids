@@ -131,11 +131,6 @@ class _WalletWidgetState extends State<WalletWidget> {
                                 padding: EdgeInsets.zero,
                                 alignment: Alignment.topCenter),
                             onPressed: () {
-                              // context.pushNamed(Pages.history.name);
-                              // AnalyticsHelper.logEvent(
-                              //   eventName:
-                              //       AmplitudeEvent.seeDonationHistoryPressed,
-                              // );
                               SystemSound.play(SystemSoundType.click);
                               context.pushNamed(Pages.avatarSelection.name);
                               AnalyticsHelper.logEvent(
