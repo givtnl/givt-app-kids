@@ -9,6 +9,7 @@ import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
+import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -97,9 +98,7 @@ class _WalletWidgetState extends State<WalletWidget> {
                     ),
                     const SizedBox(height: 12),
                     state is ProfilesLoadingState
-                        ? const Center(
-                            child: CircularProgressIndicator.adaptive(),
-                          )
+                        ? const CustomCircularProgressIndicator()
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

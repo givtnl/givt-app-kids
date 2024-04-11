@@ -15,7 +15,7 @@ import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/school_event_helper.dart';
-import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
+import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       return Scaffold(
         backgroundColor: Colors.white,
         body: state is ProfilesLoadingState
-            ? const LoadingProgressIndicator()
+            ? const CustomCircularProgressIndicator()
             : RefreshIndicator(
                 onRefresh: refresh,
                 child: Stack(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 
 class GivtElevatedSecondaryButton extends StatefulWidget {
   const GivtElevatedSecondaryButton({
@@ -118,7 +119,7 @@ class _GivtElevatedSecondaryButtonState
 
   Widget getChild() {
     if (widget.isLoading == true) {
-      return const Center(child: CircularProgressIndicator());
+      return const CustomCircularProgressIndicator();
     }
     if (widget.leftIcon != null) {
       return Row(

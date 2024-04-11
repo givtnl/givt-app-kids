@@ -16,8 +16,8 @@ import 'package:givt_app_kids/features/profiles/widgets/profiles_empty_state_wid
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
+import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 import 'package:givt_app_kids/shared/widgets/givt_back_button.dart';
-import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileSelectionScreen extends StatelessWidget {
@@ -90,10 +90,7 @@ class ProfileSelectionScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            leading: (flow.flowType == FlowType.none &&
-                    state is! ProfilesLoadingState)
-                ? const LogoutIconButton()
-                : const GivtBackButton(),
+            leading: const GivtBackButton(),
             title: Text(
               'My Family',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -101,10 +98,13 @@ class ProfileSelectionScreen extends StatelessWidget {
             ),
             actions: [
               if (flow.isCoin) const CoinWidget(),
+              if (flow.flowType == FlowType.none &&
+                  state is! ProfilesLoadingState)
+                const LogoutIconButton(),
             ],
           ),
           body: state is ProfilesLoadingState
-              ? const LoadingProgressIndicator()
+              ? const CustomCircularProgressIndicator()
               : state.profiles.where((e) => e.type == 'Child').isEmpty
                   ? ProfilesEmptyStateWidget(
                       onRetry: () =>
