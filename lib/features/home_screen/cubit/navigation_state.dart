@@ -19,8 +19,6 @@ class NavigationState extends Equatable {
   List<Object> get props => [activeDestination];
 }
 
-final class NavigationInitial extends NavigationState {}
-
 enum NavigationDestinationData {
   home(
       iconPath: 'assets/images/duotone_house.svg',

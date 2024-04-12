@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 part 'navigation_state.dart';
 
 class NavigationCubit extends Cubit<NavigationState> {
-  NavigationCubit() : super(NavigationInitial());
+  NavigationCubit() : super(const NavigationState());
   void changePage(int index) {
     switch (index) {
       case 0:

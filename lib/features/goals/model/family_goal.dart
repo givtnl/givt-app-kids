@@ -101,8 +101,8 @@ class FamilyGoal extends Equatable {
 enum FamilyGoalStatus {
   inProgress('InProgress'),
   completed('Completed'),
-  updating('updating'),
-  init('init');
+  updating('Updating'),
+  init('Init');
 
   const FamilyGoalStatus(this.value);
 
