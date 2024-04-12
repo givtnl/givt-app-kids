@@ -65,6 +65,9 @@ class FamilyGoalTracker extends StatelessWidget {
     if (state.currentGoal.status == FamilyGoalStatus.inProgress) {
       return const GoalActiveWidget();
     }
+    if (state.currentGoal.status == FamilyGoalStatus.updating) {
+      return const GoalActiveWidget();
+    }
     return const SizedBox();
   }
 }

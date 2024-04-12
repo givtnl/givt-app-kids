@@ -5,6 +5,7 @@ import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/goals/model/family_goal.dart';
 import 'package:givt_app_kids/features/goals/widgets/family_goal_tracker.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
+import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 
 class GoalScreen extends StatelessWidget {
   const GoalScreen({super.key});
@@ -40,7 +41,11 @@ class GoalScreen extends StatelessWidget {
                       ],
                     ),
                   )
-                : const FamilyGoalTracker(),
+                : Stack(children: [
+                    const FamilyGoalTracker(),
+                    if (state.currentGoal.status == FamilyGoalStatus.updating)
+                      const CustomCircularProgressIndicator()
+                  ]),
           ),
         );
       },
