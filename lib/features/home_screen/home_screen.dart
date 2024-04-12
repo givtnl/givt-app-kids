@@ -20,12 +20,14 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: const HomeScreenAppBar(),
       bottomNavigationBar: CustomNavigationBar(
-        index: context.read<NavigationCubit>().state.activeDestination.index,
+        index: context.watch<NavigationCubit>().state.activeDestination.index,
         onDestinationSelected: (int index) {
           SystemSound.play(SystemSoundType.click);
           HapticFeedback.selectionClick();
 
-          context.read<NavigationCubit>().changePage(index);
+          context
+              .read<NavigationCubit>()
+              .changePage(NavigationDestinationData.values[index]);
 
           AnalyticsHelper.logEvent(
               eventName: AmplitudeEvent.navigationBarPressed,
