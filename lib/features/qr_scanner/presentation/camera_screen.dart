@@ -11,6 +11,7 @@ import 'package:givt_app_kids/features/qr_scanner/cubit/camera_cubit.dart';
 import 'package:givt_app_kids/features/qr_scanner/widgets/camera_screen_frame.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
+import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -120,7 +121,9 @@ class _CameraScreenState extends State<CameraScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'To scan the QR Code we need to turn on the camera. Go to Settings to allow that.',
+                  isSettings
+                      ? 'To scan the QR Code we need to turn on the camera. Go to Settings to allow that.'
+                      : 'To scan the QR Code we need to turn on the camera in the app. Press OK in the next screen to allow that.',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
@@ -199,8 +202,6 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Widget _builCenterLoader() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const CustomCircularProgressIndicator();
   }
 }

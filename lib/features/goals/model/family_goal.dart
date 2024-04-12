@@ -47,8 +47,16 @@ class FamilyGoal extends Equatable {
   final String goalId;
 
   @override
-  List<Object?> get props =>
-      [goalAmount, amount, totalAmount, mediumId, status, dateCreated, orgName, goalId];
+  List<Object?> get props => [
+        goalAmount,
+        amount,
+        totalAmount,
+        mediumId,
+        status,
+        dateCreated,
+        orgName,
+        goalId
+      ];
 
   bool get isActive => status == FamilyGoalStatus.inProgress;
 
@@ -66,12 +74,35 @@ class FamilyGoal extends Equatable {
     }
     ''';
   }
+
+  FamilyGoal copyWith({
+    int? goalAmount,
+    double? amount,
+    double? totalAmount,
+    String? mediumId,
+    FamilyGoalStatus? status,
+    String? dateCreated,
+    String? orgName,
+    String? goalId,
+  }) {
+    return FamilyGoal(
+      goalAmount: goalAmount ?? this.goalAmount,
+      amount: amount ?? this.amount,
+      totalAmount: totalAmount ?? this.totalAmount,
+      mediumId: mediumId ?? this.mediumId,
+      status: status ?? this.status,
+      dateCreated: dateCreated ?? this.dateCreated,
+      orgName: orgName ?? this.orgName,
+      goalId: goalId ?? this.goalId,
+    );
+  }
 }
 
 enum FamilyGoalStatus {
   inProgress('InProgress'),
   completed('Completed'),
-  init('init');
+  updating('Updating'),
+  init('Init');
 
   const FamilyGoalStatus(this.value);
 

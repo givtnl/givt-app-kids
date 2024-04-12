@@ -14,8 +14,8 @@ import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dar
 import 'package:givt_app_kids/features/design_alignment_screen/design_alignment_screen.dart';
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
+import 'package:givt_app_kids/features/goals/model/family_goal.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -24,9 +24,10 @@ import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
 import 'package:givt_app_kids/features/history/history_screen.dart';
+import 'package:givt_app_kids/features/home_screen/cubit/navigation_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
-import 'package:givt_app_kids/features/profiles/screens/wallet_screen.dart';
+import 'package:givt_app_kids/features/home_screen/home_screen.dart';
 import 'package:givt_app_kids/features/qr_scanner/cubit/camera_cubit.dart';
 import 'package:givt_app_kids/features/qr_scanner/presentation/camera_screen.dart';
 import 'package:givt_app_kids/features/recommendation/interests/cubit/interests_cubit.dart';
@@ -106,7 +107,19 @@ class AppRouter {
               context
                   .read<GoalTrackerCubit>()
                   .getGoal(profiles.activeProfile.id);
-              return const WalletScreen();
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => NavigationCubit(),
+                  ),
+                  BlocProvider(
+                    create: (context) => HistoryCubit(getIt())
+                      ..fetchHistory(
+                          context.read<ProfilesCubit>().state.activeProfile.id),
+                  ),
+                ],
+                child: const HomeScreen(),
+              );
             }),
         GoRoute(
           path: Pages.camera.path,

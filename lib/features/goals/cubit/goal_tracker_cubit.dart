@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/repository/goal_tracker_repository.dart';
+import 'package:givt_app_kids/features/goals/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/repository/goal_tracker_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'goal_tracker_state.dart';
@@ -24,9 +24,10 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
   Future<void> getGoal(String childId) async {
     emit(
       state.copyWith(
-        error: "",
-        currentGoal: const FamilyGoal.empty(),
-      ),
+          error: "",
+          currentGoal: state.currentGoal.copyWith(
+            status: FamilyGoalStatus.updating,
+          )),
     );
     try {
       final goal = await _goalTrackerRepository.fetchFamilyGoal();

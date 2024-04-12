@@ -3,13 +3,10 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/widgets/family_goal_tracker.dart';
+import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
@@ -18,18 +15,17 @@ import 'package:givt_app_kids/features/profiles/widgets/wallet_widget.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/school_event_helper.dart';
-import 'package:givt_app_kids/shared/widgets/givt_fab.dart';
-import 'package:givt_app_kids/shared/widgets/loading_progress_indicator.dart';
+import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
 
-class WalletScreen extends StatefulWidget {
-  const WalletScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<WalletScreen> createState() => _WalletScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _WalletScreenState extends State<WalletScreen>
+class _ProfileScreenState extends State<ProfileScreen>
     with WidgetsBindingObserver {
   bool isiPad = false;
   @override
@@ -56,7 +52,6 @@ class _WalletScreenState extends State<WalletScreen>
   }
 
   Future<void> refresh() async {
-    final activeProfile = context.read<ProfilesCubit>().state.activeProfile;
     // Check user should be logged out
     final isSchoolEventUserLoggedOut =
         SchoolEventHelper.logoutSchoolEventUsers(context);
@@ -67,7 +62,6 @@ class _WalletScreenState extends State<WalletScreen>
     // Execute tasks in parallel
     await Future.wait([
       context.read<ProfilesCubit>().fetchActiveProfile(true),
-      context.read<GoalTrackerCubit>().getGoal(activeProfile.id)
     ]);
   }
 
@@ -90,44 +84,17 @@ class _WalletScreenState extends State<WalletScreen>
     return BlocBuilder<ProfilesCubit, ProfilesState>(builder: (context, state) {
       final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
       final hasDonations = state.activeProfile.hasDonations;
-      final goalCubit = context.read<GoalTrackerCubit>();
       final authState = context.read<AuthCubit>().state as LoggedInState;
+      final goalCubit = context.watch<GoalTrackerCubit>();
+
       var countdownAmount = 0.0;
       if (state is ProfilesCountdownState) {
         countdownAmount = state.amount;
       }
-
       return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            state.activeProfile.firstName,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Theme.of(context).colorScheme.onPrimary,
-            statusBarIconBrightness:
-                Brightness.dark, // For Android (dark icons)
-            statusBarBrightness: Brightness.light, // For iOS (dark icons)
-          ),
-          actions: [
-            IconButton(
-              icon: FaIcon(
-                FontAwesomeIcons.solidPenToSquare,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onPressed: () {
-                SystemSound.play(SystemSoundType.click);
-                context.pushNamed(Pages.avatarSelection.name);
-                AnalyticsHelper.logEvent(
-                  eventName: AmplitudeEvent.editAvatarIconClicked,
-                );
-              },
-            )
-          ],
-        ),
+        backgroundColor: Colors.white,
         body: state is ProfilesLoadingState
-            ? const LoadingProgressIndicator()
+            ? const CustomCircularProgressIndicator()
             : RefreshIndicator(
                 onRefresh: refresh,
                 child: Stack(
@@ -140,7 +107,6 @@ class _WalletScreenState extends State<WalletScreen>
                         hasDonations: hasDonations,
                         avatarUrl: state.activeProfile.pictureURL,
                       ),
-                      const FamilyGoalTracker(),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
                         child: Row(
@@ -214,21 +180,6 @@ class _WalletScreenState extends State<WalletScreen>
                   ],
                 ),
               ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        floatingActionButton: GivtFloatingActionButton(
-          onTap: () {
-            // Reset data + flow and go back to profile selection
-            context.read<ProfilesCubit>().fetchAllProfiles();
-            context.read<FlowsCubit>().resetFlow();
-
-            context.pushReplacementNamed(Pages.profileSelection.name);
-            AnalyticsHelper.logEvent(
-              eventName: AmplitudeEvent.profileSwitchPressed,
-            );
-          },
-          text: 'My Family',
-          leftIcon: FontAwesomeIcons.arrowLeft,
-        ),
       );
     });
   }

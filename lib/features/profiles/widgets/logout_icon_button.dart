@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
@@ -14,17 +14,19 @@ class LogoutIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        AnalyticsHelper.logEvent(
-          eventName: AmplitudeEvent.logOutPressed,
-        );
-        context.read<AuthCubit>().logout();
-        context.read<ProfilesCubit>().clearProfiles();
-        context.read<FlowsCubit>().resetFlow();
+        onPressed: () {
+          AnalyticsHelper.logEvent(
+            eventName: AmplitudeEvent.logOutPressed,
+          );
+          context.read<AuthCubit>().logout();
+          context.read<ProfilesCubit>().clearProfiles();
+          context.read<FlowsCubit>().resetFlow();
 
-        context.goNamed(Pages.login.name);
-      },
-      icon: FaIcon(FontAwesomeIcons.rightFromBracket, color: Theme.of(context).colorScheme.onPrimaryContainer),
-    );
+          context.goNamed(Pages.login.name);
+        },
+        icon: SvgPicture.asset(
+          'assets/images/logout.svg',
+          width: 36,
+        ));
   }
 }

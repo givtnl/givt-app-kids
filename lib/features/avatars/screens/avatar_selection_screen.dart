@@ -8,6 +8,7 @@ import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dar
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
+import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:givt_app_kids/shared/widgets/reward_banner_dialog.dart';
 import 'package:go_router/go_router.dart';
@@ -88,7 +89,7 @@ Widget _getContent({
 }) {
   if (avatarsState.status == AvatarsStatus.loading ||
       editProfileState.status == EditProfileStatus.editing) {
-    return const Center(child: CircularProgressIndicator());
+    return const CustomCircularProgressIndicator();
   }
 
   if (avatarsState.status == AvatarsStatus.loaded) {
