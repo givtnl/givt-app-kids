@@ -12,28 +12,21 @@ import 'package:givt_app_kids/features/home_screen/widgets/custom_navigation_bar
 import 'package:givt_app_kids/features/home_screen/widgets/home_screen_app_bar.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const HomeScreenAppBar(),
       bottomNavigationBar: CustomNavigationBar(
-        index: currentPageIndex,
+        index: context.read<NavigationCubit>().state.activeDestination.index,
         onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
           SystemSound.play(SystemSoundType.click);
           HapticFeedback.selectionClick();
+
           context.read<NavigationCubit>().changePage(index);
+
           AnalyticsHelper.logEvent(
               eventName: AmplitudeEvent.navigationBarPressed,
               eventProperties: {

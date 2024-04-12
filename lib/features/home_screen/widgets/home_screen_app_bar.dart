@@ -30,14 +30,14 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
         statusBarBrightness: Brightness.light, // For iOS (dark icons)
       ),
       actions: [
-        if (navigation.state.activeDestination.name == 'home')
+        if (navigation.state.activeDestination ==
+            NavigationDestinationData.home)
           IconButton(
             icon: FaIcon(
               FontAwesomeIcons.retweet,
               color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
             onPressed: () {
-              // Reset data + flow and go back to profile selection
               profiles.fetchAllProfiles();
               context.read<FlowsCubit>().resetFlow();
 
