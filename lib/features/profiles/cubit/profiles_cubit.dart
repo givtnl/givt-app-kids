@@ -13,7 +13,7 @@ part 'profiles_state.dart';
 class ProfilesCubit extends HydratedCubit<ProfilesState> {
   ProfilesCubit(this._profilesRepositoy) : super(const ProfilesInitialState()) {
     hydrate();
-    AnalyticsHelper.setUserId(state.activeProfile.firstName);
+    AnalyticsHelper.setUserProperties(state.activeProfile);
   }
 
   final ProfilesRepository _profilesRepositoy;
