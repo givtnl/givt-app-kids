@@ -25,7 +25,7 @@ class ImpactGroup extends Equatable {
           image: '',
           amountOfMembers: 0,
           organiser: const GroupOrganiser.empty(),
-          goal: null,
+          goal: const Goal.empty(),
         );
 
   factory ImpactGroup.fromMap(Map<String, dynamic> map) {
@@ -41,7 +41,7 @@ class ImpactGroup extends Equatable {
           GroupOrganiser.fromMap(map['organiser'] as Map<String, dynamic>),
       goal: map['goal'] != null
           ? Goal.fromMap(map['goal'] as Map<String, dynamic>)
-          : null,
+          : Goal.empty(),
     );
   }
 
@@ -53,7 +53,7 @@ class ImpactGroup extends Equatable {
   final String image;
   final int amountOfMembers;
   final GroupOrganiser organiser;
-  final Goal? goal;
+  final Goal goal;
 
   @override
   List<Object?> get props => [
