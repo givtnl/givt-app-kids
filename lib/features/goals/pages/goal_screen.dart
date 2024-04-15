@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/goals/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/model/goal.dart';
 import 'package:givt_app_kids/features/goals/widgets/family_goal_tracker.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
@@ -25,7 +25,7 @@ class GoalScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
-            child: state.currentGoal == const FamilyGoal.empty()
+            child: state.currentGoal == const Goal.empty()
                 ? Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +43,7 @@ class GoalScreen extends StatelessWidget {
                   )
                 : Stack(children: [
                     const FamilyGoalTracker(),
-                    if (state.currentGoal.status == FamilyGoalStatus.updating)
+                    if (state.currentGoal.status == GoalStatus.updating)
                       const CustomCircularProgressIndicator()
                   ]),
           ),

@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
         context.read<ProfilesCubit>().fetchActiveProfile();
         return const ProfileScreen();
       case NavigationDestinationData.groups:
-        context.read<GoalTrackerCubit>().getGoal(user.id);
+        context.read<GoalTrackerCubit>().getFamilyGoal(user.id);
         return const GoalScreen();
       case NavigationDestinationData.myGivts:
         context.read<HistoryCubit>().fetchHistory(user.id);

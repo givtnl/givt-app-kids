@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/goals/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/model/goal.dart';
 import 'package:givt_app_kids/features/goals/widgets/goal_active_widget.dart';
 import 'package:givt_app_kids/features/goals/widgets/goal_completed_widget.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
@@ -60,10 +60,10 @@ class FamilyGoalTracker extends StatelessWidget {
 
   Widget _buildGoalWidget(BuildContext context, GoalTrackerState state) {
     switch (state.currentGoal.status) {
-      case FamilyGoalStatus.completed:
+      case GoalStatus.completed:
         return const GoalCompletedWidget();
-      case FamilyGoalStatus.inProgress:
-      case FamilyGoalStatus.updating:
+      case GoalStatus.inProgress:
+      case GoalStatus.updating:
         return const GoalActiveWidget();
       default:
         return const SizedBox();
