@@ -14,34 +14,34 @@ class GoalCompletedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final goalCubit = context.read<GoalTrackerCubit>();
     final currentGoal = goalCubit.state.currentGoal;
-    return Stack(children: [
-      Positioned(
-        right: 0,
-        child: IconButton(
-          onPressed: () {
-            goalCubit.dismissCompletedGoal(
-                context.read<ProfilesCubit>().state.activeProfile.id);
-            AnalyticsHelper.logEvent(
-              eventName: AmplitudeEvent.goalDismissed,
-              eventProperties: {
-                AnalyticsHelper.goalKey: currentGoal.orgName,
-                AnalyticsHelper.amountKey: currentGoal.goalAmount.toString(),
-                AnalyticsHelper.dateEUKey:
-                    DateTime.parse((currentGoal.dateCreated))
-                        .formattedFullEuDate,
-              },
-            );
-          },
-          icon: Icon(
-            FontAwesomeIcons.xmark,
-            size: 20,
-            color: Theme.of(context).colorScheme.inversePrimary,
+    return Stack(
+      children: [
+        Positioned(
+          right: 0,
+          child: IconButton(
+            onPressed: () {
+              goalCubit.dismissCompletedGoal(
+                  context.read<ProfilesCubit>().state.activeProfile.id);
+              AnalyticsHelper.logEvent(
+                eventName: AmplitudeEvent.goalDismissed,
+                eventProperties: {
+                  AnalyticsHelper.goalKey: currentGoal.orgName,
+                  AnalyticsHelper.amountKey: currentGoal.goalAmount.toString(),
+                  AnalyticsHelper.dateEUKey:
+                      DateTime.parse((currentGoal.dateCreated))
+                          .formattedFullEuDate,
+                },
+              );
+            },
+            icon: Icon(
+              FontAwesomeIcons.xmark,
+              size: 20,
+              color: Theme.of(context).colorScheme.inversePrimary,
+            ),
           ),
         ),
-      ),
-      Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 24),
+        Padding(
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -51,7 +51,10 @@ class GoalCompletedWidget extends StatelessWidget {
                 width: 24,
                 height: 24,
               ),
-              const SizedBox(height: 4),
+              const SizedBox(
+                width: double.infinity,
+                height: 4,
+              ),
               Text(
                 currentGoal.orgName,
                 style: Theme.of(context).textTheme.titleSmall,
@@ -66,7 +69,7 @@ class GoalCompletedWidget extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }
