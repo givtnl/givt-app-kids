@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/features/goals/model/goal.dart';
 import 'package:givt_app_kids/features/goals/model/group_organiser.dart';
 
 class ImpactGroup extends Equatable {
@@ -11,6 +12,7 @@ class ImpactGroup extends Equatable {
     required this.image,
     required this.amountOfMembers,
     required this.organiser,
+    required this.goal,
   });
 
   const ImpactGroup.empty()
@@ -23,6 +25,7 @@ class ImpactGroup extends Equatable {
           image: '',
           amountOfMembers: 0,
           organiser: const GroupOrganiser.empty(),
+          goal: null,
         );
 
   factory ImpactGroup.fromMap(Map<String, dynamic> map) {
@@ -36,6 +39,9 @@ class ImpactGroup extends Equatable {
       amountOfMembers: (map['amountOfMembers'] as num).toInt(),
       organiser:
           GroupOrganiser.fromMap(map['organiser'] as Map<String, dynamic>),
+      goal: map['goal'] != null
+          ? Goal.fromMap(map['goal'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -47,6 +53,7 @@ class ImpactGroup extends Equatable {
   final String image;
   final int amountOfMembers;
   final GroupOrganiser organiser;
+  final Goal? goal;
 
   @override
   List<Object?> get props => [
@@ -58,20 +65,30 @@ class ImpactGroup extends Equatable {
         image,
         amountOfMembers,
         organiser,
+        goal,
       ];
 
   ImpactGroup copyWith({
     String? id,
+    ImpactGroupStatus? status,
+    ImpactGroupType? type,
+    String? name,
+    String? description,
+    String? image,
+    int? amountOfMembers,
+    GroupOrganiser? organiser,
+    Goal? goal,
   }) {
     return ImpactGroup(
       id: id ?? this.id,
-      status: status,
-      type: type,
-      name: name,
-      description: description,
-      image: image,
-      amountOfMembers: amountOfMembers,
-      organiser: organiser,
+      status: status ?? this.status,
+      type: type ?? this.type,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      image: image ?? this.image,
+      amountOfMembers: amountOfMembers ?? this.amountOfMembers,
+      organiser: organiser ?? this.organiser,
+      goal: goal ?? this.goal,
     );
   }
 }
