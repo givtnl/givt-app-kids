@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/features/goals/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/model/goal.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/models/organisation_details.dart';
 
 class FamilyGoalWidget extends StatelessWidget {
   final OrganisationDetails organisation;
-  final FamilyGoal familyGoal;
+  final Goal familyGoal;
 
   const FamilyGoalWidget(this.familyGoal, this.organisation, {super.key});
 

@@ -15,7 +15,7 @@ import 'package:givt_app_kids/features/design_alignment_screen/design_alignment_
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
 import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/goals/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/model/goal.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -106,7 +106,7 @@ class AppRouter {
               context.read<ProfilesCubit>().fetchActiveProfile();
               context
                   .read<GoalTrackerCubit>()
-                  .getGoal(profiles.activeProfile.id);
+                  .getFamilyGoal(profiles.activeProfile.id);
               return MultiBlocProvider(
                 providers: [
                   BlocProvider(
@@ -142,8 +142,8 @@ class AppRouter {
             path: Pages.chooseAmountSliderGoal.path,
             name: Pages.chooseAmountSliderGoal.name,
             builder: (context, state) {
-              final extra = state.extra ?? const FamilyGoal.empty();
-              final familyGoal = (extra as FamilyGoal);
+              final extra = state.extra ?? const Goal.empty();
+              final familyGoal = (extra as Goal);
               return BlocProvider(
                 create: (BuildContext context) => CreateTransactionCubit(
                     context.read<ProfilesCubit>(), getIt()),

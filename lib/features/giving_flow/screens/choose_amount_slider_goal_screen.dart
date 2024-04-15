@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/goals/model/family_goal.dart';
+import 'package:givt_app_kids/features/goals/model/goal.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
@@ -21,7 +21,7 @@ import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderGoalScreen extends StatelessWidget {
   const ChooseAmountSliderGoalScreen({required this.familyGoal, super.key});
-  final FamilyGoal familyGoal;
+  final Goal familyGoal;
   @override
   Widget build(BuildContext context) {
     final organisationDetailsState =
