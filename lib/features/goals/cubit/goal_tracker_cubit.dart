@@ -34,11 +34,21 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
 
       // No goal
       if (goal == const Goal.empty()) {
+        emit(
+          state.copyWith(
+            currentGoal: const Goal.empty(),
+          ),
+        );
         return;
       }
       // Goal is completed and dismissed by this child
       if (goal.status == GoalStatus.completed &&
           isGoalDismissed(childId, goal.goalId)) {
+        emit(
+          state.copyWith(
+            currentGoal: const Goal.empty(),
+          ),
+        );
         return;
       }
 
