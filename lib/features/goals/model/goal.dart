@@ -15,7 +15,7 @@ class Goal extends Equatable {
   const Goal.empty()
       : this(
           goalAmount: 0,
-          amount: 0,
+          amount: 100,
           totalAmount: 0,
           mediumId: '',
           status: GoalStatus.init,
