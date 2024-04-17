@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/model/family_goal.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/repository/goal_tracker_repository.dart';
+import 'package:givt_app_kids/features/goals/model/goal.dart';
+import 'package:givt_app_kids/features/goals/repository/goal_tracker_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'goal_tracker_state.dart';
@@ -18,26 +18,37 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
   }
 
   bool get hasActiveGoal =>
-      state.currentGoal != const FamilyGoal.empty() &&
-      state.currentGoal.status == FamilyGoalStatus.inProgress;
+      state.currentGoal != const Goal.empty() &&
+      state.currentGoal.status == GoalStatus.inProgress;
 
-  Future<void> getGoal(String childId) async {
+  Future<void> getFamilyGoal(String childId) async {
     emit(
       state.copyWith(
-        error: "",
-        currentGoal: const FamilyGoal.empty(),
-      ),
+          error: "",
+          currentGoal: state.currentGoal.copyWith(
+            status: GoalStatus.updating,
+          )),
     );
     try {
       final goal = await _goalTrackerRepository.fetchFamilyGoal();
 
       // No goal
-      if (goal == const FamilyGoal.empty()) {
+      if (goal == const Goal.empty()) {
+        emit(
+          state.copyWith(
+            currentGoal: const Goal.empty(),
+          ),
+        );
         return;
       }
       // Goal is completed and dismissed by this child
-      if (goal.status == FamilyGoalStatus.completed &&
+      if (goal.status == GoalStatus.completed &&
           isGoalDismissed(childId, goal.goalId)) {
+        emit(
+          state.copyWith(
+            currentGoal: const Goal.empty(),
+          ),
+        );
         return;
       }
 
@@ -50,7 +61,7 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
       emit(
         state.copyWith(
           error: "We couldn't fetch your goal\n$e",
-          currentGoal: const FamilyGoal.empty(),
+          currentGoal: const Goal.empty(),
         ),
       );
     }
@@ -63,7 +74,7 @@ class GoalTrackerCubit extends Cubit<GoalTrackerState> {
     // dismiss goal from current UI
     emit(
       state.copyWith(
-        currentGoal: const FamilyGoal.empty(),
+        currentGoal: const Goal.empty(),
       ),
     );
   }

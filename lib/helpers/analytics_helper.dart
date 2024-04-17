@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:amplitude_flutter/amplitude.dart';
+import 'package:givt_app_kids/features/profiles/models/profile.dart';
 
 enum AmplitudeEvent {
   amountPressed('amount_pressed'),
@@ -51,6 +52,7 @@ enum AmplitudeEvent {
   openAppPermissionsSettings('open_app_permissions_settings'),
   openCameraPermissionDialog('open_camera_permission_dialog'),
   closePermissionsDialog('close_permissions_dialog'),
+  navigationBarPressed('navigation_bar_pressed'),
   ;
 
   final String value;
@@ -82,12 +84,15 @@ class AnalyticsHelper {
     await _amplitude!.trackingSessionEvents(true);
   }
 
-  static Future<void> setUserId(String profileName) async {
+  static Future<void> setUserProperties(Profile profile) async {
     final currentUserId = await _amplitude?.getUserId();
-    final isNewUser = profileName != currentUserId;
+    final isNewUser = profile.id != currentUserId;
 
-    log('The ${isNewUser ? 'new' : 'same'} amplitude user $profileName is set.');
-    await _amplitude?.setUserId(profileName, startNewSession: isNewUser);
+    log('The ${isNewUser ? 'new' : 'same'} amplitude user ${profile.id} is set.');
+    await _amplitude?.setUserId(profile.id, startNewSession: isNewUser);
+    await _amplitude?.setUserProperties({
+      'First Name': profile.firstName,
+    });
   }
 
   static Future<void> logEvent({

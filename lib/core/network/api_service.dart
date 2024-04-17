@@ -322,4 +322,49 @@ class APIService {
     final item = decodedBody['item'];
     return item;
   }
+
+  Future<List<dynamic>> fetchAllGloals() async {
+    //  final url = Uri.https(_apiURL, '/givt4kidsservice/v1/goals');
+    // final response = await client.get(url);
+    // if (response.statusCode >= 400) {
+    //   throw GivtServerException(
+    //     statusCode: response.statusCode,
+    //     body: jsonDecode(response.body) as Map<String, dynamic>,
+    //   );
+    // }
+    final mockData = jsonEncode({
+      "items": [
+        {
+          "Id": "GUID",
+          "Status": "Accepted", // Invited or Accepted
+          "Name": "Peterson",
+          "Type": "Family", // or Impact
+          // New fields
+          "Description":
+              "In a small village lived a craftsman Geppetto. One day he decided to...",
+          "Image": "https://d2zp5xs5cp8zlg.cloudfront.net/image-53552-800.jpg",
+          "Organiser": {
+            "Id": "Guid", // Givt user Id
+            "FirstName": "String",
+            "LastName": "String",
+            "Avatar":
+                "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero1.svg"
+          },
+          "AmountOfMembers": 5,
+          "Goal": {
+            "MediumId": "Guid",
+            "CollectGroupId": "Guid",
+            "CurrentAmount": 123,
+            "WaitingAmount": 234,
+            "TotalAmount": 357,
+            "Goal": 500,
+            "Status": "InProgress",
+          }
+        }
+      ]
+    });
+    final decodedBody = jsonDecode(mockData) as Map<String, dynamic>;
+    final itemMap = decodedBody['items']! as List<dynamic>;
+    return itemMap;
+  }
 }

@@ -5,7 +5,7 @@ import 'package:givt_app_kids/core/app/app_router.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/family_goal_tracker/cubit/goal_tracker_cubit.dart';
+import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -55,7 +55,7 @@ class GivtApp extends StatelessWidget {
         return BlocConsumer<ProfilesCubit, ProfilesState>(
             listener: (context, profilesState) {
           if (profilesState is ProfilesUpdatedState) {
-            AnalyticsHelper.setUserId(profilesState.activeProfile.firstName);
+            AnalyticsHelper.setUserProperties(profilesState.activeProfile);
           }
         }, builder: (context, profilesState) {
           return const _AppView();
