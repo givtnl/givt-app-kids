@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
+import 'package:givt_app_kids/features/Impact_groups/cubit/impact_groups_cubit.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/avatars/cubit/avatars_cubit.dart';
@@ -14,8 +15,7 @@ import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dar
 import 'package:givt_app_kids/features/design_alignment_screen/design_alignment_screen.dart';
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
-import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/goals/model/goal.dart';
+import 'package:givt_app_kids/features/Impact_groups/model/goal.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -102,11 +102,8 @@ class AppRouter {
               return null;
             },
             builder: (context, state) {
-              final profiles = context.read<ProfilesCubit>().state;
               context.read<ProfilesCubit>().fetchActiveProfile();
-              context
-                  .read<GoalTrackerCubit>()
-                  .getFamilyGoal(profiles.activeProfile.id);
+              context.read<ImpactGroupsCubit>().fetchImpactGroups();
               return MultiBlocProvider(
                 providers: [
                   BlocProvider(

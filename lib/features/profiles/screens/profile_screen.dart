@@ -5,8 +5,8 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/Impact_groups/cubit/impact_groups_cubit.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/widgets/action_tile.dart';
@@ -85,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
       final hasDonations = state.activeProfile.hasDonations;
       final authState = context.read<AuthCubit>().state as LoggedInState;
-      final goalCubit = context.watch<GoalTrackerCubit>();
+      final goalCubit = context.watch<ImpactGroupsCubit>();
 
       var countdownAmount = 0.0;
       if (state is ProfilesCountdownState) {
@@ -141,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     ),
                                     backgroundColor: Colors.white,
                                     builder: (context) => GiveBottomSheet(
-                                      familyGoal: goalCubit.state.currentGoal,
+                                      familyGoal: goalCubit.state.familyGoal,
                                       isiPad: isiPad,
                                     ),
                                   );

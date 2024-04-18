@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/features/goals/model/goal.dart';
+import 'package:givt_app_kids/features/Impact_groups/model/goal.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/models/organisation_details.dart';
 
 class FamilyGoalWidget extends StatelessWidget {

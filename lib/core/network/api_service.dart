@@ -322,8 +322,27 @@ class APIService {
     final item = decodedBody['item'];
     return item;
   }
+  // Future<List<dynamic>> fetchImpactGroups() async {
+  //   final url = Uri.https(_apiURL, '/givtservice/v1/groups');
+  //   final response = await client.get(url);
 
-  Future<List<dynamic>> fetchAllGloals() async {
+  //   if (response.statusCode >= 400 && response.statusCode < 500) {
+  //     return [];
+  //   }
+
+  //   if (response.statusCode >= 500) {
+  //     throw GivtServerFailure(
+  //       statusCode: response.statusCode,
+  //       body: jsonDecode(response.body) as Map<String, dynamic>,
+  //     );
+  //   }
+
+  //   final decodedBody = jsonDecode(response.body) as Map<String, dynamic>;
+  //   final itemMap = decodedBody['items']! as List<dynamic>;
+  //   return itemMap;
+  // }
+
+  Future<List<dynamic>> fetchImpactGroups() async {
     //  final url = Uri.https(_apiURL, '/givt4kidsservice/v1/goals');
     // final response = await client.get(url);
     // if (response.statusCode >= 400) {
@@ -335,30 +354,59 @@ class APIService {
     final mockData = jsonEncode({
       "items": [
         {
-          "Id": "GUID",
-          "Status": "Accepted", // Invited or Accepted
-          "Name": "Peterson",
-          "Type": "Family", // or Impact
+          "id": "GUID",
+          "status": "Accepted", // Invited or Accepted
+          "name": "Peterson",
+          "type": "Family", // or Impact
           // New fields
-          "Description":
+          "description":
               "In a small village lived a craftsman Geppetto. One day he decided to...",
-          "Image": "https://d2zp5xs5cp8zlg.cloudfront.net/image-53552-800.jpg",
-          "Organiser": {
-            "Id": "Guid", // Givt user Id
-            "FirstName": "String",
-            "LastName": "String",
-            "Avatar":
+          "image": "https://d2zp5xs5cp8zlg.cloudfront.net/image-53552-800.jpg",
+          "organiser": {
+            "id": "Guid", // Givt user Id
+            "firstName": "String",
+            "lastName": "String",
+            "avatar":
                 "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero1.svg"
           },
-          "AmountOfMembers": 5,
-          "Goal": {
-            "MediumId": "Guid",
-            "CollectGroupId": "Guid",
-            "CurrentAmount": 123,
-            "WaitingAmount": 234,
-            "TotalAmount": 357,
-            "Goal": 500,
-            "Status": "InProgress",
+          "amountOfMembers": 5,
+          "goal": {
+            "id": "dscbdshfjc",
+            "mediumId": "Guid",
+            "collectGroupName": "PocketFull of Sunshine",
+            "creationDate": "2024-01-01T10:00:00Z",
+            "currentAmount": 123,
+            "totalAmount": 357,
+            "goal": 500,
+            "status": "InProgress",
+          }
+        },
+        {
+          "id": "GUID",
+          "status": "Accepted", // Invited or Accepted
+          "name": "Honduras",
+          "type": "Impact", // or Impact
+          // New fields
+          "description":
+              "In a small village lived a craftsman Geppetto. One day he decided to...",
+          "image": "https://d2zp5xs5cp8zlg.cloudfront.net/image-53552-800.jpg",
+          "organiser": {
+            "id": "Guid", // Givt user Id
+            "firstName": "Chris",
+            "lastName": "String",
+            "avatar":
+                "https://givtstoragedebug.blob.core.windows.net/public/cdn/avatars/Hero1.svg"
+          },
+          "amountOfMembers": 135,
+          "goal": {
+            "id": "sdbcldbfsh",
+            "mediumId": "Guid",
+            "collectGroupName": "Mission Trip to Honduras",
+            "creationDate": "2024-01-01T10:00:00Z",
+            "currentAmount": 673,
+            "totalAmount": 1560,
+            "goal": 8000,
+            "status": "InProgress",
           }
         }
       ]

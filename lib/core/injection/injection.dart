@@ -6,7 +6,7 @@ import 'package:givt_app_kids/core/network/api_service.dart';
 import 'package:givt_app_kids/features/auth/repositories/auth_repository.dart';
 import 'package:givt_app_kids/features/avatars/repositories/avatars_repository.dart';
 import 'package:givt_app_kids/features/edit_profile/repositories/edit_profile_repository.dart';
-import 'package:givt_app_kids/features/goals/repository/goal_tracker_repository.dart';
+import 'package:givt_app_kids/features/Impact_groups/repository/impact_groups_repository.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/repositories/create_transaction_repository.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/repositories/organisation_details_repository.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_repository.dart';
@@ -91,8 +91,8 @@ void _initRepositories() {
         getIt(),
       ),
     )
-    ..registerLazySingleton<GoalTrackerRepository>(
-      () => GoalTrackerRepositoryImpl(
+    ..registerLazySingleton<ImpactGroupsRepository>(
+      () => ImpactGroupsRepositoryImpl(
         getIt(),
       ),
     );
