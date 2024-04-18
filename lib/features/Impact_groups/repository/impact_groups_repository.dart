@@ -1,9 +1,7 @@
 import 'package:givt_app_kids/core/network/api_service.dart';
-import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
 import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
 
 mixin ImpactGroupsRepository {
-  Future<Goal> fetchFamilyGoal();
   Future<List<ImpactGroup>> fetchImpactGroups();
 }
 
@@ -13,18 +11,6 @@ class ImpactGroupsRepositoryImpl with ImpactGroupsRepository {
   );
 
   final APIService _apiService;
-
-  @override
-  Future<Goal> fetchFamilyGoal() async {
-    final response = await _apiService.fetchFamilyGoal();
-    if (response == null) {
-      return const Goal.empty();
-    }
-
-    final Goal goal = Goal.fromMap(response);
-
-    return goal;
-  }
 
   @override
   Future<List<ImpactGroup>> fetchImpactGroups() async {

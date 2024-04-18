@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:givt_app_kids/core/logging/logging_service.dart';
 import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
 import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
 import 'package:givt_app_kids/features/impact_groups/repository/impact_groups_repository.dart';
@@ -30,11 +31,13 @@ class ImpactGroupsCubit extends Cubit<ImpactGroupsState> {
           groups: impactGroups,
         ),
       );
-    } catch (e) {
+    } catch (error, stackTrace) {
+      LoggingInfo.instance.error('Error while fetching impact groups: $error',
+          methodName: stackTrace.toString());
       emit(
         state.copyWith(
           status: ImpactGroupCubitStatus.error,
-          error: e.toString(),
+          error: error.toString(),
         ),
       );
     }
