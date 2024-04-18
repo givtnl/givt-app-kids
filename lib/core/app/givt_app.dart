@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/app_router.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
-
+import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
-import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
@@ -43,8 +42,8 @@ class GivtApp extends StatelessWidget {
         BlocProvider<FlowsCubit>(
           create: (BuildContext context) => FlowsCubit(),
         ),
-        BlocProvider<GoalTrackerCubit>(
-          create: (BuildContext context) => GoalTrackerCubit(getIt()),
+        BlocProvider<ImpactGroupsCubit>(
+          create: (BuildContext context) => ImpactGroupsCubit(getIt()),
           lazy: true,
         ),
         BlocProvider(

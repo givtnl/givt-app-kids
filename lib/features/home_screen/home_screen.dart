@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/goals/pages/goal_screen.dart';
+import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
+import 'package:givt_app_kids/features/impact_groups/pages/goal_screen.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
 import 'package:givt_app_kids/features/history/history_screen.dart';
 import 'package:givt_app_kids/features/home_screen/cubit/navigation_cubit.dart';
@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
         context.read<ProfilesCubit>().fetchActiveProfile();
         return const ProfileScreen();
       case NavigationDestinationData.groups:
-        context.read<GoalTrackerCubit>().getFamilyGoal(user.id);
+        context.read<ImpactGroupsCubit>().fetchImpactGroups();
         return const GoalScreen();
       case NavigationDestinationData.myGivts:
         context.read<HistoryCubit>().fetchHistory(user.id);
