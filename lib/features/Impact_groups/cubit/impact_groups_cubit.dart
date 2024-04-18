@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/features/Impact_groups/model/goal.dart';
-import 'package:givt_app_kids/features/Impact_groups/model/impact_group.dart';
-import 'package:givt_app_kids/features/Impact_groups/repository/impact_groups_repository.dart';
+import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
+import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
+import 'package:givt_app_kids/features/impact_groups/repository/impact_groups_repository.dart';
 
 part 'impact_groups_state.dart';
 

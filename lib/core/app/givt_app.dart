@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/app_router.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
-import 'package:givt_app_kids/features/Impact_groups/cubit/impact_groups_cubit.dart';
+import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';

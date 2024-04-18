@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/features/Impact_groups/model/impact_group.dart';
-import 'package:givt_app_kids/features/Impact_groups/widgets/gradient_progress_bar.dart';
+import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
+import 'package:givt_app_kids/features/impact_groups/widgets/gradient_progress_bar.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 

@@ -1,6 +1,6 @@
 import 'package:givt_app_kids/core/network/api_service.dart';
-import 'package:givt_app_kids/features/Impact_groups/model/goal.dart';
-import 'package:givt_app_kids/features/Impact_groups/model/impact_group.dart';
+import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
+import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
 
 mixin ImpactGroupsRepository {
   Future<Goal> fetchFamilyGoal();

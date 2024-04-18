@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/features/Impact_groups/cubit/impact_groups_cubit.dart';
-import 'package:givt_app_kids/features/Impact_groups/model/goal.dart';
-import 'package:givt_app_kids/features/Impact_groups/widgets/goal_card.dart';
-import 'package:givt_app_kids/features/Impact_groups/widgets/no_goals_widget.dart';
+import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
+import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
+import 'package:givt_app_kids/features/impact_groups/widgets/goal_card.dart';
+import 'package:givt_app_kids/features/impact_groups/widgets/no_goals_widget.dart';
 import 'package:givt_app_kids/helpers/snack_bar_helper.dart';
 import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 

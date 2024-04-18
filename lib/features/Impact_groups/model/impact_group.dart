@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/features/Impact_groups/model/goal.dart';
-import 'package:givt_app_kids/features/Impact_groups/model/group_organiser.dart';
+import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
+import 'package:givt_app_kids/features/impact_groups/model/group_organiser.dart';
 
 class ImpactGroup extends Equatable {
   const ImpactGroup({
