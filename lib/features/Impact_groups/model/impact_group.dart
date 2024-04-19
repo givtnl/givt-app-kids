@@ -41,9 +41,11 @@ class ImpactGroup extends Equatable {
           GroupOrganiser.fromMap(map['organiser'] as Map<String, dynamic>),
       goal: map['goal'] != null
           ? Goal.fromMap(map['goal'] as Map<String, dynamic>)
-          : Goal.empty(),
+          : const Goal.empty(),
     );
   }
+
+  bool get isFamilyGroup => type == ImpactGroupType.family;
 
   final String id;
   final ImpactGroupStatus status;
