@@ -91,3 +91,4 @@ jobs:
           LOGIT_API_KEY: ${{ secrets.LOGIT_API_KEY }}
           PACKAGE_NAME: ${{ env.PACKAGE_NAME }}
           FLAVOR: ${{ env.FLAVOR }}
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
