@@ -44,11 +44,7 @@ class ImpactGroupDetailsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, right: 20),
                     child: ImpactGroupDetailsExpandableDescription(
-                      //TODO: replace with just impactGroup.description
-                      // description: impactGroup.description,
-                      description: impactGroup.isFamilyGroup
-                          ? impactGroup.description
-                          : '${impactGroup.description} ${impactGroup.description} ${impactGroup.description}${impactGroup.description} ${impactGroup.description} ${impactGroup.description}',
+                      description: impactGroup.description,
                     ),
                   ),
                 ],

@@ -388,7 +388,7 @@ class APIService {
           "type": "Impact", // or Impact
           // New fields
           "description":
-              "In a small village lived a craftsman Geppetto. One day he decided to...",
+              "In a small village lived a craftsman Geppetto. One day he decided to make a wooden toy. He said to himself, 'I will make a little boy and call him Pinocchio.'\n\nHe searched everywhere for a good piece of wood. To his good luck, he came upon a piece of pinewood. After examining the wood, he began to carve it. He worked tirelessly for many hours, and finally, his hard work paid off. He carved a beautiful wooden puppet boy who he named Pinocchio. He said, 'I wish Pinocchio were a real boy.'",
           "image": "https://d2zp5xs5cp8zlg.cloudfront.net/image-53552-800.jpg",
           "organiser": {
             "id": "Guid", // Givt user Id
