@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:givt_app_kids/shared/widgets/goal_progress_bar/goal_progress_bar.dart';
@@ -47,6 +48,10 @@ class ImpactGroupDetailsBottomPanel extends StatelessWidget {
             const SizedBox(height: 15),
             GivtElevatedButton(
               onTap: () {
+                AnalyticsHelper.logEvent(
+                    eventName: AmplitudeEvent.impactGroupDetailsGiveClicked,
+                    eventProperties: {'name': impactGroup.name});
+
                 String generatedMediumId =
                     base64.encode(impactGroup.goal.mediumId.codeUnits);
                 context

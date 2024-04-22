@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_app_kids/features/impact_groups/dialogs/impact_group_details_description_dialog.dart';
+import 'package:givt_app_kids/helpers/analytics_helper.dart';
 
 class ImpactGroupDetailsExpandableDescription extends StatelessWidget {
   const ImpactGroupDetailsExpandableDescription({
@@ -45,6 +46,11 @@ class ImpactGroupDetailsExpandableDescription extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
+                    AnalyticsHelper.logEvent(
+                      eventName:
+                          AmplitudeEvent.impactGroupDetailsReadMoreClicked,
+                    );
+
                     ImpactGroupDetailsDescriptionDialog
                         .showImpactGroupDescriptionDialog(
                       context: context,
