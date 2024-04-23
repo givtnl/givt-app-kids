@@ -84,6 +84,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
   static const downloadAppBackground = Color.fromARGB(255, 46, 41, 87);
 
+  static const impactGroupDialogBarrierColor = Color(0x40006D42);
+
 // FOR TESTING
   static const testingTextStyleLabelMedium = TextStyle(fontSize: 20);
   Scheme _schemeLight() {

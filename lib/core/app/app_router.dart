@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
+import 'package:givt_app_kids/features/Impact_groups/pages/impact_group_details_page.dart';
 import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
@@ -25,6 +26,7 @@ import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
 import 'package:givt_app_kids/features/history/history_screen.dart';
 import 'package:givt_app_kids/features/home_screen/cubit/navigation_cubit.dart';
+import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/home_screen/home_screen.dart';
@@ -378,6 +380,14 @@ class AppRouter {
           path: Pages.designAlignment.path,
           name: Pages.designAlignment.name,
           builder: (context, state) => const DesignAlignmentScreen(),
+        ),
+        GoRoute(
+          path: Pages.impactGroupDetails.path,
+          name: Pages.impactGroupDetails.name,
+          builder: (context, state) {
+            final impactGroup = state.extra! as ImpactGroup;
+            return ImpactGroupDetailsPage(impactGroup: impactGroup);
+          },
         ),
       ]);
 }

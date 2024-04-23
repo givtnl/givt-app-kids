@@ -43,6 +43,11 @@ enum Pages {
   schoolEventInfo(path: '/school-event-info', name: 'SCHOOL_EVENT_INFO'),
   schoolEventOrganisations(
       path: '/school-event-organisations', name: 'SCHOOL_EVENT_ORGANISATIONS'),
+
+  impactGroupDetails(
+    path: '/impact-group-details',
+    name: 'IMPACT_GROUP_DETAILS',
+  ),
   ;
 
   final String path;

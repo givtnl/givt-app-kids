@@ -53,6 +53,9 @@ enum AmplitudeEvent {
   openCameraPermissionDialog('open_camera_permission_dialog'),
   closePermissionsDialog('close_permissions_dialog'),
   navigationBarPressed('navigation_bar_pressed'),
+
+  impactGroupDetailsReadMoreClicked('impact_group_details_read_more_clicked'),
+  impactGroupDetailsGiveClicked('impact_group_details_give_clicked'),
   ;
 
   final String value;
