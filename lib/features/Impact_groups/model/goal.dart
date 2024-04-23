@@ -29,7 +29,7 @@ class Goal extends Equatable {
       goalAmount: (map['goal'] as num).toInt(),
       amount: (map['currentAmount'] as num).toDouble(),
       totalAmount: (map['totalAmount'] as num).toDouble(),
-      mediumId: map['mediumId'] as String,
+      mediumId: map['mediumId'] as String? ?? '',
       status: GoalStatus.fromString(map['status'] as String),
       dateCreated: map['creationDate'] as String,
       orgName: map['collectGroupName'] as String,
