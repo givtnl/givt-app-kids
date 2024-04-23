@@ -27,7 +27,7 @@ class Goal extends Equatable {
   factory Goal.fromMap(Map<String, dynamic> map) {
     return Goal(
       goalAmount: (map['goal'] as num).toInt(),
-      amount: (map['currentAmount'] as num).toDouble(),
+      amount: (map['amount'] as num).toDouble(),
       totalAmount: (map['totalAmount'] as num).toDouble(),
       mediumId: map['mediumId'] as String? ?? '',
       status: GoalStatus.fromString(map['status'] as String),
