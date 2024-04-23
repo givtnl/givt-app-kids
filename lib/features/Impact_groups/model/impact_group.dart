@@ -30,15 +30,16 @@ class ImpactGroup extends Equatable {
 
   factory ImpactGroup.fromMap(Map<String, dynamic> map) {
     return ImpactGroup(
-      id: map['id'] as String,
-      status: ImpactGroupStatus.fromString(map['status'] as String),
-      type: ImpactGroupType.fromString(map['type'] as String),
-      name: map['name'] as String,
-      description: map['description'] as String,
-      image: map['image'] as String,
-      amountOfMembers: (map['amountOfMembers'] as num).toInt(),
-      organiser:
-          GroupOrganiser.fromMap(map['organiser'] as Map<String, dynamic>),
+      id: map['id'] as String? ?? '',
+      status: ImpactGroupStatus.fromString(map['status'] as String? ?? ''),
+      type: ImpactGroupType.fromString(map['type'] as String? ?? ''),
+      name: map['name'] as String? ?? '',
+      description: map['description'] as String? ?? '',
+      image: map['image'] as String? ?? '',
+      amountOfMembers: (map['numberOfMembers'] as num? ?? 0).toInt(),
+      organiser: map['organiser'] != null
+          ? GroupOrganiser.fromMap(map['organiser'] as Map<String, dynamic>)
+          : const GroupOrganiser.empty(),
       goal: map['goal'] != null
           ? Goal.fromMap(map['goal'] as Map<String, dynamic>)
           : const Goal.empty(),
