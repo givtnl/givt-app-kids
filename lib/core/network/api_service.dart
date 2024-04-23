@@ -343,7 +343,7 @@ class APIService {
   // }
 
   Future<List<dynamic>> fetchImpactGroups() async {
-    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/group');
+    final url = Uri.https(_apiURL, '/givt4kidsservice/v1/groups');
     final response = await client.get(url);
     if (response.statusCode >= 400) {
       throw GivtServerException(
