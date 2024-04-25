@@ -105,7 +105,7 @@ class AppRouter {
             },
             builder: (context, state) {
               context.read<ProfilesCubit>().fetchActiveProfile();
-              context.read<ImpactGroupsCubit>().fetchImpactGroups();
+              context.read<ImpactGroupsCubit>().fetchImpactGroups(true);
               return MultiBlocProvider(
                 providers: [
                   BlocProvider(
