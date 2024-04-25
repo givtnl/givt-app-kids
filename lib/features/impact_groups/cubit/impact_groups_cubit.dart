@@ -18,8 +18,10 @@ class ImpactGroupsCubit extends Cubit<ImpactGroupsState> {
     return '$childId-dissmissedGoalKey';
   }
 
-  Future<void> fetchImpactGroups() async {
-    emit(state.copyWith(status: ImpactGroupCubitStatus.loading));
+  Future<void> fetchImpactGroups([bool forceLoading = false]) async {
+    emit(state.copyWith(
+        groups: forceLoading ? [] : state.groups,
+        status: ImpactGroupCubitStatus.loading));
 
     try {
       final impactGroups =
@@ -36,6 +38,7 @@ class ImpactGroupsCubit extends Cubit<ImpactGroupsState> {
           methodName: stackTrace.toString());
       emit(
         state.copyWith(
+          groups: [],
           status: ImpactGroupCubitStatus.error,
           error: error.toString(),
         ),

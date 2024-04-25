@@ -322,25 +322,6 @@ class APIService {
     final item = decodedBody['item'];
     return item;
   }
-  // Future<List<dynamic>> fetchImpactGroups() async {
-  //   final url = Uri.https(_apiURL, '/givtservice/v1/groups');
-  //   final response = await client.get(url);
-
-  //   if (response.statusCode >= 400 && response.statusCode < 500) {
-  //     return [];
-  //   }
-
-  //   if (response.statusCode >= 500) {
-  //     throw GivtServerFailure(
-  //       statusCode: response.statusCode,
-  //       body: jsonDecode(response.body) as Map<String, dynamic>,
-  //     );
-  //   }
-
-  //   final decodedBody = jsonDecode(response.body) as Map<String, dynamic>;
-  //   final itemMap = decodedBody['items']! as List<dynamic>;
-  //   return itemMap;
-  // }
 
   Future<List<dynamic>> fetchImpactGroups() async {
     final url = Uri.https(_apiURL, '/givt4kidsservice/v1/groups');
