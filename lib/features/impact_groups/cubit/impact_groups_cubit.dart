@@ -18,7 +18,8 @@ class ImpactGroupsCubit extends Cubit<ImpactGroupsState> {
     return '$childId-dissmissedGoalKey';
   }
 
-  Future<void> fetchImpactGroups([bool forceLoading = false]) async {
+  Future<void> fetchImpactGroups(String guid,
+      [bool forceLoading = false]) async {
     emit(state.copyWith(
         error: '',
         groups: forceLoading ? [] : state.groups,
@@ -26,7 +27,7 @@ class ImpactGroupsCubit extends Cubit<ImpactGroupsState> {
 
     try {
       final impactGroups =
-          await _impactGroupInviteRepository.fetchImpactGroups();
+          await _impactGroupInviteRepository.fetchImpactGroups(guid);
 
       emit(
         state.copyWith(
