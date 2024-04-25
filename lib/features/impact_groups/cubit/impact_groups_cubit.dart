@@ -20,6 +20,7 @@ class ImpactGroupsCubit extends Cubit<ImpactGroupsState> {
 
   Future<void> fetchImpactGroups([bool forceLoading = false]) async {
     emit(state.copyWith(
+        error: '',
         groups: forceLoading ? [] : state.groups,
         status: ImpactGroupCubitStatus.loading));
 
