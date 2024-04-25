@@ -105,16 +105,18 @@ class AppRouter {
             },
             builder: (context, state) {
               context.read<ProfilesCubit>().fetchActiveProfile();
-              context.read<ImpactGroupsCubit>().fetchImpactGroups(true);
+              final user = context.read<ProfilesCubit>().state.activeProfile;
+              context
+                  .read<ImpactGroupsCubit>()
+                  .fetchImpactGroups(user.id, true);
               return MultiBlocProvider(
                 providers: [
                   BlocProvider(
                     create: (context) => NavigationCubit(),
                   ),
                   BlocProvider(
-                    create: (context) => HistoryCubit(getIt())
-                      ..fetchHistory(
-                          context.read<ProfilesCubit>().state.activeProfile.id),
+                    create: (context) =>
+                        HistoryCubit(getIt())..fetchHistory(user.id),
                   ),
                 ],
                 child: const HomeScreen(),
