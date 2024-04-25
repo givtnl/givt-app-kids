@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
+import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
@@ -21,6 +22,7 @@ class ImpactGroupDetailsBottomPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final activeProfile = context.read<ProfilesCubit>().state.activeProfile;
     return Container(
       padding: const EdgeInsets.only(left: 24, right: 24, top: 10, bottom: 16),
       color: AppTheme.highlight99,
@@ -47,6 +49,7 @@ class ImpactGroupDetailsBottomPanel extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             GivtElevatedButton(
+              isDisabled: activeProfile.wallet.balance < 1,
               onTap: () {
                 AnalyticsHelper.logEvent(
                     eventName: AmplitudeEvent.impactGroupDetailsGiveClicked,
