@@ -34,7 +34,7 @@ class ImpactGroupDetailsDescriptionDialog extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
           ),
           color: Colors.white,
-          elevation: 7,
+          elevation: 0,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
