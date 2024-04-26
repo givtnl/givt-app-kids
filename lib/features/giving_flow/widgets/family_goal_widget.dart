@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
-import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/models/organisation_details.dart';
 import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
 
 class FamilyGoalWidget extends StatelessWidget {
   final OrganisationDetails organisation;
-  final Goal goal;
+  final ImpactGroup group;
 
-  const FamilyGoalWidget(this.goal, this.organisation, {super.key});
+  const FamilyGoalWidget(this.group, this.organisation, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final impactGroupsState = context.watch<ImpactGroupsCubit>().state;
-    final group = impactGroupsState.getGoalGroup(goal);
     return Container(
       alignment: Alignment.topLeft,
       padding: const EdgeInsets.only(left: 24, right: 24, top: 40),
@@ -34,12 +29,12 @@ class FamilyGoalWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(goal.orgName,
+                Text(group.goal.orgName,
                     style: Theme.of(context).textTheme.titleMedium),
                 Text(
                   group.type == ImpactGroupType.family
-                      ? 'Family goal: \$${goal.goalAmount}'
-                      : 'Goal: \$${goal.goalAmount}',
+                      ? 'Family goal: \$${group.goal.goalAmount}'
+                      : 'Goal: \$${group.goal.goalAmount}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],

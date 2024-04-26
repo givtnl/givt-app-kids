@@ -63,7 +63,7 @@ class ImpactGroupDetailsBottomPanel extends StatelessWidget {
 
                 context.pushNamed(
                   Pages.chooseAmountSliderGoal.name,
-                  extra: impactGroup.goal,
+                  extra: impactGroup,
                 );
               },
               text: 'Give',
