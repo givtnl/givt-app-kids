@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
+import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
 import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -48,9 +49,13 @@ class GiveBottomSheet extends StatelessWidget {
                           context
                               .read<OrganisationDetailsCubit>()
                               .getOrganisationDetails(generatedMediumId);
+                          final group = context
+                              .read<ImpactGroupsCubit>()
+                              .state
+                              .getGoalGroup(familyGoal);
                           context.pushNamed(
                             Pages.chooseAmountSliderGoal.name,
-                            extra: familyGoal,
+                            extra: group,
                           );
                           AnalyticsHelper.logEvent(
                             eventName: AmplitudeEvent.choseGiveToFamilyGoal,

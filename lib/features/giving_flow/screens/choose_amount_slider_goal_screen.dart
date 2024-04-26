@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
-import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
-import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/models/transaction.dart';
@@ -22,8 +20,8 @@ import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 
 class ChooseAmountSliderGoalScreen extends StatelessWidget {
-  const ChooseAmountSliderGoalScreen({required this.goal, super.key});
-  final Goal goal;
+  const ChooseAmountSliderGoalScreen({required this.group, super.key});
+  final ImpactGroup group;
   @override
   Widget build(BuildContext context) {
     final organisationDetailsState =
@@ -31,10 +29,8 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
     final profilesCubit = context.read<ProfilesCubit>();
     final organisation = organisationDetailsState.organisation;
     final mediumId = organisationDetailsState.mediumId;
-    final amountLeftToGoal = goal.goalAmount - goal.amount;
-    final group = context.watch<ImpactGroupsCubit>().state.getGoalGroup(goal);
-    final goalString =
-        group.type == ImpactGroupType.family ? 'Family Goal' : 'Goal';
+    final amountLeftToGoal = group.goal.goalAmount - group.goal.amount;
+    final goalString = group.isFamilyGroup ? 'Family Goal' : 'Goal';
 
     return BlocConsumer<CreateTransactionCubit, CreateTransactionState>(
       listener: (context, state) async {
@@ -49,7 +45,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
           }
 
           context.pushReplacementNamed(Pages.successCoin.name,
-              extra: goal.isActive);
+              extra: group.goal.isActive);
         }
       },
       builder: (context, state) {
@@ -68,7 +64,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                 Expanded(
                   child: Column(
                     children: [
-                      FamilyGoalWidget(goal, organisation),
+                      FamilyGoalWidget(group, organisation),
                       const Spacer(),
                       Text("How much would you like to give?",
                           style: Theme.of(context).textTheme.bodyMedium),
@@ -140,7 +136,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
                           userId: profilesCubit.state.activeProfile.id,
                           mediumId: mediumId,
                           amount: state.amount,
-                          goalId: goal.goalId,
+                          goalId: group.goal.goalId,
                         );
 
                         context

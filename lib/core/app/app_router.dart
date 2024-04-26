@@ -144,12 +144,12 @@ class AppRouter {
             name: Pages.chooseAmountSliderGoal.name,
             builder: (context, state) {
               final extra = state.extra ?? const Goal.empty();
-              final familyGoal = (extra as Goal);
+              final group = (extra as ImpactGroup);
               return BlocProvider(
                 create: (BuildContext context) => CreateTransactionCubit(
                     context.read<ProfilesCubit>(), getIt()),
                 child: ChooseAmountSliderGoalScreen(
-                  goal: familyGoal,
+                  group: group,
                 ),
               );
             }),
