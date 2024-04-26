@@ -30,8 +30,7 @@ class ChooseAmountSliderGoalScreen extends StatelessWidget {
     final organisation = organisationDetailsState.organisation;
     final mediumId = organisationDetailsState.mediumId;
     final amountLeftToGoal = group.goal.goalAmount - group.goal.amount;
-    final goalString =
-        group.type == ImpactGroupType.family ? 'Family Goal' : 'Goal';
+    final goalString = group.isFamilyGroup ? 'Family Goal' : 'Goal';
 
     return BlocConsumer<CreateTransactionCubit, CreateTransactionState>(
       listener: (context, state) async {
