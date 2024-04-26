@@ -61,12 +61,10 @@ class ImpactGroupDetailsBottomPanel extends StatelessWidget {
                     .read<OrganisationDetailsCubit>()
                     .getOrganisationDetails(generatedMediumId);
 
-                impactGroup.isFamilyGroup
-                    ? context.pushNamed(
-                        Pages.chooseAmountSliderGoal.name,
-                        extra: impactGroup.goal,
-                      )
-                    : context.pushNamed(Pages.chooseAmountSlider.name);
+                context.pushNamed(
+                  Pages.chooseAmountSliderGoal.name,
+                  extra: impactGroup.goal,
+                );
               },
               text: 'Give',
             ),
