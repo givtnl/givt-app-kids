@@ -149,7 +149,7 @@ class AppRouter {
                 create: (BuildContext context) => CreateTransactionCubit(
                     context.read<ProfilesCubit>(), getIt()),
                 child: ChooseAmountSliderGoalScreen(
-                  familyGoal: familyGoal,
+                  goal: familyGoal,
                 ),
               );
             }),
