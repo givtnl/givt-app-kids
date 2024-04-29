@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
+import 'package:givt_app_kids/features/impact_groups/pages/impact_group_details_page.dart';
+import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
 import 'package:givt_app_kids/features/auth/screens/login_screen.dart';
 import 'package:givt_app_kids/features/avatars/cubit/avatars_cubit.dart';
@@ -14,8 +16,7 @@ import 'package:givt_app_kids/features/coin_flow/screens/success_coin_screen.dar
 import 'package:givt_app_kids/features/design_alignment_screen/design_alignment_screen.dart';
 import 'package:givt_app_kids/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:givt_app_kids/features/exhibition_flow/screens/voucher_code_screen.dart';
-import 'package:givt_app_kids/features/goals/cubit/goal_tracker_cubit.dart';
-import 'package:givt_app_kids/features/goals/model/goal.dart';
+import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/cubit/create_transaction_cubit.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/organisation_details_cubit.dart';
@@ -25,6 +26,7 @@ import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
 import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
 import 'package:givt_app_kids/features/history/history_screen.dart';
 import 'package:givt_app_kids/features/home_screen/cubit/navigation_cubit.dart';
+import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/features/profiles/screens/profile_selection_screen.dart';
 import 'package:givt_app_kids/features/home_screen/home_screen.dart';
@@ -102,20 +104,19 @@ class AppRouter {
               return null;
             },
             builder: (context, state) {
-              final profiles = context.read<ProfilesCubit>().state;
               context.read<ProfilesCubit>().fetchActiveProfile();
+              final user = context.read<ProfilesCubit>().state.activeProfile;
               context
-                  .read<GoalTrackerCubit>()
-                  .getFamilyGoal(profiles.activeProfile.id);
+                  .read<ImpactGroupsCubit>()
+                  .fetchImpactGroups(user.id, true);
               return MultiBlocProvider(
                 providers: [
                   BlocProvider(
                     create: (context) => NavigationCubit(),
                   ),
                   BlocProvider(
-                    create: (context) => HistoryCubit(getIt())
-                      ..fetchHistory(
-                          context.read<ProfilesCubit>().state.activeProfile.id),
+                    create: (context) =>
+                        HistoryCubit(getIt())..fetchHistory(user.id),
                   ),
                 ],
                 child: const HomeScreen(),
@@ -143,12 +144,12 @@ class AppRouter {
             name: Pages.chooseAmountSliderGoal.name,
             builder: (context, state) {
               final extra = state.extra ?? const Goal.empty();
-              final familyGoal = (extra as Goal);
+              final group = (extra as ImpactGroup);
               return BlocProvider(
                 create: (BuildContext context) => CreateTransactionCubit(
                     context.read<ProfilesCubit>(), getIt()),
                 child: ChooseAmountSliderGoalScreen(
-                  familyGoal: familyGoal,
+                  group: group,
                 ),
               );
             }),
@@ -381,6 +382,14 @@ class AppRouter {
           path: Pages.designAlignment.path,
           name: Pages.designAlignment.name,
           builder: (context, state) => const DesignAlignmentScreen(),
+        ),
+        GoRoute(
+          path: Pages.impactGroupDetails.path,
+          name: Pages.impactGroupDetails.name,
+          builder: (context, state) {
+            final impactGroup = state.extra! as ImpactGroup;
+            return ImpactGroupDetailsPage(impactGroup: impactGroup);
+          },
         ),
       ]);
 }

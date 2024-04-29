@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:givt_app_kids/features/goals/model/goal.dart';
-import 'package:givt_app_kids/features/goals/model/group_organiser.dart';
+import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
+import 'package:givt_app_kids/features/impact_groups/model/group_organiser.dart';
 
 class ImpactGroup extends Equatable {
   const ImpactGroup({
@@ -30,20 +30,23 @@ class ImpactGroup extends Equatable {
 
   factory ImpactGroup.fromMap(Map<String, dynamic> map) {
     return ImpactGroup(
-      id: map['id'] as String,
-      status: ImpactGroupStatus.fromString(map['status'] as String),
-      type: ImpactGroupType.fromString(map['type'] as String),
-      name: map['name'] as String,
-      description: map['description'] as String,
-      image: map['image'] as String,
-      amountOfMembers: (map['amountOfMembers'] as num).toInt(),
-      organiser:
-          GroupOrganiser.fromMap(map['organiser'] as Map<String, dynamic>),
+      id: map['id'] as String? ?? '',
+      status: ImpactGroupStatus.fromString(map['status'] as String? ?? ''),
+      type: ImpactGroupType.fromString(map['type'] as String? ?? ''),
+      name: map['name'] as String? ?? '',
+      description: map['description'] as String? ?? '',
+      image: map['image'] as String? ?? '',
+      amountOfMembers: (map['numberOfMembers'] as num? ?? 0).toInt(),
+      organiser: map['organiser'] != null
+          ? GroupOrganiser.fromMap(map['organiser'] as Map<String, dynamic>)
+          : const GroupOrganiser.empty(),
       goal: map['goal'] != null
           ? Goal.fromMap(map['goal'] as Map<String, dynamic>)
-          : Goal.empty(),
+          : const Goal.empty(),
     );
   }
+
+  bool get isFamilyGroup => type == ImpactGroupType.family;
 
   final String id;
   final ImpactGroupStatus status;
@@ -112,7 +115,7 @@ enum ImpactGroupStatus {
 
 enum ImpactGroupType {
   family('Family'),
-  general('General'),
+  impact('Impact'),
   unknown('Unknown');
 
   const ImpactGroupType(this.value);

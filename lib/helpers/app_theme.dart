@@ -18,6 +18,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
 // extra colors within pallette
   static const primary20 = Color(0xFF003920);
   static const primary40 = Color(0xFF006D42);
+  static const primary50 = Color(0xFF008954);
   static const primary60 = Color(0xFF15A569);
   static const primary70 = Color(0xFF40C181);
   static const primary95 = Color(0xFFC0FFD6);
@@ -32,6 +33,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const secondary99 = Color(0xFFF1FFFE);
 
   static const tertiary40 = Color(0xFF744AA5);
+  static const tertiary50 = Color(0xFF8E63C0);
   static const tertiary80 = Color(0xFFDAB9FF);
   static const tertiary95 = Color(0xFFEEDBFF);
   static const tertiary98 = Color(0xFFFFF7FF);
@@ -48,6 +50,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static const highlight99 = Color(0xFFFFFDF7);
 
   static const neutralVariant95 = Color(0xFFEEF2E4);
+  static const neutralVariant60 = Color(0xFF8E9286);
 
   static const disabledTileBackground = Color(0xFFF5F4F5);
   static const disabledTileBorder = Color(0xFFC8C6C9);
@@ -80,6 +83,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
   static final historyAllowanceColor =
       const Color(0xFF89BCEF).withAlpha((255 * 0.1).toInt());
   static const downloadAppBackground = Color.fromARGB(255, 46, 41, 87);
+
+  static const impactGroupDialogBarrierColor = Color(0x40006D42);
 
 // FOR TESTING
   static const testingTextStyleLabelMedium = TextStyle(fontSize: 20);
