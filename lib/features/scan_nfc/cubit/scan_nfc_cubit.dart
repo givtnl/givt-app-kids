@@ -18,11 +18,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
           scanNFCStatus: ScanNFCStatus.ready,
         ));
 
-  static const oneAnimationLoopTimeDelay = Duration(milliseconds: 3000);
-
-  static const _closeIOSScanningScheetDelay = Duration(milliseconds: 2900);
-
-  static const debuggingSuccessDelay = Duration(milliseconds: 3000);
+  static const animationDuration = Duration(milliseconds: 1000);
+  static const debuggingSuccessDelay = Duration(milliseconds: 1000);
 
   void cancelScanning() {
     NfcManager.instance.stopSession();
@@ -47,7 +44,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     // Check NFC availability
     bool isAvailable = await NfcManager.instance.isAvailable();
     if (!isAvailable && Platform.isAndroid) {
-      await Future.delayed(oneAnimationLoopTimeDelay);
+      await Future.delayed(animationDuration);
       emit(state.copyWith(
         scanNFCStatus: ScanNFCStatus.nfcNotAvailable,
       ));
@@ -57,7 +54,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     // so we simulate a successful scan
     if (Platform.isIOS) {
       var iosInfo = await DeviceInfoPlugin().iosInfo;
-      if (!iosInfo.isPhysicalDevice) {
+      if (Platform.isIOS & !iosInfo.isPhysicalDevice) {
         Future.delayed(debuggingSuccessDelay, () {
           emit(state.copyWith(
             mediumId: OrganisationDetailsCubit.defaultMediumId,
@@ -70,7 +67,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     }
     if (Platform.isAndroid) {
       var androidInfo = await DeviceInfoPlugin().androidInfo;
-      if (!androidInfo.isPhysicalDevice) {
+      if (!androidInfo.isPhysicalDevice && Platform.isAndroid) {
         Future.delayed(debuggingSuccessDelay, () {
           emit(state.copyWith(
             mediumId: OrganisationDetailsCubit.defaultMediumId,
@@ -122,7 +119,6 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
                 // until user triggers stop scanning on another screen
                 if (Platform.isIOS) {
                   await NfcManager.instance.stopSession(alertMessage: ' ');
-                  await Future.delayed(_closeIOSScanningScheetDelay);
                 }
 
                 emit(state.copyWith(
