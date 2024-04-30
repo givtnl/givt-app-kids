@@ -43,7 +43,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     ));
     // Check NFC availability
     bool isAvailable = await NfcManager.instance.isAvailable();
-    if (!isAvailable && Platform.isAndroid) {
+    if (!isAvailable) {
       await Future.delayed(animationDuration);
       emit(state.copyWith(
         scanNFCStatus: ScanNFCStatus.nfcNotAvailable,
@@ -54,7 +54,7 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     // so we simulate a successful scan
     if (Platform.isIOS) {
       var iosInfo = await DeviceInfoPlugin().iosInfo;
-      if (Platform.isIOS & !iosInfo.isPhysicalDevice) {
+      if (!iosInfo.isPhysicalDevice) {
         Future.delayed(debuggingSuccessDelay, () {
           emit(state.copyWith(
             mediumId: OrganisationDetailsCubit.defaultMediumId,
