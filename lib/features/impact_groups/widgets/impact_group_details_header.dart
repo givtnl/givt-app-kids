@@ -52,7 +52,7 @@ class ImpactGroupDetailsHeader extends StatelessWidget {
                   children: [
                     Text(
                       impactGroup.isFamilyGroup
-                          ? 'The ${impactGroup.name} Family'
+                          ? 'The ${impactGroup.name}'
                           : impactGroup.organiser.fullName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

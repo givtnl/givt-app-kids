@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:givt_app_kids/features/impact_groups/model/goal.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/models/organisation_details.dart';
+import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';
 
 class FamilyGoalWidget extends StatelessWidget {
   final OrganisationDetails organisation;
-  final Goal familyGoal;
+  final ImpactGroup group;
 
-  const FamilyGoalWidget(this.familyGoal, this.organisation, {super.key});
+  const FamilyGoalWidget(this.group, this.organisation, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +29,12 @@ class FamilyGoalWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(familyGoal.orgName,
+                Text(group.goal.orgName,
                     style: Theme.of(context).textTheme.titleMedium),
                 Text(
-                  'Family goal: \$${familyGoal.goalAmount}',
+                  group.type == ImpactGroupType.family
+                      ? 'Family goal: \$${group.goal.goalAmount}'
+                      : 'Goal: \$${group.goal.goalAmount}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
