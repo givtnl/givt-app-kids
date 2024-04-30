@@ -43,7 +43,8 @@ class ScanNfcCubit extends Cubit<ScanNfcState> {
     ));
     // Check NFC availability
     bool isAvailable = await NfcManager.instance.isAvailable();
-    if (!isAvailable) {
+    //only android bc ios has custom error display
+    if (!isAvailable && Platform.isAndroid) {
       await Future.delayed(animationDuration);
       emit(state.copyWith(
         scanNFCStatus: ScanNFCStatus.nfcNotAvailable,
