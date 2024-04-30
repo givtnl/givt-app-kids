@@ -31,9 +31,8 @@ class _NFCScanPageState extends State<NFCScanPage> {
   void initState() {
     super.initState();
     // Prescanning delay is to improve the UI animation (not be jarring)
-    context
-        .read<ScanNfcCubit>()
-        .readTag(prescanningDelay: const Duration(milliseconds: 100));
+    context.read<ScanNfcCubit>().readTag(
+        prescanningDelay: Duration(milliseconds: Platform.isAndroid ? 100 : 0));
   }
 
   @override
@@ -64,24 +63,7 @@ class _NFCScanPageState extends State<NFCScanPage> {
                         return BlocBuilder<OrganisationDetailsCubit,
                             OrganisationDetailsState>(
                           builder: (context, state) {
-                            return FoundNfcAnimation(
-                              scanNfcCubit: scanNfcCubit,
-                              isLoading: context
-                                  .read<OrganisationDetailsCubit>()
-                                  .state is OrganisationDetailsLoadingState,
-                              onPressed: () {
-                                if (auth.isSchoolEvenMode) {
-                                  context.pushReplacementNamed(
-                                      Pages.schoolEventOrganisations.name);
-                                } else if (flow.isExhibition) {
-                                  context.pushReplacementNamed(
-                                      Pages.exhibitionOrganisations.name);
-                                } else {
-                                  context.pushReplacementNamed(
-                                      Pages.chooseAmountSlider.name);
-                                }
-                              },
-                            );
+                            return const FoundNfcAnimation();
                           },
                         );
                       } else {
@@ -121,7 +103,14 @@ class _NFCScanPageState extends State<NFCScanPage> {
           context
               .read<OrganisationDetailsCubit>()
               .getOrganisationDetails(state.mediumId);
-          Future.delayed(ScanNfcCubit.oneAnimationLoopTimeDelay, () {
+          // Android needs the delay to show the success bottom sheet animation
+          // iOS needs this delay to allow for the bottomsheet to close
+          Future.delayed(ScanNfcCubit.animationDuration, () {
+            // close the android success bottom sheet animation
+            if (Platform.isAndroid) {
+              context.pop();
+            }
+
             if (auth.isSchoolEvenMode) {
               context.pushReplacementNamed(Pages.schoolEventOrganisations.name);
             } else if (flow.isExhibition) {
@@ -129,13 +118,14 @@ class _NFCScanPageState extends State<NFCScanPage> {
             } else {
               context.pushReplacementNamed(Pages.chooseAmountSlider.name);
             }
+
+            AnalyticsHelper.logEvent(
+              eventName: AmplitudeEvent.inAppCoinScannedSuccessfully,
+              eventProperties: {
+                AnalyticsHelper.mediumIdKey: state.mediumId,
+              },
+            );
           });
-          AnalyticsHelper.logEvent(
-            eventName: AmplitudeEvent.inAppCoinScannedSuccessfully,
-            eventProperties: {
-              AnalyticsHelper.mediumIdKey: state.mediumId,
-            },
-          );
         }
       },
       builder: (context, state) {

@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:givt_app_kids/features/scan_nfc/cubit/scan_nfc_cubit.dart';
 import 'package:givt_app_kids/shared/widgets/givt_elevated_button.dart';
 
 class FoundNfcAnimation extends StatelessWidget {
-  const FoundNfcAnimation(
-      {required this.scanNfcCubit,
-      required this.isLoading,
-      required this.onPressed,
-      super.key});
-  final ScanNfcCubit scanNfcCubit;
-  final bool isLoading;
-  final void Function()? onPressed;
+  const FoundNfcAnimation({super.key});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
