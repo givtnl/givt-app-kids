@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/home_screen/cubit/navigation_cubit.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/helpers/analytics_helper.dart';
+import 'package:givt_app_kids/shared/widgets/common_icons.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -33,9 +33,7 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (navigation.state.activeDestination ==
             NavigationDestinationData.home)
           IconButton(
-            icon: SvgPicture.asset(
-              'assets/images/switch_profiles.svg',
-            ),
+            icon: switchProfilesIcon(),
             onPressed: () {
               profiles.fetchAllProfiles();
               context.read<FlowsCubit>().resetFlow();
