@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/features/flows/cubit/flows_cubit.dart';
 import 'package:givt_app_kids/features/home_screen/cubit/navigation_cubit.dart';
@@ -33,9 +33,8 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (navigation.state.activeDestination ==
             NavigationDestinationData.home)
           IconButton(
-            icon: FaIcon(
-              FontAwesomeIcons.retweet,
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            icon: SvgPicture.asset(
+              'assets/images/switch_profiles.svg',
             ),
             onPressed: () {
               profiles.fetchAllProfiles();
