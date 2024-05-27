@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:givt_app_kids/assets/tokens/tokens.g.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/shared/widgets/action_container.dart';
 
@@ -82,27 +83,13 @@ class _ActionTileState extends State<ActionTile> {
                       widget.titleBig.isNotEmpty
                           ? Text(widget.titleBig,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(
-                                    color: widget.isDisabled
-                                        ? AppTheme.disabledTileBorder
-                                        : widget.textColor,
-                                  ))
+                              style: context.tokens.textStyle.labelMedium)
                           : const SizedBox(),
                       widget.titleSmall.isNotEmpty
                           ? Text(
                               widget.titleSmall,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                    color: widget.isDisabled
-                                        ? AppTheme.disabledTileBorder
-                                        : widget.textColor,
-                                  ),
+                              style: context.tokens.textStyle.labelSmall,
                             )
                           : const SizedBox(),
                       SizedBox(height: widget.subtitle.isNotEmpty ? 8 : 0),
@@ -110,11 +97,7 @@ class _ActionTileState extends State<ActionTile> {
                           ? Text(
                               widget.subtitle,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                      color: widget.textColor.withAlpha(200)),
+                              style: context.tokens.textStyle.labelSmall,
                             )
                           : const SizedBox(),
                     ],
