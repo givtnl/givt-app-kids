@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:givt_app_kids/assets/tokens/tokens.g.dart';
 import 'package:givt_app_kids/core/app/app_router.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
 import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
@@ -69,12 +70,15 @@ class _AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const theme = AppTheme();
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: theme.toThemeData(),
-      routeInformationProvider: AppRouter.router.routeInformationProvider,
-      routeInformationParser: AppRouter.router.routeInformationParser,
-      routerDelegate: AppRouter.router.routerDelegate,
+    return Tokens(
+      tokens: DefaultTokens(),
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        theme: theme.toThemeData(),
+        routeInformationProvider: AppRouter.router.routeInformationProvider,
+        routeInformationParser: AppRouter.router.routeInformationParser,
+        routerDelegate: AppRouter.router.routerDelegate,
+      ),
     );
   }
 }
