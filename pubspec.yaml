@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  design_tokens_builder: ^0.2.0+1
   amplitude_flutter: ^3.16.2
   countup: ^0.1.4
   currency_text_input_formatter: ^2.1.8
@@ -59,6 +60,9 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   flutter_launcher_icons: ^0.13.1
   figma2flutter: ^0.3.0-alpha
+
+  design_tokens_builder: ^0.2.0+1
+  build_runner: ^2.3.3
 
 flutter:
   generate: true
