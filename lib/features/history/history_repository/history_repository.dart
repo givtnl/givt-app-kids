@@ -1,5 +1,5 @@
 import 'package:givt_app_kids/core/network/api_service.dart';
-import 'package:givt_app_kids/features/history/models/allowance.dart';
+import 'package:givt_app_kids/features/history/models/income.dart';
 import 'package:givt_app_kids/features/history/models/donation.dart';
 import 'package:givt_app_kids/features/history/models/history_item.dart';
 
@@ -32,11 +32,12 @@ class HistoryRepositoryImpl with HistoryRepository {
     List<HistoryItem> result = [];
 
     for (final donationMap in response) {
-      if (type == HistoryTypes.donation) {
+      if (donationMap['donationType'] == HistoryTypes.donation.value) {
         result.add(Donation.fromMap(donationMap));
       }
-      if (type == HistoryTypes.allowance) {
-        result.add(Allowance.fromMap(donationMap));
+      if (donationMap['donationType'] == HistoryTypes.allowance.value ||
+          donationMap['donationType'] == HistoryTypes.topUp.value) {
+        result.add(Income.fromMap(donationMap));
       }
     }
     return result;

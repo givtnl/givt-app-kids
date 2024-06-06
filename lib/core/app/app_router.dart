@@ -23,7 +23,7 @@ import 'package:givt_app_kids/features/giving_flow/organisation_details/cubit/or
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_goal_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/choose_amount_slider_screen.dart';
 import 'package:givt_app_kids/features/giving_flow/screens/success_screen.dart';
-import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
+import 'package:givt_app_kids/features/history/history_cubit/history_cubit.dart';
 import 'package:givt_app_kids/features/history/history_screen.dart';
 import 'package:givt_app_kids/features/home_screen/cubit/navigation_cubit.dart';
 import 'package:givt_app_kids/features/impact_groups/model/impact_group.dart';

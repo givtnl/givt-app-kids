@@ -9,7 +9,7 @@ import 'package:givt_app_kids/features/edit_profile/repositories/edit_profile_re
 import 'package:givt_app_kids/features/impact_groups/repository/impact_groups_repository.dart';
 import 'package:givt_app_kids/features/giving_flow/create_transaction/repositories/create_transaction_repository.dart';
 import 'package:givt_app_kids/features/giving_flow/organisation_details/repositories/organisation_details_repository.dart';
-import 'package:givt_app_kids/features/history/history_logic/history_repository.dart';
+import 'package:givt_app_kids/features/history/history_repository/history_repository.dart';
 import 'package:givt_app_kids/features/profiles/repository/profiles_repository.dart';
 import 'package:givt_app_kids/features/recommendation/organisations/repositories/organisations_repository.dart';
 import 'package:givt_app_kids/features/recommendation/tags/repositories/tags_repository.dart';

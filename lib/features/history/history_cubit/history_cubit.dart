@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:givt_app_kids/core/logging/logging.dart';
-import 'package:givt_app_kids/features/history/history_logic/history_repository.dart';
+import 'package:givt_app_kids/features/history/history_repository/history_repository.dart';
 import 'package:givt_app_kids/features/history/models/history_item.dart';
 
 part 'history_state.dart';
@@ -44,8 +44,8 @@ class HistoryCubit extends Cubit<HistoryState> {
           history: history,
           pageNr: state.pageNr + 1));
     } catch (e, stackTrace) {
-      LoggingInfo.instance.error(
-          'Error while fetching history: $e', methodName: stackTrace.toString());
+      LoggingInfo.instance.error('Error while fetching history: $e',
+          methodName: stackTrace.toString());
       emit(state.copyWith(status: HistroryStatus.error, error: e.toString()));
     }
   }

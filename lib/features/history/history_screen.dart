@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:givt_app_kids/features/history/history_logic/history_cubit.dart';
-import 'package:givt_app_kids/features/history/models/allowance.dart';
+import 'package:givt_app_kids/features/history/history_cubit/history_cubit.dart';
+import 'package:givt_app_kids/features/history/models/income.dart';
 import 'package:givt_app_kids/features/history/models/donation.dart';
+import 'package:givt_app_kids/features/history/models/donation_item_uimodel.dart';
 import 'package:givt_app_kids/features/history/models/history_item.dart';
+import 'package:givt_app_kids/features/history/models/income_item_uimodel.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
-import 'package:givt_app_kids/shared/widgets/allowance_item_widget.dart';
+import 'package:givt_app_kids/shared/widgets/income_item_widget.dart';
 import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
 import 'package:givt_app_kids/shared/widgets/donation_item_widget.dart';
 
@@ -18,7 +20,6 @@ class HistoryScreen extends StatelessWidget {
     ScrollController scrollController = ScrollController();
     final childId = context.read<ProfilesCubit>().state.activeProfile.id;
     final historyCubit = context.read<HistoryCubit>();
-    final Size size = MediaQuery.of(context).size;
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.position.pixels) {
@@ -49,14 +50,13 @@ class HistoryScreen extends StatelessWidget {
                   controller: scrollController,
                   itemCount: state.history.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (state.history[index].type == HistoryTypes.allowance) {
-                      return AllowanceItemWidget(
-                          allowance: state.history[index] as Allowance);
+                    if (state.history[index].type != HistoryTypes.donation) {
+                      return IncomeItemWidget(
+                          uimodel: IncomeItemUIModel(
+                              income: state.history[index] as Income));
                     }
-                    return Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                      child: DonationItemWidget(
+                    return DonationItemWidget(
+                      uimodel: DonationItemUIModel(
                           donation: state.history[index] as Donation),
                     );
                   },
