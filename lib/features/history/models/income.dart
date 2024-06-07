@@ -1,7 +1,7 @@
 import 'package:givt_app_kids/features/history/models/history_item.dart';
 
-class Allowance extends HistoryItem {
-  const Allowance({
+class Income extends HistoryItem {
+  const Income({
     required super.amount,
     required super.date,
     required super.type,
@@ -10,15 +10,15 @@ class Allowance extends HistoryItem {
   @override
   List<Object?> get props => [amount, date, type];
 
-  Allowance.empty()
+  Income.empty()
       : this(
           amount: 0,
           date: DateTime.now(),
           type: HistoryTypes.donation,
         );
 
-  factory Allowance.fromMap(Map<String, dynamic> map) {
-    return Allowance(
+  factory Income.fromMap(Map<String, dynamic> map) {
+    return Income(
         amount: double.tryParse(map['amount'].toString()) ?? 0,
         date: DateTime.tryParse(map['donationDate']) ?? DateTime.now(),
         type: HistoryTypes.values.firstWhere(

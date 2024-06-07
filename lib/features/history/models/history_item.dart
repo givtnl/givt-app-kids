@@ -17,6 +17,7 @@ abstract class HistoryItem extends Equatable {
 
 enum HistoryTypes {
   donation('WalletDonation'),
+  topUp('WalletTopup'),
   allowance('RecurringAllowance');
 
   final String value;
