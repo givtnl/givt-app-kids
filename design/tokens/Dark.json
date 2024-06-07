@@ -1,0 +1,14 @@
+{
+  "text": {
+    "primary": {
+      "type": "color",
+      "value": "{primary.primary98}"
+    }
+  },
+  "surface": {
+    "default": {
+      "type": "color",
+      "value": "{neutral.neutral20}"
+    }
+  }
+}
