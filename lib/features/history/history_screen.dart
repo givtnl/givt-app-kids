@@ -5,7 +5,6 @@ import 'package:givt_app_kids/features/history/history_cubit/history_cubit.dart'
 import 'package:givt_app_kids/features/history/models/income.dart';
 import 'package:givt_app_kids/features/history/models/donation.dart';
 import 'package:givt_app_kids/features/history/models/donation_item_uimodel.dart';
-import 'package:givt_app_kids/features/history/models/history_item.dart';
 import 'package:givt_app_kids/features/history/models/income_item_uimodel.dart';
 import 'package:givt_app_kids/features/profiles/cubit/profiles_cubit.dart';
 import 'package:givt_app_kids/shared/widgets/income_item_widget.dart';
@@ -50,7 +49,7 @@ class HistoryScreen extends StatelessWidget {
                   controller: scrollController,
                   itemCount: state.history.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (state.history[index].type != HistoryTypes.donation) {
+                    if (state.history[index].type.isIncome()) {
                       return IncomeItemWidget(
                           uimodel: IncomeItemUIModel(
                               income: state.history[index] as Income));

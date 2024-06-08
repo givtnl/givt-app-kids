@@ -22,4 +22,6 @@ enum HistoryTypes {
 
   final String value;
   const HistoryTypes(this.value);
+
+  isIncome() => this == allowance || this == topUp;
 }

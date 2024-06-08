@@ -14,9 +14,7 @@ class IncomeItemUIModel {
   double get amount => income.amount;
   Color get amountColor => const Color(0xFF06509B);
   bool get amountShowPlus => true;
-  String get title => income.type == HistoryTypes.topUp
-      ? 'Awesome! Your parents gave you a top up!'
-      : 'Awesome! Your parents gave yout an allowance!';
+  String get title => 'Awesome! Your parents added more to your Wallet';
   String get dateText => income.date.formatDate();
   Color get backgroundColor => AppTheme.historyAllowanceColor;
 }
