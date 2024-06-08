@@ -32,6 +32,9 @@ class HistoryRepositoryImpl with HistoryRepository {
     List<HistoryItem> result = [];
 
     for (final donationMap in response) {
+      if(donationMap['status'] == 'Rejected') {
+        continue;
+      }
       if (donationMap['donationType'] == HistoryTypes.donation.value) {
         result.add(Donation.fromMap(donationMap));
       }
