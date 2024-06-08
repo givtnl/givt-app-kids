@@ -10,7 +10,6 @@ class CommonHistoryItemWidget extends StatelessWidget {
     required this.title,
     required this.dateText,
     this.trailingSvgAsset = '',
-    this.name = '',
     this.trailingSvgAssetOpacity = 0.5,
     this.backgroundColor = Colors.transparent,
     super.key,
@@ -19,7 +18,6 @@ class CommonHistoryItemWidget extends StatelessWidget {
   final double amount;
   final Color amountColor;
   final bool amountShowPlus;
-  final String name;
   final String title;
   final String dateText;
   final String trailingSvgAsset;
@@ -41,9 +39,7 @@ class CommonHistoryItemWidget extends StatelessWidget {
             children: [
               Text(
                 amountShowPlus
-                    ? name.isNotEmpty
-                        ? '+ \$${amount.toStringAsFixed(0)} to $name'
-                        : '+ \$${amount.toStringAsFixed(0)}'
+                    ? '+ \$${amount.toStringAsFixed(0)}'
                     : '\$${amount.toStringAsFixed(0)}',
                 style: TextStyle(
                   color: amountColor,

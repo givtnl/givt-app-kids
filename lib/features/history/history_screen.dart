@@ -18,14 +18,14 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
-    final child = context.read<ProfilesCubit>().state.activeProfile;
+    final childid = context.read<ProfilesCubit>().state.activeProfile.id;
     final historyCubit = context.read<HistoryCubit>();
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.position.pixels) {
         if (historyCubit.state.status != HistroryStatus.loading) {
           // Scrolled to end of list try to fetch more data
-          historyCubit.fetchHistory(child.id);
+          historyCubit.fetchHistory(childid);
         }
       }
     });
@@ -53,8 +53,8 @@ class HistoryScreen extends StatelessWidget {
                     if (state.history[index].type != HistoryTypes.donation) {
                       return IncomeItemWidget(
                           uimodel: IncomeItemUIModel(
-                              income: state.history[index] as Income,
-                              name: child.firstName));
+                        income: state.history[index] as Income,
+                      ));
                     }
                     return DonationItemWidget(
                       uimodel: DonationItemUIModel(
