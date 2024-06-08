@@ -12,6 +12,7 @@ class IncomeItemWidget extends StatelessWidget {
       amount: uimodel.amount,
       amountColor: uimodel.amountColor,
       amountShowPlus: uimodel.amountShowPlus,
+      name: uimodel.name,
       title: uimodel.title,
       dateText: uimodel.dateText,
       backgroundColor: uimodel.backgroundColor,
