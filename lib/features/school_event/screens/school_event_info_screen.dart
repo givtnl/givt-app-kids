@@ -73,7 +73,7 @@ class SchoolEventInfoScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
-                                  'Thanks to the generous support of Mark & Debbie Plaster & Dr. Presley and Associates, we are delighted to give you:',
+                                  'As Givt we are delighted to give you:',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme
@@ -92,7 +92,7 @@ class SchoolEventInfoScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 30),
                           Text(
-                            'to contribute to the Impact Groups that are making a difference for the charities here tonight.',
+                            'to contribute to the Impact Groups that are making a difference for the non-profits.',
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
