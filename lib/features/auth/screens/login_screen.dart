@@ -277,7 +277,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 24),
                   if (isSchoolEventFlowEnabled)
                     GivtElevatedSecondaryButton(
-                      text: "I'm at WCA",
+                      text: "Tulsa Changemakers Unite",
                       onTap: () {
                         AnalyticsHelper.logEvent(
                           eventName:
