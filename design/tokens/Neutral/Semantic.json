@@ -1,0 +1,26 @@
+{
+  "text": {
+    "primary": {
+      "type": "color",
+      "value": "{primary.primary20}"
+    }
+  },
+  "surface": {
+    "default": {
+      "type": "color",
+      "value": "{white}"
+    }
+  },
+  "background": {
+    "default": {
+      "type": "color",
+      "value": "{neutral-variant.neutral-variant99}"
+    }
+  },
+  "border": {
+    "subtle": {
+      "type": "color",
+      "value": "{primary.primary98}"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "text": {
+    "primary": {
+      "type": "color",
+      "value": "{primary.primary20}"
+    }
+  }
+}

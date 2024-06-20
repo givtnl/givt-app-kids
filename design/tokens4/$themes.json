@@ -3,12 +3,15 @@
     "id": "257032cc1cd786233fa14aff26611415859a00f4",
     "name": "Givt4Kids",
     "$figmaStyleReferences": {
-      "text.primary": "S:240cb04f5b03794e50aeae12dc766c639deb4f8a,"
+      "text.primary.color": "S:240cb04f5b03794e50aeae12dc766c639deb4f8a,"
     },
     "selectedTokenSets": {
       "Givt4Kids/Foundation": "enabled",
       "Givt4Kids/Semantic": "enabled",
-      "Core/Foundation": "source"
+      "Neutral/Semantic": "disabled",
+      "Givt/Semantic": "disabled",
+      "Core/Foundation": "source",
+      "Core/Semantic": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:56008:2646",
     "$figmaModeId": "56008:1",
@@ -25,6 +28,7 @@
       "10": "7f639d6fcf2c001a876b3f36edfc6bec35c2bc1e",
       "11": "1389120b875a3780cb61d358db0cb600141cf95c",
       "12": "df83b62f13b7b22f533943c11ccb050c6e0d29dc",
+      "text.primary.color": "204e023931b2bc17fa9430b029f01eab28a7f18c",
       "sizing.Base": "2ed03585521d457c443e2ca962f84e38b9207053",
       "white": "ea79db9b621c8dfc902946bf684060a6e3be5ed9",
       "black": "eab5ded35afd4181abae868ea52b01ff253a5f95",
@@ -172,8 +176,7 @@
       "letterSpacing.2": "638694576447202df74ff7d5d84cf5dcb73ec344",
       "letterSpacing.3": "bd800d05b8703a88599c58441d691895d67849cf",
       "paragraphSpacing.0": "79716c6c91d30cb46db2fbb8522a3ef9ba4e8351",
-      "paragraphIndent.0": "faf0aca078a1ea83399bc9c2c76da74d79ae9172",
-      "text.primary": "204e023931b2bc17fa9430b029f01eab28a7f18c"
+      "paragraphIndent.0": "faf0aca078a1ea83399bc9c2c76da74d79ae9172"
     },
     "group": "brand"
   },
@@ -184,7 +187,8 @@
     "selectedTokenSets": {
       "Givt/Foundation": "enabled",
       "Givt/Semantic": "enabled",
-      "Core/Foundation": "source"
+      "Core/Foundation": "source",
+      "Core/Semantic": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:56008:2646",
     "$figmaModeId": "56008:2",
@@ -201,6 +205,7 @@
       "10": "7f639d6fcf2c001a876b3f36edfc6bec35c2bc1e",
       "11": "1389120b875a3780cb61d358db0cb600141cf95c",
       "12": "df83b62f13b7b22f533943c11ccb050c6e0d29dc",
+      "text.primary.color": "204e023931b2bc17fa9430b029f01eab28a7f18c",
       "sizing.Base": "2ed03585521d457c443e2ca962f84e38b9207053",
       "white": "ea79db9b621c8dfc902946bf684060a6e3be5ed9",
       "black": "eab5ded35afd4181abae868ea52b01ff253a5f95",
@@ -348,8 +353,7 @@
       "letterSpacing.3": "bd800d05b8703a88599c58441d691895d67849cf",
       "paragraphSpacing.0": "79716c6c91d30cb46db2fbb8522a3ef9ba4e8351",
       "paragraphIndent.0": "faf0aca078a1ea83399bc9c2c76da74d79ae9172",
-      "fontFamilies.IconFont": "efc31d07db1812fbc939caddec094f758b0e2701",
-      "text.primary": "204e023931b2bc17fa9430b029f01eab28a7f18c"
+      "fontFamilies.IconFont": "efc31d07db1812fbc939caddec094f758b0e2701"
     },
     "group": "brand"
   },
@@ -360,7 +364,8 @@
     "selectedTokenSets": {
       "Neutral/Foundation": "enabled",
       "Neutral/Semantic": "enabled",
-      "Core/Foundation": "source"
+      "Core/Foundation": "source",
+      "Core/Semantic": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:56008:2646",
     "$figmaModeId": "56008:3",
@@ -377,6 +382,7 @@
       "10": "7f639d6fcf2c001a876b3f36edfc6bec35c2bc1e",
       "11": "1389120b875a3780cb61d358db0cb600141cf95c",
       "12": "df83b62f13b7b22f533943c11ccb050c6e0d29dc",
+      "text.primary.color": "204e023931b2bc17fa9430b029f01eab28a7f18c",
       "sizing.Base": "2ed03585521d457c443e2ca962f84e38b9207053",
       "white": "ea79db9b621c8dfc902946bf684060a6e3be5ed9",
       "black": "eab5ded35afd4181abae868ea52b01ff253a5f95",
@@ -524,8 +530,7 @@
       "letterSpacing.2": "638694576447202df74ff7d5d84cf5dcb73ec344",
       "letterSpacing.3": "bd800d05b8703a88599c58441d691895d67849cf",
       "paragraphSpacing.0": "79716c6c91d30cb46db2fbb8522a3ef9ba4e8351",
-      "paragraphIndent.0": "faf0aca078a1ea83399bc9c2c76da74d79ae9172",
-      "text.primary": "204e023931b2bc17fa9430b029f01eab28a7f18c"
+      "paragraphIndent.0": "faf0aca078a1ea83399bc9c2c76da74d79ae9172"
     },
     "group": "brand"
   }

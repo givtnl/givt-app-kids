@@ -71,7 +71,7 @@ class _AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     const theme = AppTheme();
     return Tokens(
-      tokens: DefaultTokens(),
+      tokens: Givt4KidsTokens(),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         theme: theme.toThemeData(),
