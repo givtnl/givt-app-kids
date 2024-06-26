@@ -83,7 +83,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfilesCubit, ProfilesState>(
-        listener: (context, state) => state.activeProfile.wallet.balance == 30
+        listener: (context, state) => state is ProfilesUpdatedState &&
+                state.activeProfile.wallet.balance == 0
             ? showDialog<void>(
                 context: context,
                 barrierDismissible: false,
