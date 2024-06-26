@@ -10,17 +10,23 @@ class SchoolEventHelper {
   static bool logoutSchoolEventUsers(BuildContext context) {
     final isSchoolEventFlowEnabled = RemoteConfigHelper.isFeatureEnabled(
         RemoteConfigFeatures.schoolEventFlow);
-    final auth = context.read<AuthCubit>().state;
 
-    if (!isSchoolEventFlowEnabled &&
-        auth is LoggedInState &&
-        auth.isSchoolEvenMode) {
+    if (!isSchoolEventFlowEnabled && isSchoolEventUser(context)) {
       context.read<AuthCubit>().logout();
       context.read<ProfilesCubit>().clearProfiles();
       context.read<FlowsCubit>().resetFlow();
       AnalyticsHelper.logEvent(
         eventName: AmplitudeEvent.schoolEventLogOutTriggered,
       );
+      return true;
+    }
+    return false;
+  }
+
+  static bool isSchoolEventUser(BuildContext context) {
+    final auth = context.read<AuthCubit>().state;
+
+    if (auth is LoggedInState && auth.isSchoolEvenMode) {
       return true;
     }
     return false;
