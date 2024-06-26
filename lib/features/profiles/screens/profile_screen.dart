@@ -16,6 +16,7 @@ import 'package:givt_app_kids/helpers/analytics_helper.dart';
 import 'package:givt_app_kids/helpers/app_theme.dart';
 import 'package:givt_app_kids/helpers/school_event_helper.dart';
 import 'package:givt_app_kids/shared/widgets/custom_progress_indicator.dart';
+import 'package:givt_app_kids/shared/widgets/download_givt_app_dialog.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -81,106 +82,119 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfilesCubit, ProfilesState>(builder: (context, state) {
-      final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
-      final hasDonations = state.activeProfile.hasDonations;
-      final authState = context.read<AuthCubit>().state as LoggedInState;
-      final goalCubit = context.watch<ImpactGroupsCubit>();
+    return BlocConsumer<ProfilesCubit, ProfilesState>(
+        listener: (context, state) => state is ProfilesUpdatedState &&
+                state.activeProfile.wallet.balance == 0
+            ? showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => const DownloadGivtAppDialog(),
+              )
+            : null,
+        builder: (context, state) {
+          final isGiveButtonActive = state.activeProfile.wallet.balance > 0;
+          final hasDonations = state.activeProfile.hasDonations;
+          final authState = context.read<AuthCubit>().state as LoggedInState;
+          final goalCubit = context.watch<ImpactGroupsCubit>();
 
-      var countdownAmount = 0.0;
-      if (state is ProfilesCountdownState) {
-        countdownAmount = state.amount;
-      }
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: state is ProfilesLoadingState
-            ? const CustomCircularProgressIndicator()
-            : RefreshIndicator(
-                onRefresh: refresh,
-                child: Stack(
-                  children: [
-                    ListView(),
-                    Column(children: [
-                      WalletWidget(
-                        balance: state.activeProfile.wallet.balance,
-                        countdownAmount: countdownAmount,
-                        hasDonations: hasDonations,
-                        avatarUrl: state.activeProfile.pictureURL,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: ActionTile(
-                                isDisabled: !isGiveButtonActive,
-                                titleBig: "Give",
-                                iconPath: 'assets/images/give_tile.svg',
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.onSecondary,
-                                borderColor: Theme.of(context)
-                                    .colorScheme
-                                    .onInverseSurface,
-                                textColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                onTap: () {
-                                  AnalyticsHelper.logEvent(
-                                      eventName:
-                                          AmplitudeEvent.iWantToGivePressed,
-                                      eventProperties: {
-                                        AnalyticsHelper.walletAmountKey:
-                                            state.activeProfile.wallet.balance,
-                                      });
-                                  showModalBottomSheet<void>(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    backgroundColor: Colors.white,
-                                    builder: (context) => GiveBottomSheet(
-                                      familyGoal: goalCubit.state.familyGoal,
-                                      isiPad: isiPad,
-                                    ),
-                                  );
-                                },
-                              ),
+          var countdownAmount = 0.0;
+          if (state is ProfilesCountdownState) {
+            countdownAmount = state.amount;
+          }
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: state is ProfilesLoadingState
+                ? const CustomCircularProgressIndicator()
+                : RefreshIndicator(
+                    onRefresh: refresh,
+                    child: Stack(
+                      children: [
+                        ListView(),
+                        Column(children: [
+                          WalletWidget(
+                            balance: state.activeProfile.wallet.balance,
+                            countdownAmount: countdownAmount,
+                            hasDonations: hasDonations,
+                            avatarUrl: state.activeProfile.pictureURL,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: ActionTile(
+                                    isDisabled: !isGiveButtonActive,
+                                    titleBig: "Give",
+                                    iconPath: 'assets/images/give_tile.svg',
+                                    backgroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                    borderColor: Theme.of(context)
+                                        .colorScheme
+                                        .onInverseSurface,
+                                    textColor:
+                                        Theme.of(context).colorScheme.secondary,
+                                    onTap: () {
+                                      AnalyticsHelper.logEvent(
+                                          eventName:
+                                              AmplitudeEvent.iWantToGivePressed,
+                                          eventProperties: {
+                                            AnalyticsHelper.walletAmountKey:
+                                                state.activeProfile.wallet
+                                                    .balance,
+                                          });
+                                      showModalBottomSheet<void>(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        backgroundColor: Colors.white,
+                                        builder: (context) => GiveBottomSheet(
+                                          familyGoal:
+                                              goalCubit.state.familyGoal,
+                                          isiPad: isiPad,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: ActionTile(
+                                    isDisabled: authState.isSchoolEvenMode,
+                                    titleBig: "Find Charity",
+                                    iconPath: 'assets/images/find_tile.svg',
+                                    backgroundColor: AppTheme.primary98,
+                                    borderColor: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
+                                    textColor: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                    onTap: () {
+                                      context
+                                          .read<FlowsCubit>()
+                                          .startRecommendationFlow();
+                                      context.pushNamed(
+                                          Pages.recommendationStart.name);
+                                      AnalyticsHelper.logEvent(
+                                          eventName: AmplitudeEvent
+                                              .helpMeFindCharityPressed);
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: ActionTile(
-                                isDisabled: authState.isSchoolEvenMode,
-                                titleBig: "Find Charity",
-                                iconPath: 'assets/images/find_tile.svg',
-                                backgroundColor: AppTheme.primary98,
-                                borderColor: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
-                                textColor: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimaryContainer,
-                                onTap: () {
-                                  context
-                                      .read<FlowsCubit>()
-                                      .startRecommendationFlow();
-                                  context.pushNamed(
-                                      Pages.recommendationStart.name);
-                                  AnalyticsHelper.logEvent(
-                                      eventName: AmplitudeEvent
-                                          .helpMeFindCharityPressed);
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ]),
-                  ],
-                ),
-              ),
-      );
-    });
+                          ),
+                        ]),
+                      ],
+                    ),
+                  ),
+          );
+        });
   }
 }
