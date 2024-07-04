@@ -7,10 +7,12 @@ import 'package:go_router/go_router.dart';
 class GivtCloseButton extends StatelessWidget {
   const GivtCloseButton({
     super.key,
+    this.onPressedForced,
     this.isDisabled = false,
   });
 
   final bool isDisabled;
+  final void Function()? onPressedForced;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class GivtCloseButton extends StatelessWidget {
       baseBorderSize: 4,
       base: ActionContainerBase.bottom,
       isDisabled: isDisabled,
-      onTap: () => context.pop(),
+      onTap: () => onPressedForced != null ? onPressedForced!() : context.pop(),
       child: Container(
         width: 40,
         height: 40,

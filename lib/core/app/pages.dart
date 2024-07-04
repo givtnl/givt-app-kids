@@ -1,5 +1,6 @@
 enum Pages {
   splash(path: '/', name: 'SPLASH'),
+  givtRedirect(path: '/givt-redirect', name: 'GIVT_REDIRECT'),
   login(path: '/login', name: 'LOGIN'),
   profileSelection(path: '/profile-selection', name: 'PROFILE_SELECTION'),
   wallet(path: '/wallet', name: 'WALLET'),
