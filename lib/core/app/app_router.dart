@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:givt_app_kids/core/app/pages.dart';
 import 'package:givt_app_kids/core/injection/injection.dart';
+import 'package:givt_app_kids/features/home_screen/givt_redirect.dart';
 import 'package:givt_app_kids/features/impact_groups/pages/impact_group_details_page.dart';
 import 'package:givt_app_kids/features/impact_groups/cubit/impact_groups_cubit.dart';
 import 'package:givt_app_kids/features/auth/cubit/auth_cubit.dart';
@@ -64,24 +65,12 @@ class AppRouter {
         GoRoute(
           path: Pages.splash.path,
           name: Pages.splash.name,
-          redirect: (context, state) {
-            final auth = context.read<AuthCubit>().state;
-            final profiles = context.read<ProfilesCubit>().state;
-            if (auth is LoggedInState) {
-              final isSchoolEventUserLoggedOut =
-                  SchoolEventHelper.logoutSchoolEventUsers(context);
-              if (isSchoolEventUserLoggedOut) {
-                return Pages.login.path;
-              }
-              if (profiles.isProfileSelected) {
-                return Pages.wallet.path;
-              }
-              context.read<ProfilesCubit>().fetchAllProfiles();
-              return Pages.profileSelection.path;
-            }
-            return Pages.login.path;
-          },
+          redirect: (context, state) => Pages.givtRedirect.path,
         ),
+        GoRoute(
+            path: Pages.givtRedirect.path,
+            name: Pages.givtRedirect.name,
+            builder: (context, state) => const GivtRedirectScreen()),
         GoRoute(
           path: Pages.login.path,
           name: Pages.login.name,
