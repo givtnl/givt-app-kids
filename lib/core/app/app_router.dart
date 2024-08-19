@@ -70,7 +70,7 @@ class AppRouter {
         GoRoute(
             path: Pages.givtRedirect.path,
             name: Pages.givtRedirect.name,
-            builder: (context, state) => const GivtRedirectScreen()),
+            builder: (context, state) => GivtRedirectScreen()),
         GoRoute(
           path: Pages.login.path,
           name: Pages.login.name,
