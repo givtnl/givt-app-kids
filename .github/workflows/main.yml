@@ -11,7 +11,7 @@ jobs:
     droid:
         uses: ./.github/workflows/android.yml
         with:
-          flutter-version: '3.19.x'
+          flutter-version: '3.24.x'
         secrets:
           CODESIGNING_DEPLOY_KEY: ${{ secrets.CODESIGNING_DEPLOY_KEY }}
           GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
@@ -21,7 +21,7 @@ jobs:
     ios:
          uses: ./.github/workflows/ios.yml
          with:
-          flutter-version: '3.19.x'
+          flutter-version: '3.24.x'
          secrets:
           CODESIGNING_DEPLOY_KEY: ${{ secrets.CODESIGNING_DEPLOY_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
